@@ -1,0 +1,8 @@
+In software and systems engineering, a use case is a list of steps, typically defining interactions between a role (known in Unified Modeling Language (UML) as an "actor") and a system, to achieve a goal. The actor can be a human, an external system, or time.
+
+PM catalogue admin user case:
+1.user add a new pm product to the system .
+2.user add, update, delete attributtes(images,options, fees,tags,metas)  of PM product.
+3.user update status of the product.
+
+PM catelogue front use case:

@@ -1,0 +1,5 @@
+study existing softwares and get a feature list to be implemented.
+
+feature list:
+fund raise compagin.
+activate your community. 
