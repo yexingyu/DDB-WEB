@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @author x_ye
  */
 @RestController
-public class IndexController {
+@RequestMapping(value = "/admin")
+public class AdminController {
 
   @RequestMapping(method = RequestMethod.GET)
   public String index() {
-    return "DailyDealsBox Welcome Page.";
+    return "DailyDealsBox Admin Page.";
   }
 
 }
