@@ -1,1 +1,1 @@
-data structure and entity relationship diagram.
+Data structure and entity relationship diagram.

@@ -1,1 +1,10 @@
-Software prototyping is the activity of creating prototypes of software applications, i.e., incomplete versions of the software program being developed. It is an activity that can occur in software development and is comparable to prototyping as known from other fields, such as mechanical engineering or manufacturing.
+Software prototyping is the activity of creating prototypes of software applications, i.e., incomplete versions of the software program being developed.
+It is an activity that can occur in software development and is comparable to prototyping as known from other fields, such as mechanical engineering or manufacturing.
+
+
+ADMIN panel prototype:
+reference : http://thevectorlab.net/theme/?theme=Flat%20Lab
+Prototype: admin_panel.jpg
+http://dig1c6.axshare.com/#p=admin_panel
+Prototype: PM catalog
+http://dig1c6.axshare.com/#p=pm_catalogue
