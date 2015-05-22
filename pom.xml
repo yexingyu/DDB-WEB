@@ -21,7 +21,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>1.2.3.RELEASE</version>
 				<configuration>
-					<mainClass>com.mindgeek.dssp.Node</mainClass>
+					<mainClass>com.dailydealsbox.web.WebApplication</mainClass>
+					<addResources>true</addResources>
 				</configuration>
 				<executions>
 					<execution>
@@ -77,5 +78,12 @@
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<version>1.2.3.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
+	<packaging>war</packaging>
 </project>
