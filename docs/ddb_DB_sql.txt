@@ -1,0 +1,618 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: May 26, 2015 at 11:45 AM
+-- Server version: 5.5.40-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `ddb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts`
+--
+
+CREATE TABLE IF NOT EXISTS `accounts` (
+  `account_id` int(11) NOT NULL,
+  PRIMARY KEY (`account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_address_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `account_address_relationship` (
+  `account_address_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`account_address_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_balance_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `account_balance_relationship` (
+  `account_balance_id` int(13) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`account_balance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_email_relationships`
+--
+
+CREATE TABLE IF NOT EXISTS `account_email_relationships` (
+  `account_email_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`account_email_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_image_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `account_image_relationship` (
+  `account_image_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`account_image_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_name_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `account_name_relationship` (
+  `account_name_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`account_name_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_password_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `account_password_relationship` (
+  `account_password_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`account_password_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_phone_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `account_phone_relationship` (
+  `account_phone_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`account_phone_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_addresses`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_addresses` (
+  `address_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`address_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_balances`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_balances` (
+  `balance_id` int(13) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`balance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_comments`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_comments` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_descriptions`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_descriptions` (
+  `description_id` int(11) NOT NULL AUTO_INCREMENT,
+  `description_language` varchar(16) NOT NULL,
+  `description_excerpt` varchar(256) NOT NULL,
+  `description_content` text NOT NULL,
+  PRIMARY KEY (`description_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_emails`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_emails` (
+  `email_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`email_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_fees`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_fees` (
+  `fee_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`fee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_images`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_images` (
+  `image_id` int(11) NOT NULL AUTO_INCREMENT,
+  `image_language` varchar(16) NOT NULL,
+  `image_URL` varchar(512) NOT NULL,
+  `image_alt` varchar(256) NOT NULL,
+  `image_width` int(11) NOT NULL,
+  `image_height` int(11) NOT NULL,
+  `image_size` int(11) NOT NULL,
+  `image_type` varchar(16) NOT NULL,
+  `image_added_time` datetime NOT NULL,
+  `image_added_by` int(11) NOT NULL,
+  PRIMARY KEY (`image_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_likes`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_likes` (
+  `like_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`like_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_links`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_links` (
+  `link_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`link_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_metas`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_metas` (
+  `meta_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`meta_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_names`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_names` (
+  `name_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name_first` varchar(128) NOT NULL,
+  `name_last` varchar(128) NOT NULL,
+  PRIMARY KEY (`name_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_options`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_options` (
+  `option_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`option_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_passwords`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_passwords` (
+  `password_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`password_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_phones`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_phones` (
+  `phone_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`phone_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_prices`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_prices` (
+  `price_id` int(11) NOT NULL AUTO_INCREMENT,
+  `price_currency` varchar(16) NOT NULL,
+  `price_value` double(13,4) NOT NULL,
+  `price_added_time` datetime NOT NULL,
+  `price_added_by` int(11) NOT NULL,
+  PRIMARY KEY (`price_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_reviews`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_reviews` (
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`review_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_statuses`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_statuses` (
+  `status_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`status_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_tags`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_tags` (
+  `tag_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_taxes`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_taxes` (
+  `tax_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`tax_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_titles`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_titles` (
+  `title_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title_language` varchar(16) NOT NULL,
+  `title_value` varchar(256) NOT NULL,
+  `title_added_time` datetime NOT NULL,
+  `title_added_by` int(11) NOT NULL,
+  PRIMARY KEY (`title_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_transactions`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_transactions` (
+  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+  `transaction_debit_acount` int(11) NOT NULL,
+  `transaction_credit_acount` int(11) NOT NULL,
+  PRIMARY KEY (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_validations`
+--
+
+CREATE TABLE IF NOT EXISTS `entity_validations` (
+  `validation_id` int(11) NOT NULL AUTO_INCREMENT,
+  `validation_from` datetime NOT NULL,
+  `validation_to` datetime NOT NULL,
+  PRIMARY KEY (`validation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pay_monthly_orders`
+--
+
+CREATE TABLE IF NOT EXISTS `pay_monthly_orders` (
+  `PM_order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `PM_order_account_id` int(11) NOT NULL,
+  PRIMARY KEY (`PM_order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pay_monthly_products`
+--
+
+CREATE TABLE IF NOT EXISTS `pay_monthly_products` (
+  `PMP_id` int(11) NOT NULL AUTO_INCREMENT,
+  `PMP_URL` varchar(512) CHARACTER SET utf8 NOT NULL,
+  `PMP_store_id` int(11) DEFAULT NULL,
+  `PMP_store_name` varchar(256) NOT NULL,
+  `PMP_key` varchar(64) CHARACTER SET utf8 NOT NULL,
+  `PMP_added_time` datetime NOT NULL,
+  `PMP_added_by` int(11) NOT NULL,
+  PRIMARY KEY (`PMP_id`),
+  UNIQUE KEY `deal_store_id` (`PMP_store_id`,`PMP_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMO_image_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMO_image_relationship` (
+  `PMO_image_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMO_image_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMO_PMP_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMO_PMP_relationship` (
+  `PM_order_product_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PM_order_product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMO_status_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMO_status_relationship` (
+  `PMO_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMO_status_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_comment_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_comment_relationship` (
+  `PMP_comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_description_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_description_relationship` (
+  `PMP_description_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_description_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_fee_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_fee_relationship` (
+  `PMP_fee_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_fee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_image_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_image_relationship` (
+  `PMP_image_id` int(11) NOT NULL AUTO_INCREMENT,
+  `PMP_id` int(11) NOT NULL,
+  `image_id` int(11) NOT NULL,
+  `image_time_stamp` datetime NOT NULL,
+  PRIMARY KEY (`PMP_image_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_like_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_like_relationship` (
+  `PMP_like_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_like_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_link_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_link_relationship` (
+  `PMP_link_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_link_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_meta_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_meta_relationship` (
+  `PMP_meta_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_meta_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_option_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_option_relationship` (
+  `PMP_option_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_option_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_price_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_price_relationship` (
+  `PMP_price_id` int(11) NOT NULL AUTO_INCREMENT,
+  `PMP_id` int(11) NOT NULL,
+  `price_id` int(11) NOT NULL,
+  PRIMARY KEY (`PMP_price_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_review_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_review_relationship` (
+  `PMP_review_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_review_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_status_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_status_relationship` (
+  `PMP_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_status_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_tag_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_tag_relationship` (
+  `PMP_tag_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_tax_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_tax_relationship` (
+  `PMP_tax_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_tax_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_title_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_title_relationship` (
+  `PMP_name_id` int(11) NOT NULL AUTO_INCREMENT,
+  `PMP_id` int(11) NOT NULL,
+  `title_id` int(11) NOT NULL,
+  PRIMARY KEY (`PMP_name_id`),
+  UNIQUE KEY `PMP_id` (`PMP_id`,`title_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='pay monthly product name' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PMP_validation_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `PMP_validation_relationship` (
+  `PMP_validation_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PMP_validation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
