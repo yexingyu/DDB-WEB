@@ -3,16 +3,27 @@
  */
 package com.dailydealsbox.web;
 
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
@@ -20,11 +31,70 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan
+@EnableTransactionManagement
+@ComponentScan("com.dailydealsbox")
+@PropertySource(value = { "classpath:database.properties" })
 public class WebApplication extends SpringBootServletInitializer {
-  public static Logger                         logger = LoggerFactory
-                                                          .getLogger(WebApplication.class);
-  public static ConfigurableApplicationContext CTX;
+  public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
+
+  @Autowired
+  private Environment  environment;
+
+  /**
+   * sessionFactory
+   * 
+   * @return
+   */
+  @Bean
+  public LocalSessionFactoryBean sessionFactory() {
+    LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+    sessionFactory.setDataSource(dataSource());
+    sessionFactory.setPackagesToScan(new String[] { "com.dailydealsbox.database.model" });
+    sessionFactory.setHibernateProperties(hibernateProperties());
+    return sessionFactory;
+  }
+
+  /**
+   * dataSource
+   * 
+   * @return
+   */
+  @Bean
+  public DataSource dataSource() {
+    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
+    dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+    dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+    dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+    return dataSource;
+  }
+
+  /**
+   * hibernateProperties
+   * 
+   * @return
+   */
+  private Properties hibernateProperties() {
+    Properties properties = new Properties();
+    properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+    properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+    properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+    return properties;
+  }
+
+  /**
+   * transactionManager
+   * 
+   * @param s
+   * @return
+   */
+  @Bean
+  @Autowired
+  public HibernateTransactionManager transactionManager(SessionFactory s) {
+    HibernateTransactionManager txManager = new HibernateTransactionManager();
+    txManager.setSessionFactory(s);
+    return txManager;
+  }
 
   /*
    * (non-Javadoc)
@@ -56,8 +126,7 @@ public class WebApplication extends SpringBootServletInitializer {
    * @param args
    */
   public static void main(String[] args) {
-    CTX = SpringApplication.run(WebApplication.class, args);
-    CTX.registerShutdownHook();
+    SpringApplication.run(WebApplication.class, args).registerShutdownHook();
   }
 
 }

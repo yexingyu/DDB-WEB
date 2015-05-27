@@ -6,6 +6,7 @@ package com.dailydealsbox.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dailydealsbox.database.model.TimoTest;
+import com.dailydealsbox.database.service.TimoTestService;
+
 /**
  * @author x_ye
  */
 @Controller
 @RequestMapping("/flyer")
 public class FlyerController {
+  @Autowired
+  TimoTestService service;
 
   @RequestMapping(method = RequestMethod.GET)
   public String index(
@@ -35,6 +41,11 @@ public class FlyerController {
       Model model) {
     model.addAttribute("name", name);
     System.out.println("name: " + name);
+
+    TimoTest test = new TimoTest();
+    test.setName(name);
+    service.save(test);
+
     return "flyer/test";
   }
 
