@@ -1,0 +1,18 @@
+<div>
+    <div class="row">
+        <div class="col-md-2">
+            Search: <input ng-model="query"> Sort by: <select ng-model="orderProp">
+                <option value="account">Account Name</option>
+                <option value="stampJoined">Joined</option>
+            </select>
+        </div>
+        <div>
+            <ul>
+                <li ng-repeat="account in accounts | filter:query | orderBy:orderProp"><a
+                    href="#/accounts/{{account.id}}">{{account.account}}</a>
+                    <p>{{account.stampJoined}}</p>
+                    <p>{{account.stampModified}}</p></li>
+            </ul>
+        </div>
+    </div>
+</div>

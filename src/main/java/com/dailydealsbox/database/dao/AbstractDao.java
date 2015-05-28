@@ -44,14 +44,23 @@ public abstract class AbstractDao<T> {
   }
 
   /**
+   * delete
+   * 
+   * @param id
+   */
+  public void delete(int id) {
+    this.getSession().delete("id", id);
+  }
+
+  /**
    * get
    * 
    * @param clazz
    * @param id
    * @return
    */
+  @SuppressWarnings("unchecked")
   public T get(Class<T> clazz, int id) {
     return (T) this.getSession().get(clazz, id);
   }
-
 }

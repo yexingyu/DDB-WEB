@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="ddbApp">
 <head>
-<meta charset="UTF-8">
-<script src="/js/global.js"></script>
-<link rel="stylesheet" href="/css/global.css">
-<title>Welcome to DailyDealsBox.com</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DDB</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js"></script>
+<script src="/js/ddb-app.js"></script>
+<script src="/js/controllers.js"></script>
 </head>
-
 <body>
-<img src="images/box.png" alt="DailyDealsBox.com" /><br />
-Welcome to DailyDealsBox.com
+    <div ng-view></div>
 </body>
-
 </html>
