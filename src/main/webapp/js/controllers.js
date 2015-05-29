@@ -29,6 +29,7 @@ accountControllers.controller('AccountsRegisterCtrl', [
             $scope.register = function() {
                 $scope.account.password = md5.createHash($scope.passwd || '');
                 alert(JSON.stringify($scope.account));
+
                 $http.post('/api/accounts', $scope.account).success(
                         function(data, status, headers, config) {
                             $location.path('/accounts');
@@ -36,5 +37,6 @@ accountControllers.controller('AccountsRegisterCtrl', [
                     alert("register error.");
                     $location.path('/accounts');
                 });
+
             };
         } ]);
