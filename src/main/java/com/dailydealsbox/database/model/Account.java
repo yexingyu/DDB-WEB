@@ -5,27 +5,27 @@ package com.dailydealsbox.database.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.dailydealsbox.database.model.base.EntityBaseModel;
 
 /**
  * @author x_ye
  */
 @Entity
 @Table(name = "accounts")
-public class Account {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int    id;
+public class Account extends EntityBaseModel {
 
   @NotNull
   @Size(min = 3, max = 45)
   @Column(name = "account", nullable = false, length = 45)
   private String account;
+
+  @NotNull
+  @Column(name = "password", nullable = false, length = 100)
+  private String password;
 
   @Column(name = "stamp_joined", nullable = false, updatable = false, insertable = false)
   private String stampJoined;
@@ -34,18 +34,18 @@ public class Account {
   private String stampModified;
 
   /**
-   * @return the id
+   * @return the password
    */
-  public int getId() {
-    return id;
+  public String getPassword() {
+    return this.password;
   }
 
   /**
-   * @param id
-   *          the id to set
+   * @param password
+   *          the password to set
    */
-  public void setId(int id) {
-    this.id = id;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   /**

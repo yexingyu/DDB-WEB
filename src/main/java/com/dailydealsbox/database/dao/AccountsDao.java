@@ -13,18 +13,11 @@ import com.dailydealsbox.database.model.Account;
 public interface AccountsDao {
 
   /**
-   * delete
-   * 
-   * @param id
-   */
-  public void delete(int id);
-
-  /**
    * save
    * 
    * @param test
    */
-  public void save(Account test);
+  public void save(Account account);
 
   /**
    * findAll
@@ -40,4 +33,11 @@ public interface AccountsDao {
    * @return
    */
   public Account get(int id);
+
+  /**
+   * delete
+   * 
+   * @param account
+   */
+  public void delete(Account account);
 }

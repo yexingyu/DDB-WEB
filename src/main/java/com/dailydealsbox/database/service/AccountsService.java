@@ -34,4 +34,10 @@ public interface AccountsService {
    */
   public List<Account> findAll();
 
+  /**
+   * delete
+   * 
+   * @param account
+   */
+  public void delete(Account account);
 }

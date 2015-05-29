@@ -1,4 +1,4 @@
-var ddbApp = angular.module('ddbApp', [ 'ngRoute', 'accountsControllers' ]);
+var ddbApp = angular.module('ddbApp', [ 'ngRoute', 'accountsControllers', 'angular-md5' ]);
 
 ddbApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/accounts', {

@@ -22,11 +22,21 @@ public class AccountsServiceImpl implements AccountsService {
   @Autowired
   private AccountsDao dao;
 
+  /*
+   * (non-Javadoc)
+   * @see
+   * com.dailydealsbox.database.service.AccountsService#save(com.dailydealsbox.database.model.Account
+   * )
+   */
   @Override
   public void save(Account account) {
     dao.save(account);
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.AccountsService#findAll()
+   */
   @Override
   public List<Account> findAll() {
     return dao.findAll();
@@ -39,6 +49,17 @@ public class AccountsServiceImpl implements AccountsService {
   @Override
   public Account get(int id) {
     return dao.get(id);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see
+   * com.dailydealsbox.database.service.AccountsService#delete(com.dailydealsbox.database.model.
+   * Account)
+   */
+  @Override
+  public void delete(Account account) {
+    dao.delete(account);
   }
 
 }

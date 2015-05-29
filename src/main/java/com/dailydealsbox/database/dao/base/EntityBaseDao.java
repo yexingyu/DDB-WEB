@@ -1,17 +1,19 @@
 /**
  * 
  */
-package com.dailydealsbox.database.dao;
+package com.dailydealsbox.database.dao.base;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.dailydealsbox.database.model.base.EntityBaseModel;
+
 /**
  * @author x_ye
  * @param <T>
  */
-public abstract class AbstractDao<T> {
+public abstract class EntityBaseDao<T extends EntityBaseModel> {
 
   @Autowired
   private SessionFactory sessionFactory;
@@ -37,19 +39,11 @@ public abstract class AbstractDao<T> {
   /**
    * delete
    * 
-   * @param entity
-   */
-  public void delete(T entity) {
-    getSession().delete(entity);
-  }
-
-  /**
-   * delete
-   * 
    * @param id
    */
-  public void delete(int id) {
-    this.getSession().delete("id", id);
+  public void delete(T entity) {
+    entity.setStatus(-1);
+    this.getSession().update(entity);
   }
 
   /**

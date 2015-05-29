@@ -8,13 +8,14 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
+import com.dailydealsbox.database.dao.base.EntityBaseDao;
 import com.dailydealsbox.database.model.Account;
 
 /**
  * @author x_ye
  */
 @Repository("timo_test_dao")
-public class AccountsDaoImpl extends AbstractDao<Account> implements AccountsDao {
+public class AccountsDaoImpl extends EntityBaseDao<Account> implements AccountsDao {
 
   /*
    * (non-Javadoc)
@@ -44,4 +45,5 @@ public class AccountsDaoImpl extends AbstractDao<Account> implements AccountsDao
   public Account get(int id) {
     return this.get(Account.class, id);
   }
+
 }
