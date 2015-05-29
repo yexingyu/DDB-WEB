@@ -27,12 +27,6 @@ public class Account extends EntityBaseModel {
   @Column(name = "password", nullable = false, length = 100)
   private String password;
 
-  @Column(name = "stamp_joined", nullable = false, updatable = false, insertable = false)
-  private String stampJoined;
-
-  @Column(name = "stamp_modified", nullable = false, updatable = false, insertable = false)
-  private String stampModified;
-
   /**
    * @return the password
    */
@@ -61,36 +55,6 @@ public class Account extends EntityBaseModel {
    */
   public void setAccount(String account) {
     this.account = account;
-  }
-
-  /**
-   * @return the stampJoined
-   */
-  public String getStampJoined() {
-    return this.stampJoined;
-  }
-
-  /**
-   * @param stampJoined
-   *          the stampJoined to set
-   */
-  public void setStampJoined(String stampJoined) {
-    this.stampJoined = stampJoined;
-  }
-
-  /**
-   * @return the stampModified
-   */
-  public String getStampModified() {
-    return this.stampModified;
-  }
-
-  /**
-   * @param stampModified
-   *          the stampModified to set
-   */
-  public void setStampModified(String stampModified) {
-    this.stampModified = stampModified;
   }
 
 }
