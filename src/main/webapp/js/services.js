@@ -1,6 +1,6 @@
 angular.module('ddbApp.services', [ 'ngResource' ])
 
-.factory('Accounts', [ '$resource', function($resource) {
+.factory('AccountsService', [ '$resource', function($resource) {
     return {
         all : function() {
             return $resource('/api/accounts', {}, {
@@ -31,7 +31,7 @@ angular.module('ddbApp.services', [ 'ngResource' ])
     };
 } ])
 
-.factory('PayMonthly', [ '$resource', function($resource) {
+.factory('PayMonthlyService', [ '$resource', function($resource) {
     return {
         index : function() {
             return [ {
