@@ -1,42 +1,30 @@
-var accountControllers = angular.module('accountsControllers', []);
+angular.module('ddbApp.controllers', [ 'angular-md5' ])
 
-accountControllers.controller('AccountsListCtrl', [ '$scope', '$http', '$location',
-        function($scope, $http, $location) {
-            $http.get('/api/accounts').success(function(data) {
-                $scope.accounts = data;
-            });
+.controller('PayMonthlyIndexCtrl',
+        [ '$scope', '$location', 'PayMonthly', function($scope, $location, PayMonthly) {
+            $scope.items = PayMonthly.index();
+        } ])
+
+.controller('AccountsListCtrl',
+        [ '$scope', '$location', 'Accounts', function($scope, $location, Accounts) {
+            $scope.accounts = Accounts.all();
             $scope.orderProp = 'account';
-
             $scope.goRegister = function() {
                 $location.path('/accounts/register');
             };
-        } ]);
+        } ])
 
-accountControllers.controller('AccountsDetailCtrl', [ '$scope', '$http', '$routeParams',
-        function($scope, $http, $routeParams) {
-            $scope.accountId = $routeParams.accountId;
-            $http.get('/api/accounts/' + $scope.accountId).success(function(data) {
-                $scope.accountDetail = data;
-            });
-        } ]);
+.controller('AccountsDetailCtrl',
+        [ '$scope', '$routeParams', 'Accounts', function($scope, $routeParams, Accounts) {
+            $scope.account = null;
+            $scope.account = Accounts.get($routeParams.accountId);
+        } ])
 
-accountControllers.controller('AccountsRegisterCtrl', [
-        '$scope',
-        '$http',
-        'md5',
-        '$location',
-        function($scope, $http, md5, $location) {
+.controller('AccountsRegisterCtrl',
+        [ '$scope', '$location', 'md5', 'Accounts', function($scope, $location, md5, Accounts) {
             $scope.register = function() {
                 $scope.account.password = md5.createHash($scope.passwd || '');
-                alert(JSON.stringify($scope.account));
-
-                $http.post('/api/accounts', $scope.account).success(
-                        function(data, status, headers, config) {
-                            $location.path('/accounts');
-                        }).error(function(data, status, headers, config) {
-                    alert("register error.");
-                    $location.path('/accounts');
-                });
-
+                Accounts.save($scope.account);
+                $location.path('/accounts');
             };
         } ]);

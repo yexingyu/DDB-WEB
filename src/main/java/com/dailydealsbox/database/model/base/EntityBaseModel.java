@@ -3,6 +3,8 @@
  */
 package com.dailydealsbox.database.model.base;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,22 +20,22 @@ public abstract class EntityBaseModel {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int    id;
+  private int  id;
 
   @NotNull
   @Column(name = "status", nullable = false)
-  private int    status;
+  private int  status;
 
-  @Column(name = "stamp_joined", nullable = false, updatable = false, insertable = false)
-  private String stampJoined;
+  @Column(name = "stamp_joined", nullable = false, updatable = false)
+  private Date stampJoined = new Date();
 
   @Column(name = "stamp_modified", nullable = false, updatable = false, insertable = false)
-  private String stampModified;
+  private Date stampModified;
 
   /**
    * @return the stampJoined
    */
-  public String getStampJoined() {
+  public Date getStampJoined() {
     return this.stampJoined;
   }
 
@@ -41,14 +43,14 @@ public abstract class EntityBaseModel {
    * @param stampJoined
    *          the stampJoined to set
    */
-  public void setStampJoined(String stampJoined) {
+  public void setStampJoined(Date stampJoined) {
     this.stampJoined = stampJoined;
   }
 
   /**
    * @return the stampModified
    */
-  public String getStampModified() {
+  public Date getStampModified() {
     return this.stampModified;
   }
 
@@ -56,7 +58,7 @@ public abstract class EntityBaseModel {
    * @param stampModified
    *          the stampModified to set
    */
-  public void setStampModified(String stampModified) {
+  public void setStampModified(Date stampModified) {
     this.stampModified = stampModified;
   }
 
