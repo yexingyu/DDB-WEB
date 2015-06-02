@@ -14,8 +14,9 @@ import com.dailydealsbox.database.model.PayMonthlyProduct;
 /**
  * @author x_ye
  */
-@Repository("timo_test_dao")
-public class PayMonthlyProductsDaoImpl extends EntityBaseDao<PayMonthlyProduct> implements PayMonthlyProductsDao {
+@Repository("pay_monthly_products_dao")
+public class PayMonthlyProductsDaoImpl extends EntityBaseDao<PayMonthlyProduct> implements
+    PayMonthlyProductsDao {
 
   /*
    * (non-Javadoc)
@@ -47,4 +48,3 @@ public class PayMonthlyProductsDaoImpl extends EntityBaseDao<PayMonthlyProduct> 
   }
 
 }
-

@@ -16,6 +16,10 @@ angular.module('ddbApp', [ 'ngRoute', 'ddbApp.controllers', 'ddbApp.services' ])
                 templateUrl : 'templates/pm-index.html',
                 controller : 'PayMonthlyIndexCtrl'
 
+            }).when('/login', {
+                templateUrl : 'templates/login.html',
+                controller : 'LoginCtrl'
+
             }).otherwise({
                 redirectTo : '/pm'
             });

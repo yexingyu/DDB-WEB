@@ -1,5 +1,19 @@
 angular.module('ddbApp.services', [ 'ngResource' ])
 
+.factory('LoginService', [ '$resource', '$location', function($resource) {
+    return {
+        login : function(account, success) {
+            var LoginResource = $resource('/api/login', {}, {
+                'login' : {
+                    method : 'POST',
+                    isArray : false
+                }
+            });
+            new LoginResource(account).$login(success);
+        }
+    };
+} ])
+
 .factory('AccountsService', [ '$resource', function($resource) {
     return {
         all : function() {

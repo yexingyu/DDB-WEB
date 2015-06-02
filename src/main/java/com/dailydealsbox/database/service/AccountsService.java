@@ -28,6 +28,14 @@ public interface AccountsService {
   public Account get(int id);
 
   /**
+   * getByAccount
+   * 
+   * @param account
+   * @return
+   */
+  public Account getByAccount(String account);
+
+  /**
    * findAll
    * 
    * @return

@@ -15,7 +15,7 @@ import com.dailydealsbox.database.model.PayMonthlyProduct;
 /**
  * @author x_ye
  */
-@Service("timo_test_service")
+@Service("pay_monthly_pruducts_service")
 @Transactional
 public class PayMonthlyProductsServiceImpl implements PayMonthlyProductsService {
 
@@ -25,7 +25,8 @@ public class PayMonthlyProductsServiceImpl implements PayMonthlyProductsService 
   /*
    * (non-Javadoc)
    * @see
-   * com.dailydealsbox.database.service.PayMonthlyProductsService#save(com.dailydealsbox.database.model.PayMonthlyProduct
+   * com.dailydealsbox.database.service.PayMonthlyProductsService#save(com.dailydealsbox.database.model
+   * .PayMonthlyProduct
    * )
    */
   @Override
@@ -54,7 +55,8 @@ public class PayMonthlyProductsServiceImpl implements PayMonthlyProductsService 
   /*
    * (non-Javadoc)
    * @see
-   * com.dailydealsbox.database.service.PayMonthlyProductsService#delete(com.dailydealsbox.database.model.
+   * com.dailydealsbox.database.service.PayMonthlyProductsService#delete(com.dailydealsbox.database.
+   * model.
    * PayMonthlyProduct)
    */
   @Override
@@ -63,4 +65,3 @@ public class PayMonthlyProductsServiceImpl implements PayMonthlyProductsService 
   }
 
 }
-

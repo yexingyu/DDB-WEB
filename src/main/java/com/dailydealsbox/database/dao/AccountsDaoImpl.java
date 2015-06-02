@@ -6,6 +6,7 @@ package com.dailydealsbox.database.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.dailydealsbox.database.dao.base.EntityBaseDao;
@@ -14,7 +15,7 @@ import com.dailydealsbox.database.model.Account;
 /**
  * @author x_ye
  */
-@Repository("timo_test_dao")
+@Repository("accounts_dao")
 public class AccountsDaoImpl extends EntityBaseDao<Account> implements AccountsDao {
 
   /*
@@ -46,4 +47,19 @@ public class AccountsDaoImpl extends EntityBaseDao<Account> implements AccountsD
     return this.get(Account.class, id);
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.dao.AccountsDao#getByAccount(java.lang.String)
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public Account getByAccount(String account) {
+    List<Account> as = getSession().createCriteria(Account.class)
+        .add(Restrictions.eq("account", account)).list();
+    if (as.size() >= 1) {
+      return as.get(0);
+    } else {
+      return null;
+    }
+  }
 }

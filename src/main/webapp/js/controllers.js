@@ -1,6 +1,25 @@
 angular.module('ddbApp.controllers', [ 'angular-md5' ])
 
 .controller(
+        'LoginCtrl',
+        [ '$scope', '$location', 'LoginService', 'md5',
+                function($scope, $location, LoginService, md5) {
+                    $scope.login = function() {
+                        $scope.result = "loggining in...";
+                        $scope.account.password = md5.createHash($scope.account.passwd || '');
+                        // alert(JSON.stringify($scope.account));
+                        LoginService.login($scope.account, function(response) {
+                            $scope.result = response.data;
+                            if (response.data == "GO") {
+                                $location.path("/accounts");
+                            }
+                        });
+                        // do login action
+                        // alert(JSON.stringify($scope.account));
+                    };
+                } ])
+
+.controller(
         'PayMonthlyIndexCtrl',
         [ '$scope', '$location', 'PayMonthlyService',
                 function($scope, $location, PayMonthlyService) {

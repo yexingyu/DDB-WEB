@@ -53,8 +53,9 @@ public class AccountsController {
    * @return
    */
   @RequestMapping(method = RequestMethod.POST)
-  public Account addAccount(@RequestBody Account test) {
-    service.save(test);
-    return service.get(test.getId());
+  public Account addAccount(@RequestBody Account account) {
+    service.save(account);
+    return service.get(account.getId());
   }
+
 }

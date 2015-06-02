@@ -35,6 +35,14 @@ public interface AccountsDao {
   public Account get(int id);
 
   /**
+   * getByAccount
+   * 
+   * @param account
+   * @return
+   */
+  public Account getByAccount(String account);
+
+  /**
    * delete
    * 
    * @param account

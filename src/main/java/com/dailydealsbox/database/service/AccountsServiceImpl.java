@@ -15,7 +15,7 @@ import com.dailydealsbox.database.model.Account;
 /**
  * @author x_ye
  */
-@Service("timo_test_service")
+@Service("accounts_service")
 @Transactional
 public class AccountsServiceImpl implements AccountsService {
 
@@ -60,6 +60,15 @@ public class AccountsServiceImpl implements AccountsService {
   @Override
   public void delete(Account account) {
     dao.delete(account);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.AccountsService#getByAccount(java.lang.String)
+   */
+  @Override
+  public Account getByAccount(String account) {
+    return dao.getByAccount(account);
   }
 
 }
