@@ -15,7 +15,7 @@ import com.dailydealsbox.database.model.Account;
 /**
  * @author x_ye
  */
-@Service("accounts_service")
+@Service
 @Transactional
 public class AccountsServiceImpl implements AccountsService {
 

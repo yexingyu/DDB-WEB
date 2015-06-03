@@ -15,7 +15,7 @@ import com.dailydealsbox.database.model.PayMonthlyProduct;
 /**
  * @author x_ye
  */
-@Service("pay_monthly_pruducts_service")
+@Service
 @Transactional
 public class PayMonthlyProductsServiceImpl implements PayMonthlyProductsService {
 

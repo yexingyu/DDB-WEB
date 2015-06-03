@@ -60,6 +60,6 @@ public class BaseResponseData {
   }
 
   public enum STATUS {
-    SUCCEED, FAIL
+    SUCCESS, FAIL, NEED_LOGIN
   }
 }

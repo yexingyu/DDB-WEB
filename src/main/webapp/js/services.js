@@ -1,5 +1,34 @@
 angular.module('ddbApp.services', [ 'ngResource' ])
 
+.factory('MenuService', [ '$rootScope', function($rootScope) {
+    return {
+        go : function(id) {
+            if (id == 1) {
+                $rootScope.menu_css_i0 = "";
+                $rootScope.menu_css_i1 = "current_page_item";
+                $rootScope.menu_css_i2 = "";
+                $rootScope.menu_css_i3 = "";
+            } else if (id == 2) {
+                $rootScope.menu_css_i0 = "";
+                $rootScope.menu_css_i1 = "";
+                $rootScope.menu_css_i2 = "current_page_item";
+                $rootScope.menu_css_i3 = "";
+            } else if (id == 3) {
+                $rootScope.menu_css_i0 = "";
+                $rootScope.menu_css_i1 = "";
+                $rootScope.menu_css_i2 = "";
+                $rootScope.menu_css_i3 = "current_page_item";
+            } else {
+                $rootScope.menu_css_i0 = "current_page_item";
+                $rootScope.menu_css_i1 = "";
+                $rootScope.menu_css_i2 = "";
+                $rootScope.menu_css_i3 = "";
+            }
+
+        }
+    };
+} ])
+
 .factory('LoginService', [ '$resource', '$location', function($resource) {
     return {
         login : function(account, success) {
@@ -10,6 +39,19 @@ angular.module('ddbApp.services', [ 'ngResource' ])
                 }
             });
             new LoginResource(account).$login(success);
+        }
+    };
+} ])
+
+.factory('ProfileService', [ '$resource', function($resource) {
+    return {
+        profile : function(success) {
+            return $resource('/api/profile', {}, {
+                'query' : {
+                    method : 'GET',
+                    isArray : false
+                }
+            }).query(success);
         }
     };
 } ])
@@ -32,6 +74,14 @@ angular.module('ddbApp.services', [ 'ngResource' ])
             });
             new AccountResource(account).$save();
         },
+        profile : function() {
+            return $resource('/api/profile', {}, {
+                query : {
+                    method : 'GET',
+                    isArray : false
+                }
+            }).query();
+        },
         get : function(id) {
             return $resource('/api/accounts/:id', {
                 'id' : id
@@ -47,7 +97,7 @@ angular.module('ddbApp.services', [ 'ngResource' ])
 
 .factory('PayMonthlyService', [ '$resource', function($resource) {
     return {
-        index : function() {
+        home : function() {
             return [ {
                 id : 1,
                 name : 'test_01',

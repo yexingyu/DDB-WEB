@@ -10,8 +10,8 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                         // alert(JSON.stringify($scope.account));
                         LoginService.login($scope.account, function(response) {
                             $scope.result = response.data;
-                            if (response.data == "GO") {
-                                $location.path("/accounts");
+                            if (response.status == "SUCCESS") {
+                                $location.path("/profile");
                             }
                         });
                         // do login action
@@ -20,10 +20,40 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                 } ])
 
 .controller(
-        'PayMonthlyIndexCtrl',
-        [ '$scope', '$location', 'PayMonthlyService',
-                function($scope, $location, PayMonthlyService) {
-                    $scope.items = PayMonthlyService.index();
+        'HomeCtrl',
+        [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
+                function($scope, $location, PayMonthlyService, MenuService) {
+                    MenuService.go(0);
+                    $scope.items = PayMonthlyService.home();
+                } ])
+
+.controller(
+        'PMCtrl',
+        [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
+                function($scope, $location, PayMonthlyService, MenuService) {
+                    MenuService.go(1);
+                } ])
+
+.controller(
+        'ProfileCtrl',
+        [ '$scope', '$location', 'ProfileService', 'MenuService',
+                function($scope, $location, ProfileService, MenuService) {
+                    MenuService.go(2);
+                    ProfileService.profile(function(response) {
+                        // console.log(response);
+                        if (response.status == 'SUCCESS') {
+                            $scope.profile = response.data;
+                        } else {
+                            $location.path('/login');
+                        }
+                    });
+                } ])
+
+.controller(
+        'AboutCtrl',
+        [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
+                function($scope, $location, PayMonthlyService, MenuService) {
+                    MenuService.go(3);
                 } ])
 
 .controller('AccountsListCtrl',

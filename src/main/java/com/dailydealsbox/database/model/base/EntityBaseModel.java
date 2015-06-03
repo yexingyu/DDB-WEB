@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * @author x_ye
  */
@@ -90,6 +93,20 @@ public abstract class EntityBaseModel {
    */
   public void setStatus(int status) {
     this.status = status;
+  }
+
+  /**
+   * 
+   */
+  @Override
+  public String toString() {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+      return "";
+    }
   }
 
 }

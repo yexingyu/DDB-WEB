@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Account;
 import com.dailydealsbox.database.service.AccountsService;
+import com.dailydealsbox.database.service.AuthorizationService;
+import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseResponseData;
 import com.dailydealsbox.web.base.BaseResponseData.STATUS;
 
@@ -26,7 +28,10 @@ import com.dailydealsbox.web.base.BaseResponseData.STATUS;
 public class LoginController {
 
   @Autowired
-  AccountsService service;
+  AccountsService      accountService;
+
+  @Autowired
+  AuthorizationService authService;
 
   /**
    * login
@@ -36,16 +41,22 @@ public class LoginController {
    */
   @RequestMapping(method = RequestMethod.POST)
   public BaseResponseData login(@RequestBody Account account, HttpServletResponse response) {
-    Account account_from_db = service.getByAccount(account.getAccount());
+    Account account_from_db = accountService.getByAccount(account.getAccount());
     if (account_from_db != null
         && StringUtils.equals(account_from_db.getPassword(), account.getPassword())) {
       System.out.println(account_from_db.getPassword() + " : " + account.getPassword());
-      Cookie cookie = new Cookie("auth", "test");
-      cookie.setMaxAge(3600 * 24 * 31);
-      response.addCookie(cookie);
-      return BaseResponseData.newInstance(STATUS.SUCCEED, "GO");
+
+      Cookie cookie = authService
+          .buildCookie(AuthorizationToken.newInstance(account_from_db.getId(),
+              account_from_db.getAccount(), authService.buildExpiredStamp(), 0));
+      if (cookie == null) {
+        return BaseResponseData.newInstance(STATUS.FAIL, "FAIL_001");
+      } else {
+        response.addCookie(cookie);
+        return BaseResponseData.newInstance(STATUS.SUCCESS, "SUCCESS");
+      }
     } else {
-      return BaseResponseData.newInstance(STATUS.SUCCEED, "FAIL");
+      return BaseResponseData.newInstance(STATUS.FAIL, "FAIL_002");
     }
   }
 }
