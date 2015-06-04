@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dailydealsbox.database.model.base.EntityBaseModel;
+import com.dailydealsbox.database.model.base.EntityBaseModel.STATUS;
 
 /**
  * @author x_ye
@@ -42,7 +43,7 @@ public abstract class EntityBaseDao<T extends EntityBaseModel> {
    * @param id
    */
   public void delete(T entity) {
-    entity.setStatus(-1);
+    entity.setStatus(STATUS.DELETED);
     this.getSession().update(entity);
   }
 

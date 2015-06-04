@@ -5,26 +5,26 @@ package com.dailydealsbox.database.dao;
 
 import java.util.List;
 
-import com.dailydealsbox.database.model.Account;
+import com.dailydealsbox.database.model.Member;
 
 /**
  * @author x_ye
  */
-public interface AccountsDao {
+public interface MemberDao {
 
   /**
    * save
    * 
    * @param test
    */
-  public void save(Account account);
+  public void save(Member account);
 
   /**
    * findAll
    * 
    * @return
    */
-  public List<Account> findAll();
+  public List<Member> all();
 
   /**
    * get
@@ -32,7 +32,7 @@ public interface AccountsDao {
    * @param id
    * @return
    */
-  public Account get(int id);
+  public Member get(int id);
 
   /**
    * getByAccount
@@ -40,12 +40,12 @@ public interface AccountsDao {
    * @param account
    * @return
    */
-  public Account getByAccount(String account);
+  public Member getByAccount(String account);
 
   /**
    * delete
    * 
    * @param account
    */
-  public void delete(Account account);
+  public void delete(Member account);
 }

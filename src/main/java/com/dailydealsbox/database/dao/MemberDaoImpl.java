@@ -10,20 +10,20 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.dailydealsbox.database.dao.base.EntityBaseDao;
-import com.dailydealsbox.database.model.Account;
+import com.dailydealsbox.database.model.Member;
 
 /**
  * @author x_ye
  */
-@Repository("accounts_dao")
-public class AccountsDaoImpl extends EntityBaseDao<Account> implements AccountsDao {
+@Repository
+public class MemberDaoImpl extends EntityBaseDao<Member> implements MemberDao {
 
   /*
    * (non-Javadoc)
    * @see com.dailydealsbox.database.dao.TimoTestDao#save(com.dailydealsbox.database.model.TimoTest)
    */
   @Override
-  public void save(Account test) {
+  public void save(Member test) {
     this.persist(test);
   }
 
@@ -33,8 +33,8 @@ public class AccountsDaoImpl extends EntityBaseDao<Account> implements AccountsD
    */
   @SuppressWarnings("unchecked")
   @Override
-  public List<Account> findAll() {
-    Criteria criteria = getSession().createCriteria(Account.class);
+  public List<Member> all() {
+    Criteria criteria = getSession().createCriteria(Member.class);
     return criteria.list();
   }
 
@@ -43,8 +43,8 @@ public class AccountsDaoImpl extends EntityBaseDao<Account> implements AccountsD
    * @see com.dailydealsbox.database.dao.TestDao#get(int)
    */
   @Override
-  public Account get(int id) {
-    return this.get(Account.class, id);
+  public Member get(int id) {
+    return this.get(Member.class, id);
   }
 
   /*
@@ -53,8 +53,8 @@ public class AccountsDaoImpl extends EntityBaseDao<Account> implements AccountsD
    */
   @SuppressWarnings("unchecked")
   @Override
-  public Account getByAccount(String account) {
-    List<Account> as = getSession().createCriteria(Account.class)
+  public Member getByAccount(String account) {
+    List<Member> as = getSession().createCriteria(Member.class)
         .add(Restrictions.eq("account", account)).list();
     if (as.size() >= 1) {
       return as.get(0);

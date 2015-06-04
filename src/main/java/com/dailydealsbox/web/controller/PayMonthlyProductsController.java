@@ -58,4 +58,3 @@ public class PayMonthlyProductsController {
     return service.get(test.getId());
   }
 }
-

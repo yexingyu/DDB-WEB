@@ -6,84 +6,62 @@ package com.dailydealsbox.database.model.base;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author x_ye
  */
 @MappedSuperclass
-public abstract class EntityBaseModel {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int  id;
+public abstract class EntityBaseModel extends BaseModel {
 
   @NotNull
   @Column(name = "status", nullable = false)
-  private int  status;
+  @Enumerated(EnumType.ORDINAL)
+  private STATUS status;
 
-  @Column(name = "stamp_joined", nullable = false, updatable = false)
-  private Date stampJoined = new Date();
+  @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
+  private Date   createdAt = new Date();
 
-  @Column(name = "stamp_modified", nullable = false, updatable = false, insertable = false)
-  private Date stampModified;
+  @Column(name = "modified_at", nullable = false, updatable = false, insertable = false)
+  private Date   modifiedAt;
 
   /**
-   * @return the stampJoined
+   * @return the createdAt
    */
-  public Date getStampJoined() {
-    return this.stampJoined;
+  public Date getCreatedAt() {
+    return this.createdAt;
   }
 
   /**
-   * @param stampJoined
-   *          the stampJoined to set
+   * @param createdAt
+   *          the createdAt to set
    */
-  public void setStampJoined(Date stampJoined) {
-    this.stampJoined = stampJoined;
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
   }
 
   /**
-   * @return the stampModified
+   * @return the modifiedAt
    */
-  public Date getStampModified() {
-    return this.stampModified;
+  public Date getModifiedAt() {
+    return this.modifiedAt;
   }
 
   /**
-   * @param stampModified
-   *          the stampModified to set
+   * @param modifiedAt
+   *          the modifiedAt to set
    */
-  public void setStampModified(Date stampModified) {
-    this.stampModified = stampModified;
-  }
-
-  /**
-   * @return the id
-   */
-  public int getId() {
-    return id;
-  }
-
-  /**
-   * @param id
-   *          the id to set
-   */
-  public void setId(int id) {
-    this.id = id;
+  public void setModifiedAt(Date modifiedAt) {
+    this.modifiedAt = modifiedAt;
   }
 
   /**
    * @return the status
    */
-  public int getStatus() {
+  public STATUS getStatus() {
     return this.status;
   }
 
@@ -91,22 +69,15 @@ public abstract class EntityBaseModel {
    * @param status
    *          the status to set
    */
-  public void setStatus(int status) {
+  public void setStatus(STATUS status) {
     this.status = status;
   }
 
   /**
-   * 
+   * @author x_ye
    */
-  @Override
-  public String toString() {
-    ObjectMapper mapper = new ObjectMapper();
-    try {
-      return mapper.writeValueAsString(this);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      return "";
-    }
+  public static enum STATUS {
+    AVAILABLE, UNAVAILABLE, DELETED
   }
 
 }

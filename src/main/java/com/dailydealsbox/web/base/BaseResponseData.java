@@ -59,7 +59,10 @@ public class BaseResponseData {
     this.data = data;
   }
 
-  public enum STATUS {
-    SUCCESS, FAIL, NEED_LOGIN
+  /**
+   * @author x_ye
+   */
+  public static enum STATUS {
+    SUCCESS, FAIL, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT
   }
 }

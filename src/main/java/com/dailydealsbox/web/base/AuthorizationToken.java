@@ -3,14 +3,16 @@
  */
 package com.dailydealsbox.web.base;
 
+import com.dailydealsbox.database.model.Member;
+
 /**
  * @author x_ye
  */
 public class AuthorizationToken {
-  private int    accountId;
-  private String account;
-  private int    isAdministrator;
-  private long   expired;
+  private int         memberId;
+  private String      account;
+  private Member.ROLE role;
+  private long        expired;
 
   /**
    * newInstance
@@ -24,15 +26,15 @@ public class AuthorizationToken {
   /**
    * newInstance
    * 
-   * @param accountId
+   * @param memberId
    * @param account
    * @param expired
-   * @param isAdministrator
+   * @param role
    * @return
    */
-  public static AuthorizationToken newInstance(int accountId, String account, long expired,
-      int isAdministrator) {
-    return new AuthorizationToken(accountId, account, expired, isAdministrator);
+  public static AuthorizationToken newInstance(int memberId, String account, long expired,
+      Member.ROLE role) {
+    return new AuthorizationToken(memberId, account, expired, role);
   }
 
   /*
@@ -40,41 +42,41 @@ public class AuthorizationToken {
    */
   public AuthorizationToken() {}
 
-  public AuthorizationToken(int accountId, String account, long expired, int isAdministrator) {
-    this.setAccountId(accountId);
+  public AuthorizationToken(int memberId, String account, long expired, Member.ROLE role) {
+    this.setMemberId(memberId);
     this.setAccount(account);
-    this.setIsAdministrator(isAdministrator);
+    this.setRole(role);
     this.setExpired(expired);
   }
 
   /**
-   * @return the isAdministrator
+   * @return the role
    */
-  public int getIsAdministrator() {
-    return this.isAdministrator;
+  public Member.ROLE getRole() {
+    return this.role;
   }
 
   /**
-   * @param isAdministrator
-   *          the isAdministrator to set
+   * @param role
+   *          the role to set
    */
-  public void setIsAdministrator(int isAdministrator) {
-    this.isAdministrator = isAdministrator;
+  public void setRole(Member.ROLE role) {
+    this.role = role;
   }
 
   /**
-   * @return the accountId
+   * @return the memberId
    */
-  public int getAccountId() {
-    return this.accountId;
+  public int getMemberId() {
+    return this.memberId;
   }
 
   /**
-   * @param accountId
-   *          the accountId to set
+   * @param memberId
+   *          the memberId to set
    */
-  public void setAccountId(int accountId) {
-    this.accountId = accountId;
+  public void setMemberId(int memberId) {
+    this.memberId = memberId;
   }
 
   /**
@@ -109,7 +111,7 @@ public class AuthorizationToken {
 
   @Override
   public String toString() {
-    return String.format("%d,%s,%d,%d", this.getAccountId(), this.getAccount(), this.getExpired(),
-        this.getIsAdministrator());
+    return String.format("%d,%s,%d,%s", this.getMemberId(), this.getAccount(), this.getExpired(),
+        this.getRole());
   }
 }
