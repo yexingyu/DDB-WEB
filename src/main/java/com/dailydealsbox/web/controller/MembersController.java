@@ -39,12 +39,14 @@ public class MembersController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
+  //@Transactional
   public BaseResponseData all(@CookieValue(value = "token", required = false) String tokenString) {
     AuthorizationToken token = authService.verify(tokenString);
     if (token == null) {
       return BaseResponseData.newInstance(STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == Member.ROLE.ADMIN) {
       List<Member> members = service.all();
+      //System.out.println(members);
       if (members == null || members.size() == 0) {
         return BaseResponseData.newInstance(BaseResponseData.STATUS.EMPTY_RESULT, null);
       } else {

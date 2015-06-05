@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -22,9 +24,11 @@ public abstract class EntityBaseModel extends BaseModel {
   @Enumerated(EnumType.ORDINAL)
   private STATUS status;
 
+  @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
   private Date   createdAt = new Date();
 
+  @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = "modified_at", nullable = false, updatable = false, insertable = false)
   private Date   modifiedAt;
 

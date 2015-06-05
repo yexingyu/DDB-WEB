@@ -34,7 +34,7 @@ public class MemberDaoImpl extends EntityBaseDao<Member> implements MemberDao {
   @SuppressWarnings("unchecked")
   @Override
   public List<Member> all() {
-    Criteria criteria = getSession().createCriteria(Member.class);
+    Criteria criteria = getSession().createCriteria(Member.class).setCacheable(true);
     return criteria.list();
   }
 

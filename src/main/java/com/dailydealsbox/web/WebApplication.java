@@ -79,6 +79,16 @@ public class WebApplication extends SpringBootServletInitializer {
     properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
     properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
     properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+    properties.put("hibernate.enable_lazy_load_no_trans", true);
+    //properties.put("hibernate.current_session_context_class", "thread");
+    properties.put("hibernate.cache.provider_class", "org.hibernate.cache.EhCacheProvider");
+    properties.put("hibernate.cache.use_structured_entries", "true");
+    properties.put("hibernate.cache.use_query_cache", "true");
+    properties.put("hibernate.cache.use_second_level_cache", "true");
+    //properties.put("hibernate.hbm2ddl.auto", "validate");
+    properties.put("hibernate.cache.region.factory_class",
+        "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+    properties.put("net.sf.ehcache.configurationResourceName", "ehcache.xml");
     return properties;
   }
 
@@ -90,9 +100,9 @@ public class WebApplication extends SpringBootServletInitializer {
    */
   @Bean
   @Autowired
-  public HibernateTransactionManager transactionManager(SessionFactory s) {
+  public HibernateTransactionManager transactionManager(SessionFactory factory) {
     HibernateTransactionManager txManager = new HibernateTransactionManager();
-    txManager.setSessionFactory(s);
+    txManager.setSessionFactory(factory);
     return txManager;
   }
 

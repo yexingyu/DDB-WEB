@@ -17,6 +17,10 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cache.annotation.Cacheable;
+
 import com.dailydealsbox.database.model.base.EntityBaseModel;
 
 /**
@@ -24,6 +28,8 @@ import com.dailydealsbox.database.model.base.EntityBaseModel;
  */
 @Entity
 @Table(name = "members", uniqueConstraints = { @UniqueConstraint(columnNames = "account") })
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Member extends EntityBaseModel {
 
   @NotNull
@@ -52,8 +58,9 @@ public class Member extends EntityBaseModel {
   @Enumerated(EnumType.STRING)
   private ROLE             role;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberPhone> phones;
 
   /**
