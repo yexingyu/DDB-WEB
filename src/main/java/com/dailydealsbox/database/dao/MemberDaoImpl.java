@@ -9,22 +9,22 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.dailydealsbox.database.dao.base.EntityBaseDao;
+import com.dailydealsbox.database.dao.base.BaseEntityDao;
 import com.dailydealsbox.database.model.Member;
 
 /**
  * @author x_ye
  */
 @Repository
-public class MemberDaoImpl extends EntityBaseDao<Member> implements MemberDao {
+public class MemberDaoImpl extends BaseEntityDao<Member> implements MemberDao {
 
   /*
    * (non-Javadoc)
    * @see com.dailydealsbox.database.dao.TimoTestDao#save(com.dailydealsbox.database.model.TimoTest)
    */
   @Override
-  public void save(Member test) {
-    this.persist(test);
+  public void save(Member member) {
+    this.persist(member);
   }
 
   /*

@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  * @author x_ye
  */
 @MappedSuperclass
-public abstract class EntityBaseModel extends BaseModel {
+public abstract class BaseEntityModel extends BaseModel {
 
   @NotNull
   @Column(name = "status", nullable = false)

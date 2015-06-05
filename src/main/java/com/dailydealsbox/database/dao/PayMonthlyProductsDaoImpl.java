@@ -8,14 +8,14 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
-import com.dailydealsbox.database.dao.base.EntityBaseDao;
+import com.dailydealsbox.database.dao.base.BaseEntityDao;
 import com.dailydealsbox.database.model.PayMonthlyProduct;
 
 /**
  * @author x_ye
  */
-@Repository("pay_monthly_products_dao")
-public class PayMonthlyProductsDaoImpl extends EntityBaseDao<PayMonthlyProduct> implements
+@Repository
+public class PayMonthlyProductsDaoImpl extends BaseEntityDao<PayMonthlyProduct> implements
     PayMonthlyProductsDao {
 
   /*

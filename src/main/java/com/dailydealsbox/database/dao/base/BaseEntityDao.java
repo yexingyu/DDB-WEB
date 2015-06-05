@@ -7,14 +7,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dailydealsbox.database.model.base.EntityBaseModel;
-import com.dailydealsbox.database.model.base.EntityBaseModel.STATUS;
+import com.dailydealsbox.database.model.base.BaseEntityModel;
 
 /**
  * @author x_ye
  * @param <T>
  */
-public abstract class EntityBaseDao<T extends EntityBaseModel> {
+public abstract class BaseEntityDao<T extends BaseEntityModel> {
 
   @Autowired
   private SessionFactory sessionFactory;
@@ -43,7 +42,7 @@ public abstract class EntityBaseDao<T extends EntityBaseModel> {
    * @param id
    */
   public void delete(T entity) {
-    entity.setStatus(STATUS.DELETED);
+    entity.setStatus(BaseEntityModel.STATUS.DELETED);
     this.getSession().update(entity);
   }
 

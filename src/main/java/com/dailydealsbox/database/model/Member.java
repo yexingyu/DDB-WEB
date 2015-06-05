@@ -21,7 +21,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.cache.annotation.Cacheable;
 
-import com.dailydealsbox.database.model.base.EntityBaseModel;
+import com.dailydealsbox.database.model.base.BaseEntityModel;
 
 /**
  * @author x_ye
@@ -30,7 +30,7 @@ import com.dailydealsbox.database.model.base.EntityBaseModel;
 @Table(name = "members", uniqueConstraints = { @UniqueConstraint(columnNames = "account") })
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Member extends EntityBaseModel {
+public class Member extends BaseEntityModel {
 
   @NotNull
   @Size(min = 10, max = 100)

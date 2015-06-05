@@ -15,9 +15,9 @@ public interface MemberDao {
   /**
    * save
    * 
-   * @param test
+   * @param member
    */
-  public void save(Member account);
+  public void save(Member member);
 
   /**
    * findAll
