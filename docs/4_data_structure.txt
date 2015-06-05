@@ -1,1156 +1,574 @@
--- MySQL dump 10.13  Distrib 5.6.23, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: ddb
--- ------------------------------------------------------
--- Server version	5.7.7-rc-log
+-- Host: 127.0.0.1
+-- Generation Time: Jun 04, 2015 at 04:12 PM
+-- Server version: 5.6.19-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `account_address_relationship`
+-- Database: `ddb`
 --
 
-DROP TABLE IF EXISTS `account_address_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_address_relationship` (
-  `account_address_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`account_address_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `account_address_relationship`
+-- Table structure for table `members`
 --
 
-LOCK TABLES `account_address_relationship` WRITE;
-/*!40000 ALTER TABLE `account_address_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `account_address_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_balance_relationship`
---
-
-DROP TABLE IF EXISTS `account_balance_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_balance_relationship` (
-  `account_balance_id` int(13) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`account_balance_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_balance_relationship`
---
-
-LOCK TABLES `account_balance_relationship` WRITE;
-/*!40000 ALTER TABLE `account_balance_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `account_balance_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_email_relationships`
---
-
-DROP TABLE IF EXISTS `account_email_relationships`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_email_relationships` (
-  `account_email_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`account_email_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_email_relationships`
---
-
-LOCK TABLES `account_email_relationships` WRITE;
-/*!40000 ALTER TABLE `account_email_relationships` DISABLE KEYS */;
-/*!40000 ALTER TABLE `account_email_relationships` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_image_relationship`
---
-
-DROP TABLE IF EXISTS `account_image_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_image_relationship` (
-  `account_image_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`account_image_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_image_relationship`
---
-
-LOCK TABLES `account_image_relationship` WRITE;
-/*!40000 ALTER TABLE `account_image_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `account_image_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_name_relationship`
---
-
-DROP TABLE IF EXISTS `account_name_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_name_relationship` (
-  `account_name_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`account_name_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_name_relationship`
---
-
-LOCK TABLES `account_name_relationship` WRITE;
-/*!40000 ALTER TABLE `account_name_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `account_name_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_phone_relationship`
---
-
-DROP TABLE IF EXISTS `account_phone_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_phone_relationship` (
-  `account_phone_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`account_phone_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_phone_relationship`
---
-
-LOCK TABLES `account_phone_relationship` WRITE;
-/*!40000 ALTER TABLE `account_phone_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `account_phone_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `accounts`
---
-
-DROP TABLE IF EXISTS `accounts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `accounts` (
+CREATE TABLE IF NOT EXISTS `members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `account` varchar(45) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `stamp_joined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `stamp_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` tinyint(2) NOT NULL DEFAULT '1',
+  `status` tinyint(2) NOT NULL DEFAULT '0',
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `account` varchar(100) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `middle_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `role` enum('MEMBER','ADMIN') NOT NULL DEFAULT 'MEMBER',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `account_UNIQUE` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  UNIQUE KEY `account` (`account`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `accounts`
+-- Dumping data for table `members`
 --
 
-LOCK TABLES `accounts` WRITE;
-/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'yexingyu','','2015-05-28 19:25:55','2015-05-28 19:25:55',1),(2,'yun.dai','d41d8cd98f00b204e9800998ecf8427e','2015-05-29 16:47:23','2015-05-29 16:47:23',0),(3,'hongjun.zhu','d41d8cd98f00b204e9800998ecf8427e','2015-05-29 17:08:26','2015-05-29 17:08:26',0);
-/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `members` (`id`, `status`, `modified_at`, `created_at`, `account`, `password`, `first_name`, `middle_name`, `last_name`, `role`) VALUES
+(1, 0, '2015-06-04 19:31:21', '2015-06-04 19:31:21', 'yexingyu@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Xingyu', '', 'Ye', 'ADMIN'),
+(2, 0, '2015-06-04 19:32:24', '2015-06-04 19:32:24', 'dai.yun@dailydealsbox.com', 'e10adc3949ba59abbe56e057f20f883e', 'Yun', '', 'Dai', 'MEMBER'),
+(3, 0, '2015-06-04 19:33:15', '2015-06-04 19:33:15', 'hongjun.zhu@dailydealsbox.com', 'e10adc3949ba59abbe56e057f20f883e', 'Hongjun', '', 'Zhu', 'MEMBER');
 
---
--- Table structure for table `entity_addresses`
---
-
-DROP TABLE IF EXISTS `entity_addresses`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_addresses` (
-  `address_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`address_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_addresses`
---
-
-LOCK TABLES `entity_addresses` WRITE;
-/*!40000 ALTER TABLE `entity_addresses` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_addresses` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_balances`
---
-
-DROP TABLE IF EXISTS `entity_balances`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_balances` (
-  `balance_id` int(13) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`balance_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_balances`
---
-
-LOCK TABLES `entity_balances` WRITE;
-/*!40000 ALTER TABLE `entity_balances` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_balances` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_comments`
---
-
-DROP TABLE IF EXISTS `entity_comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_comments` (
-  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_comments`
---
-
-LOCK TABLES `entity_comments` WRITE;
-/*!40000 ALTER TABLE `entity_comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_comments` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_descriptions`
---
-
-DROP TABLE IF EXISTS `entity_descriptions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_descriptions` (
-  `description_id` int(11) NOT NULL AUTO_INCREMENT,
-  `description_language` varchar(16) NOT NULL,
-  `description_excerpt` varchar(256) NOT NULL,
-  `description_content` text NOT NULL,
-  PRIMARY KEY (`description_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_descriptions`
---
-
-LOCK TABLES `entity_descriptions` WRITE;
-/*!40000 ALTER TABLE `entity_descriptions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_descriptions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_emails`
---
-
-DROP TABLE IF EXISTS `entity_emails`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_emails` (
-  `email_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`email_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_emails`
---
-
-LOCK TABLES `entity_emails` WRITE;
-/*!40000 ALTER TABLE `entity_emails` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_emails` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_fees`
---
-
-DROP TABLE IF EXISTS `entity_fees`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_fees` (
-  `fee_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`fee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_fees`
---
-
-LOCK TABLES `entity_fees` WRITE;
-/*!40000 ALTER TABLE `entity_fees` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_fees` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_images`
---
-
-DROP TABLE IF EXISTS `entity_images`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_images` (
-  `image_id` int(11) NOT NULL AUTO_INCREMENT,
-  `image_language` varchar(16) NOT NULL,
-  `image_URL` varchar(512) NOT NULL,
-  `image_alt` varchar(256) NOT NULL,
-  `image_width` int(11) NOT NULL,
-  `image_height` int(11) NOT NULL,
-  `image_size` int(11) NOT NULL,
-  `image_type` varchar(16) NOT NULL,
-  `image_added_time` datetime NOT NULL,
-  `image_added_by` int(11) NOT NULL,
-  PRIMARY KEY (`image_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_images`
---
-
-LOCK TABLES `entity_images` WRITE;
-/*!40000 ALTER TABLE `entity_images` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_images` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_likes`
---
-
-DROP TABLE IF EXISTS `entity_likes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_likes` (
-  `like_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`like_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_likes`
---
-
-LOCK TABLES `entity_likes` WRITE;
-/*!40000 ALTER TABLE `entity_likes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_likes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_links`
---
-
-DROP TABLE IF EXISTS `entity_links`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_links` (
-  `link_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`link_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_links`
---
-
-LOCK TABLES `entity_links` WRITE;
-/*!40000 ALTER TABLE `entity_links` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_links` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_metas`
---
-
-DROP TABLE IF EXISTS `entity_metas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_metas` (
-  `meta_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`meta_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_metas`
---
-
-LOCK TABLES `entity_metas` WRITE;
-/*!40000 ALTER TABLE `entity_metas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_metas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_names`
---
-
-DROP TABLE IF EXISTS `entity_names`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_names` (
-  `name_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name_first` varchar(128) NOT NULL,
-  `name_last` varchar(128) NOT NULL,
-  PRIMARY KEY (`name_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_names`
---
-
-LOCK TABLES `entity_names` WRITE;
-/*!40000 ALTER TABLE `entity_names` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_names` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_options`
---
-
-DROP TABLE IF EXISTS `entity_options`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_options` (
-  `option_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`option_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_options`
---
-
-LOCK TABLES `entity_options` WRITE;
-/*!40000 ALTER TABLE `entity_options` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_options` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_phones`
---
-
-DROP TABLE IF EXISTS `entity_phones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_phones` (
-  `phone_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`phone_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_phones`
---
-
-LOCK TABLES `entity_phones` WRITE;
-/*!40000 ALTER TABLE `entity_phones` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_phones` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_prices`
---
-
-DROP TABLE IF EXISTS `entity_prices`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_prices` (
-  `price_id` int(11) NOT NULL AUTO_INCREMENT,
-  `price_currency` varchar(16) NOT NULL,
-  `price_value` double(13,4) NOT NULL,
-  `price_added_time` datetime NOT NULL,
-  `price_added_by` int(11) NOT NULL,
-  PRIMARY KEY (`price_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_prices`
---
-
-LOCK TABLES `entity_prices` WRITE;
-/*!40000 ALTER TABLE `entity_prices` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_prices` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_reviews`
---
-
-DROP TABLE IF EXISTS `entity_reviews`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_reviews` (
-  `review_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`review_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_reviews`
---
-
-LOCK TABLES `entity_reviews` WRITE;
-/*!40000 ALTER TABLE `entity_reviews` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_reviews` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_statuses`
---
-
-DROP TABLE IF EXISTS `entity_statuses`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_statuses` (
-  `status_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_statuses`
---
-
-LOCK TABLES `entity_statuses` WRITE;
-/*!40000 ALTER TABLE `entity_statuses` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_statuses` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_tags`
---
-
-DROP TABLE IF EXISTS `entity_tags`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_tags` (
-  `tag_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`tag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_tags`
---
-
-LOCK TABLES `entity_tags` WRITE;
-/*!40000 ALTER TABLE `entity_tags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_tags` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_taxes`
---
-
-DROP TABLE IF EXISTS `entity_taxes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_taxes` (
-  `tax_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`tax_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_taxes`
---
-
-LOCK TABLES `entity_taxes` WRITE;
-/*!40000 ALTER TABLE `entity_taxes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_taxes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_titles`
---
-
-DROP TABLE IF EXISTS `entity_titles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_titles` (
-  `title_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title_language` varchar(16) NOT NULL,
-  `title_value` varchar(256) NOT NULL,
-  `title_added_time` datetime NOT NULL,
-  `title_added_by` int(11) NOT NULL,
-  PRIMARY KEY (`title_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_titles`
---
-
-LOCK TABLES `entity_titles` WRITE;
-/*!40000 ALTER TABLE `entity_titles` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_titles` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_transactions`
---
-
-DROP TABLE IF EXISTS `entity_transactions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_transactions` (
-  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
-  `transaction_debit_acount` int(11) NOT NULL,
-  `transaction_credit_acount` int(11) NOT NULL,
-  PRIMARY KEY (`transaction_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_transactions`
---
-
-LOCK TABLES `entity_transactions` WRITE;
-/*!40000 ALTER TABLE `entity_transactions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_transactions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `entity_validations`
---
-
-DROP TABLE IF EXISTS `entity_validations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `entity_validations` (
-  `validation_id` int(11) NOT NULL AUTO_INCREMENT,
-  `validation_from` datetime NOT NULL,
-  `validation_to` datetime NOT NULL,
-  PRIMARY KEY (`validation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entity_validations`
---
-
-LOCK TABLES `entity_validations` WRITE;
-/*!40000 ALTER TABLE `entity_validations` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entity_validations` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pay_monthly_orders`
---
-
-DROP TABLE IF EXISTS `pay_monthly_orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pay_monthly_orders` (
-  `PM_order_id` int(11) NOT NULL AUTO_INCREMENT,
-  `PM_order_account_id` int(11) NOT NULL,
-  PRIMARY KEY (`PM_order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pay_monthly_orders`
---
-
-LOCK TABLES `pay_monthly_orders` WRITE;
-/*!40000 ALTER TABLE `pay_monthly_orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pay_monthly_orders` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pay_monthly_products`
---
-
-DROP TABLE IF EXISTS `pay_monthly_products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pay_monthly_products` (
-  `PMP_id` int(11) NOT NULL AUTO_INCREMENT,
-  `PMP_URL` varchar(512) CHARACTER SET utf8 NOT NULL,
-  `PMP_store_id` int(11) DEFAULT NULL,
-  `PMP_store_name` varchar(256) NOT NULL,
-  `PMP_key` varchar(64) CHARACTER SET utf8 NOT NULL,
-  `PMP_added_time` datetime NOT NULL,
-  `PMP_added_by` int(11) NOT NULL,
-  PRIMARY KEY (`PMP_id`),
-  UNIQUE KEY `deal_store_id` (`PMP_store_id`,`PMP_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pay_monthly_products`
---
-
-LOCK TABLES `pay_monthly_products` WRITE;
-/*!40000 ALTER TABLE `pay_monthly_products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pay_monthly_products` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmo_image_relationship`
---
-
-DROP TABLE IF EXISTS `pmo_image_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmo_image_relationship` (
-  `PMO_image_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMO_image_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmo_image_relationship`
---
-
-LOCK TABLES `pmo_image_relationship` WRITE;
-/*!40000 ALTER TABLE `pmo_image_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmo_image_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmo_pmp_relationship`
---
-
-DROP TABLE IF EXISTS `pmo_pmp_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmo_pmp_relationship` (
-  `PM_order_product_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PM_order_product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmo_pmp_relationship`
---
-
-LOCK TABLES `pmo_pmp_relationship` WRITE;
-/*!40000 ALTER TABLE `pmo_pmp_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmo_pmp_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmo_status_relationship`
---
-
-DROP TABLE IF EXISTS `pmo_status_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmo_status_relationship` (
-  `PMO_status_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMO_status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmo_status_relationship`
---
-
-LOCK TABLES `pmo_status_relationship` WRITE;
-/*!40000 ALTER TABLE `pmo_status_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmo_status_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_comment_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_comment_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_comment_relationship` (
-  `PMP_comment_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_comment_relationship`
---
-
-LOCK TABLES `pmp_comment_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_comment_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_comment_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_description_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_description_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_description_relationship` (
-  `PMP_description_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_description_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_description_relationship`
---
-
-LOCK TABLES `pmp_description_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_description_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_description_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_fee_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_fee_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_fee_relationship` (
-  `PMP_fee_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_fee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_fee_relationship`
---
-
-LOCK TABLES `pmp_fee_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_fee_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_fee_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_image_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_image_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_image_relationship` (
-  `PMP_image_id` int(11) NOT NULL AUTO_INCREMENT,
-  `PMP_id` int(11) NOT NULL,
-  `image_id` int(11) NOT NULL,
-  `image_time_stamp` datetime NOT NULL,
-  PRIMARY KEY (`PMP_image_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_image_relationship`
---
-
-LOCK TABLES `pmp_image_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_image_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_image_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_like_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_like_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_like_relationship` (
-  `PMP_like_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_like_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_like_relationship`
---
-
-LOCK TABLES `pmp_like_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_like_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_like_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_link_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_link_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_link_relationship` (
-  `PMP_link_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_link_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_link_relationship`
---
-
-LOCK TABLES `pmp_link_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_link_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_link_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_meta_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_meta_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_meta_relationship` (
-  `PMP_meta_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_meta_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_meta_relationship`
---
-
-LOCK TABLES `pmp_meta_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_meta_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_meta_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_option_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_option_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_option_relationship` (
-  `PMP_option_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_option_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_option_relationship`
---
-
-LOCK TABLES `pmp_option_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_option_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_option_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_price_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_price_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_price_relationship` (
-  `PMP_price_id` int(11) NOT NULL AUTO_INCREMENT,
-  `PMP_id` int(11) NOT NULL,
-  `price_id` int(11) NOT NULL,
-  PRIMARY KEY (`PMP_price_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_price_relationship`
---
-
-LOCK TABLES `pmp_price_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_price_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_price_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_review_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_review_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_review_relationship` (
-  `PMP_review_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_review_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_review_relationship`
---
-
-LOCK TABLES `pmp_review_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_review_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_review_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_status_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_status_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_status_relationship` (
-  `PMP_status_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_status_relationship`
---
-
-LOCK TABLES `pmp_status_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_status_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_status_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_tag_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_tag_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_tag_relationship` (
-  `PMP_tag_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_tag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_tag_relationship`
---
-
-LOCK TABLES `pmp_tag_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_tag_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_tag_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_tax_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_tax_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_tax_relationship` (
-  `PMP_tax_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_tax_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_tax_relationship`
---
-
-LOCK TABLES `pmp_tax_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_tax_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_tax_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_title_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_title_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_title_relationship` (
-  `PMP_name_id` int(11) NOT NULL AUTO_INCREMENT,
-  `PMP_id` int(11) NOT NULL,
-  `title_id` int(11) NOT NULL,
-  PRIMARY KEY (`PMP_name_id`),
-  UNIQUE KEY `PMP_id` (`PMP_id`,`title_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='pay monthly product name';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_title_relationship`
---
-
-LOCK TABLES `pmp_title_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_title_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_title_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pmp_validation_relationship`
---
-
-DROP TABLE IF EXISTS `pmp_validation_relationship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pmp_validation_relationship` (
-  `PMP_validation_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`PMP_validation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pmp_validation_relationship`
---
-
-LOCK TABLES `pmp_validation_relationship` WRITE;
-/*!40000 ALTER TABLE `pmp_validation_relationship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pmp_validation_relationship` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
--- Table structure for table `test`
+-- Table structure for table `member_addresses`
 --
 
-DROP TABLE IF EXISTS `test`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `test` (
+CREATE TABLE IF NOT EXISTS `member_addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `member_id` int(10) NOT NULL,
+  `address1` varchar(255) NOT NULL DEFAULT '',
+  `address2` varchar(255) NOT NULL DEFAULT '',
+  `city` varchar(255) NOT NULL DEFAULT '',
+  `region` varchar(255) NOT NULL DEFAULT '',
+  `country` varchar(2) NOT NULL DEFAULT '',
+  `post_code` varchar(50) NOT NULL DEFAULT '',
+  `type` enum('LIVING','BILLING') NOT NULL DEFAULT 'BILLING',
+  PRIMARY KEY (`id`),
+  KEY `member_id` (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `member_emails`
+--
+
+CREATE TABLE IF NOT EXISTS `member_emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(10) NOT NULL DEFAULT '0',
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `member_id` (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `member_phones`
+--
+
+CREATE TABLE IF NOT EXISTS `member_phones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(10) NOT NULL,
+  `country_code` varchar(10) NOT NULL DEFAULT '+1',
+  `phone_number` varchar(50) NOT NULL,
+  `type` enum('MOBILE','HOME','WORK','FAX') NOT NULL DEFAULT 'MOBILE',
+  PRIMARY KEY (`id`),
+  KEY `member_id` (`member_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `member_phones`
+--
+
+INSERT INTO `member_phones` (`id`, `member_id`, `country_code`, `phone_number`, `type`) VALUES
+(1, 1, '+1', '5149987307', 'MOBILE'),
+(3, 1, '+1', '1111111111', 'MOBILE');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `test`
+-- Table structure for table `products`
 --
 
-LOCK TABLES `test` WRITE;
-/*!40000 ALTER TABLE `test` DISABLE KEYS */;
-INSERT INTO `test` VALUES (1,'aaaa'),(2,'aaaa');
-/*!40000 ALTER TABLE `test` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(512) NOT NULL,
+  `key` varchar(64) NOT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `store_name` varchar(256) CHARACTER SET latin1 NOT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `last_modified` datetime DEFAULT NULL,
+  `last_modified_by` int(11) DEFAULT NULL,
+  `added_time` datetime NOT NULL,
+  `added_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `deal_store_id` (`store_id`,`key`),
+  KEY `added_by` (`added_by`),
+  KEY `last_modified_by` (`last_modified_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='NULL' AUTO_INCREMENT=1 ;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_descriptions`
+--
+
+CREATE TABLE IF NOT EXISTS `product_descriptions` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `language` varchar(16) DEFAULT NULL,
+  `excerpt` varchar(256) DEFAULT NULL,
+  `content` text,
+  `last_modified` datetime DEFAULT NULL,
+  `last_modified_by` int(11) DEFAULT NULL,
+  `added_time` datetime DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_product_name_language` (`product_id`,`language`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_fees`
+--
+
+CREATE TABLE IF NOT EXISTS `product_fees` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `value` varchar(45) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `added_time` varchar(45) DEFAULT NULL,
+  `added_by` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_images`
+--
+
+CREATE TABLE IF NOT EXISTS `product_images` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `type` varchar(16) NOT NULL,
+  `URL` varchar(512) NOT NULL,
+  `alt` varchar(256) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  `size` int(11) NOT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `language` varchar(16) NOT NULL,
+  `last_modified` datetime DEFAULT NULL,
+  `last_modified_by` int(11) DEFAULT NULL,
+  `added_time` datetime NOT NULL,
+  `added_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `added_by` (`added_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_likes`
+--
+
+CREATE TABLE IF NOT EXISTS `product_likes` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `browser` varchar(45) DEFAULT NULL,
+  `ip` varchar(45) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `added_time` varchar(45) DEFAULT NULL,
+  `added_by` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_links`
+--
+
+CREATE TABLE IF NOT EXISTS `product_links` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `url` varchar(45) DEFAULT NULL,
+  `rating` varchar(45) DEFAULT NULL,
+  `reivew_number` varchar(45) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `last_modified` datetime DEFAULT NULL,
+  `last_modified_by` int(11) DEFAULT NULL,
+  `added_time` datetime DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_metas`
+--
+
+CREATE TABLE IF NOT EXISTS `product_metas` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `key` varchar(45) DEFAULT NULL,
+  `value` varchar(45) DEFAULT NULL,
+  `last_modified` varchar(45) DEFAULT NULL,
+  `last_modified_by` varchar(45) DEFAULT NULL,
+  `added_time` varchar(45) DEFAULT NULL,
+  `added_by` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_names`
+--
+
+CREATE TABLE IF NOT EXISTS `product_names` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `language` varchar(16) NOT NULL,
+  `value` varchar(256) NOT NULL,
+  `last_modified` datetime DEFAULT NULL,
+  `last_modified_by` int(11) DEFAULT NULL,
+  `added_time` datetime NOT NULL,
+  `added_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_product_name_language` (`product_id`,`language`),
+  KEY `added_by` (`added_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_options`
+--
+
+CREATE TABLE IF NOT EXISTS `product_options` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `value` varchar(45) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `last_modified` datetime DEFAULT NULL,
+  `last_modified_by` int(11) DEFAULT NULL,
+  `added_time` datetime DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_prices`
+--
+
+CREATE TABLE IF NOT EXISTS `product_prices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `currency` varchar(16) NOT NULL,
+  `value` double(13,4) NOT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  `added_time` datetime NOT NULL,
+  `added_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `added_by` (`added_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_reviews`
+--
+
+CREATE TABLE IF NOT EXISTS `product_reviews` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `rating` varchar(45) DEFAULT NULL,
+  `content` varchar(45) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `added_time` datetime DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_statuses`
+--
+
+CREATE TABLE IF NOT EXISTS `product_statuses` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `value` varchar(45) DEFAULT NULL,
+  `comment` varchar(45) DEFAULT NULL,
+  `current` tinyint(1) DEFAULT NULL,
+  `added_time` datetime DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `added_by` (`added_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_tags`
+--
+
+CREATE TABLE IF NOT EXISTS `product_tags` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `tag` int(11) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `last_modified_by` varchar(45) DEFAULT NULL,
+  `last_modified` varchar(45) DEFAULT NULL,
+  `added_time` varchar(45) DEFAULT NULL,
+  `added_by` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_taxes`
+--
+
+CREATE TABLE IF NOT EXISTS `product_taxes` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `value` varchar(45) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `added_time` datetime DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_validations`
+--
+
+CREATE TABLE IF NOT EXISTS `product_validations` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `added_time` datetime DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stores`
+--
+
+CREATE TABLE IF NOT EXISTS `stores` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `logo` varchar(45) DEFAULT NULL,
+  `website` varchar(45) DEFAULT NULL,
+  `deal_page` varchar(45) DEFAULT NULL,
+  `category` varchar(45) DEFAULT NULL,
+  `last_modified` datetime DEFAULT NULL,
+  `last_modified_by` int(11) DEFAULT NULL,
+  `added_time` datetime DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='NULL';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timo_tpl`
+--
+
+CREATE TABLE IF NOT EXISTS `timo_tpl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `member_addresses`
+--
+ALTER TABLE `member_addresses`
+  ADD CONSTRAINT `member_addresses_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`);
+
+--
+-- Constraints for table `member_emails`
+--
+ALTER TABLE `member_emails`
+  ADD CONSTRAINT `member_emails_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`);
+
+--
+-- Constraints for table `member_phones`
+--
+ALTER TABLE `member_phones`
+  ADD CONSTRAINT `member_phones_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`);
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`),
+  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`),
+  ADD CONSTRAINT `products_ibfk_3` FOREIGN KEY (`last_modified_by`) REFERENCES `members` (`id`);
+
+--
+-- Constraints for table `product_descriptions`
+--
+ALTER TABLE `product_descriptions`
+  ADD CONSTRAINT `product_descriptions_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_fees`
+--
+ALTER TABLE `product_fees`
+  ADD CONSTRAINT `product_fees_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `product_images_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`);
+
+--
+-- Constraints for table `product_likes`
+--
+ALTER TABLE `product_likes`
+  ADD CONSTRAINT `product_likes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_links`
+--
+ALTER TABLE `product_links`
+  ADD CONSTRAINT `product_links_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_metas`
+--
+ALTER TABLE `product_metas`
+  ADD CONSTRAINT `product_metas_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_names`
+--
+ALTER TABLE `product_names`
+  ADD CONSTRAINT `product_names_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `product_names_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`);
+
+--
+-- Constraints for table `product_options`
+--
+ALTER TABLE `product_options`
+  ADD CONSTRAINT `product_options_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_prices`
+--
+ALTER TABLE `product_prices`
+  ADD CONSTRAINT `product_prices_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `product_prices_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`);
+
+--
+-- Constraints for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_statuses`
+--
+ALTER TABLE `product_statuses`
+  ADD CONSTRAINT `product_statuses_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `product_statuses_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`);
+
+--
+-- Constraints for table `product_tags`
+--
+ALTER TABLE `product_tags`
+  ADD CONSTRAINT `product_tags_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_taxes`
+--
+ALTER TABLE `product_taxes`
+  ADD CONSTRAINT `product_taxes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `product_validations`
+--
+ALTER TABLE `product_validations`
+  ADD CONSTRAINT `product_validations_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2015-05-29 13:32:49
