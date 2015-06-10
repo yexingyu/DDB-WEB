@@ -17,8 +17,8 @@ import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.web.base.AuthorizationToken;
-import com.dailydealsbox.web.base.BaseResponseData;
 import com.dailydealsbox.web.base.BaseResponseData.STATUS;
+import com.dailydealsbox.web.base.ResponseData;
 
 /**
  * @author x_ye
@@ -40,7 +40,7 @@ public class LoginController {
    * @return
    */
   @RequestMapping(method = RequestMethod.POST)
-  public BaseResponseData login(@RequestBody Member member, HttpServletResponse response) {
+  public ResponseData login(@RequestBody Member member, HttpServletResponse response) {
     Member member_from_db = memberService.getByAccount(member.getAccount());
     if (member_from_db != null
         && StringUtils.equals(member_from_db.getPassword(), member.getPassword())) {
@@ -50,13 +50,13 @@ public class LoginController {
           member_from_db.getId(), member_from_db.getAccount(), authService.buildExpiredStamp(),
           member_from_db.getRole()));
       if (cookie == null) {
-        return BaseResponseData.newInstance(STATUS.FAIL, "FAIL_001");
+        return ResponseData.newInstance(STATUS.FAIL, "FAIL_001");
       } else {
         response.addCookie(cookie);
-        return BaseResponseData.newInstance(STATUS.SUCCESS, "SUCCESS");
+        return ResponseData.newInstance(STATUS.SUCCESS, member_from_db);
       }
     } else {
-      return BaseResponseData.newInstance(STATUS.FAIL, "FAIL_002");
+      return ResponseData.newInstance(STATUS.FAIL, "FAIL_002");
     }
   }
 }

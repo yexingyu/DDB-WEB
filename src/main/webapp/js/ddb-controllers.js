@@ -1,5 +1,32 @@
 angular.module('ddbApp.controllers', [ 'angular-md5' ])
 
+/*
+ * BannerCtrl definition
+ */
+.controller(
+        'BannerCtrl',
+        [ '$scope', '$location', 'ProfileService', 'CookieService',
+                function($scope, $location, ProfileService, CookieService) {
+                    console.log($scope);
+
+                    ProfileService.profile(function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.$root.profile = response.data;
+                            $scope.$root.profile.sw = "membership";
+                        }
+                    });
+
+                    $scope.logout = function() {
+                        CookieService.logout();
+                        $scope.$root.profile = {
+                            sw : ""
+                        };
+                        $location.path('/home');
+                    };
+                } ])
+/*
+ * LoginCtrl definition
+ */
 .controller(
         'LoginCtrl',
         [ '$scope', '$location', 'LoginService', 'md5',
@@ -7,16 +34,23 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     $scope.login = function() {
                         $scope.result = "loggining in...";
                         $scope.member.password = md5.createHash($scope.member.passwd || '');
-                        // alert(JSON.stringify($scope.member));
                         LoginService.login($scope.member, function(response) {
-                            $scope.result = response.data;
                             if (response.status == "SUCCESS") {
+                                $scope.result = 'Welcome ' + response.data.firstName;
+                                $scope.$root.profile = response.data;
+                                $scope.$root.profile.sw = 'membership';
+                                console.log($scope.$root);
                                 $location.path("/profile");
+                            } else {
+                                $scope.result = 'Fail to login!';
                             }
                         });
                     };
                 } ])
 
+/*
+ * HomeCtrl definition
+ */
 .controller(
         'HomeCtrl',
         [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
@@ -24,7 +58,9 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     MenuService.go(0);
                     $scope.items = PayMonthlyService.home();
                 } ])
-
+/*
+ * PMCtrl definition
+ */
 .controller(
         'PMCtrl',
         [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
@@ -32,6 +68,9 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     MenuService.go(1);
                 } ])
 
+/*
+ * ProfileCtrl definition
+ */
 .controller(
         'ProfileCtrl',
         [ '$scope', '$location', 'ProfileService', 'MenuService',
@@ -47,6 +86,9 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     });
                 } ])
 
+/*
+ * AboutCtrl definition
+ */
 .controller(
         'AboutCtrl',
         [ '$scope', '$location', 'PayMonthlyService', 'MenuService',

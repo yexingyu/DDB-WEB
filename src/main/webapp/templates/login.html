@@ -1,8 +1,13 @@
 <div>
     <ul>
-        <li>Account: <input ng-model="member.account" placeholder="Input your account here" /></li>
-        <li>Password: <input ng-model="member.passwd" placeholder="Input your password here" type="password" /></li>
-        <li><button ng-click="login();">Login</button></li>
+        <li>Account: <input ng-model="member.account" placeholder="Input your account here" overwrite-email name="account" type="email" />
+        <span ng-show="account.$error.email">This email format is invalid!</span>
+        </li>
+        <li>Password: <input ng-model="member.passwd" placeholder="Input your password here"
+            type="password" /></li>
+        <li><input type="submit" ng-click="login();">Sign In
+            </button></li>
+        <li><a href="#/sign_up">Sign Up</a></li>
         <div>{{result}}</div>
     </ul>
 </div>

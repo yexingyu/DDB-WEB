@@ -5,7 +5,6 @@ package com.dailydealsbox.database.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -34,8 +33,9 @@ public class MemberDaoImpl extends BaseEntityDao<Member> implements MemberDao {
   @SuppressWarnings("unchecked")
   @Override
   public List<Member> all() {
-    Criteria criteria = getSession().createCriteria(Member.class).setCacheable(true);
-    return criteria.list();
+    return this.getSession().createSQLQuery("select * from members").addEntity(Member.class).list();
+    //return this.getSession().createCriteria(Member.class).setCacheable(true).list();
+    //return this.getSession().createQuery("from Member").setCacheable(true).list();
   }
 
   /*

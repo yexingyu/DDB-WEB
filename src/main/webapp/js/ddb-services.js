@@ -1,38 +1,47 @@
-angular.module('ddbApp.services', [ 'ngResource' ])
+angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 
 .factory('MenuService', [ '$rootScope', function($rootScope) {
     return {
         go : function(id) {
-            if (id == 1) {
-                $rootScope.menu_css_i0 = "";
-                $rootScope.menu_css_i1 = "current_page_item";
-                $rootScope.menu_css_i2 = "";
-                $rootScope.menu_css_i3 = "";
-            } else if (id == 2) {
-                $rootScope.menu_css_i0 = "";
-                $rootScope.menu_css_i1 = "";
-                $rootScope.menu_css_i2 = "current_page_item";
-                $rootScope.menu_css_i3 = "";
-            } else if (id == 3) {
-                $rootScope.menu_css_i0 = "";
-                $rootScope.menu_css_i1 = "";
-                $rootScope.menu_css_i2 = "";
-                $rootScope.menu_css_i3 = "current_page_item";
-            } else {
-                $rootScope.menu_css_i0 = "current_page_item";
-                $rootScope.menu_css_i1 = "";
-                $rootScope.menu_css_i2 = "";
-                $rootScope.menu_css_i3 = "";
-            }
+            // if (id == 1) {
+            // $rootScope.menu_css_i0 = "";
+            // $rootScope.menu_css_i1 = "current_page_item";
+            // $rootScope.menu_css_i2 = "";
+            // $rootScope.menu_css_i3 = "";
+            // } else if (id == 2) {
+            // $rootScope.menu_css_i0 = "";
+            // $rootScope.menu_css_i1 = "";
+            // $rootScope.menu_css_i2 = "current_page_item";
+            // $rootScope.menu_css_i3 = "";
+            // } else if (id == 3) {
+            // $rootScope.menu_css_i0 = "";
+            // $rootScope.menu_css_i1 = "";
+            // $rootScope.menu_css_i2 = "";
+            // $rootScope.menu_css_i3 = "current_page_item";
+            // } else {
+            // $rootScope.menu_css_i0 = "current_page_item";
+            // $rootScope.menu_css_i1 = "";
+            // $rootScope.menu_css_i2 = "";
+            // $rootScope.menu_css_i3 = "";
+            // }
 
         }
     };
 } ])
 
-.factory('LoginService', [ '$resource', '$location', function($resource) {
+.factory('CookieService', [ '$cookies', function($cookies) {
+    return {
+        logout : function() {
+            console.log($cookies);
+            $cookies.token = '';
+        }
+    };
+} ])
+
+.factory('LoginService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         login : function(account, success) {
-            var LoginResource = $resource('/api/login', {}, {
+            var LoginResource = $resource($rootScope.apiUrl + '/api/login', {}, {
                 'login' : {
                     method : 'POST',
                     isArray : false
@@ -43,10 +52,10 @@ angular.module('ddbApp.services', [ 'ngResource' ])
     };
 } ])
 
-.factory('ProfileService', [ '$resource', function($resource) {
+.factory('ProfileService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         profile : function(success) {
-            return $resource('/api/profile', {}, {
+            return $resource($rootScope.apiUrl + '/api/profile', {}, {
                 'query' : {
                     method : 'GET',
                     isArray : false
@@ -56,7 +65,7 @@ angular.module('ddbApp.services', [ 'ngResource' ])
     };
 } ])
 
-.factory('PayMonthlyService', [ '$resource', function($resource) {
+.factory('PayMonthlyService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         home : function() {
             return [ {

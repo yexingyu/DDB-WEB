@@ -10,17 +10,6 @@ public class BaseResponseData {
   private STATUS status;
   private Object data = null;
 
-  /**
-   * newInstance
-   * 
-   * @param status
-   * @param data
-   * @return
-   */
-  public static BaseResponseData newInstance(STATUS status, Object data) {
-    return new BaseResponseData(status, data);
-  }
-
   /*
    * Constructors
    */

@@ -1,26 +1,35 @@
-angular.module('ddbApp', [ 'ngRoute', 'ddbApp.controllers', 'ddbApp.services' ]).config(
-        [ '$routeProvider', function($routeProvider) {
-            $routeProvider.when('/login', {
-                templateUrl : 'templates/login.html',
-                controller : 'LoginCtrl'
+angular.module('ddbApp', [ 'ngRoute', 'ddbApp.controllers', 'ddbApp.services' ])
 
-            }).when('/home', {
-                templateUrl : 'templates/home.html',
-                controller : 'HomeCtrl'
+.run(function($rootScope) {
+    $rootScope.apiUrl = "http://localhost:8080";
+    $rootScope.profile = {
+        sw : ""
+    };
+    console.log($rootScope);
+})
 
-            }).when('/pm', {
-                templateUrl : 'templates/pm-index.html',
-                controller : 'PMCtrl'
+.config([ '$routeProvider', function($routeProvider) {
+    $routeProvider.when('/login', {
+        templateUrl : 'templates/login.html',
+        controller : 'LoginCtrl'
 
-            }).when('/profile', {
-                templateUrl : 'templates/profile.html',
-                controller : 'ProfileCtrl'
+    }).when('/home', {
+        templateUrl : 'templates/home.html',
+        controller : 'HomeCtrl'
 
-            }).when('/about', {
-                templateUrl : 'templates/about.html',
-                controller : 'AboutCtrl'
+    }).when('/pm', {
+        templateUrl : 'templates/pm-index.html',
+        controller : 'PMCtrl'
 
-            }).otherwise({
-                redirectTo : '/home'
-            });
-        } ]);
+    }).when('/profile', {
+        templateUrl : 'templates/profile.html',
+        controller : 'ProfileCtrl'
+
+    }).when('/about', {
+        templateUrl : 'templates/about.html',
+        controller : 'AboutCtrl'
+
+    }).otherwise({
+        redirectTo : '/home'
+    });
+} ]);
