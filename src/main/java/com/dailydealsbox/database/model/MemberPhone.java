@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.cache.annotation.Cacheable;
 
 import com.dailydealsbox.database.model.base.BaseModel;
 
@@ -21,7 +20,6 @@ import com.dailydealsbox.database.model.base.BaseModel;
  */
 @Entity
 @Table(name = "member_phones")
-@Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class MemberPhone extends BaseModel {
 

@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.dailydealsbox.database.model.base.BaseModel;
 
 /**
@@ -15,8 +18,7 @@ import com.dailydealsbox.database.model.base.BaseModel;
  */
 @Entity
 @Table(name = "member_emails")
-//@Cacheable
-//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class MemberEmail extends BaseModel {
 
   @NotNull

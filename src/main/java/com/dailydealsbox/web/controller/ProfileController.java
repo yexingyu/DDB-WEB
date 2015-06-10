@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Member;
-import com.dailydealsbox.database.service.AuthorizationService;
-import com.dailydealsbox.database.service.MemberService;
+import com.dailydealsbox.service.AuthorizationService;
+import com.dailydealsbox.service.MemberService;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseResponseData.STATUS;
-import com.dailydealsbox.web.base.ResponseData;
+import com.dailydealsbox.web.base.GeneralResponseData;
 
 /**
  * @author x_ye
@@ -36,17 +36,17 @@ public class ProfileController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  public ResponseData profile(@CookieValue(value = "token", required = false) String tokenString) {
+  public GeneralResponseData profile(@CookieValue(value = "token", required = false) String tokenString) {
     AuthorizationToken token = authService.verify(tokenString);
     if (token == null) {
-      return ResponseData.newInstance(STATUS.NEED_LOGIN, "");
+      return GeneralResponseData.newInstance(STATUS.NEED_LOGIN, "");
     } else {
       Member member = memberService.get(token.getMemberId());
       //System.out.println(member);
       if (member == null) {
-        return ResponseData.newInstance(STATUS.FAIL, "");
+        return GeneralResponseData.newInstance(STATUS.FAIL, "");
       } else {
-        return ResponseData.newInstance(STATUS.SUCCESS, member);
+        return GeneralResponseData.newInstance(STATUS.SUCCESS, member);
       }
     }
   }

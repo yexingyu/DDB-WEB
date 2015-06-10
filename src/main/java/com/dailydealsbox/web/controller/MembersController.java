@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Member;
-import com.dailydealsbox.database.service.AuthorizationService;
-import com.dailydealsbox.database.service.MemberService;
+import com.dailydealsbox.service.AuthorizationService;
+import com.dailydealsbox.service.MemberService;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseResponseData;
 import com.dailydealsbox.web.base.BaseResponseData.STATUS;
-import com.dailydealsbox.web.base.ResponseData;
+import com.dailydealsbox.web.base.GeneralResponseData;
 
 /**
  * @author x_ye
@@ -41,20 +41,20 @@ public class MembersController {
    */
   @RequestMapping(method = RequestMethod.GET)
   //@Transactional
-  public ResponseData all(@CookieValue(value = "token", required = false) String tokenString) {
+  public GeneralResponseData all(@CookieValue(value = "token", required = false) String tokenString) {
     AuthorizationToken token = authService.verify(tokenString);
     if (token == null) {
-      return ResponseData.newInstance(STATUS.NEED_LOGIN, "");
+      return GeneralResponseData.newInstance(STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == Member.ROLE.ADMIN) {
-      List<Member> members = service.all();
+      List<Member> members = service.getAll();
       //System.out.println(members);
       if (members == null || members.size() == 0) {
-        return ResponseData.newInstance(BaseResponseData.STATUS.EMPTY_RESULT, null);
+        return GeneralResponseData.newInstance(BaseResponseData.STATUS.EMPTY_RESULT, null);
       } else {
-        return ResponseData.newInstance(BaseResponseData.STATUS.SUCCESS, members);
+        return GeneralResponseData.newInstance(BaseResponseData.STATUS.SUCCESS, members);
       }
     } else {
-      return ResponseData.newInstance(BaseResponseData.STATUS.NO_PERMISSION, null);
+      return GeneralResponseData.newInstance(BaseResponseData.STATUS.NO_PERMISSION, null);
     }
   }
 

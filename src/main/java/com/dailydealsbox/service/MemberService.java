@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dailydealsbox.database.service;
+package com.dailydealsbox.service;
 
 import java.util.List;
 
@@ -11,14 +11,6 @@ import com.dailydealsbox.database.model.Member;
  * @author x_ye
  */
 public interface MemberService {
-
-  /**
-   * save
-   * 
-   * @param test
-   */
-  public void save(Member member);
-
   /**
    * get
    * 
@@ -36,16 +28,9 @@ public interface MemberService {
   public Member getByAccount(String account);
 
   /**
-   * findAll
+   * getAll
    * 
    * @return
    */
-  public List<Member> all();
-
-  /**
-   * delete
-   * 
-   * @param account
-   */
-  public void delete(Member member);
+  public List<Member> getAll();
 }

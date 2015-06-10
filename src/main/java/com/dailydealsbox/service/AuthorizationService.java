@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dailydealsbox.database.service;
+package com.dailydealsbox.service;
 
 import javax.servlet.http.Cookie;
 

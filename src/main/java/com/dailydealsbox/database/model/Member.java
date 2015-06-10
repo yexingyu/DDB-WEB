@@ -19,7 +19,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.cache.annotation.Cacheable;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 
@@ -28,7 +27,6 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
  */
 @Entity
 @Table(name = "members", uniqueConstraints = { @UniqueConstraint(columnNames = "account") })
-@Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Member extends BaseEntityModel {
 
@@ -62,6 +60,26 @@ public class Member extends BaseEntityModel {
   @JoinColumn(name = "member_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberPhone> phones;
+
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinColumn(name = "member_id")
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Set<MemberEmail> emails;
+
+  /**
+   * @return the emails
+   */
+  public Set<MemberEmail> getEmails() {
+    return this.emails;
+  }
+
+  /**
+   * @param emails
+   *          the emails to set
+   */
+  public void setEmails(Set<MemberEmail> emails) {
+    this.emails = emails;
+  }
 
   /**
    * @return the phones
