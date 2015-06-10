@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.repository.MemberRepository;
@@ -17,6 +18,7 @@ import com.dailydealsbox.service.MemberService;
  * @author x_ye
  */
 @Service
+@Transactional(readOnly = true)
 public class MemberServiceImpl implements MemberService {
 
   @Resource

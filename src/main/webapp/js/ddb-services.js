@@ -2,29 +2,14 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 
 .factory('MenuService', [ '$rootScope', function($rootScope) {
     return {
-        go : function(id) {
-            // if (id == 1) {
-            // $rootScope.menu_css_i0 = "";
-            // $rootScope.menu_css_i1 = "current_page_item";
-            // $rootScope.menu_css_i2 = "";
-            // $rootScope.menu_css_i3 = "";
-            // } else if (id == 2) {
-            // $rootScope.menu_css_i0 = "";
-            // $rootScope.menu_css_i1 = "";
-            // $rootScope.menu_css_i2 = "current_page_item";
-            // $rootScope.menu_css_i3 = "";
-            // } else if (id == 3) {
-            // $rootScope.menu_css_i0 = "";
-            // $rootScope.menu_css_i1 = "";
-            // $rootScope.menu_css_i2 = "";
-            // $rootScope.menu_css_i3 = "current_page_item";
-            // } else {
-            // $rootScope.menu_css_i0 = "current_page_item";
-            // $rootScope.menu_css_i1 = "";
-            // $rootScope.menu_css_i2 = "";
-            // $rootScope.menu_css_i3 = "";
-            // }
-
+        setCurrent : function(id) {
+            for (var i = 0; i < $rootScope.menuCss.length; i++) {
+                if (i == id) {
+                    $rootScope.menuCss[i] = "current_page_item";
+                } else {
+                    $rootScope.menuCss[i] = "";
+                }
+            }
         }
     };
 } ])
@@ -32,7 +17,6 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('CookieService', [ '$cookies', function($cookies) {
     return {
         logout : function() {
-            console.log($cookies);
             $cookies.token = '';
         }
     };

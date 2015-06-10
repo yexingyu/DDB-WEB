@@ -1,0 +1,30 @@
+<div>
+    <h1>Welcome {{profile.firstName}} {{profile.lastName}}.</h1>
+    <ul>
+        <li>First Name: <input type="text" ng-model="profile.firstName" /></li>
+        <li>Middle Name: <input type="text" ng-model="profile.middleName" /></li>
+        <li>Last Name: <input type="text" ng-model="profile.lastName" /></li>
+        <li>
+            <div>Phone Number:</div>
+            <div ng-repeat="phone in profile.phones">
+                <select ng-model="phone.type" ng-options="phoneType for phoneType in phoneTypes"></select> : 
+                <input type="text" ng-model="phone.phoneNumber" />[<a href ng-click="profile.phones.splice($index, 1)">X</a>]
+            </div>
+            <div>
+                [<a href ng-click="profile.phones.push({memberId:profile.id})">Add</a>]
+            </div>
+        </li>
+        <li>
+            <div>Email:</div>
+            <div ng-repeat="email in profile.emails">
+                <input type="text" ng-model="email.email" />[<a href ng-click="profile.emails.splice($index, 1)">X</a>]
+            </div>
+            <div>
+                [<a href ng-click="profile.emails.push({memberId:profile.id})">Add</a>]
+            </div>
+        </li>
+        <li>
+            <button ng-click="submit()">Submit</button>
+        </li>
+    </ul>
+</div>

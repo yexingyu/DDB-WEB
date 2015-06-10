@@ -1,1 +1,20 @@
-<div>Good {{profile.account}}</div>
+<div>
+    <h1>Welcome {{profile.firstName}} {{profile.lastName}}. </h1>[<a href="#/profile/edit">Edit Profile</a>]
+    <ul>
+        <li>First Name: <input type="text" ng-model="profile.firstName" /></li>
+        <li>Middle Name: <input type="text" ng-model="profile.middleName" /></li>
+        <li>Last Name: <input type="text" ng-model="profile.lastName" /></li>
+        <li>
+            <div>Phone Number:</div>
+            <div ng-repeat="phone in profile.phones">
+                {{phone.type}}: <input type="text" ng-model="phone.phoneNumber" />
+            </div>
+        </li>
+        <li>
+            <div>Email:</div>
+            <div ng-repeat="email in profile.emails">
+                <input type="text" ng-model="email.email" />
+            </div>
+        </li>
+    </ul>
+</div>

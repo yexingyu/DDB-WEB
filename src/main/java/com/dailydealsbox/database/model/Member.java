@@ -56,6 +56,11 @@ public class Member extends BaseEntityModel {
   @Enumerated(EnumType.STRING)
   private ROLE             role;
 
+  @NotNull
+  @Column(name = "login_type", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private LOGIN_TYPE       loginType;
+
   @OneToMany(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -65,6 +70,21 @@ public class Member extends BaseEntityModel {
   @JoinColumn(name = "member_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberEmail> emails;
+
+  /**
+   * @return the loginType
+   */
+  public LOGIN_TYPE getLoginType() {
+    return this.loginType;
+  }
+
+  /**
+   * @param loginType
+   *          the loginType to set
+   */
+  public void setLoginType(LOGIN_TYPE loginType) {
+    this.loginType = loginType;
+  }
 
   /**
    * @return the emails
@@ -191,5 +211,12 @@ public class Member extends BaseEntityModel {
    */
   public static enum ROLE {
     MEMBER, ADMIN
-  };
+  }
+
+  /**
+   * @author x_ye
+   */
+  public static enum LOGIN_TYPE {
+    DAILYDEALSBOX, FACEBOOK
+  }
 }
