@@ -92,19 +92,8 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                 function($scope, $location, ProfileService, MenuService) {
                     MenuService.setCurrent(2);
                     $scope.phoneTypes = [ 'MOBILE', 'HOME', 'WORK', 'FAX' ];
-                    // $scope.phoneTypes = [ {
-                    // name : 'MOBILE',
-                    // shade : 'MOBILE'
-                    // }, {
-                    // name : 'HOME',
-                    // shade : 'HOME'
-                    // }, {
-                    // name : 'WORK',
-                    // shade : 'WORK'
-                    // }, {
-                    // name : 'FAX',
-                    // shade : 'FAX'
-                    // } ];
+                    $scope.addressTypes = [ 'BILLING', 'LIVING' ];
+                    $scope.countries = [ 'CA', 'US' ];
                     ProfileService.profile(function(response) {
                         if (response.status == 'SUCCESS') {
                             $scope.profile = response.data;

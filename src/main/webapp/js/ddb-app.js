@@ -1,33 +1,5 @@
 angular.module('ddbApp', [ 'ngRoute', 'ddbApp.controllers', 'ddbApp.services' ])
 
-.run([ '$rootScope', '$window', function($rootScope, $window) {
-    $rootScope.apiUrl = "http://localhost:8080";
-    $rootScope.profile = {
-        sw : ""
-    };
-    $rootScope.menuCss = [ "current_page_item", "", "", "" ];
-
-    // Load the SDK asynchronously
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    // Initial fb SDK
-    $window.fbAsyncInit = function() {
-        FB.init({
-            appId : '1170711572955238',
-            cookie : true,
-            xfbml : true,
-            version : 'v2.3'
-        });
-    };
-} ])
-
 .config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/login', {
         templateUrl : 'templates/login.html',
@@ -56,4 +28,32 @@ angular.module('ddbApp', [ 'ngRoute', 'ddbApp.controllers', 'ddbApp.services' ])
     }).otherwise({
         redirectTo : '/home'
     });
+} ])
+
+.run([ '$rootScope', '$window', function($rootScope, $window) {
+    $rootScope.apiUrl = "http://localhost:8080";
+    $rootScope.profile = {
+        sw : ""
+    };
+    $rootScope.menuCss = [ "current_page_item", "", "", "" ];
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    // Initial fb SDK
+    $window.fbAsyncInit = function() {
+        FB.init({
+            appId : '1170711572955238',
+            cookie : true,
+            xfbml : true,
+            version : 'v2.3'
+        });
+    };
 } ]);

@@ -5,23 +5,41 @@
         <li>Middle Name: <input type="text" ng-model="profile.middleName" /></li>
         <li>Last Name: <input type="text" ng-model="profile.lastName" /></li>
         <li>
-            <div>Phone Number:</div>
-            <div ng-repeat="phone in profile.phones">
+            <span>Phone Number:</span><br />
+            <span ng-repeat="phone in profile.phones">
                 <select ng-model="phone.type" ng-options="phoneType for phoneType in phoneTypes"></select> : 
-                <input type="text" ng-model="phone.phoneNumber" />[<a href ng-click="profile.phones.splice($index, 1)">X</a>]
-            </div>
-            <div>
-                [<a href ng-click="profile.phones.push({memberId:profile.id})">Add</a>]
-            </div>
+                <input type="text" ng-model="phone.phoneNumber" />
+                [<a ng-click="profile.phones.splice($index, 1)">X</a>]<br />
+            </span>
+            <span>
+                [<a ng-click="profile.phones.push({memberId:profile.id})">Add</a>]
+            </span>
         </li>
         <li>
-            <div>Email:</div>
-            <div ng-repeat="email in profile.emails">
-                <input type="text" ng-model="email.email" />[<a href ng-click="profile.emails.splice($index, 1)">X</a>]
-            </div>
-            <div>
-                [<a href ng-click="profile.emails.push({memberId:profile.id})">Add</a>]
-            </div>
+            <span>Email:</span><br />
+            <span ng-repeat="email in profile.emails">
+                <input type="text" ng-model="email.email" />
+                [<a ng-click="profile.emails.splice($index, 1)">X</a>]
+            </span>
+            <span>
+                [<a ng-click="profile.emails.push({memberId:profile.id})">Add</a>]
+            </span>
+        </li>
+        <li>
+            <span>Address:</span><br />
+            <span ng-repeat="address in profile.addresses">
+                <select ng-model="address.type" ng-options="addressType for addressType in addressTypes"></select> : 
+                <input type="text" ng-model="address.address1" /> 
+                <input type="text" ng-model="address.address2" />, 
+                <input type="text" ng-model="address.city" />, 
+                <input type="text" ng-model="address.region" />, 
+                <input type="text" ng-model="address.postCode" />, 
+                <select ng-model="address.country" ng-options="country for country in countries"></select>
+                [<a ng-click="profile.addresses.splice($index, 1)">X</a>]<br />
+            </span>
+            <span>
+                [<a ng-click="profile.addresses.push({memberId:profile.id})">Add</a>]
+            </span>
         </li>
         <li>
             <button ng-click="submit()">Submit</button>
