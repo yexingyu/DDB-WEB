@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author x_ye
  */
 @Entity
-@Table(name = "member_emails")
+@Table(name = "member_email")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class MemberEmail extends BaseModel {
 

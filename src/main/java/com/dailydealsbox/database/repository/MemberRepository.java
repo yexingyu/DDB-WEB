@@ -12,5 +12,11 @@ import com.dailydealsbox.database.model.Member;
  */
 public interface MemberRepository extends CrudRepository<Member, Integer> {
 
-  Member findByAccount(String account);
+  /**
+   * findByAccount
+   * 
+   * @param account
+   * @return
+   */
+  public Member findByAccount(String account);
 }

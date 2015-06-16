@@ -29,7 +29,7 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
  * @author x_ye
  */
 @Entity
-@Table(name = "members", uniqueConstraints = { @UniqueConstraint(columnNames = "account") })
+@Table(name = "member", uniqueConstraints = { @UniqueConstraint(columnNames = "account") })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Member extends BaseEntityModel {
 
