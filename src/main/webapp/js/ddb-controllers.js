@@ -76,10 +76,26 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                 } ])
 
 /*
- * PMCtrl definition
+ * PMProductCtrl definition
  */
 .controller(
         'PMProductCtrl',
+        [ '$scope', '$location', '$routeParams', 'ProductService', 'MenuService',
+                function($scope, $location, $routeParams, ProductService, MenuService) {
+                    MenuService.setCurrent(1);
+                    var id = $routeParams.id;
+                    ProductService.get(id, function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.product = response.data;
+                        }
+                    });
+                } ])
+
+/*
+ * PMOrderCtrl definition
+ */
+.controller(
+        'PMOrderCtrl',
         [ '$scope', '$location', '$routeParams', 'ProductService', 'MenuService',
                 function($scope, $location, $routeParams, ProductService, MenuService) {
                     MenuService.setCurrent(1);

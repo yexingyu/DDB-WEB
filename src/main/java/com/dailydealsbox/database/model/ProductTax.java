@@ -16,8 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.dailydealsbox.database.model.Product.TAX_TITLE;
-import com.dailydealsbox.database.model.Product.TAX_TYPE;
+import com.dailydealsbox.database.model.base.BaseEnum.PRODUCT_TAX_TITLE;
+import com.dailydealsbox.database.model.base.BaseEnum.PRODUCT_TAX_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,26 +31,26 @@ public class ProductTax extends BaseModel {
 
   @NotNull
   @Column(name = "product_id", nullable = false)
-  private int       productId;
+  private int               productId;
 
   @NotNull
   @Column(name = "value", nullable = false)
-  private double    value;
+  private double            value;
 
   @NotNull
   @Column(name = "title", nullable = false)
   @Enumerated(EnumType.STRING)
-  private TAX_TITLE title;
+  private PRODUCT_TAX_TITLE title;
 
   @NotNull
   @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private TAX_TYPE  type;
+  private PRODUCT_TAX_TYPE  type;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id", insertable = false, updatable = false)
-  private Product   product;
+  private Product           product;
 
   /**
    * validate
@@ -65,7 +65,7 @@ public class ProductTax extends BaseModel {
   /**
    * @return the title
    */
-  public TAX_TITLE getTitle() {
+  public PRODUCT_TAX_TITLE getTitle() {
     return this.title;
   }
 
@@ -73,14 +73,14 @@ public class ProductTax extends BaseModel {
    * @param title
    *          the title to set
    */
-  public void setTitle(TAX_TITLE title) {
+  public void setTitle(PRODUCT_TAX_TITLE title) {
     this.title = title;
   }
 
   /**
    * @return the type
    */
-  public TAX_TYPE getType() {
+  public PRODUCT_TAX_TYPE getType() {
     return this.type;
   }
 
@@ -88,7 +88,7 @@ public class ProductTax extends BaseModel {
    * @param type
    *          the type to set
    */
-  public void setType(TAX_TYPE type) {
+  public void setType(PRODUCT_TAX_TYPE type) {
     this.type = type;
   }
 

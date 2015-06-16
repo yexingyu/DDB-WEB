@@ -17,6 +17,10 @@ angular.module('ddbApp', [ 'ngRoute', 'ddbApp.controllers', 'ddbApp.services' ])
         templateUrl : 'templates/pm-product.html',
         controller : 'PMProductCtrl'
 
+    }).when('/pm-order/:id', {
+        templateUrl : 'templates/pm-order.html',
+        controller : 'PMOrderCtrl'
+
     }).when('/profile', {
         templateUrl : 'templates/profile.html',
         controller : 'ProfileCtrl'

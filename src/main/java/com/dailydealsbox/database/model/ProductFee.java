@@ -16,8 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.dailydealsbox.database.model.Product.FEE_TITLE;
-import com.dailydealsbox.database.model.Product.FEE_TYPE;
+import com.dailydealsbox.database.model.base.BaseEnum.PRODUCT_FEE_TITLE;
+import com.dailydealsbox.database.model.base.BaseEnum.PRODUCT_FEE_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,26 +31,26 @@ public class ProductFee extends BaseModel {
 
   @NotNull
   @Column(name = "product_id", nullable = false)
-  private int       productId;
+  private int               productId;
 
   @NotNull
   @Column(name = "value", nullable = false)
-  private double    value;
+  private double            value;
 
   @NotNull
   @Column(name = "title", nullable = false)
   @Enumerated(EnumType.STRING)
-  private FEE_TITLE title;
+  private PRODUCT_FEE_TITLE title;
 
   @NotNull
   @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private FEE_TYPE  type;
+  private PRODUCT_FEE_TYPE  type;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id", insertable = false, updatable = false)
-  private Product   product;
+  private Product           product;
 
   /**
    * validate
@@ -65,7 +65,7 @@ public class ProductFee extends BaseModel {
   /**
    * @return the title
    */
-  public FEE_TITLE getTitle() {
+  public PRODUCT_FEE_TITLE getTitle() {
     return this.title;
   }
 
@@ -73,14 +73,14 @@ public class ProductFee extends BaseModel {
    * @param title
    *          the title to set
    */
-  public void setTitle(FEE_TITLE title) {
+  public void setTitle(PRODUCT_FEE_TITLE title) {
     this.title = title;
   }
 
   /**
    * @return the type
    */
-  public FEE_TYPE getType() {
+  public PRODUCT_FEE_TYPE getType() {
     return this.type;
   }
 
@@ -88,7 +88,7 @@ public class ProductFee extends BaseModel {
    * @param type
    *          the type to set
    */
-  public void setType(FEE_TYPE type) {
+  public void setType(PRODUCT_FEE_TYPE type) {
     this.type = type;
   }
 

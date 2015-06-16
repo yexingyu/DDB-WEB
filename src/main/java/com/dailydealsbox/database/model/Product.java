@@ -289,45 +289,4 @@ public class Product extends BaseEntityModel {
     this.storeId = storeId;
   }
 
-  /**
-   * @author x_ye
-   */
-  public static enum LANGUAGE {
-    EN, FR
-  }
-
-  /**
-   * @author x_ye
-   */
-  public static enum CURRENCY {
-    CAD, USD
-  }
-
-  /**
-   * @author x_ye
-   */
-  public static enum FEE_TITLE {
-    SHIPPING
-  }
-
-  /**
-   * @author x_ye
-   */
-  public static enum FEE_TYPE {
-    PERCENTAGE, DOLLER
-  }
-
-  /**
-   * @author x_ye
-   */
-  public static enum TAX_TITLE {
-    FEDERAL, PROVINCE, DUTY
-  }
-
-  /**
-   * @author x_ye
-   */
-  public static enum TAX_TYPE {
-    PERCENTAGE
-  }
 }

@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_PHONE_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,25 +31,25 @@ public class MemberPhone extends BaseModel {
 
   @NotNull
   @Column(name = "member_id", nullable = false)
-  private int    memberId;
+  private int               memberId;
 
   @NotNull
   @Column(name = "country_code", nullable = false, length = 10)
-  private String countryCode;
+  private String            countryCode;
 
   @NotNull
   @Column(name = "phone_number", nullable = false, length = 50)
-  private String phoneNumber;
+  private String            phoneNumber;
 
   @NotNull
   @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private TYPE   type;
+  private MEMBER_PHONE_TYPE type;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id", insertable = false, updatable = false)
-  private Member member;
+  private Member            member;
 
   /**
    * validate
@@ -112,7 +113,7 @@ public class MemberPhone extends BaseModel {
   /**
    * @return the type
    */
-  public TYPE getType() {
+  public MEMBER_PHONE_TYPE getType() {
     return this.type;
   }
 
@@ -120,11 +121,8 @@ public class MemberPhone extends BaseModel {
    * @param type
    *          the type to set
    */
-  public void setType(TYPE type) {
+  public void setType(MEMBER_PHONE_TYPE type) {
     this.type = type;
   }
 
-  public static enum TYPE {
-    MOBILE, HOME, WORK, FAX
-  }
 }

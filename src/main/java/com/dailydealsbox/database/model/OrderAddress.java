@@ -26,13 +26,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author x_ye
  */
 @Entity
-@Table(name = "member_address")
+@Table(name = "order_address")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class MemberAddress extends BaseModel {
+public class OrderAddress extends BaseModel {
 
   @NotNull
-  @Column(name = "member_id", nullable = false)
-  private int                    memberId;
+  @Column(name = "order_id", nullable = false)
+  private int                    orderId;
 
   @NotNull
   @Column(name = "address1", nullable = false, length = 255)
@@ -66,8 +66,8 @@ public class MemberAddress extends BaseModel {
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id", insertable = false, updatable = false)
-  private Member                 member;
+  @JoinColumn(name = "order_id", insertable = false, updatable = false)
+  private Order                  order;
 
   public boolean validate() {
     if (StringUtils.isBlank(this.getAddress1())) {
@@ -79,23 +79,8 @@ public class MemberAddress extends BaseModel {
     if (StringUtils.isBlank(this.getCity())) { return false; }
     if (StringUtils.isBlank(this.getPostCode())) { return false; }
     if (StringUtils.isBlank(this.getRegion())) { return false; }
-    if (this.getMemberId() <= 0) { return false; }
+    if (this.getOrderId() <= 0) { return false; }
     return true;
-  }
-
-  /**
-   * @return the member
-   */
-  public Member getMember() {
-    return this.member;
-  }
-
-  /**
-   * @param member
-   *          the member to set
-   */
-  public void setMember(Member member) {
-    this.member = member;
   }
 
   /**
@@ -114,18 +99,33 @@ public class MemberAddress extends BaseModel {
   }
 
   /**
-   * @return the memberId
+   * @return the orderId
    */
-  public int getMemberId() {
-    return this.memberId;
+  public int getOrderId() {
+    return this.orderId;
   }
 
   /**
-   * @param memberId
-   *          the memberId to set
+   * @param orderId
+   *          the orderId to set
    */
-  public void setMemberId(int memberId) {
-    this.memberId = memberId;
+  public void setOrderId(int orderId) {
+    this.orderId = orderId;
+  }
+
+  /**
+   * @return the order
+   */
+  public Order getOrder() {
+    return this.order;
+  }
+
+  /**
+   * @param order
+   *          the order to set
+   */
+  public void setOrder(Order order) {
+    this.order = order;
   }
 
   /**

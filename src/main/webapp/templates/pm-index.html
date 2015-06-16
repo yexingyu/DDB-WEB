@@ -8,6 +8,7 @@
         Price: ${{item.prices[0].value}} ({{item.prices[0].currency}})<br />
         Fee: <span ng-repeat="fee in item.fees">{{fee.title}} : <span ng-if="fee.type=='DOLLER'">$</span>{{fee.value}}<span ng-if="fee.type=='PERCENTAGE'">%</span><br /></span>
         Tax: <span ng-repeat="tax in item.taxes">{{tax.title}} : {{tax.value}}<span ng-if="tax.type=='PERCENTAGE'">%</span><br /></span>
+        [<a href="#/pm-order/{{item.id}}"><b>ORDER</b></a>]<br>
         Description: <span class="pmp-desc">{{item.descriptions[0].value}}</span>
     </span>
 </div>

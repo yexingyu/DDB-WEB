@@ -24,6 +24,8 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
+import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_LOGIN_TYPE;
+import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 
 /**
  * @author x_ye
@@ -57,12 +59,12 @@ public class Member extends BaseEntityModel {
   @NotNull
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
-  private ROLE               role;
+  private MEMBER_ROLE        role;
 
   @NotNull
   @Column(name = "login_type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private LOGIN_TYPE         loginType;
+  private MEMBER_LOGIN_TYPE  loginType;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "member",
@@ -149,7 +151,7 @@ public class Member extends BaseEntityModel {
   /**
    * @return the loginType
    */
-  public LOGIN_TYPE getLoginType() {
+  public MEMBER_LOGIN_TYPE getLoginType() {
     return this.loginType;
   }
 
@@ -157,7 +159,7 @@ public class Member extends BaseEntityModel {
    * @param loginType
    *          the loginType to set
    */
-  public void setLoginType(LOGIN_TYPE loginType) {
+  public void setLoginType(MEMBER_LOGIN_TYPE loginType) {
     this.loginType = loginType;
   }
 
@@ -239,7 +241,7 @@ public class Member extends BaseEntityModel {
   /**
    * @return the role
    */
-  public ROLE getRole() {
+  public MEMBER_ROLE getRole() {
     return this.role;
   }
 
@@ -247,7 +249,7 @@ public class Member extends BaseEntityModel {
    * @param role
    *          the role to set
    */
-  public void setRole(ROLE role) {
+  public void setRole(MEMBER_ROLE role) {
     this.role = role;
   }
 
@@ -281,17 +283,4 @@ public class Member extends BaseEntityModel {
     this.account = account;
   }
 
-  /**
-   * @author x_ye
-   */
-  public static enum ROLE {
-    MEMBER, ADMIN
-  }
-
-  /**
-   * @author x_ye
-   */
-  public static enum LOGIN_TYPE {
-    DAILYDEALSBOX, FACEBOOK
-  }
 }
