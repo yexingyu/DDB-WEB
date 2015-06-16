@@ -68,7 +68,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                 }
             }).query(success);
         },
-        get : function(id) {
+        get : function(id, success) {
             return $resource($rootScope.apiUrl + '/api/product/:id', {
                 'id' : id
             }, {
