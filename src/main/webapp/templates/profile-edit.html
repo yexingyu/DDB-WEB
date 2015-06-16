@@ -55,7 +55,7 @@
             </span>
         </li>
         <li>
-            <button ng-click="submit()">Submit</button>
+            <button ng-click="submit()" ng-disabled="!myForm.$valid">Submit</button>
         </li>
     </ul>
 </div>
