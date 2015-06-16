@@ -25,7 +25,7 @@ import com.dailydealsbox.web.base.GeneralResponseData;
  * @author x_ye
  */
 @RestController
-@RequestMapping("/api/members")
+@RequestMapping("/api/member")
 public class MembersController {
 
   @Autowired
@@ -40,7 +40,6 @@ public class MembersController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  //@Transactional
   public GeneralResponseData all(@CookieValue(value = "token", required = false) String tokenString) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {

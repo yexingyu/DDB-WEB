@@ -18,7 +18,8 @@
                 <select ng-model="phone.type" ng-options="phoneType for phoneType in phoneTypes"></select> : 
                 <input type="text" ng-model="phone.countryCode" size="2"/>
                 <input type="text" ng-model="phone.phoneNumber" />
-                [<a ng-click="profile.phones.splice($index, 1)">X</a>]<br />
+                [<a ng-click="profile.phones.splice($index, 1)">X</a>]
+                <br />
             </span>
             <span>
                 [<a ng-click="profile.phones.push({memberId:profile.id, countryCode:'+1'})">Add</a>]
@@ -30,6 +31,7 @@
                 <input name="email_{{email.id}}" type="email" ng-model="email.email" size="40" required />
                 [<a ng-click="profile.emails.splice($index, 1)">X</a>]
                 <span ng-show="myForm.email_{{email.id}}.$error.email">Not Email!</span>
+                <span ng-show="myForm.email_{{email.id}}.$error.required">required!</span>
                 <br />
             </span>
             <span>

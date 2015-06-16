@@ -58,24 +58,25 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
     };
 } ])
 
-.factory('PayMonthlyService', [ '$rootScope', '$resource', function($rootScope, $resource) {
+.factory('ProductService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
-        home : function() {
-            return [ {
-                id : 1,
-                name : 'test_01',
-                describe : 'for test 01'
-            }, {
-                id : 2,
-                name : 'test_02',
-                describe : 'for test 02'
-            }, {
-                id : 3,
-                name : 'test_03',
-                describe : 'for test 03'
-            } ];
+        home : function(success) {
+            return $resource($rootScope.apiUrl + '/api/product', {}, {
+                'query' : {
+                    method : 'GET',
+                    isArray : false
+                }
+            }).query(success);
         },
         get : function(id) {
+            return $resource($rootScope.apiUrl + '/api/product/:id', {
+                'id' : id
+            }, {
+                'query' : {
+                    method : 'GET',
+                    isArray : false
+                }
+            }).query(success);
         }
     };
 } ]);

@@ -51,19 +51,28 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
  */
 .controller(
         'HomeCtrl',
-        [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
-                function($scope, $location, PayMonthlyService, MenuService) {
+        [ '$scope', '$location', 'ProductService', 'MenuService',
+                function($scope, $location, ProductService, MenuService) {
                     MenuService.setCurrent(0);
-                    $scope.items = PayMonthlyService.home();
+                    ProductService.home(function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.items = response.data;
+                        }
+                    });
                 } ])
 /*
  * PMCtrl definition
  */
 .controller(
         'PMCtrl',
-        [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
-                function($scope, $location, PayMonthlyService, MenuService) {
+        [ '$scope', '$location', 'ProductService', 'MenuService',
+                function($scope, $location, ProductService, MenuService) {
                     MenuService.setCurrent(1);
+                    ProductService.home(function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.items = response.data;
+                        }
+                    });
                 } ])
 
 /*

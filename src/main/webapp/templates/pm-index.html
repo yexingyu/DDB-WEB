@@ -1,1 +1,13 @@
-<div>templates/pm-index.html</div>
+<div class="article borders" ng-repeat="item in items">
+    <div class="title">
+        <h2>{{item.names[0].value}}</h2>
+        <span class="byline">something to show here!</span>
+    </div>
+    <span class="image image-pmp"><img ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}" /></span>
+    <span>
+        Price: ${{item.prices[0].value}} ({{item.prices[0].currency}})<br />
+        Fee: <span ng-repeat="fee in item.fees">{{fee.title}} : <span ng-if="fee.type=='DOLLER'">$</span>{{fee.value}}<span ng-if="fee.type=='PERCENTAGE'">%</span><br /></span>
+        Tax: <span ng-repeat="tax in item.taxes">{{tax.title}} : {{tax.value}}<span ng-if="tax.type=='PERCENTAGE'">%</span><br /></span>
+        Description: <span class="pmp-desc">{{item.descriptions[0].value}}</span>
+    </span>
+</div>
