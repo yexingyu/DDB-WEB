@@ -32,7 +32,7 @@ public class MembersController {
   MemberService        service;
 
   @Autowired
-  AuthorizationService authService;
+  AuthorizationService authorizationService;
 
   /**
    * all
@@ -42,19 +42,19 @@ public class MembersController {
   @RequestMapping(method = RequestMethod.GET)
   //@Transactional
   public GeneralResponseData all(@CookieValue(value = "token", required = false) String tokenString) {
-    AuthorizationToken token = authService.verify(tokenString);
+    AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
       return GeneralResponseData.newInstance(STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == Member.ROLE.ADMIN) {
       List<Member> members = service.getAll();
       //System.out.println(members);
       if (members == null || members.size() == 0) {
-        return GeneralResponseData.newInstance(BaseResponseData.STATUS.EMPTY_RESULT, null);
+        return GeneralResponseData.newInstance(BaseResponseData.STATUS.EMPTY_RESULT, "");
       } else {
         return GeneralResponseData.newInstance(BaseResponseData.STATUS.SUCCESS, members);
       }
     } else {
-      return GeneralResponseData.newInstance(BaseResponseData.STATUS.NO_PERMISSION, null);
+      return GeneralResponseData.newInstance(BaseResponseData.STATUS.NO_PERMISSION, "");
     }
   }
 
@@ -77,7 +77,7 @@ public class MembersController {
    * @return
    */
   @RequestMapping(method = RequestMethod.POST)
-  public BaseResponseData add(@RequestBody Member account) {
+  public BaseResponseData add(@RequestBody Member member) {
     //service.save(account);
     //return service.get(account.getId());
     return null;

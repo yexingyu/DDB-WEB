@@ -3,6 +3,7 @@
  */
 package com.dailydealsbox.database.model;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,15 +11,17 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 
@@ -61,20 +64,72 @@ public class Member extends BaseEntityModel {
   @Enumerated(EnumType.STRING)
   private LOGIN_TYPE         loginType;
 
-  @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { javax.persistence.CascadeType.ALL },
+    orphanRemoval = true)
+  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberPhone>   phones;
 
-  @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { javax.persistence.CascadeType.ALL },
+    orphanRemoval = true)
+  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberEmail>   emails;
 
-  @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { javax.persistence.CascadeType.ALL },
+    orphanRemoval = true)
+  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberAddress> addresses;
+
+  /**
+   * validate
+   * 
+   * @return
+   */
+  public boolean validate() {
+    if (StringUtils.isBlank(this.getAccount())) { return false; }
+    if (StringUtils.isBlank(this.getFirstName())) { return false; }
+    if (StringUtils.isBlank(this.getLastName())) { return false; }
+    if (StringUtils.isBlank(this.getMiddleName())) {
+      this.setMiddleName("");
+    }
+
+    // validate addresses
+    Iterator<MemberAddress> itAddresses = this.getAddresses().iterator();
+    while (itAddresses.hasNext()) {
+      MemberAddress address = itAddresses.next();
+      if (!address.validate()) {
+        itAddresses.remove();
+      }
+    }
+
+    // validate phones
+    Iterator<MemberPhone> itPhones = this.getPhones().iterator();
+    while (itPhones.hasNext()) {
+      MemberPhone phone = itPhones.next();
+      if (!phone.validate()) {
+        itPhones.remove();
+      }
+    }
+
+    // validate emails
+    Iterator<MemberEmail> itEmails = this.getEmails().iterator();
+    while (itEmails.hasNext()) {
+      MemberEmail email = itEmails.next();
+      if (!email.validate()) {
+        itEmails.remove();
+      }
+    }
+
+    return true;
+  }
 
   /**
    * @return the addresses

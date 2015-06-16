@@ -1,25 +1,36 @@
-<div>
+<div ng-form="myForm">
     <h1>Welcome {{profile.firstName}} {{profile.lastName}}.</h1>
     <ul>
-        <li>First Name: <input type="text" ng-model="profile.firstName" /></li>
+        <li><pre>{{myForm.$error | json}}</pre></li>
+        <li>
+            First Name: <input type="text" name="first_name" ng-model="profile.firstName" required />
+            <span ng-show="myForm.first_name.$error.required">Required!</span>
+        </li>
         <li>Middle Name: <input type="text" ng-model="profile.middleName" /></li>
-        <li>Last Name: <input type="text" ng-model="profile.lastName" /></li>
+        <li>
+            Last Name: <input type="text" name="last_name" ng-model="profile.lastName" required />
+            <span ng-show="myForm.last_name.$error.required">Required!</span>
+        </li>
+        
         <li>
             <span>Phone Number:</span><br />
             <span ng-repeat="phone in profile.phones">
                 <select ng-model="phone.type" ng-options="phoneType for phoneType in phoneTypes"></select> : 
+                <input type="text" ng-model="phone.countryCode" size="2"/>
                 <input type="text" ng-model="phone.phoneNumber" />
                 [<a ng-click="profile.phones.splice($index, 1)">X</a>]<br />
             </span>
             <span>
-                [<a ng-click="profile.phones.push({memberId:profile.id})">Add</a>]
+                [<a ng-click="profile.phones.push({memberId:profile.id, countryCode:'+1'})">Add</a>]
             </span>
         </li>
         <li>
             <span>Email:</span><br />
             <span ng-repeat="email in profile.emails">
-                <input type="text" ng-model="email.email" />
+                <input name="email_{{email.id}}" type="email" ng-model="email.email" size="40" required />
                 [<a ng-click="profile.emails.splice($index, 1)">X</a>]
+                <span ng-show="myForm.email_{{email.id}}.$error.email">Not Email!</span>
+                <br />
             </span>
             <span>
                 [<a ng-click="profile.emails.push({memberId:profile.id})">Add</a>]

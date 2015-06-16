@@ -51,4 +51,13 @@ public class MemberServiceImpl implements MemberService {
     return (List<Member>) repo.findAll();
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.service.MemberService#update(com.dailydealsbox.database.model.Member)
+   */
+  @Override
+  public Member update(Member member) {
+    return repo.save(member);
+  }
+
 }

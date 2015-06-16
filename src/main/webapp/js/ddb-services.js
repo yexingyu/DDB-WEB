@@ -24,14 +24,14 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 
 .factory('LoginService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
-        login : function(account, success) {
+        login : function(member, success) {
             var LoginResource = $resource($rootScope.apiUrl + '/api/login', {}, {
                 'login' : {
                     method : 'POST',
                     isArray : false
                 }
             });
-            new LoginResource(account).$login(success);
+            new LoginResource(member).$login(success);
         }
     };
 } ])
@@ -45,6 +45,15 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                     isArray : false
                 }
             }).query(success);
+        },
+        edit : function(profile, success) {
+            var profileResource = $resource($rootScope.apiUrl + '/api/profile', {}, {
+                'login' : {
+                    method : 'PUT',
+                    isArray : false
+                }
+            });
+            new profileResource(profile).$login(success);
         }
     };
 } ])

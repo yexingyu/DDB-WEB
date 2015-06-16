@@ -11,6 +11,7 @@ import com.dailydealsbox.database.model.Member;
 public class AuthorizationToken {
   private int         memberId;
   private String      account;
+  private String      password;
   private Member.ROLE role;
   private long        expired;
 
@@ -28,13 +29,14 @@ public class AuthorizationToken {
    * 
    * @param memberId
    * @param account
+   * @param password
    * @param expired
    * @param role
    * @return
    */
-  public static AuthorizationToken newInstance(int memberId, String account, long expired,
-      Member.ROLE role) {
-    return new AuthorizationToken(memberId, account, expired, role);
+  public static AuthorizationToken newInstance(int memberId, String account, String password,
+      long expired, Member.ROLE role) {
+    return new AuthorizationToken(memberId, account, password, expired, role);
   }
 
   /*
@@ -42,11 +44,28 @@ public class AuthorizationToken {
    */
   public AuthorizationToken() {}
 
-  public AuthorizationToken(int memberId, String account, long expired, Member.ROLE role) {
+  public AuthorizationToken(int memberId, String account, String password, long expired,
+      Member.ROLE role) {
     this.setMemberId(memberId);
     this.setAccount(account);
+    this.setPassword(password);
     this.setRole(role);
     this.setExpired(expired);
+  }
+
+  /**
+   * @return the password
+   */
+  public String getPassword() {
+    return this.password;
+  }
+
+  /**
+   * @param password
+   *          the password to set
+   */
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   /**

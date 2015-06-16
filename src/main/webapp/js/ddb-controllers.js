@@ -102,7 +102,10 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                         }
                     });
                     $scope.submit = function() {
-                        console.log($scope);
+                        console.log($scope.profile);
+                        ProfileService.edit($scope.profile, function(response) {
+                            console.log(response);
+                        });
                     };
                 } ])
 

@@ -31,7 +31,7 @@ public class LoginController {
   MemberService        memberService;
 
   @Resource
-  AuthorizationService authService;
+  AuthorizationService authorizationService;
 
   /**
    * login
@@ -44,11 +44,9 @@ public class LoginController {
     Member member_from_db = memberService.getByAccount(member.getAccount());
     if (member_from_db != null
         && StringUtils.equals(member_from_db.getPassword(), member.getPassword())) {
-      System.out.println(member_from_db.getPassword() + " : " + member.getPassword());
-
-      Cookie cookie = authService.buildCookie(AuthorizationToken.newInstance(
-          member_from_db.getId(), member_from_db.getAccount(), authService.buildExpiredStamp(),
-          member_from_db.getRole()));
+      Cookie cookie = authorizationService.buildCookie(AuthorizationToken.newInstance(
+          member_from_db.getId(), member_from_db.getAccount(), member_from_db.getPassword(),
+          authorizationService.buildExpiredStamp(), member_from_db.getRole()));
       if (cookie == null) {
         return GeneralResponseData.newInstance(STATUS.FAIL, "FAIL_001");
       } else {

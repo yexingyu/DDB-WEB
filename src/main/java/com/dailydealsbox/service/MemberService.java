@@ -33,4 +33,12 @@ public interface MemberService {
    * @return
    */
   public List<Member> getAll();
+
+  /**
+   * update
+   * 
+   * @param member
+   * @return
+   */
+  public Member update(Member member);
 }
