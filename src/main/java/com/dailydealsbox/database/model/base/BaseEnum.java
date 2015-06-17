@@ -83,4 +83,11 @@ public class BaseEnum {
   public static enum PRODUCT_TAX_TYPE {
     PERCENTAGE
   }
+
+  /**
+   * @author x_ye
+   */
+  public static enum RESPONSE_STATUS {
+    SUCCESS, FAIL, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT
+  }
 }

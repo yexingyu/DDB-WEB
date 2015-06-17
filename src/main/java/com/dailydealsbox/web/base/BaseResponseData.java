@@ -3,17 +3,19 @@
  */
 package com.dailydealsbox.web.base;
 
+import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
+
 /**
  * @author x_ye
  */
 public class BaseResponseData {
-  private STATUS status;
-  private Object data = null;
+  private RESPONSE_STATUS status;
+  private Object          data = null;
 
   /*
    * Constructors
    */
-  public BaseResponseData(STATUS status, Object data) {
+  public BaseResponseData(RESPONSE_STATUS status, Object data) {
     this.setStatus(status);
     this.setData(data);
   }
@@ -21,7 +23,7 @@ public class BaseResponseData {
   /**
    * @return the status
    */
-  public STATUS getStatus() {
+  public RESPONSE_STATUS getStatus() {
     return this.status;
   }
 
@@ -29,7 +31,7 @@ public class BaseResponseData {
    * @param status
    *          the status to set
    */
-  public void setStatus(STATUS status) {
+  public void setStatus(RESPONSE_STATUS status) {
     this.status = status;
   }
 
@@ -48,10 +50,4 @@ public class BaseResponseData {
     this.data = data;
   }
 
-  /**
-   * @author x_ye
-   */
-  public static enum STATUS {
-    SUCCESS, FAIL, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT
-  }
 }

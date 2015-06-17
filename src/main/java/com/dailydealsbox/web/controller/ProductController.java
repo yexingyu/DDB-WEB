@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.service.AuthorizationService;
 import com.dailydealsbox.service.ProductService;
-import com.dailydealsbox.web.base.BaseResponseData.STATUS;
 import com.dailydealsbox.web.base.GeneralResponseData;
 
 /**
@@ -40,9 +40,9 @@ public class ProductController {
   public GeneralResponseData all() throws Exception {
     List<Product> products = productService.getAll();
     if (products == null || products.isEmpty()) {
-      return GeneralResponseData.newInstance(STATUS.EMPTY_RESULT, "");
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GeneralResponseData.newInstance(STATUS.SUCCESS, products);
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
     }
   }
 
@@ -57,9 +57,9 @@ public class ProductController {
   public GeneralResponseData retrieve(@PathVariable("id") int id) throws Exception {
     Product product = productService.get(id);
     if (product == null) {
-      return GeneralResponseData.newInstance(STATUS.EMPTY_RESULT, "");
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GeneralResponseData.newInstance(STATUS.SUCCESS, product);
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
     }
   }
 

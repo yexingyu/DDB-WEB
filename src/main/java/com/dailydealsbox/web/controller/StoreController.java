@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Store;
+import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.service.AuthorizationService;
 import com.dailydealsbox.service.StoreService;
-import com.dailydealsbox.web.base.BaseResponseData.STATUS;
 import com.dailydealsbox.web.base.GeneralResponseData;
 
 /**
@@ -39,9 +39,9 @@ public class StoreController {
   public GeneralResponseData all() {
     List<Store> stores = storeService.getAll();
     if (stores == null || stores.isEmpty()) {
-      return GeneralResponseData.newInstance(STATUS.EMPTY_RESULT, "");
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GeneralResponseData.newInstance(STATUS.SUCCESS, stores);
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, stores);
     }
   }
 
@@ -55,9 +55,9 @@ public class StoreController {
   public GeneralResponseData retrieve(@PathVariable("id") int id) {
     Store store = storeService.get(id);
     if (store == null) {
-      return GeneralResponseData.newInstance(STATUS.EMPTY_RESULT, "");
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GeneralResponseData.newInstance(STATUS.SUCCESS, store);
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, store);
     }
   }
 
