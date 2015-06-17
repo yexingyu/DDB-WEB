@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Member;
+import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.service.AuthorizationService;
 import com.dailydealsbox.service.MemberService;
 import com.dailydealsbox.web.base.AuthorizationToken;
@@ -44,7 +45,7 @@ public class MembersController {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
       return GeneralResponseData.newInstance(STATUS.NEED_LOGIN, "");
-    } else if (token.getRole() == Member.ROLE.ADMIN) {
+    } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
       List<Member> members = service.getAll();
       //System.out.println(members);
       if (members == null || members.size() == 0) {

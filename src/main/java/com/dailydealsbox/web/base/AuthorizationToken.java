@@ -3,7 +3,7 @@
  */
 package com.dailydealsbox.web.base;
 
-import com.dailydealsbox.database.model.Member;
+import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 
 /**
  * @author x_ye
@@ -12,7 +12,7 @@ public class AuthorizationToken {
   private int         memberId;
   private String      account;
   private String      password;
-  private Member.ROLE role;
+  private MEMBER_ROLE role;
   private long        expired;
 
   /**
@@ -35,7 +35,7 @@ public class AuthorizationToken {
    * @return
    */
   public static AuthorizationToken newInstance(int memberId, String account, String password,
-      long expired, Member.ROLE role) {
+      long expired, MEMBER_ROLE role) {
     return new AuthorizationToken(memberId, account, password, expired, role);
   }
 
@@ -45,7 +45,7 @@ public class AuthorizationToken {
   public AuthorizationToken() {}
 
   public AuthorizationToken(int memberId, String account, String password, long expired,
-      Member.ROLE role) {
+      MEMBER_ROLE role) {
     this.setMemberId(memberId);
     this.setAccount(account);
     this.setPassword(password);
@@ -71,7 +71,7 @@ public class AuthorizationToken {
   /**
    * @return the role
    */
-  public Member.ROLE getRole() {
+  public MEMBER_ROLE getRole() {
     return this.role;
   }
 
@@ -79,7 +79,7 @@ public class AuthorizationToken {
    * @param role
    *          the role to set
    */
-  public void setRole(Member.ROLE role) {
+  public void setRole(MEMBER_ROLE role) {
     this.role = role;
   }
 
