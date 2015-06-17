@@ -1,4 +1,5 @@
-angular.module('adminApp', [ 'ngRoute', 'adminApp.controllers', 'adminApp.services' ]).config(
+angular.module('adminApp',
+        [ 'ngRoute', 'adminApp.controllers', 'adminApp.services', 'ddbApp.services' ]).config(
         [ '$routeProvider', function($routeProvider) {
             $routeProvider.when('/home', {
                 templateUrl : 'tpl-admin-home.html',
@@ -13,6 +14,7 @@ angular.module('adminApp', [ 'ngRoute', 'adminApp.controllers', 'adminApp.servic
             });
         } ])
 
-.run([ '$rootScope', '$window', function($rootScope, $window) {
+.run([ '$rootScope', '$window', 'ConstantService', function($rootScope, $window, ConstantService) {
     $rootScope.apiUrl = "http://localhost:8080";
+    ConstantService.init();
 } ]);

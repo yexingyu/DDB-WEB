@@ -1,5 +1,22 @@
 angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 
+.factory('ConstantService', [ '$rootScope', '$resource', function($rootScope, $resource) {
+    return {
+        init : function() {
+            $resource($rootScope.apiUrl + '/api/constant', {}, {
+                'query' : {
+                    method : 'GET',
+                    isArray : false
+                }
+            }).query(function(response) {
+                if (response.status == 'SUCCESS') {
+                    $rootScope.constant = response.data;
+                }
+            });
+        }
+    };
+} ])
+
 .factory('MenuService', [ '$rootScope', function($rootScope) {
     return {
         setCurrent : function(id) {

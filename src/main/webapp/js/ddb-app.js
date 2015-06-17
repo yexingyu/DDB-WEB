@@ -38,8 +38,9 @@ angular.module('ddbApp', [ 'ngRoute', 'ddbApp.controllers', 'ddbApp.services' ])
     });
 } ])
 
-.run([ '$rootScope', '$window', function($rootScope, $window) {
+.run([ '$rootScope', '$window', 'ConstantService', function($rootScope, $window, ConstantService) {
     $rootScope.apiUrl = "http://localhost:8080";
+    ConstantService.init();
     $rootScope.profile = {
         sw : ""
     };

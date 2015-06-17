@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ADDRESS_COUNTRY;
+import com.dailydealsbox.database.model.base.BaseEnum.COUNTRY;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ADDRESS_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,42 +32,42 @@ public class MemberAddress extends BaseModel {
 
   @NotNull
   @Column(name = "member_id", nullable = false)
-  private int                    memberId;
+  private int                 memberId;
 
   @NotNull
   @Column(name = "address1", nullable = false, length = 255)
-  private String                 address1;
+  private String              address1;
 
   @NotNull
   @Column(name = "address2", nullable = false, length = 255)
-  private String                 address2;
+  private String              address2;
 
   @NotNull
   @Column(name = "city", nullable = false, length = 255)
-  private String                 city;
+  private String              city;
 
   @NotNull
   @Column(name = "region", nullable = false, length = 255)
-  private String                 region;
+  private String              region;
 
   @NotNull
   @Column(name = "country", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_ADDRESS_COUNTRY country;
+  private COUNTRY             country;
 
   @NotNull
   @Column(name = "post_code", nullable = false, length = 50)
-  private String                 postCode;
+  private String              postCode;
 
   @NotNull
   @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_ADDRESS_TYPE    type;
+  private MEMBER_ADDRESS_TYPE type;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id", insertable = false, updatable = false)
-  private Member                 member;
+  private Member              member;
 
   public boolean validate() {
     if (StringUtils.isBlank(this.getAddress1())) {
@@ -191,7 +191,7 @@ public class MemberAddress extends BaseModel {
   /**
    * @return the country
    */
-  public MEMBER_ADDRESS_COUNTRY getCountry() {
+  public COUNTRY getCountry() {
     return this.country;
   }
 
@@ -199,7 +199,7 @@ public class MemberAddress extends BaseModel {
    * @param country
    *          the country to set
    */
-  public void setCountry(MEMBER_ADDRESS_COUNTRY country) {
+  public void setCountry(COUNTRY country) {
     this.country = country;
   }
 
