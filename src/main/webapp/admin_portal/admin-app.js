@@ -9,6 +9,10 @@ angular.module('adminApp',
                 templateUrl : 'tpl-admin-login.html',
                 controller : 'AdminLoginCtrl'
                 	
+            }).when('/dashboard', {
+                templateUrl : 'tpl-admin-dashboard.html',
+                controller : 'DashboardCtrl'
+                	
             }).when('/product', {
                 templateUrl : 'tpl-admin-product-index.html',
                 controller : 'PMCtrl'
@@ -16,9 +20,17 @@ angular.module('adminApp',
             }).when('/pm-product/:id', {
                 templateUrl : 'tpl-admin-product-detail.html',
                 controller : 'PMProductCtrl'              	
-            
+
+            }).when('/flot', {
+                templateUrl : 'tpl-admin-flot.html',
+                controller : 'FlotCtrl'
+                	
+            }).when('/morris', {
+                templateUrl : 'tpl-admin-morris.html',
+                controller : 'MorrisCtrl'                   	
+                	
             }).otherwise({
-                redirectTo : '/home'
+                redirectTo : '/dashboard'
             });
         } ])
 

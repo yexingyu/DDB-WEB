@@ -6,6 +6,16 @@ angular.module('adminApp.controllers', [ 'angular-md5' ])
                 function($scope, $location, AdminLoginService) {
                     AdminLoginService.check();
                 } ])
+                
+/*
+ * DashboardCtrl definition
+ */
+.controller(
+        'DashboardCtrl',
+        [ '$scope', '$location', 
+                function($scope, $location) {
+                } ])                       
+                
 
 /*
  * PMCtrl definition
@@ -34,8 +44,25 @@ angular.module('adminApp.controllers', [ 'angular-md5' ])
                             $scope.product = response.data;
                         }
                     });
-                } ])                
+                } ])
                 
+/*
+ * FlotCtrl definition
+ */
+.controller(
+        'FlotCtrl',
+        [ '$scope', '$location', 
+                function($scope, $location) {
+                } ])                       
+                                
+ /*
+ * MorrisCtrl definition
+ */
+.controller(
+        'MorrisCtrl',
+        [ '$scope', '$location', 
+                function($scope, $location) {
+                } ])                   
 .controller(
         'AdminLoginCtrl',
         [ '$scope', '$location', 'AdminLoginService', 'md5',
