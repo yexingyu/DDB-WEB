@@ -42,11 +42,11 @@
             <span>Address:</span><br />
             <span ng-repeat="address in profile.addresses">
                 <select ng-model="address.type" ng-options="addressType for addressType in $root.constant.MEMBER_ADDRESS_TYPE"></select> : 
-                <input type="text" ng-model="address.address1" /> 
-                <input type="text" ng-model="address.address2" />, 
-                <input type="text" ng-model="address.city" />, 
-                <input type="text" ng-model="address.region" />, 
-                <input type="text" ng-model="address.postCode" />, 
+                <input type="text" placeholder="Address Line 1" ng-model="address.address1" /> 
+                <input type="text" placeholder="Address Line 2" ng-model="address.address2" />, 
+                <input type="text" placeholder="City" ng-model="address.city" />, 
+                <input type="text" placeholder="Province" ng-model="address.region" />, 
+                <input type="text" placeholder="Postal Code" ng-model="address.postCode" />, 
                 <select ng-model="address.country" ng-options="country for country in $root.constant.COUNTRY"></select>
                 [<a ng-click="profile.addresses.splice($index, 1)">X</a>]<br />
             </span>
