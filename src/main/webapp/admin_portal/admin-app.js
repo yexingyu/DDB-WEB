@@ -8,7 +8,15 @@ angular.module('adminApp',
             }).when('/login', {
                 templateUrl : 'tpl-admin-login.html',
                 controller : 'AdminLoginCtrl'
-
+                	
+            }).when('/product', {
+                templateUrl : 'tpl-admin-product-index.html',
+                controller : 'PMCtrl'
+                	
+            }).when('/pm-product/:id', {
+                templateUrl : 'tpl-admin-product-detail.html',
+                controller : 'PMProductCtrl'              	
+            
             }).otherwise({
                 redirectTo : '/home'
             });

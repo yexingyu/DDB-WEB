@@ -7,6 +7,35 @@ angular.module('adminApp.controllers', [ 'angular-md5' ])
                     AdminLoginService.check();
                 } ])
 
+/*
+ * PMCtrl definition
+ */
+.controller(
+        'PMCtrl',
+        [ '$scope', '$location', 'ProductService',
+                function($scope, $location, ProductService) {
+                    ProductService.home(function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.items = response.data;
+                        }
+                    });
+                } ])         
+ 
+/*
+ * PMProductCtrl definition
+ */
+.controller(
+        'PMProductCtrl',
+        [ '$scope', '$location', '$routeParams', 'ProductService',
+                function($scope, $location, $routeParams, ProductService, MenuService) {
+                    var id = $routeParams.id;
+                    ProductService.get(id, function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.product = response.data;
+                        }
+                    });
+                } ])                
+                
 .controller(
         'AdminLoginCtrl',
         [ '$scope', '$location', 'AdminLoginService', 'md5',
