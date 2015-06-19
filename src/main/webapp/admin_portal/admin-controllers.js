@@ -69,7 +69,13 @@ angular.module('adminApp.controllers', [ 'angular-md5' ])
                             console.log(response);
                         });
                     };                    
-                    
+
+                    $scope.add = function() {
+                        console.log($scope.product);
+                        ProductService.add($scope.product, function(response) {
+                            console.log(response);
+                        });
+                    };                     
                 } ])
                 
 /*
