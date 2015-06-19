@@ -77,6 +77,16 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                     isArray : false
                 }
             }).query(success);
-        }
+        },
+        edit : function(product, success) {
+            var productResource = $resource($rootScope.apiUrl + '/api/product', {}, {
+                'login' : {
+                    method : 'PUT',
+                    isArray : false
+                }
+            });
+            new productResource(product).$login(success);
+        }        
+        
     };
 } ]);

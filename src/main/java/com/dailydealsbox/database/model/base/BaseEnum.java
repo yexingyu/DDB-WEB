@@ -44,11 +44,11 @@ public class BaseEnum {
   }
 
   public static enum PRODUCT_FEE_TITLE {
-    SHIPPING;
+    SHIPPING, ECO;
   }
 
   public static enum PRODUCT_FEE_TYPE {
-    PERCENTAGE, DOLLER;
+    PERCENTAGE, AMOUNT;
   }
 
   public static enum PRODUCT_TAX_TITLE {
@@ -56,7 +56,7 @@ public class BaseEnum {
   }
 
   public static enum PRODUCT_TAX_TYPE {
-    PERCENTAGE;
+    PERCENTAGE, AMOUNT;
   }
 
   public static enum RESPONSE_STATUS {

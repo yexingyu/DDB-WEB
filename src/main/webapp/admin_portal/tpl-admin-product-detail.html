@@ -7,7 +7,8 @@
 </div>
 -->
 <h1 class="page-header">TEST ID:{{product.id}}</h1>
-
+<div class="row">
+	<div class="col-lg-6">
 <!-- product URL panel-->
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -46,8 +47,9 @@
             </div>
             <div class="panel-footer">
             </div>
-        </div>    
-
+        </div>
+    </div>    
+	<div class="col-lg-6">
 <!-- product price, tax fee panel-->
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -64,21 +66,46 @@
 			                <br />
 			            </span>
 			            <span>
-			                [<a ng-click="product.prices.push({memberId:profile.id, countryCode:'+1'})">Add</a>]
+			                [<a ng-click="product.prices.push({productId:product.id})">Add</a>]
 			            </span>
 	                </p>  	            	            
 		        </div>
 		        <div class="form-group">
-		            <label>Tax:</label> 	            	            
+		            <label>Tax:</label>
+		            <p>
+			            <span ng-repeat="tax in product.taxes">
+			                <select ng-model="tax.title" ng-options="title as title for title in $root.constant.PRODUCT_TAX_TITLE"></select> 
+			                <select ng-model="tax.type" ng-options="type as type for type in $root.constant.PRODUCT_TAX_TYPE"></select> :
+			                <input type="text" ng-model="tax.value" />
+			                [<a ng-click="product.taxes.splice($index, 1)">X</a>]
+			                <br />
+			            </span>
+			            <span>
+			                [<a ng-click="product.taxes.push({productId:product.id})">Add</a>]
+			            </span>
+	                </p>  		             	            	            
 		        </div>
 		        <div class="form-group">
-		            <label>Fee:</label> 	            	            
+		            <label>Fee:</label>
+		            <p>
+			            <span ng-repeat="fee in product.fees">
+			                <select ng-model="fee.title" ng-options="title as title for title in $root.constant.PRODUCT_FEE_TITLE"></select> 
+			                <select ng-model="fee.type" ng-options="type as type for type in $root.constant.PRODUCT_FEE_TYPE"></select> :
+			                <input type="text" ng-model="fee.value" />
+			                [<a ng-click="product.fees.splice($index, 1)">X</a>]
+			                <br />
+			            </span>
+			            <span>
+			                [<a ng-click="product.fees.push({productId:product.id})">Add</a>]
+			            </span>
+	                </p>  			            	            	            
 		        </div>			        		        
 		    </div>
             <div class="panel-footer">
             </div>
         </div>
-
+    </div>
+</div>
 <!-- product image panel-->
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -115,6 +142,6 @@
             </div>
         </div>        
             
-       <button type="submit" class="btn btn-default">Submit Button</button>
+       <button type="submit" class="btn btn-default" ng-click="submit()" >Submit Button</button>
        <button type="reset" class="btn btn-default">Reset Button</button>
 </div>
