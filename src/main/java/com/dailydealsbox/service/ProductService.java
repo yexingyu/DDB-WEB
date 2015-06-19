@@ -5,6 +5,7 @@ package com.dailydealsbox.service;
 
 import java.util.List;
 
+import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Product;
 
 /**
@@ -25,5 +26,7 @@ public interface ProductService {
    * @return
    */
   public List<Product> getAll();
+  
+  public Product update(Product Product); 
 
 }
