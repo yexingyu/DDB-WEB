@@ -25,7 +25,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('LoginService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         login : function(member, success) {
-            var LoginResource = $resource('api/login', {}, {
+            var LoginResource = $resource('/api/login', {}, {
                 'login' : {
                     method : 'POST',
                     isArray : false
@@ -39,7 +39,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('ProfileService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         profile : function(success) {
-            return $resource('api/profile', {}, {
+            return $resource('/api/profile', {}, {
                 'query' : {
                     method : 'GET',
                     isArray : false
@@ -47,7 +47,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             }).query(success);
         },
         edit : function(profile, success) {
-            var profileResource = $resource('api/profile', {}, {
+            var profileResource = $resource('/api/profile', {}, {
                 'login' : {
                     method : 'PUT',
                     isArray : false
@@ -61,7 +61,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('ProductService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         home : function(success) {
-            return $resource('api/product', {}, {
+            return $resource('/api/product', {}, {
                 'query' : {
                     method : 'GET',
                     isArray : false
@@ -69,7 +69,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             }).query(success);
         },
         get : function(id, success) {
-            return $resource('api/product/:id', {
+            return $resource('/api/product/:id', {
                 'id' : id
             }, {
                 'query' : {
@@ -86,7 +86,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                 }
             });
             new productResource(product).$login(success);
-        }        
-        
+        }
+
     };
 } ]);

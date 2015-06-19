@@ -2,7 +2,7 @@ angular.module('ddbApp.constants', [ 'ngResource' ])
 
 .run([ '$rootScope', '$resource', function($rootScope, $resource) {
     $rootScope.constantMapper = {};
-    $resource('api/constant', {}, {
+    $resource('/api/constant', {}, {
         'query' : {
             method : 'GET',
             isArray : false
@@ -14,7 +14,7 @@ angular.module('ddbApp.constants', [ 'ngResource' ])
         }
     });
 
-    $resource('data/language.json', {}, {
+    $resource('/data/language.json', {}, {
         'query' : {
             method : 'GET',
             isArray : false
@@ -23,7 +23,7 @@ angular.module('ddbApp.constants', [ 'ngResource' ])
         $rootScope.constantMapper.LANGUAGE = response;
     });
 
-    $resource('data/country.json', {}, {
+    $resource('/data/country.json', {}, {
         'query' : {
             method : 'GET',
             isArray : false
