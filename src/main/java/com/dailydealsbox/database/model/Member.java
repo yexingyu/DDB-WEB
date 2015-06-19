@@ -6,6 +6,7 @@ package com.dailydealsbox.database.model;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,15 +14,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_LOGIN_TYPE;
@@ -31,7 +29,8 @@ import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
  * @author x_ye
  */
 @Entity
-@Table(name = "member", uniqueConstraints = { @UniqueConstraint(columnNames = "account") })
+//@Table(name = "member", uniqueConstraints = { @UniqueConstraint(columnNames = "account") })
+@Table(name = "member")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Member extends BaseEntityModel {
 
@@ -68,25 +67,25 @@ public class Member extends BaseEntityModel {
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "member",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+  //@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberPhone>   phones;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "member",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+  //@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberEmail>   emails;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "member",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+  //@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberAddress> addresses;
 

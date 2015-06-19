@@ -6,6 +6,7 @@ package com.dailydealsbox.database.model;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,8 +20,6 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -54,49 +53,43 @@ public class Product extends BaseEntityModel {
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "product",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductName>        names;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "product",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductDescription> descriptions;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "product",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductImage>       images;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "product",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductPrice>       prices;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "product",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductFee>         fees;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "product",
-    cascade = { javax.persistence.CascadeType.ALL },
+    cascade = { CascadeType.ALL },
     orphanRemoval = true)
-  @Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTax>         taxes;
 

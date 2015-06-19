@@ -27,10 +27,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ProductImage extends BaseModel {
 
   @NotNull
-  @Column(name = "product_id", nullable = false)
-  private int     productId;
-
-  @NotNull
   @Column(name = "url", nullable = false, length = 512)
   private String  url;
 
@@ -48,7 +44,7 @@ public class ProductImage extends BaseModel {
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_id", insertable = false, updatable = false)
+  @JoinColumn(name = "product_id")
   private Product product;
 
   /**
@@ -83,21 +79,6 @@ public class ProductImage extends BaseModel {
    */
   public void setProduct(Product product) {
     this.product = product;
-  }
-
-  /**
-   * @return the productId
-   */
-  public int getProductId() {
-    return this.productId;
-  }
-
-  /**
-   * @param productId
-   *          the productId to set
-   */
-  public void setProductId(int productId) {
-    this.productId = productId;
   }
 
   /**

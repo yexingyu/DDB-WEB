@@ -29,9 +29,16 @@ public interface ProductService {
   /**
    * update
    * 
-   * @param Product
+   * @param product
    * @return
    */
-  public Product update(Product Product);
+  public Product update(Product product);
 
+  /**
+   * insert
+   * 
+   * @param product
+   * @return
+   */
+  public Product insert(Product product);
 }

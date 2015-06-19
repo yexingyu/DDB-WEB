@@ -29,10 +29,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ProductPrice extends BaseModel {
 
   @NotNull
-  @Column(name = "product_id", nullable = false)
-  private int      productId;
-
-  @NotNull
   @Column(name = "value", nullable = false)
   private double   value;
 
@@ -43,7 +39,7 @@ public class ProductPrice extends BaseModel {
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_id", insertable = false, updatable = false)
+  @JoinColumn(name = "product_id")
   private Product  product;
 
   /**
@@ -84,21 +80,6 @@ public class ProductPrice extends BaseModel {
    */
   public void setProduct(Product product) {
     this.product = product;
-  }
-
-  /**
-   * @return the productId
-   */
-  public int getProductId() {
-    return this.productId;
-  }
-
-  /**
-   * @param productId
-   *          the productId to set
-   */
-  public void setProductId(int productId) {
-    this.productId = productId;
   }
 
   /**
