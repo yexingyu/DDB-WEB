@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.service.ProductService;
@@ -42,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
   public List<Product> getAll() {
     return (List<Product>) repo.findAll();
   }
-  
+
   @Override
   public Product update(Product product) {
     return repo.save(product);
