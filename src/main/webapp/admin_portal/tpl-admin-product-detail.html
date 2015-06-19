@@ -1,5 +1,5 @@
 <div ng-form="myForm">
-<!--  
+<!-- 
 <div>
     <span>
         <pre>{{product | json}}</pre>
@@ -7,6 +7,30 @@
 </div>
 -->
 <h1 class="page-header">TEST ID:{{product.id}}</h1>
+<!-- product index preview-->        
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                Test Index Preview
+            </div>
+            <div class="panel-body">
+            
+            </div>
+            <div class="panel-footer">
+            </div>
+        </div>     
+
+<!-- product detail preview-->        
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                Test Index Detail Preview
+            </div>
+            <div class="panel-body">
+            
+            </div>
+            <div class="panel-footer">
+            </div>
+        </div> 
+
 <div class="row">
 	<div class="col-lg-6">
 <!-- product URL panel-->
@@ -112,7 +136,19 @@
                 TEST Image
             </div>
             <div class="panel-body">
-                
+		        <div class="form-group">
+		            <label>Image URL:</label>
+		            <p>
+			            <span ng-repeat="image in product.images">
+			                <input class="form-control" type="text" ng-model="image.url" />
+			                [<a ng-click="product.images.splice($index, 1)">X</a>]
+			                <br />
+			            </span>
+			            <span>
+			                [<a ng-click="product.images.push({productId:product.id})">Add</a>]
+			            </span>
+	                </p>  	            	            
+		        </div>                
             </div>
             <div class="panel-footer">
             </div>
@@ -125,22 +161,40 @@
                 TEST Name, Description
             </div>
             <div class="panel-body">
-                
+		        <div class="form-group">
+		            <label>Test Name:</label>
+		            <p>
+			            <span ng-repeat="name in product.names">
+			                <select ng-model="name.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select>
+			                <input class="form-control" type="text" ng-model="name.value" />
+			                [<a ng-click="product.names.splice($index, 1)">X</a>]
+			                <br />
+			            </span>
+			            <span>
+			                [<a ng-click="product.names.push({productId:product.id})">Add</a>]
+			            </span>
+	                </p>  	            	            
+		        </div>
+		        <div class="form-group">
+		            <label>Test Description:</label>
+		            <p>
+			            <span ng-repeat="description in product.descriptions">
+			                <select ng-model="description.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select>
+			                <textarea class="form-control" rows="3" ng-model="description.value" >
+			                </textarea>
+			                [<a ng-click="product.descriptions.splice($index, 1)">X</a>]
+			                <br />
+			            </span>
+			            <span>
+			                [<a ng-click="product.descriptions.push({productId:product.id})">Add</a>]
+			            </span>
+	                </p>  	            	            
+		        </div>  		                            
             </div>
             <div class="panel-footer">
             </div>
         </div>
-<!-- product preview-->        
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                Test Preview
-            </div>
-            <div class="panel-body">
-            
-            </div>
-            <div class="panel-footer">
-            </div>
-        </div>        
+   
             
        <button type="submit" class="btn btn-default" ng-click="submit()" >Submit Button</button>
        <button type="reset" class="btn btn-default">Reset Button</button>
