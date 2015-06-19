@@ -8,58 +8,59 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.EnumUtils;
+
 /**
  * @author x_ye
  */
 public class BaseEnum {
 
   public static enum MEMBER_ROLE {
-    MEMBER, ADMIN
+    MEMBER, ADMIN;
   }
 
   public static enum MEMBER_LOGIN_TYPE {
-    DAILYDEALSBOX, FACEBOOK
+    DAILYDEALSBOX, FACEBOOK;
   }
 
   public static enum COUNTRY {
-    CA, US
+    CA, US;
   }
 
   public static enum MEMBER_ADDRESS_TYPE {
-    BILLING, LIVING, SHIPPING
+    BILLING, LIVING, SHIPPING;
   }
 
   public static enum MEMBER_PHONE_TYPE {
-    MOBILE, HOME, WORK, FAX
+    MOBILE, HOME, WORK, FAX;
   }
 
   public static enum LANGUAGE {
-    EN, FR
+    EN, FR;
   }
 
   public static enum CURRENCY {
-    CAD, USD
+    CAD, USD;
   }
 
   public static enum PRODUCT_FEE_TITLE {
-    SHIPPING
+    SHIPPING;
   }
 
   public static enum PRODUCT_FEE_TYPE {
-    PERCENTAGE, DOLLER
+    PERCENTAGE, DOLLER;
   }
 
   public static enum PRODUCT_TAX_TITLE {
-    FEDERAL, PROVINCE, DUTY
+    FEDERAL, PROVINCE, DUTY;
   }
 
   public static enum PRODUCT_TAX_TYPE {
-    PERCENTAGE
+    PERCENTAGE;
   }
 
   public static enum RESPONSE_STATUS {
     SUCCESS, FAIL, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT;
-
   }
 
   /**
@@ -78,4 +79,8 @@ public class BaseEnum {
     return map;
   }
 
+  public static void main(String[] args) {
+
+    System.out.println(EnumUtils.getEnumMap(COUNTRY.class));
+  }
 }

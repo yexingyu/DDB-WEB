@@ -1,0 +1,12 @@
+{
+    "EN":{
+        "CA":"Canada",
+        "US":"United States",
+        "CN":"P.R. China"
+    },
+    "FR":{
+        "CA":"Canada",
+        "US":"États Unis",
+        "CN":"P.R. Chine"
+    }
+}
