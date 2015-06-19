@@ -137,10 +137,12 @@
             </div>
             <div class="panel-body">
 		        <div class="form-group">
-		            <label>Image URL:</label>
+		            <label>Image:</label>
 		            <p>
 			            <span ng-repeat="image in product.images">
-			                <input class="form-control" type="text" ng-model="image.url" />
+			            	URL: <input class="form-control" type="text" ng-model="image.url" />
+			                ALT: <input class="form-control" type="text" ng-model="image.alt" />
+
 			                [<a ng-click="product.images.splice($index, 1)">X</a>]
 			                <br />
 			            </span>
