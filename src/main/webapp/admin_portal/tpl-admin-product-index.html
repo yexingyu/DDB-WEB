@@ -1,14 +1,77 @@
-<div class="article borders" ng-repeat="item in items">
-    <div class="title">
-        <h2><a href="#/product/{{item.id}}">{{item.names[0].value}}</a></h2>
-        <span class="byline">something to show here!</span>
-    </div>
-    <span class="image image-pmp"><img ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}" /></a></span>
-    <span>
-        Price: ${{item.prices[0].value}} ({{item.prices[0].currency}})<br />
-        Fee: <span ng-repeat="fee in item.fees">{{fee.title}} : <span ng-if="fee.type=='DOLLER'">$</span>{{fee.value}}<span ng-if="fee.type=='PERCENTAGE'">%</span><br /></span>
-        Tax: <span ng-repeat="tax in item.taxes">{{tax.title}} : {{tax.value}}<span ng-if="tax.type=='PERCENTAGE'">%</span><br /></span>
-        [<a href="#/pm-order/{{item.id}}"><b>ORDER</b></a>]<br>
-        Description: <span class="pmp-desc">{{item.descriptions[0].value}}</span>
-    </span>
-</div>
+<div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Product <a href="#/product/add"><button type="button" class="btn btn-outline btn-primary btn-lg">Add</button></a></h1> 
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                
+<div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Best Selling
+                        </div>
+                        <!-- .panel-heading -->
+                        <div class="panel-body">
+                            <div class="panel-group" id="accordion" ng-repeat="item in items">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="#/product/{{item.id}}"><button type="button" class="btn btn-outline btn-primary">Edit</button></a>
+                                            <a href="#/product/{{item.id}}"><button type="button" class="btn btn-outline btn-primary">Deactivate</button></a>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{item.id}}" target="_self"><button type="button" class="btn btn-outline btn-primary">Collapse</button></a>
+                                            <button type="button" class="btn btn-info"> ${{item.prices[0].currency}}{{item.prices[0].value}} </button>
+                                            <a href="{{item.url}}" target="_blank">{{item.names[0].value}}</a>
+
+                                        </h4>
+                                    </div>
+                                    <div id="collapse{{item.id}}" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                                <span class="image image-pmp"><img ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}" /></span>
+											    <span>
+
+											        Fee: <span ng-repeat="fee in item.fees">{{fee.title}} : <span ng-if="fee.type=='DOLLER'">$</span>{{fee.value}}<span ng-if="fee.type=='PERCENTAGE'">%</span><br /></span>
+											        Tax: <span ng-repeat="tax in item.taxes">{{tax.title}} : {{tax.value}}<span ng-if="tax.type=='PERCENTAGE'">%</span><br /></span>
+											        [<a href="#/pm-order/{{item.id}}"><b>ORDER</b></a>]<br>
+											        Description: <span class="pmp-desc">{{item.descriptions[0].value}}</span>
+											    </span>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- .panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>            
+
+                
+<div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Top Rated
+                        </div>
+                        <!-- .panel-heading -->
+                        <div class="panel-body">
+
+                            </div>
+                        </div>
+                        <!-- .panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                
+  <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Deal
+                        </div>
+                        <!-- .panel-heading -->
+                        <div class="panel-body">
+
+                            </div>
+                        </div>
+                        <!-- .panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>              
+
