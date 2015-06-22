@@ -34,10 +34,10 @@ angular.module('adminApp.controllers', [ 'angular-md5' ])
                 } ])         
  
 /*
- * PMProductCtrl definition
+ * PMProductEdit definition
  */
 .controller(
-        'PMProductCtrl',
+        'PMProductEdit',
         [ '$scope', '$location', '$routeParams', 'ProductService',
                 function($scope, $location, $routeParams, ProductService, MenuService) {
                     var id = $routeParams.id;

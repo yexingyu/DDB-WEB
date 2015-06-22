@@ -17,10 +17,14 @@ angular.module(
     }).when('/product', {
         templateUrl : 'tpl-admin-product-index.html',
         controller : 'PMCtrl'
-
-    }).when('/pm-product/:id', {
-        templateUrl : 'tpl-admin-product-detail.html',
-        controller : 'PMProductCtrl'
+        	
+    }).when('/product/add', {
+        templateUrl : 'tpl-admin-product-add.html',
+        controller : 'PMProductAdd'
+        	
+    }).when('/product/:id', {
+        templateUrl : 'tpl-admin-product-edit.html',
+        controller : 'PMProductEdit'
 
     }).when('/flot', {
         templateUrl : 'tpl-admin-flot.html',
