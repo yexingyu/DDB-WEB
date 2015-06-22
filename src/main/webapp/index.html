@@ -37,13 +37,16 @@
                         <div ng-switch on="$root.profile.sw">
                             <div ng-switch-when="membership">
                                 Welcome {{$root.profile.firstName}}
-                                <button ng-click="logout()">
-                                    Sign Out</a>
+                                <button ng-click="logout()">Sign Out</button>
                             </div>
                             <div ng-switch-default>
                                 <a href="#/login" title="Sign In">Sign In</a>
                             </div>
                         </div>
+                        <button ng-click="switchLanguage()">
+                            <span ng-if="language.language == 'FR'">English</span>
+                            <span ng-if="language.language == 'EN'">French</span>
+                        </button>
                     </li>
                 </ul>
             </div>

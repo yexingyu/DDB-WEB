@@ -15,12 +15,25 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                         }
                     });
 
+                    // logout
                     $scope.logout = function() {
                         CookieService.logout();
                         $scope.$root.profile = {
                             sw : ""
                         };
                         $location.path('/home');
+                    };
+
+                    // switch language
+                    $scope.language = $scope.$root.language;
+                    $scope.switchLanguage = function() {
+                        if ($scope.$root.language.language == 'FR') {
+                            $scope.$root.language.language = 'EN';
+                        } else {
+                            $scope.$root.language.language = 'FR'
+                        }
+                        CookieService.setLanguage($scope.$root.language.language);
+                        console.log($scope.$root.language);
                     };
                 } ])
 /*

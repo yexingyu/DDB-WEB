@@ -22,7 +22,7 @@
                 <br />
             </span>
             <span>
-                [<a ng-click="profile.phones.push({memberId:profile.id, countryCode:'+1'})">Add</a>]
+                [<a ng-click="profile.phones.push({countryCode:'+1'})">Add</a>]
             </span>
         </li>
         <li>
@@ -35,7 +35,7 @@
                 <br />
             </span>
             <span>
-                [<a ng-click="profile.emails.push({memberId:profile.id})">Add</a>]
+                [<a ng-click="profile.emails.push({})">Add</a>]
             </span>
         </li>
         <li>
@@ -51,7 +51,7 @@
                 [<a ng-click="profile.addresses.splice($index, 1)">X</a>]<br />
             </span>
             <span>
-                [<a ng-click="profile.addresses.push({memberId:profile.id})">Add</a>]
+                [<a ng-click="profile.addresses.push({})">Add</a>]
             </span>
         </li>
         <li>

@@ -14,10 +14,23 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
     };
 } ])
 
-.factory('CookieService', [ '$cookies', function($cookies) {
+.factory('CookieService', [ '$rootScope', '$cookies', function($rootScope, $cookies) {
     return {
         logout : function() {
             $cookies.remove('token');
+        },
+        setLanguage : function(lang) {
+            $cookies.put('lang', lang.toUpperCase());
+        },
+        getLanguage : function() {
+            var lang = $cookies.get('lang');
+            if (lang == 'FR') {
+                lang = 'FR';
+            } else {
+                lang = 'EN';
+            }
+            $cookies.put('lang', lang.toUpperCase());
+            return lang;
         }
     };
 } ])
