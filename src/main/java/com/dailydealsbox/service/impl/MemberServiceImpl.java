@@ -57,7 +57,17 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public Member update(Member member) {
+    member.setMemberForChildren();
     return repo.save(member);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.service.MemberService#insert(com.dailydealsbox.database.model.Member)
+   */
+  @Override
+  public Member insert(Member member) {
+    return this.update(member);
   }
 
 }

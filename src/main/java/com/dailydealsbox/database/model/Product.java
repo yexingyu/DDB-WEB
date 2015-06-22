@@ -38,7 +38,7 @@ public class Product extends BaseEntityModel {
   private String                  url;
 
   @NotNull
-  @Column(name = "key", nullable = false, length = 64)
+  @Column(name = "`key`", nullable = false, length = 64)
   private String                  key;
 
   @NotNull
@@ -282,4 +282,27 @@ public class Product extends BaseEntityModel {
     this.storeId = storeId;
   }
 
+  /**
+   * setProductForChildren
+   */
+  public void setProductForChildren() {
+    for (ProductDescription o : this.getDescriptions()) {
+      o.setProduct(this);
+    }
+    for (ProductFee o : this.getFees()) {
+      o.setProduct(this);
+    }
+    for (ProductImage o : this.getImages()) {
+      o.setProduct(this);
+    }
+    for (ProductName o : this.getNames()) {
+      o.setProduct(this);
+    }
+    for (ProductPrice o : this.getPrices()) {
+      o.setProduct(this);
+    }
+    for (ProductTax o : this.getTaxes()) {
+      o.setProduct(this);
+    }
+  }
 }
