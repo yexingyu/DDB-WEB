@@ -150,9 +150,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * AboutCtrl definition
  */
-.controller(
-        'AboutCtrl',
-        [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
-                function($scope, $location, PayMonthlyService, MenuService) {
-                    MenuService.setCurrent(3);
-                } ]);
+.controller('AboutCtrl',
+        [ '$scope', '$location', 'MenuService', function($scope, $location, MenuService) {
+            MenuService.setCurrent(3);
+        } ]);

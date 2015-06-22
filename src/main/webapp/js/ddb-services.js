@@ -17,7 +17,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('CookieService', [ '$cookies', function($cookies) {
     return {
         logout : function() {
-            $cookies.token = '';
+            $cookies.remove('token');
         }
     };
 } ])
@@ -95,8 +95,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                 }
             });
             new productResource(product).$login(success);
-        }        
-        
+        }
 
     };
 } ]);
