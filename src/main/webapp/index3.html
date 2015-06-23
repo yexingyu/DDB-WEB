@@ -13,6 +13,9 @@
     <!-- Bootstrap core CSS -->
     <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
 
+    <!-- styles needed by swiper slider -->
+    <link href="assets/css/idangerous.swiper.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="assets/css/style.css" rel="stylesheet">
 
@@ -469,6 +472,7 @@
                                     Position)</a></li>
                                 <li><a href="product-details-style4.html"> Product Details Version 4 (Zoom + Litebox
                                     )</a></li>
+
                             </ul>
                             <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
                                 <li class="no-border">
@@ -678,103 +682,177 @@
 </div>
 <!-- /.Fixed navbar  -->
 
-<div class="banner">
-    <div class="full-container">
-        <div class="slider-content">
-            <ul id="pager2" class="container">
-            </ul>
-            <!-- prev/next links -->
+<div class="banner banner-boxes">
+    <div class="slider-content"><span class="prevControl sliderControl"> <i class="fa fa-angle-left fa-3x "></i></span>
+        <span class="nextControl sliderControl"> <i class="fa fa-angle-right fa-3x "></i></span>
 
-            <span class="prevControl sliderControl"> <i class="fa fa-angle-left fa-3x "></i></span> <span
-                class="nextControl sliderControl"> <i class="fa fa-angle-right fa-3x "></i></span>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide slide-2x">
+                    <div class="box-slider-content">
+                        <div class="box-text">
+                            <h1>NEW COLLECTION</h1>
 
-            <div class="slider slider-v1"
-                 data-cycle-swipe=true
-                 data-cycle-prev=".prevControl"
-                 data-cycle-next=".nextControl" data-cycle-loader="wait">
-                <div class="slider-item slider-item-img1"><img src="images/slider/slider0.jpg"
-                                                               class="img-responsive parallaximg sliderImg" alt="img">
+                            <p>Veggies es bonus vobis, proinde vos postulo essum magis
+                                kohlrabi welsh onion daikon amaranth.</p>
+                            <a class="btn btn-stroke-light"> SHOP NOW</a></div>
+                        <div class="box-content-overly">
+                            <!-- Delete this div if you dont want overly effect -->
+                        </div>
+                        <a href="#" class="box-img"> <img src="images/slider/box/1.jpg" alt="img"></a></div>
                 </div>
-                <div class="slider-item slider-item-img1">
-                    <div class="sliderInfo">
-                        <div class="container">
-                            <div class="col-lg-12 col-md-12 col-sm-12 sliderTextFull ">
-                                <div class="inner text-center">
-                                    <div class="topAnima animated">
-                                        <h1 class="uppercase xlarge">FREE SHIPPING</h1>
-
-                                        <h3 class="hidden-xs"> Free Standard Shipping on Orders Over $100 </h3>
-                                    </div>
-                                    <a class="btn btn-danger btn-lg bottomAnima animated opacity0">SHOP NOW ON TSHOP
-                                        <span class="arrowUnicode">►</span></a></div>
+                <div class="swiper-slide slide-2x">
+                    <div class="slider-box-top">
+                        <div class="box-slider-content">
+                            <div class="box-text-table">
+                                <div class="box-text-cell">
+                                    <h1 class="bolder-style light"><a href="#">SALE</a></h1>
+                                    <span class="bolder-sub"> <a href="#"> EXTRA 80% OFF </a> </span></div>
                             </div>
+                            <div class="box-content-overly">
+                                <!-- Delete this div if you dont want overly effect -->
+                            </div>
+                            <a href="#" class="box-img"> <img src="images/slider/box/2a.jpg" alt="img"></a></div>
+                    </div>
+                    <div class="slider-box-bottom">
+                        <div class="box-slider-content">
+                            <div class="box-price-tag"><span class="price">$200</span></div>
+                            <a href="#" class="box-img"> <img src="images/slider/box/2b.jpg" alt="img"> </a>
+
+                            <div class="box-content-overly"><a href="#" class="box-blank-url">
+                                <!-- keep this blank. This link will provide a hyperlink over the box-content-overly div -->
+                            </a></div>
                         </div>
                     </div>
-                    <img src="images/slider/slider1.jpg" class="img-responsive parallaximg sliderImg" alt="img"></div>
-                <!--/.slider-item-->
+                </div>
+                <div class="swiper-slide slide-2x">
+                    <div class="box-slider-content">
+                        <div class="box-text bottom-align">
+                            <h1>MEN COLLECTION</h1>
+                            <a class="btn btn-stroke-light"> SHOP NOW</a></div>
+                        <a href="#" class="box-img"> <img src="images/slider/box/3.jpg" alt="img"></a>
 
-                <div class="slider-item slider-item-img2 ">
-                    <div class="sliderInfo">
-                        <div class="container">
-                            <div class="col-lg-12 col-md-12 col-sm-12 sliderTextFull  ">
-                                <div class="inner dark maxwidth500 text-center animated topAnima">
-                                    <div class=" ">
-                                        <h1 class="uppercase xlarge"> CUSTOM HTML BLOCK</h1>
+                        <div class="box-content-overly"><a href="#" class="box-blank-url"> </a></div>
+                    </div>
+                </div>
+                <div class="swiper-slide slide-4x">
+                    <div class="box-4in a">
+                        <div class="box-slider-content"><a href="#" class="box-img"> <img src="images/slider/box/4a.jpg"
+                                                                                          alt="img"></a>
 
-                                        <h3 class="hidden-xs"> Custom Slides to Your Slider </h3>
-                                    </div>
-                                    <a class="btn btn-danger btn-lg">SHOP NOW ON TSHOP <span
-                                            class="arrowUnicode">►</span></a></div>
-                            </div>
+                            <div class="box-content-overly"><a href="#" class="box-blank-url"> </a></div>
                         </div>
                     </div>
-                    <img src="images/slider/slider3.jpg" class="img-responsive parallaximg sliderImg" alt="img"></div>
-                <!--/.slider-item-->
+                    <div class="box-4in b">
+                        <div class="box-slider-content"><a href="#" class="box-img"> <img src="images/slider/box/4b.jpg"
+                                                                                          alt="img"></a>
 
-                <div class="slider-item slider-item-img3 ">
-                    <div class="sliderInfo">
-                        <div class="container">
-                            <div class="col-lg-5 col-md-4 col-sm-6 col-xs-8   pull-left sliderText white hidden-xs">
-                                <div class="inner">
-                                    <h1>TSHOP JEANS</h1>
+                            <div class="box-content-overly"><a href="#" class="box-blank-url"> </a></div>
+                        </div>
+                    </div>
+                    <div class="box-4in c">
+                        <div class="box-slider-content"><a href="#" class="box-img"> <img src="images/slider/box/4c.jpg"
+                                                                                          alt="img"></a>
 
-                                    <h3 class="price "> Free Shipping on $100</h3>
-
-                                    <p class="hidden-xs">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-                                        diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-                                        volutpat. </p>
-                                    <a href="category.html" class="btn btn-primary">SHOP NOW <span class="arrowUnicode">►</span></a>
+                            <div class="box-content-overly box-content-overly-white">
+                                <div class="box-text-table">
+                                    <div class="box-text-cell"><a class="btn btn-stroke-dark"> VIEW DEAL</a></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <img src="images/slider/slider4.jpg" class="img-responsive parallaximg sliderImg" alt="img"></div>
-                <!--/.slider-item-->
+                    <div class="box-4in d">
+                        <div class="box-slider-content"><a href="#" class="box-img"> <img src="images/slider/box/4d.jpg"
+                                                                                          alt="img"></a>
 
-                <div class="slider-item slider-item-img3">
-                    <div class="sliderInfo">
-                        <div class="container">
-                            <div class="col-lg-5 col-md-6 col-sm-5 col-xs-5 pull-left sliderText blankstyle transformRight">
-                                <div class="inner text-right"><img src="images/slider/color.png" class="img-responsive"
-                                                                   alt="img"></div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-7   pull-left sliderText blankstyle color-white">
-                                <div class="inner">
-                                    <h1 class="uppercase topAnima animated ">10+ Amazing Color Theme</h1>
-
-                                    <p class="bot tomAnima animated opacity0 hidden-xs"> Fully responsive bootstrap
-                                        Ecommerce Template. Available in 10+ color schemes and easy to set. </p>
+                            <div class="box-content-overly box-content-overly-white">
+                                <div class="box-text-table">
+                                    <div class="box-text-cell"><a class="btn btn-stroke-dark"> VIEW DEAL</a></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <img src="images/slider/6.jpg" class="img-responsive parallaximg sliderImg" alt="img"></div>
+                </div>
+                <div class="swiper-slide slide-2x">
+                    <div class="box-slider-content"><a href="#" class="box-img"> <img src="images/slider/box/6.jpg"
+                                                                                      alt="img"></a>
+
+                        <div class="box-content-overly box-content-overly-white">
+                            <div class="box-text-table">
+                                <div class="box-text-cell ">
+                                    <div class="box-text-cell-inner dark">
+                                        <h1>New Summer Look</h1>
+
+                                        <p>Veggies es bonus vobis, proinde vos postulo essum magis
+                                            kohlrabi welsh onion daikon amaranth.</p>
+                                        <a class="btn btn-stroke-dark"> SHOP NOW</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide slide-2x">
+                    <div class="slider-box-top">
+                        <div class="box-slider-content">
+                            <div class="box-content-overly box-content-overly-white">
+                                <div class="box-text-table">
+                                    <div class="box-text-cell"><span class="price dealprice"> $ 120 </span> <a
+                                            class="btn btn-stroke-dark"> VIEW DEAL</a></div>
+                                </div>
+                            </div>
+                            <a href="#" class="box-img"> <img src="images/slider/box/7b.jpg" alt="img"></a></div>
+                    </div>
+                    <div class="slider-box-bottom">
+                        <div class="box-4in c">
+                            <div class="box-slider-content"><a href="#" class="box-img"> <img
+                                    src="images/slider/box/7b1.jpg" alt="img"></a>
+
+                                <div class="box-content-overly box-content-overly-white">
+                                    <div class="box-text-table">
+                                        <div class="box-text-cell"><span class="price"> $ 450 </span> <a
+                                                class="btn btn-stroke-dark"> VIEW DEAL</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-4in d">
+                            <div class="box-slider-content"><a href="#" class="box-img"> <img
+                                    src="images/slider/box/7b2.jpg" alt="img"></a>
+
+                                <div class="box-content-overly box-content-overly-white">
+                                    <div class="box-text-table">
+                                        <div class="box-text-cell"><span class="price"> $ 680 </span> <a
+                                                class="btn btn-stroke-dark"> VIEW DEAL</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide slide-1x">
+                    <div class="box-slider-content"><a href="#" class="box-img last-child-slide"> <img
+                            src="images/slider/box/5.jpg" alt="img"></a>
+
+                        <div class="box-content-overly box-content-overly-white">
+                            <div class="box-text-table">
+                                <div class="box-text-cell ">
+                                    <div class="box-text-cell-inner dark">
+                                        <h1>Discover it</h1>
+
+                                        <p>Veggies es bonus vobis, proinde vos postulo essum magis
+                                            kohlrabi welsh onion daikon amaranth.</p>
+                                        <a class="btn btn-stroke-dark"> SHOP NOW</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--/.slider slider-v1-->
+            <div class="box-pagination"></div>
         </div>
-        <!--/.slider-content-->
+
+        <!--/.full-container-->
     </div>
-    <!--/.full-container-->
 </div>
 <!--/.banner style1-->
 
@@ -1042,244 +1120,6 @@
 <!--/.parallax-image-1-->
 
 <div class="container main-container">
-
-
-    <!-- Demo Features Content start -->
-
-    <div class="morePost row featuredPostContainer style2 globalPaddingTop ">
-        <!-- this div is for demo || Please remove it when use this page -->
-
-        <h3 class="section-title style2 text-center"><span>NEW FEATURES</span></h3>
-
-        <div class="container">
-            <div class="row xsResponse categoryProduct">
-
-
-                <div class="item itemauto col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                    <div class="product">
-                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
-                           data-placement="left">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-
-                        <div class="imageHover">
-
-                            <div class="promotion"><span class="discount">15% OFF</span></div>
-
-                            <div id="carousel-id-1" class="carousel slide" data-ride="carousel" data-interval="0">
-                                <!-- Indicators -->
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carousel-id-1" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carousel-id-1" data-slide-to="1"></li>
-                                    <li data-target="#carousel-id-1" data-slide-to="2"></li>
-                                </ol>
-
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner" role="listbox">
-                                    <div class="item active"><a href="product-details.html"> <img
-                                            src="images/product/5.jpg" alt="img" class="img-responsive "></a></div>
-                                    <div class="item"><a href="product-details.html"> <img src="images/product/21.jpg"
-                                                                                           alt="img"
-                                                                                           class="img-responsive "></a>
-                                    </div>
-                                    <div class="item"><a href="product-details.html"> <img src="images/product/30.jpg"
-                                                                                           alt="img"
-                                                                                           class="img-responsive "></a>
-                                    </div>
-                                </div>
-
-                                <!-- Controls -->
-                                <a class="left carousel-control" href="#carousel-id-1" role="button" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="right carousel-control" href="#carousel-id-1" role="button" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="description">
-                            <h4><a href="product-details.html"> Product Slider </a></h4>
-
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel
-                                    fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin
-                                    odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit
-                                    vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent
-                                    sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span></div>
-                        <div class="price"><span>$25</span></div>
-                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
-                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
-                    </div>
-                </div>
-                <!--/.item-->
-
-
-                <div class="item itemauto col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                    <div class="product">
-                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
-                           data-placement="left">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-
-                        <div class="imageHover">
-
-                            <div id="carousel-id-2" class="carousel slide carousel-fade" data-ride="carousel">
-                                <!-- Indicators -->
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carousel-id-2" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carousel-id-2" data-slide-to="1"></li>
-                                    <li data-target="#carousel-id-2" data-slide-to="2"></li>
-                                </ol>
-
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner" role="listbox">
-                                    <div class="item active"><a href="product-details.html"> <img
-                                            src="images/product/22.jpg" alt="img" class="img-responsive "></a></div>
-                                    <div class="item"><a href="product-details.html"> <img src="images/product/5.jpg"
-                                                                                           alt="img"
-                                                                                           class="img-responsive "></a>
-                                    </div>
-                                    <div class="item"><a href="product-details.html"> <img src="images/product/18.jpg"
-                                                                                           alt="img"
-                                                                                           class="img-responsive "></a>
-                                    </div>
-                                </div>
-
-                                <!-- Controls -->
-                                <a class="left carousel-control" href="#carousel-id-2" role="button" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="right carousel-control" href="#carousel-id-2" role="button" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="description">
-                            <h4><a href="product-details.html"> Slider FadeIn </a></h4>
-
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel
-                                    fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin
-                                    odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit
-                                    vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent
-                                    sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span></div>
-                        <div class="price"><span>$25</span></div>
-                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
-                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
-                    </div>
-                </div>
-
-                <!--/.item-->
-                <div class="item itemauto  col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                    <div class="product">
-                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
-                           data-placement="left">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-
-                        <div class="imageHover">
-                            <a href="product-details.html">
-                                <img src="images/product/12.jpg" alt="img" class="img-responsive primaryImage">
-                                <img src="images/product/21.jpg" alt="img" class="img-responsive secondaryImage"></a>
-
-                            <div class="promotion"><span class="discount">15% OFF</span></div>
-                        </div>
-
-
-                        <div class="description">
-                            <h4><a href="product-details.html"> Hover FadeIn </a></h4>
-
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel
-                                    fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin
-                                    odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit
-                                    vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent
-                                    sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span></div>
-                        <div class="price"><span>$25</span></div>
-                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
-                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
-                    </div>
-                </div>
-                <!--/.item-->
-
-                <div class="item itemauto  col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                    <div class="product">
-                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
-                           data-placement="left">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-
-                        <div class="imageHover imageHoverFlip">
-                            <a href="product-details.html"><img src="images/product/7.jpg" alt="img"
-                                                                class="img-responsive primaryImage">
-                                <img src="images/product/13.jpg" alt="img" class="img-responsive secondaryImage"></a>
-
-                            <div class="promotion"><span class="discount">15% OFF</span></div>
-                        </div>
-
-
-                        <div class="description">
-                            <h4><a href="product-details.html"> Hover Flip </a></h4>
-
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel
-                                    fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin
-                                    odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit
-                                    vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent
-                                    sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span></div>
-                        <div class="price"><span>$25</span></div>
-                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
-                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
-                    </div>
-                </div>
-                <!--/.item-->
-
-
-            </div>
-        </div>
-
-    </div>
-    <!-- Demo Features Content end -->
 
     <!-- Main component call to action -->
 
@@ -1913,53 +1753,31 @@
     <!--/.footer-bottom-->
 </footer>
 
-
-<div class="modal fade hide" id="modalAds" role="dialog">
-    <div class="modal-dialog  modal-bg-1">
-        <div class="modal-body-content">
-            <a class="close" data-dismiss="modal">×</a>
-
-            <div class="modal-body">
-                <div class="col-lg-6 col-sm-8 col-xs-8">
-                    <h3>enter your <br>email to receive</h3>
-
-                    <p class="discountLg">10% OFF </p>
-
-                    <p>We invite you to subscribe to our newsletter and receive 10% discount.
-                    </p>
-
-                    <div class="clearfx">
-                        <form id="newsletter" class="newsletter">
-                            <input type="text" id="subscribe" name="s" placeholder="Enter email">
-                            <button class="subscribe-btn">Subscribe</button>
-                        </form>
-                    </div>
-
-                    <p><a href="category.html" class="link shoplink"> SHOP NOW <i class="fa fa-caret-right"> </i> </a>
-                    </p>
-
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 <!-- Le javascript
 ================================================== -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
-</script>
+<script type="text/javascript" src="assets/js/jquery/jquery-1.10.1.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/idangerous.swiper-2.1.min.js"></script>
 <script>
-    // this script required for subscribe modal
-    $(window).load(function () {
-        // full load
-        $('#modalAds').modal('show');
-        $('#modalAds').removeClass('hide');
-    });
+    var mySwiper = new Swiper('.swiper-container', {
+        pagination: '.box-pagination',
+        keyboardControl: true,
+        paginationClickable: true,
+        slidesPerView: 'auto',
+        autoResize: true,
+        resizeReInit: true,
+    })
 
+    $('.prevControl').on('click', function (e) {
+        e.preventDefault()
+        mySwiper.swipePrev()
+    })
+    $('.nextControl').on('click', function (e) {
+        e.preventDefault()
+        mySwiper.swipeNext()
+    })
 </script>
 
 <!-- include jqueryCycle plugin -->
@@ -1995,10 +1813,8 @@
 
 <!-- include custom script for only homepage  -->
 <script src="assets/js/home.js"></script>
+
 <!-- include custom script for site  -->
 <script src="assets/js/script.js"></script>
-<script>
-
-</script>
 </body>
 </html>
