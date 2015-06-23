@@ -41,4 +41,12 @@ public interface MemberService {
    * @return
    */
   public Member update(Member member);
+
+  /**
+   * insert
+   * 
+   * @param member
+   * @return
+   */
+  public Member insert(Member member);
 }

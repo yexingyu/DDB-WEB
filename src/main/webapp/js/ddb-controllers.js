@@ -15,12 +15,25 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                         }
                     });
 
+                    // logout
                     $scope.logout = function() {
                         CookieService.logout();
                         $scope.$root.profile = {
                             sw : ""
                         };
                         $location.path('/home');
+                    };
+
+                    // switch language
+                    $scope.language = $scope.$root.language;
+                    $scope.switchLanguage = function() {
+                        if ($scope.$root.language.language == 'FR') {
+                            $scope.$root.language.language = 'EN';
+                        } else {
+                            $scope.$root.language.language = 'FR'
+                        }
+                        CookieService.setLanguage($scope.$root.language.language);
+                        console.log($scope.$root.language);
                     };
                 } ])
 /*
@@ -150,9 +163,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * AboutCtrl definition
  */
-.controller(
-        'AboutCtrl',
-        [ '$scope', '$location', 'PayMonthlyService', 'MenuService',
-                function($scope, $location, PayMonthlyService, MenuService) {
-                    MenuService.setCurrent(3);
-                } ]);
+.controller('AboutCtrl',
+        [ '$scope', '$location', 'MenuService', function($scope, $location, MenuService) {
+            MenuService.setCurrent(3);
+        } ]);

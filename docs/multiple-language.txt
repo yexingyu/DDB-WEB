@@ -1,0 +1,9 @@
+backup:
+
+https://lostechies.com/gabrielschenker/2014/02/11/angularjspart-12-multi-language-support/
+test.html
+
+
+-edit gruntfile.js
+-grunt nggettext_extract
+-grunt nggettext_compile

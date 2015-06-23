@@ -282,4 +282,19 @@ public class Member extends BaseEntityModel {
     this.account = account;
   }
 
+  /**
+   * setMemberForChildren
+   */
+  public void setMemberForChildren() {
+    for (MemberAddress o : this.getAddresses()) {
+      o.setMember(this);
+    }
+    for (MemberEmail o : this.getEmails()) {
+      o.setMember(this);
+    }
+    for (MemberPhone o : this.getPhones()) {
+      o.setMember(this);
+    }
+  }
+
 }

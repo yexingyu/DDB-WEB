@@ -27,16 +27,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class MemberEmail extends BaseModel {
 
   @NotNull
-  @Column(name = "member_id", nullable = false)
-  private int    memberId;
-
-  @NotNull
   @Column(name = "email", nullable = false, length = 100)
   private String email;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id", insertable = false, updatable = false)
+  @JoinColumn(name = "member_id")
   private Member member;
 
   /**
@@ -46,7 +42,6 @@ public class MemberEmail extends BaseModel {
    */
   public boolean validate() {
     if (StringUtils.isBlank(this.getEmail())) { return false; }
-    if (this.getMemberId() <= 0) { return false; }
     return true;
   }
 
@@ -63,21 +58,6 @@ public class MemberEmail extends BaseModel {
    */
   public void setMember(Member member) {
     this.member = member;
-  }
-
-  /**
-   * @return the memberId
-   */
-  public int getMemberId() {
-    return this.memberId;
-  }
-
-  /**
-   * @param memberId
-   *          the memberId to set
-   */
-  public void setMemberId(int memberId) {
-    this.memberId = memberId;
   }
 
   /**

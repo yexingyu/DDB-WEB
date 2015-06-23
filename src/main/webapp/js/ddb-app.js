@@ -41,9 +41,13 @@ angular
         } ])
 
         .run(
-                [ '$rootScope', '$window', 'ConstantService',
-                        function($rootScope, $window, ConstantService) {
+                [ '$rootScope', '$window', 'CookieService', 'ConstantService',
+                        function($rootScope, $window, CookieService, ConstantService) {
                             ConstantService.init();
+                            $rootScope.language = {
+                                'language' : CookieService.getLanguage()
+                            };
+                            console.log($rootScope);
 
                             $rootScope.profile = {
                                 sw : ""

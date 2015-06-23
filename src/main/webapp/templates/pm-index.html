@@ -1,14 +1,22 @@
 <div class="article borders" ng-repeat="item in items">
     <div class="title">
-        <h2><a href="#/pm-product/{{item.id}}">{{item.names[0].value}}</a></h2>
+        <h2>
+            <a href="#/pm-product/{{item.id}}">
+                <span ng-repeat="name in item.names | filter: {language: $root.language.language}">{{name.value}}</span>
+            </a>
+        </h2>
         <span class="byline">something to show here!</span>
     </div>
     <span class="image image-pmp"><img ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}" /></a></span>
     <span>
-        Price: ${{item.prices[0].value}} ({{item.prices[0].currency}})<br />
-        Fee: <span ng-repeat="fee in item.fees">{{fee.title}} : <span ng-if="fee.type=='DOLLER'">$</span>{{fee.value}}<span ng-if="fee.type=='PERCENTAGE'">%</span><br /></span>
+        Price: 
+            <span ng-repeat="price in item.prices">${{price.value}} ({{price.currency}})<br /></span>
+        Fee: 
+            <span ng-repeat="fee in item.fees">
+                {{fee.title}} : <span ng-if="fee.type=='DOLLER'">$</span>{{fee.value}}<span ng-if="fee.type=='PERCENTAGE'">%</span><br />
+            </span>
         Tax: <span ng-repeat="tax in item.taxes">{{tax.title}} : {{tax.value}}<span ng-if="tax.type=='PERCENTAGE'">%</span><br /></span>
         [<a href="#/pm-order/{{item.id}}"><b>ORDER</b></a>]<br>
-        Description: <span class="pmp-desc">{{item.descriptions[0].value}}</span>
+        Description: <span class="pmp-desc" ng-repeat="desc in item.descriptions | filter: {language: $root.language.language}">{{desc.value}}</span>
     </span>
 </div>

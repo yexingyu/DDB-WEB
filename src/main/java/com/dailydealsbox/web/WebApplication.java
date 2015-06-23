@@ -82,7 +82,6 @@ public class WebApplication extends SpringBootServletInitializer {
     properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
     properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
     properties.put("hibernate.enable_lazy_load_no_trans", true);
-    properties.put("hibernate.globally_quoted_identifiers", "true");
 
     // Second Cache Settings
     properties.put("hibernate.cache.provider_class", "org.hibernate.cache.EhCacheProvider");

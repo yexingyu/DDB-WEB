@@ -104,19 +104,19 @@ public class ProductController {
   public GeneralResponseData insert(
       @CookieValue(value = "token", required = false) String tokenString,
       @RequestBody Product product) {
-    //AuthorizationToken token = authorizationService.verify(tokenString);
-    //if (token == null) {
-    //  return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
-    //} else if (token.getRole() == MEMBER_ROLE.ADMIN) {
-    System.out.println(product);
-    if (product.validate()) {
-      Product productFromDb = productService.insert(product);
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
+    AuthorizationToken token = authorizationService.verify(tokenString);
+    if (token == null) {
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
+    } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
+      //System.out.println(product);
+      if (product.validate()) {
+        Product productFromDb = productService.insert(product);
+        return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
+      } else {
+        return GeneralResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+      }
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
     }
-    //} else {
-    //  return GeneralResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
-    //}
   }
 }

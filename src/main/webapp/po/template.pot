@@ -1,0 +1,13 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+
+#: test.html:36
+msgid "This is English."
+msgstr ""
+
+#: test.html:37
+msgid "We want to test globalization and localization."
+msgstr ""
