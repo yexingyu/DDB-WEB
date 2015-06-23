@@ -69,13 +69,7 @@ angular.module('adminApp.controllers', [ 'angular-md5' ])
                             console.log(response);
                         });
                     };                    
-
-                    $scope.add = function() {
-                        console.log($scope.product);
-                        ProductService.add($scope.product, function(response) {
-                            console.log(response);
-                        });
-                    };                     
+                    
                 } ])
 /*
  * PMProductAdd definition
@@ -101,18 +95,32 @@ angular.module('adminApp.controllers', [ 'angular-md5' ])
         	        	 { id: 4, type: "Local", name: "Brick" }
         	            ];                      
                     
-                    ProductService.get(id, function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.product = response.data;
-                        }
-                    });
-                    
-                    $scope.submit = function() {
-                        console.log($scope.product);
-                        ProductService.edit($scope.product, function(response) {
-                            console.log(response);
-                        });
-                    };                    
+                    $scope.product ={};
+                    $scope.product.prices = [
+                 { currency: 'CAD', value: '' },
+                 { currency: 'USD', value: '' } 
+                                          ];
+                 $scope.product.taxes = [
+                 { title: 'FEDERAL', type: 'PERCENTAGE', value :'' },
+                 { title: 'PROVINCE', type: 'PERCENTAGE', value :'' }
+                                         ];
+                 $scope.product.fees = [
+                 { title: 'SHIPPING', type: 'AMOUNT', value :'' },
+                 { title: 'ECO', type: 'AMOUNT', value :'' }   
+                                        ];
+                 
+                 $scope.product.images = [
+                 { url: '', alt: ''}                                            
+                                          ];
+                 $scope.product.names = [
+                 { language: 'EN', value: "" },
+                 { language: 'FR', value: "" }
+                                         ];
+                 $scope.product.descriptions = [
+                   { language: 'EN', value: "test" },
+                   { language: 'FR', value: "" }                                                   
+                                                ];
+           
 
                     $scope.add = function() {
                         console.log($scope.product);

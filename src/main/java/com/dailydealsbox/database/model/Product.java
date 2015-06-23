@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Product extends BaseEntityModel {
 
   @NotNull
-  @Size(min = 10, max = 100)
+  @Size(min = 10, max = 512)
   @Column(name = "url", nullable = false, length = 512)
   private String                  url;
 
