@@ -81,7 +81,7 @@ public abstract class BaseEntityModel extends BaseModel {
    * @author x_ye
    */
   public static enum STATUS {
-    AVAILABLE, UNAVAILABLE, DELETED
+    AVAILABLE, ACTIVE, INACTIVE
   }
 
 }
