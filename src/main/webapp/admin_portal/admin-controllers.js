@@ -117,7 +117,7 @@ angular.module('adminApp.controllers', [ 'angular-md5' ])
                  { language: 'FR', value: "" }
                                          ];
                  $scope.product.descriptions = [
-                   { language: 'EN', value: "test" },
+                   { language: 'EN', value: "" },
                    { language: 'FR', value: "" }                                                   
                                                 ];
            

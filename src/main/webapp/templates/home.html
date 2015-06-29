@@ -780,10 +780,10 @@
         <h3 class="section-title style2 text-center"><span>NEW FEATURES</span></h3>
 
         <div class="container">
-            <div class="row xsResponse categoryProduct">
+            <div class="row xsResponse categoryProduct" >
 
 
-                <div class="item itemauto col-lg-3 col-md-3 col-sm-6 col-xs-6" ng-repeat="item in items">
+                <div class="item itemauto col-lg-3 col-md-3 col-sm-6 col-xs-6" ng-repeat="(pIndex, item) in items">
                     <div class="product">
                         <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
                            data-placement="left">
@@ -793,18 +793,28 @@
 
                         <div class="imageHover">
 
-                            <div id="carousel-id-1" class="carousel slide" data-ride="carousel" data-interval="0">
-                                <!-- Indicators -->
-
+                            <div id="carousel-id-{{pIndex}}" class="carousel slide" data-ride="carousel" data-interval="0">
+							<!-- Indicators -->
+							<ol class="carousel-indicators" >
+							<li data-target="#carousel-id-{{pIndex}}" data-slide-to="{{$index}}"   ng-repeat="image in item.images" ng-class="{'active':  $first }"></li>
+							</ol>
 
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner" role="listbox">
-                                    <div class="item active" ng-repeat="image in item.images"><a href="product-details.html"> <img
+                                    <div class="item" ng-repeat="image in item.images" ng-class="{'active':  $first }"><a href="#/pm-product/{{item.id}}"> <img
                                             src="{{image.url}}" alt="img" class="img-responsive "></a></div>
+                                           
                                 </div>
 
-                                <!-- Controls -->
-
+                             <!-- Controls -->
+								<a class="left carousel-control" href="#carousel-id-{{pIndex}}" role="button" data-slide="prev" target="_self">
+								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+								</a>
+								<a class="right carousel-control" href="#carousel-id-{{pIndex}}" role="button" data-slide="next" target="_self">
+								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+								</a>   
                             </div>
 
 
@@ -822,7 +832,8 @@
                             </div>
                         <div class="price"><span>{{item.prices[0].currency}}$: {{item.prices[0].value}}</span></div>
                         <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
-                                class="glyphicon glyphicon-shopping-cart"> </i>Hassle Free Payment</span> </a></div>
+                                class="glyphicon glyphicon-shopping-cart"> </i> Hassle Free Payment</span> </a></div>
+
                     </div>
                 </div>
                 <!--/.item-->
