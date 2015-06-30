@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,5 +60,10 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public Product insert(Product product) {
     return this.update(product);
+  }
+
+  @Override
+  public List<Product> findByStoreId(int storeId, Pageable pageable) {
+    return repo.findByStoreId(storeId, pageable);
   }
 }

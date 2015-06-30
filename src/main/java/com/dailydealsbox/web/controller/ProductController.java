@@ -6,6 +6,7 @@ package com.dailydealsbox.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,14 +36,30 @@ public class ProductController {
   AuthorizationService authorizationService;
 
   /**
-   * all
+   * list
    * 
    * @return
    * @throws Exception
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData all() throws Exception {
+  public GeneralResponseData list() throws Exception {
     List<Product> products = productService.getAll();
+    if (products == null || products.isEmpty()) {
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+    } else {
+      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
+    }
+  }
+
+  /**
+   * findByStoreId
+   * 
+   * @param storeId
+   * @return
+   */
+  @RequestMapping(value = "store/{storeId}", method = RequestMethod.GET)
+  public GeneralResponseData findByStoreId(@PathVariable("storeId") int storeId, Pageable pageable) {
+    List<Product> products = productService.findByStoreId(storeId, pageable);
     if (products == null || products.isEmpty()) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
@@ -75,9 +92,7 @@ public class ProductController {
    * @return
    */
   @RequestMapping(method = { RequestMethod.PUT })
-  public GeneralResponseData update(
-      @CookieValue(value = "token", required = false) String tokenString,
-      @RequestBody Product product) {
+  public GeneralResponseData update(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Product product) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
@@ -101,9 +116,7 @@ public class ProductController {
    * @return
    */
   @RequestMapping(method = { RequestMethod.POST })
-  public GeneralResponseData insert(
-      @CookieValue(value = "token", required = false) String tokenString,
-      @RequestBody Product product) {
+  public GeneralResponseData insert(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Product product) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
