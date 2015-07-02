@@ -6,7 +6,6 @@ package com.dailydealsbox.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,22 +51,6 @@ public class ProductController {
   }
 
   /**
-   * findByStoreId
-   * 
-   * @param storeId
-   * @return
-   */
-  @RequestMapping(value = "store/{storeId}", method = RequestMethod.GET)
-  public GeneralResponseData findByStoreId(@PathVariable("storeId") int storeId, Pageable pageable) {
-    List<Product> products = productService.findByStoreId(storeId, pageable);
-    if (products == null || products.isEmpty()) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
-    } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
-    }
-  }
-
-  /**
    * retrieve
    * 
    * @param id
@@ -80,6 +63,8 @@ public class ProductController {
     if (product == null) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
+      System.out.println("storeId=" + product.getStore().getId());
+
       return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
     }
   }

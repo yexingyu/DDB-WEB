@@ -41,55 +41,33 @@ public class Product extends BaseEntityModel {
   @Column(name = "`key`", nullable = false, length = 64)
   private String                  key;
 
-  @NotNull
-  @Column(name = "store_id", nullable = false, length = 100)
-  private int                     storeId;
-
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "store_id", insertable = false, updatable = false)
+  @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Store                   store;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductName>        names;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductDescription> descriptions;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductImage>       images;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductPrice>       prices;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductFee>         fees;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTax>         taxes;
 
@@ -265,21 +243,6 @@ public class Product extends BaseEntityModel {
    */
   public void setKey(String key) {
     this.key = key;
-  }
-
-  /**
-   * @return the storeId
-   */
-  public int getStoreId() {
-    return this.storeId;
-  }
-
-  /**
-   * @param storeId
-   *          the storeId to set
-   */
-  public void setStoreId(int storeId) {
-    this.storeId = storeId;
   }
 
   /**

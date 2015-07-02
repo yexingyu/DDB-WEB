@@ -155,7 +155,11 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     $scope.submit = function() {
                         console.log($scope.profile);
                         ProfileService.edit($scope.profile, function(response) {
-                            console.log(response);
+                            if (response.status == 'SUCCESS') {
+                                $scope.profile = response.data;
+                            } else {
+                                $location.path('/login');
+                            }
                         });
                     };
                 } ])

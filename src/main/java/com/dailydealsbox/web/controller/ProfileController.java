@@ -37,8 +37,7 @@ public class ProfileController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData profile(
-      @CookieValue(value = "token", required = false) String tokenString) {
+  public GeneralResponseData profile(@CookieValue(value = "token", required = false) String tokenString) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
@@ -59,8 +58,7 @@ public class ProfileController {
    * @return
    */
   @RequestMapping(method = RequestMethod.PUT)
-  public GeneralResponseData edit(
-      @CookieValue(value = "token", required = false) String tokenString, @RequestBody Member member) {
+  public GeneralResponseData edit(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Member member) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");

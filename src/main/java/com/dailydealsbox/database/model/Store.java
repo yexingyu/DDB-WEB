@@ -3,6 +3,8 @@
  */
 package com.dailydealsbox.database.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -39,6 +41,10 @@ public class Store extends BaseEntityModel {
   @NotNull
   @Column(name = "deal_page", nullable = false, length = 512)
   private String dealPage;
+
+  //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "store", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  //  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  //  private Set<Product> products;
 
   /**
    * validate

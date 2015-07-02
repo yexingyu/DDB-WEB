@@ -65,27 +65,15 @@ public class Member extends BaseEntityModel {
   @Enumerated(EnumType.STRING)
   private MEMBER_LOGIN_TYPE  loginType;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "member",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  //@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberPhone>   phones;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "member",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  //@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberEmail>   emails;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "member",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  //@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberAddress> addresses;
 

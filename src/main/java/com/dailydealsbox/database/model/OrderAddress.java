@@ -31,10 +31,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class OrderAddress extends BaseModel {
 
   @NotNull
-  @Column(name = "order_id", nullable = false)
-  private int                 orderId;
-
-  @NotNull
   @Column(name = "address1", nullable = false, length = 255)
   private String              address1;
 
@@ -66,7 +62,7 @@ public class OrderAddress extends BaseModel {
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "order_id", insertable = false, updatable = false)
+  @JoinColumn(name = "order_id")
   private Order               order;
 
   public boolean validate() {
@@ -79,7 +75,6 @@ public class OrderAddress extends BaseModel {
     if (StringUtils.isBlank(this.getCity())) { return false; }
     if (StringUtils.isBlank(this.getPostCode())) { return false; }
     if (StringUtils.isBlank(this.getRegion())) { return false; }
-    if (this.getOrderId() <= 0) { return false; }
     return true;
   }
 
@@ -96,21 +91,6 @@ public class OrderAddress extends BaseModel {
    */
   public void setType(MEMBER_ADDRESS_TYPE type) {
     this.type = type;
-  }
-
-  /**
-   * @return the orderId
-   */
-  public int getOrderId() {
-    return this.orderId;
-  }
-
-  /**
-   * @param orderId
-   *          the orderId to set
-   */
-  public void setOrderId(int orderId) {
-    this.orderId = orderId;
   }
 
   /**
