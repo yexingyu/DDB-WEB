@@ -73,8 +73,13 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 
 .factory('ProductService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
-        home : function(success) {
-            return $resource('/api/product', {}, {
+        list : function(success, page, size) {
+            page = typeof page !== 'undefined' ? page : 0;
+            size = typeof size !== 'undefined' ? size : 20;
+            return $resource('/api/product', {
+                'page' : page,
+                'size' : size
+            }, {
                 'query' : {
                     method : 'GET',
                     isArray : false

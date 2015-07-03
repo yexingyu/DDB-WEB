@@ -6,6 +6,7 @@ package com.dailydealsbox.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,12 +38,14 @@ public class ProductController {
   /**
    * list
    * 
+   * @param pageable
    * @return
    * @throws Exception
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData list() throws Exception {
-    List<Product> products = productService.getAll();
+  public GeneralResponseData list(Pageable pageable) throws Exception {
+    System.out.println(pageable);
+    List<Product> products = productService.getAll(pageable);
     if (products == null || products.isEmpty()) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {

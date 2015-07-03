@@ -67,11 +67,11 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
         [ '$scope', '$location', 'ProductService', 'MenuService',
                 function($scope, $location, ProductService, MenuService) {
                     MenuService.setCurrent(1);
-                    ProductService.home(function(response) {
+                    ProductService.list(function(response) {
                         if (response.status == 'SUCCESS') {
                             $scope.items = response.data;
                         }
-                    });
+                    }, 0, 2);
                 } ])
 
 /*
@@ -153,17 +153,30 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * HomeCtrl definition
  */
-.controller(
-        'HomeCtrl',
-        [ '$scope', '$location', 'ProductService', 'MenuService',
-                function($scope, $location, ProductService, MenuService) {
-                    MenuService.setCurrent(0);
-                    ProductService.home(function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.items = response.data;
-                        }
-                    });
-                } ])
+.controller('HomeCtrl',
+        [ '$scope', '$location', 'ProductService', function($scope, $location, ProductService) {
+            // init product list
+            $scope.page = 0;
+            $scope.size = 3;
+            ProductService.list(function(response) {
+                if (response.status == 'SUCCESS') {
+                    $scope.items = response.data;
+                }
+            }, $scope.page, $scope.size);
+
+            // load more product
+            $scope.loadMore = function() {
+                $scope.page++;
+                console.log("page=" + $scope.page);
+                ProductService.list(function(response) {
+                    if (response.status == 'SUCCESS') {
+                        response.data.forEach(function(item) {
+                            $scope.items.push(item);
+                        });
+                    }
+                }, $scope.page, $scope.size);
+            };
+        } ])
 
 /*
  * ContactCtrl definition

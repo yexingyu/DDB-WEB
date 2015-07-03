@@ -24,9 +24,10 @@ public interface ProductService {
   /**
    * getAll
    * 
+   * @param pageable
    * @return
    */
-  public List<Product> getAll();
+  public List<Product> getAll(Pageable pageable);
 
   /**
    * findByStoreId

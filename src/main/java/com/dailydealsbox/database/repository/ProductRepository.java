@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.base.BaseEntityModel;
 
 /**
  * @author x_ye
@@ -20,5 +21,21 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   //    countQuery = ":cnt")
   //  List<Product> findByStoreId(@Param("storeId") int storeId, @Param("offset") int offset, @Param("cnt") int cnt);
 
+  /**
+   * findByStoreId
+   * 
+   * @param storeId
+   * @param pageable
+   * @return
+   */
   List<Product> findByStoreId(int storeId, Pageable pageable);
+
+  /**
+   * findByStatus
+   * 
+   * @param status
+   * @param pageable
+   * @return
+   */
+  List<Product> findByStatus(BaseEntityModel.STATUS status, Pageable pageable);
 }

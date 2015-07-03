@@ -1,0 +1,32 @@
+.load-more-block {
+    padding-bottom: 30px;
+    position: relative;
+}
+
+.load-more-block .btn-thin {
+    background: #fff;
+    z-index: 2;
+    position: relative;
+    box-shadow: -4px 0 0 #FFFFFF, 4px 0 0 #FFFFFF;
+    -webkit-box-shadow: -4px 0 0 #FFFFFF, 4px 0 0 #FFFFFF;
+    -moz-box-shadow: -4px 0 0 #FFFFFF, 4px 0 0 #FFFFFF;
+    -o-box-shadow: -4px 0 0 #FFFFFF, 4px 0 0 #FFFFFF;
+}
+
+.load-more-block:after {
+    background: none repeat scroll 0 0 #DDDDDD;
+    content: "";
+    display: block;
+    height: 1px;
+    margin-left: 30%;
+    position: absolute;
+    top: 18px;
+    width: 40%;
+    z-index: 1;
+}
+
+.btn-thin {
+    border: 1px solid #BDC3C7;
+    color: #BDC3C7;
+    background: none;
+}

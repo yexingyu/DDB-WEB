@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.base.BaseEntityModel;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.service.ProductService;
 
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.service.StoreService#get(int)
+   * @see com.dailydealsbox.service.ProductService#get(int)
    */
   @Override
   public Product get(int id) {
@@ -36,11 +37,11 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.service.StoreService#getAll()
+   * @see com.dailydealsbox.service.ProductService#getAll(org.springframework.data.domain.Pageable)
    */
   @Override
-  public List<Product> getAll() {
-    return (List<Product>) repo.findAll();
+  public List<Product> getAll(Pageable pageable) {
+    return repo.findByStatus(BaseEntityModel.STATUS.AVAILABLE, pageable);
   }
 
   /*
