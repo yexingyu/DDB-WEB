@@ -173,6 +173,8 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                         response.data.forEach(function(item) {
                             $scope.items.push(item);
                         });
+                    } else if (response.status == 'EMPTY_RESULT') {
+                        $scope.page--;
                     }
                 }, $scope.page, $scope.size);
             };
