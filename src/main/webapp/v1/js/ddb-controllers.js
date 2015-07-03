@@ -60,20 +60,6 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                 } ])
 
 /*
- * HomeCtrl definition
- */
-.controller(
-        'HomeCtrl',
-        [ '$scope', '$location', 'ProductService', 'MenuService',
-                function($scope, $location, ProductService, MenuService) {
-                    MenuService.setCurrent(0);
-                    ProductService.home(function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.items = response.data;
-                        }
-                    });
-                } ])
-/*
  * ProductCtrl definition
  */
 .controller(
@@ -165,9 +151,32 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                 } ])
 
 /*
+ * HomeCtrl definition
+ */
+.controller(
+        'HomeCtrl',
+        [ '$scope', '$location', 'ProductService', 'MenuService',
+                function($scope, $location, ProductService, MenuService) {
+                    MenuService.setCurrent(0);
+                    ProductService.home(function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.items = response.data;
+                        }
+                    });
+                } ])
+
+/*
+ * ContactCtrl definition
+ */
+.controller('ContactCtrl',
+        [ '$scope', '$location', 'MenuService', function($scope, $location, MenuService) {
+            // MenuService.setCurrent(3);
+        } ])
+
+/*
  * AboutCtrl definition
  */
 .controller('AboutCtrl',
         [ '$scope', '$location', 'MenuService', function($scope, $location, MenuService) {
-            MenuService.setCurrent(3);
+            // MenuService.setCurrent(3);
         } ]);

@@ -11,8 +11,16 @@ angular
                 templateUrl : 'tpl-home.html',
                 controller : 'HomeCtrl'
 
+            }).when('/contact', {
+                templateUrl : 'tpl-contact.html',
+                controller : 'ContactCtrl'
+
+            }).when('/about', {
+                templateUrl : 'tpl-about.html',
+                controller : 'AboutCtrl'
+
             }).when('/product', {
-                templateUrl : 'tpl-product-index.html',
+                templateUrl : 'tpl-product.html',
                 controller : 'ProductCtrl'
 
             }).when('/product/:id', {
@@ -30,10 +38,6 @@ angular
             }).when('/profile/edit', {
                 templateUrl : 'tpl-profile-edit.html',
                 controller : 'ProfileEditCtrl'
-
-            }).when('/about', {
-                templateUrl : 'tpl-about.html',
-                controller : 'AboutCtrl'
 
             }).otherwise({
                 redirectTo : '/home'
