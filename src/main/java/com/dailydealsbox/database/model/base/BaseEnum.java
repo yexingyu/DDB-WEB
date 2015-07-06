@@ -44,7 +44,7 @@ public class BaseEnum {
   }
 
   public static enum PRODUCT_FEE_TITLE {
-    SHIPPING, ECO;
+    SHIPPING, ECO, IMPORT;
   }
 
   public static enum PRODUCT_FEE_TYPE {
