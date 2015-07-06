@@ -3,7 +3,7 @@
     <div class="col-lg-4" ng-repeat="item in items">
         <img class="img-circle" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}" width="140" height="140">
         <h4 ng-repeat="name in item.names | filter: {language: $root.language.language}">{{name.value}}</h4>
-        <p ng-repeat="desc in item.descriptions | filter: {language: $root.language.language}">{{desc.value | limitTo:90}}</p>
+        <p ng-repeat="desc in item.descriptions | filter: {language: $root.language.language}">{{desc.value | limitTo:90}} </p>
         <p><a class="btn btn-default" href="#/product/{{item.id}}" role="button">View details &raquo;</a></p>
     </div>
     <!-- 
