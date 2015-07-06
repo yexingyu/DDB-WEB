@@ -1,23 +1,11 @@
 angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 
-.factory('MenuService', [ '$rootScope', function($rootScope) {
-    return {
-        setCurrent : function(id) {
-            for (var i = 0; i < $rootScope.menuCss.length; i++) {
-                if (i == id) {
-                    $rootScope.menuCss[i] = "current_page_item";
-                } else {
-                    $rootScope.menuCss[i] = "";
-                }
-            }
-        }
-    };
-} ])
-
 .factory('CookieService', [ '$rootScope', '$cookies', function($rootScope, $cookies) {
     return {
         logout : function() {
-            $cookies.remove('token');
+            $cookies.remove('token', {
+                path : '/'
+            });
         },
         setLanguage : function(lang) {
             $cookies.put('lang', lang.toUpperCase());
@@ -29,7 +17,9 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             } else {
                 lang = 'EN';
             }
-            $cookies.put('lang', lang.toUpperCase());
+            $cookies.put('lang', lang.toUpperCase(), {
+                path : '/'
+            });
             return lang;
         }
     };
@@ -38,7 +28,9 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('LoginService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         login : function(member, success) {
-            var LoginResource = $resource('/api/login', {}, {
+            var LoginResource = $resource('/api/login', {
+                'rememberMe' : member.rememberMe
+            }, {
                 'login' : {
                     method : 'POST',
                     isArray : false
