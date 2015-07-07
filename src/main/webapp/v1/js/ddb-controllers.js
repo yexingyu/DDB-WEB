@@ -20,7 +20,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     // display login modal
                     $scope.login = function() {
                         var modalInstance = $modal.open({
-                            animation : $scope.animationsEnabled,
+                            animation : true,
                             templateUrl : 'tpl-login.html',
                             controller : 'LoginCtrl',
                             size : 'sm',
