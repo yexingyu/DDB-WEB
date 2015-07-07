@@ -1,15 +1,32 @@
+<!-- 
 <div>
-    <ul>
-        <li>Account: <input ng-model="member.account" placeholder="Input your account here"
-            overwrite-email name="account" type="email" /> <span ng-show="account.$error.email">This
-                email format is invalid!</span>
-        </li>
-        <li>Password: <input ng-model="member.passwd" placeholder="Input your password here"
-            type="password" /></li>
-        <li><input type="submit" ng-click="login();">Sign In
-            </button></li>
-        <li><a href="#/sign_up">Sign Up</a> <fb:login-button scope="public_profile,email"></fb:login-button></li>
-        <div>{{result}}</div>
-        
-    </ul>
+  <ul>
+    <li>Account: <input ng-model="member.account" placeholder="Input your account here"
+      overwrite-email name="account" type="email" /> <span ng-show="account.$error.email">This
+        email format is invalid!</span>
+    </li>
+    <li>Password: <input ng-model="member.passwd" placeholder="Input your password here"
+      type="password" /></li>
+    <li><input type="submit" ng-click="login();">Sign In
+      </button></li>
+    <li><a href="#/sign_up">Sign Up</a> <fb:login-button scope="public_profile,email"></fb:login-button></li>
+    <div>{{result}}</div>
+  </ul>
+</div>-->
+<div class="modal-body">
+  <form class="form-signin">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" ng-model="member.account" class="form-control" placeholder="Email address" required autofocus> 
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" ng-model="member.passwd" class="form-control" placeholder="Password" required>
+    <div class="checkbox">
+      <label> <input type="checkbox" ng-model="member.rememberMe"> Remember me </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">Sign in</button>
+    <div class="alert alert-danger" ng-show="isFail">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
+        <span class="sr-only">Error:</span> Fail to login!!
+    </div>
+  </form>
 </div>

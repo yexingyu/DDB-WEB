@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 
 public class BaseAuthorization {
-  public final long          EXPIRY = 3600 * 24 * 7 * 1000;
+  public final static long   EXPIRY = 3600 * 24 * 7 * 1000;
   private final String       KEY    = "BZV@Zk+sJTs$xa=p";
   private final ObjectMapper mapper = new ObjectMapper();
   private final Key          aesKey = new SecretKeySpec(KEY.getBytes(), "AES");
@@ -49,9 +49,7 @@ public class BaseAuthorization {
     byte[] cookieData = ArrayUtils.subarray(cookieBytes, 16, cookieBytes.length);
     try {
       AuthorizationToken token = convertToAuthorization(cookieData);
-      if (token != null
-          && StringUtils.equals(Base64.encodeBase64String(DigestUtils.md5(token.toString())),
-              Base64.encodeBase64String(md5hash))
+      if (token != null && StringUtils.equals(Base64.encodeBase64String(DigestUtils.md5(token.toString())), Base64.encodeBase64String(md5hash))
           && token.getExpired() > System.currentTimeMillis()) {
         return token;
       } else {
@@ -78,13 +76,14 @@ public class BaseAuthorization {
    * buildCookie
    * 
    * @param token
+   * @param expiry
    * @return
    */
-  public Cookie buildCookie(AuthorizationToken token) {
+  public Cookie buildCookie(AuthorizationToken token, int expiry) {
     try {
       Cookie cookie = new Cookie("token", this.buildCookieString(token));
       cookie.setPath("/");
-      cookie.setMaxAge((int) (EXPIRY / 1000));
+      cookie.setMaxAge(expiry);
       return cookie;
     } catch (Exception e) {
       e.printStackTrace();

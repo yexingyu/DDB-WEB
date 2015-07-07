@@ -24,9 +24,10 @@ public interface AuthorizationService {
    * buildCookie
    * 
    * @param token
+   * @param expiry
    * @return
    */
-  public Cookie buildCookie(AuthorizationToken token);
+  public Cookie buildCookie(AuthorizationToken token, int expiry);
 
   /**
    * buildExpiredStamp

@@ -1,26 +1,41 @@
 angular.module('ddbApp.controllers', [ 'angular-md5' ])
 
 /*
- * BannerCtrl definition
+ * NavBarCtrl definition
  */
 .controller(
-        'BannerCtrl',
-        [ '$scope', '$location', 'ProfileService', 'CookieService',
-                function($scope, $location, ProfileService, CookieService) {
-                    $scope.menuCss = $scope.$root.menuCss;
+        'NavBarCtrl',
+        [ '$scope', '$location', '$modal', 'ProfileService', 'CookieService',
+                function($scope, $location, $modal, ProfileService, CookieService) {
+
+                    // retreive profile
+                    $scope.$root.profile = {};
                     ProfileService.profile(function(response) {
                         if (response.status == 'SUCCESS') {
                             $scope.$root.profile = response.data;
-                            $scope.$root.profile.sw = "membership";
+                            console.log($scope.$root.profile);
                         }
                     });
+
+                    // display login modal
+                    $scope.login = function() {
+                        var modalInstance = $modal.open({
+                            animation : $scope.animationsEnabled,
+                            templateUrl : 'tpl-login.html',
+                            controller : 'LoginCtrl',
+                            size : 'sm',
+                            resolve : {
+                                items : function() {
+                                    return $scope.items;
+                                }
+                            }
+                        });
+                    };
 
                     // logout
                     $scope.logout = function() {
                         CookieService.logout();
-                        $scope.$root.profile = {
-                            sw : ""
-                        };
+                        $scope.$root.profile = {};
                         $location.path('/home');
                     };
 
@@ -41,19 +56,19 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
  */
 .controller(
         'LoginCtrl',
-        [ '$scope', '$location', 'LoginService', 'md5',
-                function($scope, $location, LoginService, md5) {
+        [ '$scope', '$location', 'LoginService', 'md5', '$modalInstance',
+                function($scope, $location, LoginService, md5, $modalInstance) {
                     $scope.login = function() {
-                        $scope.result = "loggining in...";
+                        $scope.isFail = false;
                         $scope.member.password = md5.createHash($scope.member.passwd || '');
                         LoginService.login($scope.member, function(response) {
                             if (response.status == "SUCCESS") {
-                                $scope.result = 'Welcome ' + response.data.firstName;
                                 $scope.$root.profile = response.data;
-                                $scope.$root.profile.sw = 'membership';
+                                $modalInstance.close();
                                 $location.path("/profile");
+                                $scope.isFail = false;
                             } else {
-                                $scope.result = 'Fail to login!';
+                                $scope.isFail = true;
                             }
                         });
                     };
@@ -62,26 +77,22 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * ProductCtrl definition
  */
-.controller(
-        'ProductCtrl',
-        [ '$scope', '$location', 'ProductService', 'MenuService',
-                function($scope, $location, ProductService, MenuService) {
-                    MenuService.setCurrent(1);
-                    ProductService.list(function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.items = response.data;
-                        }
-                    }, 0, 2);
-                } ])
+.controller('ProductCtrl',
+        [ '$scope', '$location', 'ProductService', function($scope, $location, ProductService) {
+            ProductService.list(function(response) {
+                if (response.status == 'SUCCESS') {
+                    $scope.items = response.data;
+                }
+            }, 0, 2);
+        } ])
 
 /*
  * ProductDetailsCtrl definition
  */
 .controller(
         'ProductDetailsCtrl',
-        [ '$scope', '$location', '$routeParams', 'ProductService', 'MenuService',
-                function($scope, $location, $routeParams, ProductService, MenuService) {
-                    MenuService.setCurrent(1);
+        [ '$scope', '$location', '$routeParams', 'ProductService',
+                function($scope, $location, $routeParams, ProductService) {
                     var id = $routeParams.id;
                     ProductService.get(id, function(response) {
                         if (response.status == 'SUCCESS') {
@@ -95,9 +106,8 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
  */
 .controller(
         'OrderCtrl',
-        [ '$scope', '$location', '$routeParams', 'ProductService', 'MenuService',
-                function($scope, $location, $routeParams, ProductService, MenuService) {
-                    MenuService.setCurrent(1);
+        [ '$scope', '$location', '$routeParams', 'ProductService',
+                function($scope, $location, $routeParams, ProductService) {
                     var id = $routeParams.id;
                     ProductService.get(id, function(response) {
                         if (response.status == 'SUCCESS') {
@@ -109,46 +119,40 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * ProfileCtrl definition
  */
-.controller(
-        'ProfileCtrl',
-        [ '$scope', '$location', 'ProfileService', 'MenuService',
-                function($scope, $location, ProfileService, MenuService) {
-                    MenuService.setCurrent(2);
-                    ProfileService.profile(function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.profile = response.data;
-                        } else {
-                            $location.path('/login');
-                        }
-                    });
-                } ])
+.controller('ProfileCtrl',
+        [ '$scope', '$location', 'ProfileService', function($scope, $location, ProfileService) {
+            ProfileService.profile(function(response) {
+                if (response.status == 'SUCCESS') {
+                    $scope.profile = response.data;
+                } else {
+                    $location.path('/login');
+                }
+            });
+        } ])
 
 /*
  * ProfileEditCtrl definition
  */
-.controller(
-        'ProfileEditCtrl',
-        [ '$scope', '$location', 'ProfileService', 'MenuService',
-                function($scope, $location, ProfileService, MenuService) {
-                    MenuService.setCurrent(2);
-                    ProfileService.profile(function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.profile = response.data;
-                        } else {
-                            $location.path('/login');
-                        }
-                    });
-                    $scope.submit = function() {
-                        console.log($scope.profile);
-                        ProfileService.edit($scope.profile, function(response) {
-                            if (response.status == 'SUCCESS') {
-                                $scope.profile = response.data;
-                            } else {
-                                $location.path('/login');
-                            }
-                        });
-                    };
-                } ])
+.controller('ProfileEditCtrl',
+        [ '$scope', '$location', 'ProfileService', function($scope, $location, ProfileService) {
+            ProfileService.profile(function(response) {
+                if (response.status == 'SUCCESS') {
+                    $scope.profile = response.data;
+                } else {
+                    $location.path('/login');
+                }
+            });
+            $scope.submit = function() {
+                console.log($scope.profile);
+                ProfileService.edit($scope.profile, function(response) {
+                    if (response.status == 'SUCCESS') {
+                        $scope.profile = response.data;
+                    } else {
+                        $location.path('/login');
+                    }
+                });
+            };
+        } ])
 
 /*
  * HomeCtrl definition
@@ -183,15 +187,13 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * ContactCtrl definition
  */
-.controller('ContactCtrl',
-        [ '$scope', '$location', 'MenuService', function($scope, $location, MenuService) {
-            // MenuService.setCurrent(3);
-        } ])
+.controller('ContactCtrl', [ '$scope', '$location', function($scope, $location) {
+
+} ])
 
 /*
  * AboutCtrl definition
  */
-.controller('AboutCtrl',
-        [ '$scope', '$location', 'MenuService', function($scope, $location, MenuService) {
-            // MenuService.setCurrent(3);
-        } ]);
+.controller('AboutCtrl', [ '$scope', '$location', function($scope, $location) {
+
+} ]);
