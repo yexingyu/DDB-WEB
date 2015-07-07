@@ -44,7 +44,6 @@ public class ProductController {
    */
   @RequestMapping(method = RequestMethod.GET)
   public GeneralResponseData list(Pageable pageable) throws Exception {
-    System.out.println(pageable);
     List<Product> products = productService.getAll(pageable);
     if (products == null || products.isEmpty()) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
@@ -66,7 +65,7 @@ public class ProductController {
     if (product == null) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      System.out.println("storeId=" + product.getStore().getId());
+      System.out.println("store=" + product.getStore());
 
       return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
     }
@@ -109,7 +108,7 @@ public class ProductController {
     if (token == null) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
-      //System.out.println(product);
+      System.out.println(product);
       if (product.validate()) {
         Product productFromDb = productService.insert(product);
         return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);

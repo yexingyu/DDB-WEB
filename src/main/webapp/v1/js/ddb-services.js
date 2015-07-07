@@ -127,7 +127,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             }).query(callback);
         },
         edit : function(product, callback) {
-            var productResource = $resource($rootScope.apiUrl + '/api/product', {}, {
+            var productResource = $resource('/api/product', {}, {
                 'login' : {
                     method : 'PUT',
                     isArray : false
@@ -136,7 +136,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             new productResource(product).$login(callback);
         },
         add : function(product, callback) {
-            var productResource = $resource($rootScope.apiUrl + '/api/product', {}, {
+            var productResource = $resource('/api/product', {}, {
                 'login' : {
                     method : 'POST',
                     isArray : false

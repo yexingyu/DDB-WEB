@@ -76,6 +76,10 @@ public class BaseEnum {
     SUCCESS, FAIL, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT;
   }
 
+  public static enum STORE_TYPE {
+    ONLINE, LOCAL
+  }
+
   /**
    * toMap
    * 

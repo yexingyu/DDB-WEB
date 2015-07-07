@@ -1,246 +1,166 @@
 <div ng-form="myForm">
-<!-- 
-<div>
-    <span>
-        <pre>{{product | json}}</pre>
-    </span>
-</div>
--->
-
-
-<div class="row">
-	<div class="col-lg-6">
-<!-- product URL panel-->
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Test Info
-            </div>
-            <div class="panel-body">
-		        <div class="form-group">
-		            <label>TEST URL:</label>
-		            <input class="form-control" ng-model="product.url">
-		            <p class="help-block"><a  href="{{product.url}}" taget="_blank">Preview</a></p>
-		        </div>
-		        <div class="form-group">
-		            <label>TEST Key:</label>
-		            <input class="form-control" ng-model="product.key">
-		        </div>
-		        <div class="form-group">
-		            <label>TEST Status:</label>
-		            <select class="form-control" ng-model="product.status" ng-options="s.name as s.name for s in status">
-		                
-		            </select>
-		        </div>
-		        <div class="form-group">
-		            <label>Store:</label>
-		            <select class="form-control" ng-model="product.storeId" ng-options="s.id as s.name group by s.type for s in stores">
-		            </select>
-		        </div>                                                                                 
-		        <div class="form-group">
-		            <label>TEST Modified:</label>
-		            <p class="form-control-static">{{ product.modifiedAt | date:'medium' }}</p>
-		        </div>
-		        <div class="form-group">
-		            <label>TEST Added:</label>
-		            <p class="form-control-static">{{ product.createdAt  | date:'medium' }}</p>
-		        </div>
-
-            </div>
-            <div class="panel-footer">
-            </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- product URL panel-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">Test Info</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label>TEST URL:</label> <input class="form-control" ng-model="product.url">
+            <p class="help-block">
+              <a href="{{product.url}}" taget="_blank">Preview</a>
+            </p>
+          </div>
+          <div class="form-group">
+            <label>TEST Key:</label> <input class="form-control" ng-model="product.key">
+          </div>
+          <div class="form-group">
+            <label>TEST Status:</label> <select class="form-control" ng-model="product.status" ng-options="s.name as s.name for s in status">
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Store:</label> <select class="form-control" ng-model="product.store.id" ng-options="s.id as s.name group by s.type for s in stores">
+            </select>
+          </div>
+          <div class="form-group">
+            <label>TEST Modified:</label>
+            <p class="form-control-static">{{ product.modifiedAt | date:'medium' }}</p>
+          </div>
+          <div class="form-group">
+            <label>TEST Added:</label>
+            <p class="form-control-static">{{ product.createdAt | date:'medium' }}</p>
+          </div>
         </div>
-    </div>    
-	<div class="col-lg-6">
-<!-- product price, tax fee panel-->
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Test Price, Tax and Fee
-            </div>
-            <div class="panel-body">
-		        <div class="form-group">
-		            <label>Price:</label>
-		            <p>
-			            <span ng-repeat="price in product.prices">
-			                <select ng-model="price.currency" ng-options="c as c for c in $root.constant.CURRENCY"></select> : 
-			                <input type="text" ng-model="price.value" />
-			                [<a ng-click="product.prices.splice($index, 1)">X</a>]
-			                <br />
-			            </span>
-			            <span>
-			                [<a ng-click="product.prices.push({productId:product.id})">Add</a>]
-			            </span>
-	                </p>  	            	            
-		        </div>
-		        <div class="form-group">
-		            <label>Tax:</label>
-		            <p>
-			            <span ng-repeat="tax in product.taxes">
-			                <select ng-model="tax.title" ng-options="title as title for title in $root.constant.PRODUCT_TAX_TITLE"></select> 
-			                <select ng-model="tax.type" ng-options="type as type for type in $root.constant.PRODUCT_TAX_TYPE"></select> :
-			                <input type="text" ng-model="tax.value" />
-			                [<a ng-click="product.taxes.splice($index, 1)">X</a>]
-			                <br />
-			            </span>
-			            <span>
-			                [<a ng-click="product.taxes.push({productId:product.id})">Add</a>]
-			            </span>
-	                </p>  		             	            	            
-		        </div>
-		        <div class="form-group">
-		            <label>Fee:</label>
-		            <p>
-			            <span ng-repeat="fee in product.fees">
-			                <select ng-model="fee.title" ng-options="title as title for title in $root.constant.PRODUCT_FEE_TITLE"></select> 
-			                <select ng-model="fee.type" ng-options="type as type for type in $root.constant.PRODUCT_FEE_TYPE"></select> :
-			                <input type="text" ng-model="fee.value" />
-			                [<a ng-click="product.fees.splice($index, 1)">X</a>]
-			                <br />
-			            </span>
-			            <span>
-			                [<a ng-click="product.fees.push({productId:product.id})">Add</a>]
-			            </span>
-	                </p>  			            	            	            
-		        </div>			        		        
-		    </div>
-            <div class="panel-footer">
-            </div>
-        </div>
+        <div class="panel-footer"></div>
+      </div>
     </div>
-</div>
-<!-- product image panel-->
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                TEST Image
-            </div>
-            <div class="panel-body">
-		        <div class="form-group">
-		            <label>Image:</label>
-		            <p>
-			            <span ng-repeat="image in product.images">
-			            	URL: <input class="form-control" type="text" ng-model="image.url" />
-			                ALT: <input class="form-control" type="text" ng-model="image.alt" />
-
-			                [<a ng-click="product.images.splice($index, 1)">X</a>]
-			                <br />
-			            </span>
-			            <span>
-			                [<a ng-click="product.images.push({productId:product.id})">Add</a>]
-			            </span>
-	                </p>  	            	            
-		        </div>                
-            </div>
-            <div class="panel-footer">
-            </div>
-        </div> 
-
-
-<!-- product name, description panel-->
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                TEST Name, Description
-            </div>
-            <div class="panel-body">
-		        <div class="form-group">
-		            <label>Test Name:</label>
-		            <p>
-			            <span ng-repeat="name in product.names">
-			                <select ng-model="name.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select>
-			                <input class="form-control" type="text" ng-model="name.value" />
-			                [<a ng-click="product.names.splice($index, 1)">X</a>]
-			                <br />
-			            </span>
-			            <span>
-			                [<a ng-click="product.names.push({productId:product.id})">Add</a>]
-			            </span>
-	                </p>  	            	            
-		        </div>
-		        <div class="form-group">
-		            <label>Test Description:</label>
-		            <p>
-			            <span ng-repeat="description in product.descriptions">
-			                <select ng-model="description.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select>
-			                <textarea class="form-control" rows="3" ng-model="description.value" >
-			                </textarea>
-			                [<a ng-click="product.descriptions.splice($index, 1)">X</a>]
-			                <br />
-			            </span>
-			            <span>
-			                [<a ng-click="product.descriptions.push({productId:product.id})">Add</a>]
-			            </span>
-	                </p>  	            	            
-		        </div>  		                            
-            </div>
-            <div class="panel-footer">
-            </div>
+    <div class="col-lg-6">
+      <!-- product price, tax fee panel-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">Test Price, Tax and Fee</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label>Price:</label>
+            <p>
+              <span ng-repeat="price in product.prices"> <select ng-model="price.currency" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
+                ng-model="price.value" /> [<a ng-click="product.prices.splice($index, 1)">X</a>] <br />
+              </span> <span> [<a ng-click="product.prices.push({productId:product.id})">Add</a>]
+              </span>
+            </p>
+          </div>
+          <div class="form-group">
+            <label>Tax:</label>
+            <p>
+              <span ng-repeat="tax in product.taxes"> <select ng-model="tax.title" ng-options="title as title for title in $root.constant.PRODUCT_TAX_TITLE"></select> <select
+                ng-model="tax.type" ng-options="type as type for type in $root.constant.PRODUCT_TAX_TYPE"></select> : <input type="text" ng-model="tax.value" /> [<a
+                ng-click="product.taxes.splice($index, 1)">X</a>] <br />
+              </span> <span> [<a ng-click="product.taxes.push({productId:product.id})">Add</a>]
+              </span>
+            </p>
+          </div>
+          <div class="form-group">
+            <label>Fee:</label>
+            <p>
+              <span ng-repeat="fee in product.fees"> <select ng-model="fee.title" ng-options="title as title for title in $root.constant.PRODUCT_FEE_TITLE"></select> <select ng-model="fee.type"
+                ng-options="type as type for type in $root.constant.PRODUCT_FEE_TYPE"></select> : <input type="text" ng-model="fee.value" /> [<a ng-click="product.fees.splice($index, 1)">X</a>] <br />
+              </span> <span> [<a ng-click="product.fees.push({productId:product.id})">Add</a>]
+              </span>
+            </p>
+          </div>
         </div>
-<!-- product index preview-->        
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                Test Index Preview
-            </div>
-            <div class="panel-body">
-                <div class ="container">
-                    <div class ="row">
-                        <div class="col-lg-12">
-                    	    <h2>{{product.names[0].value}}</h2>
-                    	</div>
-                    </div>
-	                <div class = "row" align="center">
-	                    <div class="col-lg-12" >
-	                    	<a href = "{{product.url}}" target = "_blank"><img alt="" src="{{product.images[0].url}}"  ></a>
-	                    </div>
-                                    
-	                </div>
-	                <div class = "row">
-	                    <div class="col-lg-12" >
-	                    	{{product.descriptions[0].value | limitTo:360}} ...
-	                    </div>
-                                    
-	                </div>
-	                <div class = "row">
-	                    <div class="col-lg-12" >
-	                    	<h2>
-	                    	<span>Price: {{product.prices[1].currency}}${{product.prices[1].value}}</span> 
-                            +
-	                    	<span>{{product.fees[0].title}}: ${{product.fees[0].value}}</span>
-                            +
-	                    	<span>{{product.fees[1].title}}: ${{product.fees[1].value}}</span>	                    	
-	                    	</h2>
-	                    </div>
-                                    
-	                </div>
-	                <div class = "row">
-	                    <div class="col-lg-12" >
-	                    	<h2>
-	                    	Total: ${{product.total}}             	
-	                    	</h2>
-	                    	(Exchange Rate: {{exchange_rate}})
-	                    </div>
-                                    
-	                </div>
-	                <div class = "row">
-	                    <div class="col-lg-12" >
-	                    	<h2>
-	                    	Down Payment: ${{product.down}}    + ${{monthly_payment }} 	*   {{number_of_payments }} Monthes       	
-	                    	</h2>
-	                    </div>
-                                    
-	                </div>		                
-	                <!--  principal -->
-	                <div class = "row">
-	                    <div class="col-lg-12" >
-                    		(Principal: ${{product.principal}} Interest: {{interest}})           
-	                    </div>
-                                    
-	                </div>
-	               <!--end of principal-->		                		                	 	                	                
-               </div>
-            <div class="panel-footer">
-            </div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+  </div>
+  <!-- product image panel-->
+  <div class="panel panel-info">
+    <div class="panel-heading">TEST Image</div>
+    <div class="panel-body">
+      <div class="form-group">
+        <label>Image:</label>
+        <p>
+          <span ng-repeat="image in product.images"> URL: <input class="form-control" type="text" ng-model="image.url" /> ALT: <input class="form-control" type="text" ng-model="image.alt" />
+            [<a ng-click="product.images.splice($index, 1)">X</a>] <br />
+          </span> <span> [<a ng-click="product.images.push({productId:product.id})">Add</a>]
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="panel-footer"></div>
+  </div>
+  <!-- product name, description panel-->
+  <div class="panel panel-info">
+    <div class="panel-heading">TEST Name, Description</div>
+    <div class="panel-body">
+      <div class="form-group">
+        <label>Test Name:</label>
+        <p>
+          <span ng-repeat="name in product.names"> <select ng-model="name.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <input
+            class="form-control" type="text" ng-model="name.value" /> [<a ng-click="product.names.splice($index, 1)">X</a>] <br />
+          </span> <span> [<a ng-click="product.names.push({productId:product.id})">Add</a>]
+          </span>
+        </p>
+      </div>
+      <div class="form-group">
+        <label>Test Description:</label>
+        <p>
+          <span ng-repeat="description in product.descriptions"> <select ng-model="description.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <textarea
+              class="form-control" rows="3" ng-model="description.value">
+			                </textarea> [<a ng-click="product.descriptions.splice($index, 1)">X</a>] <br />
+          </span> <span> [<a ng-click="product.descriptions.push({productId:product.id})">Add</a>]
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="panel-footer"></div>
+  </div>
+  <!-- product index preview-->
+  <div class="panel panel-green">
+    <div class="panel-heading">Test Index Preview</div>
+    <div class="panel-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>{{product.names[0].value}}</h2>
+          </div>
         </div>
-        <!-- end of product detail preview-->       
-
-<!-- product detail preview       
+        <div class="row" align="center">
+          <div class="col-lg-12">
+            <a href="{{product.url}}" target="_blank"><img alt="" src="{{product.images[0].url}}"></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">{{product.descriptions[0].value | limitTo:360}} ...</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>
+              <span>Price: {{product.prices[1].currency}}${{product.prices[1].value}}</span> + <span>{{product.fees[0].title}}: ${{product.fees[0].value}}</span> + <span>{{product.fees[1].title}}:
+                ${{product.fees[1].value}}</span>
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>Total: ${{product.total}}</h2>
+            (Exchange Rate: {{exchange_rate}})
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>Down Payment: ${{product.down}} + ${{monthly_payment }} * {{number_of_payments }} Monthes</h2>
+          </div>
+        </div>
+        <!--  principal -->
+        <div class="row">
+          <div class="col-lg-12">(Principal: ${{product.principal}} Interest: {{interest}})</div>
+        </div>
+        <!--end of principal-->
+      </div>
+      <div class="panel-footer"></div>
+    </div>
+    <!-- end of product detail preview-->
+    <!-- product detail preview       
         <div class="panel panel-green">
             <div class="panel-heading">
                 Test Index Detail Preview
@@ -251,10 +171,9 @@
             <div class="panel-footer">
             </div>
         </div>
-end of product detail preview-->    
-            
-       <button type="submit" class="btn btn-default" ng-click="submit()" >Submit Button</button>
-       <button type="submit" class="btn btn-default" ng-click="add()" >Add Button</button>       
-       <button type="reset" class="btn btn-default">Reset Button</button>
-</div>
+end of product detail preview-->
+    <button type="submit" class="btn btn-default" ng-click="submit()">Submit Button</button>
+    <button type="submit" class="btn btn-default" ng-click="add()">Add Button</button>
+    <button type="reset" class="btn btn-default">Reset Button</button>
+  </div>
 </div>

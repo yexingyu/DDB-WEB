@@ -50,12 +50,6 @@ angular.module('ddbApp',
                     $rootScope.language = {
                         'language' : CookieService.getLanguage()
                     };
-                    console.log($rootScope);
-
-                    $rootScope.profile = {
-                        sw : ""
-                    };
-                    $rootScope.menuCss = [ "current_page_item", "", "", "" ];
 
                     // Load the SDK asynchronously
                     /*

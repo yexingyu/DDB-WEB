@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,6 +18,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
+import com.dailydealsbox.database.model.base.BaseEnum.STORE_TYPE;
 
 /**
  * @author x_ye
@@ -28,21 +31,27 @@ public class Store extends BaseEntityModel {
   @NotNull
   @Size(min = 10, max = 100)
   @Column(name = "name", nullable = false, length = 45)
-  private String name;
+  private String     name;
 
   @NotNull
   @Column(name = "logo", nullable = false, length = 255)
-  private String logo;
+  private String     logo;
 
   @NotNull
   @Column(name = "website", nullable = false, length = 255)
-  private String website;
+  private String     website;
 
   @NotNull
   @Column(name = "deal_page", nullable = false, length = 512)
-  private String dealPage;
+  private String     dealPage;
 
-  //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "store", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @NotNull
+  @Column(name = "type", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private STORE_TYPE type;
+
+  //  @JsonIgnore
+  //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
   //  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   //  private Set<Product> products;
 
@@ -60,6 +69,21 @@ public class Store extends BaseEntityModel {
     }
 
     return true;
+  }
+
+  /**
+   * @return the type
+   */
+  public STORE_TYPE getType() {
+    return this.type;
+  }
+
+  /**
+   * @param type
+   *          the type to set
+   */
+  public void setType(STORE_TYPE type) {
+    this.type = type;
   }
 
   /**

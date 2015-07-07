@@ -22,7 +22,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author x_ye
@@ -41,8 +40,7 @@ public class Product extends BaseEntityModel {
   @Column(name = "`key`", nullable = false, length = 64)
   private String                  key;
 
-  @JsonIgnore
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Store                   store;

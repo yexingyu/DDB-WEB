@@ -53,7 +53,7 @@ angular
                             $scope.stores = [];
                             StoreService.list(function(response) {
                                 if (response.status === "SUCCESS") {
-                                    $scope.stores = responsxe.data;
+                                    $scope.stores = response.data;
                                 }
                             });
 
@@ -86,7 +86,8 @@ angular
                         '$location',
                         '$routeParams',
                         'ProductService',
-                        function($scope, $location, $routeParams, ProductService, MenuService) {
+                        'StoreService',
+                        function($scope, $location, $routeParams, ProductService, StoreService) {
                             var id = $routeParams.id;
 
                             $scope.status = [ {
@@ -94,23 +95,13 @@ angular
                                 name : "AVAILABLE"
                             } ];
 
-                            $scope.stores = [ {
-                                id : 1,
-                                type : "Online",
-                                name : "walmart.ca"
-                            }, {
-                                id : 2,
-                                type : "Online",
-                                name : "ebay.ca"
-                            }, {
-                                id : 3,
-                                type : "Online",
-                                name : "costco.ca"
-                            }, {
-                                id : 4,
-                                type : "Local",
-                                name : "Brick"
-                            } ];
+                            // retrieve store list
+                            $scope.stores = [];
+                            StoreService.list(function(response) {
+                                if (response.status === "SUCCESS") {
+                                    $scope.stores = response.data;
+                                }
+                            });
 
                             $scope.product = {};
                             $scope.product.prices = [ {
@@ -168,7 +159,9 @@ angular
                             $scope.product.url = "http://www.ebay.com/itm/Samsung-Galaxy-S6-SM-G920F-32GB-Factory-Unlocked-LTE-Smartphone-GSM/301678036602";
                             $scope.product.key = "301678036602";
                             $scope.product.status = "AVAILABLE";
-                            $scope.product.storeId = 2;
+                            $scope.product.store = {
+                                id : 2
+                            };
 
                             $scope.product.prices[0].currency = 'CAD';
                             $scope.product.prices[0].value = '599.99';
