@@ -70,6 +70,8 @@ angular
                                 ProductService.edit($scope.product, function(response) {
                                     if (response.status == 'SUCCESS') {
                                         $scope.product = response.data;
+                                        console.log(response);
+                                        
                                     }
                                 });
                             };
@@ -222,7 +224,10 @@ angular
                             $scope.add = function() {
                                 console.log($scope.product);
                                 ProductService.add($scope.product, function(response) {
-                                    console.log(response);
+                                	if (response.status == 'SUCCESS') {
+                                		window.location.href="/admin_portal/index.html#/product";
+                                	} 
+                                	console.log(response);
                                 });
                             };
                         } ])
