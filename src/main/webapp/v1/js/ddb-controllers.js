@@ -180,6 +180,11 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                             $location.path('/home');
                         }
                     });
+
+                    // submit order
+                    $scope.submit = function() {
+                        console.log($scope.order);
+                    };
                 } ])
 
 /*
