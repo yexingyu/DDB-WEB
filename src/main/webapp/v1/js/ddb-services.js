@@ -31,21 +31,30 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 /*
  * LoginService
  */
-.factory('LoginService', [ '$rootScope', '$resource', function($rootScope, $resource) {
-    return {
-        login : function(member, callback) {
-            var LoginResource = $resource('/api/login', {
-                'rememberMe' : member.rememberMe
-            }, {
-                'login' : {
-                    method : 'POST',
-                    isArray : false
+.factory('LoginService',
+        [ '$rootScope', '$resource', '$modal', function($rootScope, $resource, $modal) {
+            return {
+                login : function(member, callback) {
+                    var LoginResource = $resource('/api/login', {
+                        'rememberMe' : member.rememberMe
+                    }, {
+                        'login' : {
+                            method : 'POST',
+                            isArray : false
+                        }
+                    });
+                    new LoginResource(member).$login(callback);
+                },
+                showLoginBox : function() {
+                    $modal.open({
+                        animation : true,
+                        templateUrl : 'tpl-login.html',
+                        controller : 'LoginCtrl',
+                        size : 'sm'
+                    });
                 }
-            });
-            new LoginResource(member).$login(callback);
-        }
-    };
-} ])
+            };
+        } ])
 
 /*
  * ProfileService
@@ -143,6 +152,40 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                 }
             });
             new productResource(product).$login(callback);
+        },
+        fix : function(product) {
+            // fix names
+            var names = product.names;
+            product.names = {};
+            if (angular.isArray(names) && names.length > 0) {
+                product.names = {};
+                names.forEach(function(item) {
+                    product.names[item.language] = item;
+                });
+                angular.forEach($rootScope.constant.LANGUAGE, function(key, value) {
+                    if (!product.names[value]) {
+                        product.names[value] = names[0];
+                    }
+                });
+            }
+            names = [];
+
+            // fix description
+            var descriptions = product.descriptions;
+            product.descriptions = {};
+            if (angular.isArray(descriptions) && descriptions.length > 0) {
+                descriptions.forEach(function(item) {
+                    product.descriptions[item.language] = item;
+                });
+                angular.forEach($rootScope.constant.LANGUAGE, function(key, value) {
+                    if (!product.descriptions[value]) {
+                        product.descriptions[value] = descriptions[0];
+                    }
+                });
+            }
+            descriptions = [];
+
+            return product;
         }
 
     };

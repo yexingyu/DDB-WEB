@@ -65,6 +65,11 @@ public class OrderAddress extends BaseModel {
   @JoinColumn(name = "order_id")
   private Order               order;
 
+  /**
+   * validate
+   * 
+   * @return
+   */
   public boolean validate() {
     if (StringUtils.isBlank(this.getAddress1())) {
       this.setAddress1("");
