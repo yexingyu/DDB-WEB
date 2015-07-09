@@ -135,14 +135,12 @@
         <div class="row">
           <div class="col-lg-12">
             <h2>
-              <span>Price: {{product.prices[1].currency}}${{product.prices[1].value}}</span> + <span>{{product.fees[0].title}}: ${{product.fees[0].value}}</span> + <span>{{product.fees[1].title}}:
-                ${{product.fees[1].value}}</span>
-            </h2>
+              <span>Price: {{product.prices[0].currency}}${{product.prices[0].value}}</span>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-12">
-            <h2>Total: ${{product.total}}</h2>
+            <h2>Total: ${{product.prices[0].value}}</h2>
             (Exchange Rate: {{exchange_rate}})
           </div>
         </div>
