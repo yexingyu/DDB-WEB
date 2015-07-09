@@ -51,6 +51,9 @@ public class Product extends BaseEntityModel {
   @Column(name = "activate_at", nullable = true)
   private Date                    activateAt;
 
+  @Column(name = "add_by", nullable = true)
+  private int                     addBy;
+
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -482,6 +485,21 @@ public class Product extends BaseEntityModel {
    */
   public void setActivateAt(Date activateAt) {
     this.activateAt = activateAt;
+  }
+
+  /**
+   * @return the addBy
+   */
+  public int getAddBy() {
+    return this.addBy;
+  }
+
+  /**
+   * @param addBy
+   *          the addBy to set
+   */
+  public void setAddBy(int addBy) {
+    this.addBy = addBy;
   }
 
   /**
