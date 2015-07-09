@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2015 at 04:12 PM
+-- Generation Time: Jul 09, 2015 at 04:58 PM
 -- Server version: 5.6.19-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `ddb`
@@ -23,10 +17,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `members`
+-- Table structure for table `member`
 --
 
-CREATE TABLE IF NOT EXISTS `members` (
+CREATE TABLE IF NOT EXISTS `member` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` tinyint(2) NOT NULL DEFAULT '0',
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -36,27 +30,28 @@ CREATE TABLE IF NOT EXISTS `members` (
   `first_name` varchar(100) NOT NULL,
   `middle_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `role` enum('MEMBER','ADMIN') NOT NULL DEFAULT 'MEMBER',
+  `role` varchar(45) NOT NULL,
+  `login_type` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `members`
+-- Dumping data for table `member`
 --
 
-INSERT INTO `members` (`id`, `status`, `modified_at`, `created_at`, `account`, `password`, `first_name`, `middle_name`, `last_name`, `role`) VALUES
-(1, 0, '2015-06-04 19:31:21', '2015-06-04 19:31:21', 'yexingyu@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Xingyu', '', 'Ye', 'ADMIN'),
-(2, 0, '2015-06-04 19:32:24', '2015-06-04 19:32:24', 'dai.yun@dailydealsbox.com', 'e10adc3949ba59abbe56e057f20f883e', 'Yun', '', 'Dai', 'MEMBER'),
-(3, 0, '2015-06-04 19:33:15', '2015-06-04 19:33:15', 'hongjun.zhu@dailydealsbox.com', 'e10adc3949ba59abbe56e057f20f883e', 'Hongjun', '', 'Zhu', 'MEMBER');
+INSERT INTO `member` (`id`, `status`, `modified_at`, `created_at`, `account`, `password`, `first_name`, `middle_name`, `last_name`, `role`, `login_type`) VALUES
+(1, 0, '2015-07-02 18:32:31', '2015-06-04 19:31:21', 'yexingyu@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Xingyu', 'test', 'Ye', 'ADMIN', 'DAILYDEALSBOX'),
+(2, 0, '2015-06-17 16:43:27', '2015-06-04 19:32:24', 'dai.yun@dailydealsbox.com', 'e10adc3949ba59abbe56e057f20f883e', 'yun', '', 'Dai', 'ADMIN', 'DAILYDEALSBOX'),
+(3, 0, '2015-06-17 16:43:27', '2015-06-04 19:33:15', 'hongjun.zhu@dailydealsbox.com', 'e10adc3949ba59abbe56e057f20f883e', 'Hongjun', '', 'Zhu', 'ADMIN', 'DAILYDEALSBOX');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `member_addresses`
+-- Table structure for table `member_address`
 --
 
-CREATE TABLE IF NOT EXISTS `member_addresses` (
+CREATE TABLE IF NOT EXISTS `member_address` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `member_id` int(10) NOT NULL,
   `address1` varchar(255) NOT NULL DEFAULT '',
@@ -65,380 +60,511 @@ CREATE TABLE IF NOT EXISTS `member_addresses` (
   `region` varchar(255) NOT NULL DEFAULT '',
   `country` varchar(2) NOT NULL DEFAULT '',
   `post_code` varchar(50) NOT NULL DEFAULT '',
-  `type` enum('LIVING','BILLING') NOT NULL DEFAULT 'BILLING',
+  `type` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `member_address`
+--
+
+INSERT INTO `member_address` (`id`, `member_id`, `address1`, `address2`, `city`, `region`, `country`, `post_code`, `type`) VALUES
+(6, 2, '7777 decarie', '', 'Montreal', 'QC', 'CA', 'H4J2G6', 'BILLING'),
+(11, 1, '881', 'George-V', 'Montreal', 'QC', 'CA', 'H8S2R9', 'BILLING'),
+(12, 1, '881', 'George-V', 'Montreal', 'QC', 'CA', 'H8S2R9', 'LIVING');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `member_emails`
+-- Table structure for table `member_email`
 --
 
-CREATE TABLE IF NOT EXISTS `member_emails` (
+CREATE TABLE IF NOT EXISTS `member_email` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `member_id` int(10) NOT NULL DEFAULT '0',
   `email` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
+
+--
+-- Dumping data for table `member_email`
+--
+
+INSERT INTO `member_email` (`id`, `member_id`, `email`) VALUES
+(8, 2, 'oracle_9i_dba@hotmail.com'),
+(9, 2, '2293765200@qq.com'),
+(28, 1, 'admin@dailydealsbox.com'),
+(30, 1, 'xingyu.ye@dailydealsbox.com'),
+(36, 1, 'yexingyu@gmail.com');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `member_phones`
+-- Table structure for table `member_phone`
 --
 
-CREATE TABLE IF NOT EXISTS `member_phones` (
+CREATE TABLE IF NOT EXISTS `member_phone` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `member_id` int(10) NOT NULL,
   `country_code` varchar(10) NOT NULL DEFAULT '+1',
   `phone_number` varchar(50) NOT NULL,
-  `type` enum('MOBILE','HOME','WORK','FAX') NOT NULL DEFAULT 'MOBILE',
+  `type` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
--- Dumping data for table `member_phones`
+-- Dumping data for table `member_phone`
 --
 
-INSERT INTO `member_phones` (`id`, `member_id`, `country_code`, `phone_number`, `type`) VALUES
+INSERT INTO `member_phone` (`id`, `member_id`, `country_code`, `phone_number`, `type`) VALUES
 (1, 1, '+1', '5149987307', 'MOBILE'),
-(3, 1, '+1', '1111111111', 'MOBILE');
+(5, 1, '+1', '1234567890', 'HOME'),
+(6, 2, '+1', '51496267622', 'HOME'),
+(7, 2, '+1', '51469208742', 'MOBILE'),
+(8, 2, '+1', '543643', 'MOBILE');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Table structure for table `order`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
+CREATE TABLE IF NOT EXISTS `order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `status` tinyint(2) NOT NULL DEFAULT '0',
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `product_id` int(11) NOT NULL,
+  `member_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_member_id_idx` (`member_id`),
+  KEY `fk_product_id_idx` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Table structure for table `order_address`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
+CREATE TABLE IF NOT EXISTS `order_address` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `address1` varchar(255) NOT NULL,
+  `address2` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `region` varchar(255) NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `post_code` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_order_idx` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE IF NOT EXISTS `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` tinyint(2) NOT NULL DEFAULT '0',
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `url` varchar(512) NOT NULL,
   `key` varchar(64) NOT NULL,
-  `store_id` int(11) DEFAULT NULL,
-  `store_name` varchar(256) CHARACTER SET latin1 NOT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `last_modified` datetime DEFAULT NULL,
-  `last_modified_by` int(11) DEFAULT NULL,
-  `added_time` datetime NOT NULL,
-  `added_by` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `enable` tinyint(1) NOT NULL DEFAULT '1',
+  `expired_at` datetime DEFAULT NULL,
+  `activate_at` datetime DEFAULT NULL,
+  `add_by` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `deal_store_id` (`store_id`,`key`),
-  KEY `added_by` (`added_by`),
-  KEY `last_modified_by` (`last_modified_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='NULL' AUTO_INCREMENT=1 ;
+  KEY `FK_product_store` (`store_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='NULL' AUTO_INCREMENT=36 ;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `status`, `modified_at`, `created_at`, `url`, `key`, `store_id`, `enable`, `expired_at`, `activate_at`, `add_by`) VALUES
+(9, 0, '2015-07-09 19:56:37', '2015-06-22 21:00:57', 'http://www.ebay.ca/itm/Garmin-nuvi-2597LMT-5-Bluetooth-GPS-Navigation-System-w-Lifetime-Maps-Traffic/321759636762', '321759636762', 2, 1, NULL, NULL, 0),
+(11, 0, '2015-07-09 19:56:37', '2015-06-22 22:02:24', 'http://www.ebay.com/itm/Apple-Macbook-Air-11-6-Latest-Model-2015-MJVM2LL-A-Intel-i5-128GB/121685327426', '121685327426', 2, 1, NULL, NULL, 0),
+(12, 0, '2015-07-09 19:56:38', '2015-06-23 14:47:02', 'http://www.bestbuy.ca/en-CA/product/-/b0005411.aspx', 'b0005411', 1, 1, NULL, NULL, 0),
+(14, 0, '2015-07-09 19:56:38', '2015-06-23 15:30:05', 'http://www.bestbuy.ca/en-CA/product/acer-acer-aspire-e-14-laptop-blue-intel-pentium-n3540-500gb-hdd-4gb-ram-windows-8-1-e5-411-p9vf/10323638.aspx', '10323638', 2, 1, NULL, NULL, 0),
+(16, 0, '2015-07-09 19:56:38', '2015-06-29 20:02:36', 'http://www.ebay.ca/itm/Brand-New-PS4-500GB-The-Last-of-Us-Remastered-Hardware-Bundle-/121642909607', '121642909607', 2, 1, NULL, NULL, 0),
+(20, 0, '2015-07-09 19:56:38', '2015-06-29 20:37:46', 'http://www.ebay.com/itm/331506828798', '331506828798', 2, 1, NULL, NULL, 0),
+(22, 0, '2015-07-09 19:56:38', '2015-07-07 20:33:37', 'http://www.ebay.com/itm/Samsung-Galaxy-S6-SM-G920F-32GB-Factory-Unlocked-LTE-Smartphone-GSM/301678036602', '301678036602', 2, 1, NULL, NULL, 0),
+(32, 0, '2015-07-09 19:56:39', '2015-07-08 20:23:49', 'http://www.homedepot.ca/product/50-cuft-ultra-large-capacity-washer-with-6motion-technology-wm3170cw/414891', '414891', 1, 1, NULL, NULL, 0),
+(33, 0, '2015-07-09 22:50:37', '2015-07-09 22:50:37', 'http://www.ebay.com/itm/Samsung-Galaxy-S6-SM-G920F-32GB-Factory-Unlocked-LTE-Smartphone-GSM/301678036602', '301678036602', 2, 0, NULL, NULL, 0),
+(35, 0, '2015-07-09 22:52:57', '2015-07-09 22:52:57', 'http://www.ebay.com/itm/Samsung-Galaxy-S6-SM-G920F-32GB-Factory-Unlocked-LTE-Smartphone-GSM/301678036602', '301678036602', 2, 0, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_descriptions`
+-- Table structure for table `product_description`
 --
 
-CREATE TABLE IF NOT EXISTS `product_descriptions` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `language` varchar(16) DEFAULT NULL,
-  `excerpt` varchar(256) DEFAULT NULL,
-  `content` text,
-  `last_modified` datetime DEFAULT NULL,
-  `last_modified_by` int(11) DEFAULT NULL,
-  `added_time` datetime DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `product_description` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `language` varchar(2) NOT NULL,
+  `value` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_product_name_language` (`product_id`,`language`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=67 ;
+
+--
+-- Dumping data for table `product_description`
+--
+
+INSERT INTO `product_description` (`id`, `product_id`, `language`, `value`) VALUES
+(14, 9, 'EN', 'Description\nBright 5.0 Inch Display With Dual-Orientation Capabilities/ Loaded With Detailed Maps Of North America/ Garmin Traffic/ Voice-Activated Navigation/ Garmin Real Directions With Garmin Real Voice/ Bluetooth Compatible/ 1000 Waypoints/ Black Finish\n\nProduct Identifiers\nBrand	Garmin\nModel	n?vi 2597LMT\nMPN	010-01123-30\nUPC	753759999780\n\nKey Features\nUsage	Automotive Mountable\nSystem Type	In-Dash\nScreen Size	5"\nUser Interface	Touch Screen\n\nDisplay\nDisplay Size	4.4 in. x 2.5 in.\nResolutions	480 x 272\n\nTechnical Features\nFeatures	Bluetooth Ready, Lifetime Map Updates, Voice-Activated Command, Waypoint Icons\n\nBattery\nBattery Type and Quantity	Rechargeable Li-Ion Battery\nBattery Life	2.5 Hours\n\nDimensions\nHeight	3.3 in.\nWidth	5.4 in.\nDepth	0.76 in.\nWeight	0.41 lb.\n\nOther Features\nExpansion Slot Type	micro-SD slot'),
+(16, 9, 'FR', 'Description\nBright 5.0 Inch Display With Dual-Orientation Capabilities/ Loaded With Detailed Maps Of North America/ Garmin Traffic/ Voice-Activated Navigation/ Garmin Real Directions With Garmin Real Voice/ Bluetooth Compatible/ 1000 Waypoints/ Black Finish\n\nProduct Identifiers\nBrand	Garmin\nModel	n?vi 2597LMT\nMPN	010-01123-30\nUPC	753759999780\n\nKey Features\nUsage	Automotive Mountable\nSystem Type	In-Dash\nScreen Size	5"\nUser Interface	Touch Screen\n\nDisplay\nDisplay Size	4.4 in. x 2.5 in.\nResolutions	480 x 272\n\nTechnical Features\nFeatures	Bluetooth Ready, Lifetime Map Updates, Voice-Activated Command, Waypoint Icons\n\nBattery\nBattery Type and Quantity	Rechargeable Li-Ion Battery\nBattery Life	2.5 Hours\n\nDimensions\nHeight	3.3 in.\nWidth	5.4 in.\nDepth	0.76 in.\nWeight	0.41 lb.\n\nOther Features\nExpansion Slot Type	micro-SD slot'),
+(18, 11, 'EN', '1.6 GHz Intel Core i5 (Broadwell)4GB of 1600 MHz LPDDR3 RAM128GB PCIe-Based Flash StorageIntegrated Intel HD Graphics 600011.6" LED-Backlit Glossy Display1440 x 900 Native Resolution802.11ac Wi-Fi, Bluetooth 4.0USB 3.0, Thunderbolt 2720p FaceTime HD Camera, SDXC Card SlotMac OS X 10.10 Yosemite'),
+(19, 12, 'EN', 'If a picture is worth a thousand words, then this camera bundle is priceless. It includes a Nikon D3200 24.2MP DSLR camera with a NIKKOR 18-55mm lens kit, a Lowepro Aventura DSLR bag and battery kit, and a Nikon NIKKOR 55-200mm telephoto zoom lens.'),
+(20, 12, 'FR', 'Si une image vaut mille mots, alors cet ensemble de photographie n''a pas de prix. Il comprend un appareil photo reflex numérique D3200 de 24,2 Mpx de Nikon avec un objectif NIKKOR de 18-55 mm, un sac pour appareil photo reflex numérique Aventura de Lowepro avec batterie et un téléobjectif zoom de 55-200 mm NIKKOR de Nikon.'),
+(23, 14, 'EN', 'Take your digital world along for the ride with this compact and handy 14" Acer Aspire E14 laptop. Weighing just over five pounds, it fits nicely in your bag while housing the hardware to tackle all your everyday computing needs. Work with office apps, chat with family from across the country and watch HD films on your big-screen TV.'),
+(24, 14, 'FR', 'Take your digital world along for the ride with this compact and handy 14" Acer Aspire E14 laptop. Weighing just over five pounds, it fits nicely in your bag while housing the hardware to tackle all your everyday computing needs. Work with office apps, chat with family from across the country and watch HD films on your big-screen TV.'),
+(27, 16, 'FR', 'Dive into the next generation with one of the highest-rated games of 2013 thanks to the PS4 The Last of Us Remastered hardware bundle. This bundle includes a digital download of The Last of Us Remastered, which lets you join unlikely duo Joel and Ellie in their journey across the post-apocalyptic United States as they find out just how far they''ll go to survive. This bundle includes a 500GB PS4 console, a DUALSHOCK 4 wireless controller, a wired mono headset and a digital download of The Last of Us Remastered, which includes all multiplayer DLC and The Last of Us: Left Behind downloadable chapter.\n\nFeatures\n\nHardware bundle with black 500GB PS4 console\nDUALSHOCK 4 wireless controller\nIncludes The Last of Us Remastered digital download\nGame download includes all multiplayer DLC and single-player Left Behind DLC chapter\nBundle also includes mono wired headset, HDMI cable, power cable and USB charging cable'),
+(28, 16, 'EN', 'Dive into the next generation with one of the highest-rated games of 2013 thanks to the PS4 The Last of Us Remastered hardware bundle. This bundle includes a digital download of The Last of Us Remastered, which lets you join unlikely duo Joel and Ellie in their journey across the post-apocalyptic United States as they find out just how far they''ll go to survive. This bundle includes a 500GB PS4 console, a DUALSHOCK 4 wireless controller, a wired mono headset and a digital download of The Last of Us Remastered, which includes all multiplayer DLC and The Last of Us: Left Behind downloadable chapter.\n\nFeatures\n\nHardware bundle with black 500GB PS4 console\nDUALSHOCK 4 wireless controller\nIncludes The Last of Us Remastered digital download\nGame download includes all multiplayer DLC and single-player Left Behind DLC chapter\nBundle also includes mono wired headset, HDMI cable, power cable and USB charging cable'),
+(35, 20, 'FR', 'Specifications\nGeneral Information	Manufacturer: Samsung\nManufacturer Part Number: SM-T530NZWAXAR\nManufacturer Website Address: www.samsungusa.com Brand Name: Samsung\nProduct Line: Galaxy Tab 4\nProduct Model: SM-T530\nProduct Name: Galaxy Tab 4 SM-T530 Tablet\nMarketing Information: The Perfect Work & Play Companion\nFrom the conference room to the living room and beyond, the Galaxy Tab boosts your fun and productivity wherever life takes you. Product Type: Tablet\nProcessor & Chipset	Processor Speed: 1.20 GHz\nProcessor Core: Quad-core (4 Core)\nMemory	Standard Memory: 1.50 GB\nMemory Card Reader: Yes\nStorage	Flash Memory Capacity: 16 GB\nOptical Drive Type: No\nDisplay & Graphics	Screen Size: 10.1"\nScreen Mode: WXGA\nDisplay Screen Type: Active Matrix TFT Color LCD\nAspect Ratio: 16:10\nScreen Resolution: 1280 x 800\nTouchscreen: Yes\nNetwork & Communication	GPS: Yes\nWireless LAN: Yes\nWireless LAN Standard: IEEE 802.11a/b/g/n\nBluetooth: Yes\nBluetooth Standard: Bluetooth 4.0\nInput Devices	Front Camera/Webcam: Yes\nSoftware	Operating System Platform: Android\nOperating System: Android 4.4 KitKat\nPhysical Characteristics	Color: White\nForm Factor: Slate\nHeight: 0.3"\nWidth: 9.6"\nDepth: 6.9"\nWeight (Approximate): 1.07 lb\nMiscellaneous	Package Contents: Galaxy Tab 4 SM-T530 Tablet\nAC Adapter Green Compliant: Yes\nGreen Compliance Certificate/Authority: WEEE\nCountry of Origin: Korea'),
+(36, 20, 'EN', 'Specifications\nGeneral Information	Manufacturer: Samsung\nManufacturer Part Number: SM-T530NZWAXAR\nManufacturer Website Address: www.samsungusa.com Brand Name: Samsung\nProduct Line: Galaxy Tab 4\nProduct Model: SM-T530\nProduct Name: Galaxy Tab 4 SM-T530 Tablet\nMarketing Information: The Perfect Work & Play Companion\nFrom the conference room to the living room and beyond, the Galaxy Tab boosts your fun and productivity wherever life takes you. Product Type: Tablet\nProcessor & Chipset	Processor Speed: 1.20 GHz\nProcessor Core: Quad-core (4 Core)\nMemory	Standard Memory: 1.50 GB\nMemory Card Reader: Yes\nStorage	Flash Memory Capacity: 16 GB\nOptical Drive Type: No\nDisplay & Graphics	Screen Size: 10.1"\nScreen Mode: WXGA\nDisplay Screen Type: Active Matrix TFT Color LCD\nAspect Ratio: 16:10\nScreen Resolution: 1280 x 800\nTouchscreen: Yes\nNetwork & Communication	GPS: Yes\nWireless LAN: Yes\nWireless LAN Standard: IEEE 802.11a/b/g/n\nBluetooth: Yes\nBluetooth Standard: Bluetooth 4.0\nInput Devices	Front Camera/Webcam: Yes\nSoftware	Operating System Platform: Android\nOperating System: Android 4.4 KitKat\nPhysical Characteristics	Color: White\nForm Factor: Slate\nHeight: 0.3"\nWidth: 9.6"\nDepth: 6.9"\nWeight (Approximate): 1.07 lb\nMiscellaneous	Package Contents: Galaxy Tab 4 SM-T530 Tablet\nAC Adapter Green Compliant: Yes\nGreen Compliance Certificate/Authority: WEEE\nCountry of Origin: Korea'),
+(39, 22, 'FR', ''),
+(40, 22, 'EN', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent risus elit, tempor nec accumsan at, vestibulum et est. Donec tempus lectus sed dui semper, sed pharetra leo auctor. Vestibulum commodo elit quis dignissim suscipit. Vestibulum pharetra lacus ut aliquet molestie. Donec laoreet urna sit amet nisi sollicitudin placerat. Integer viverra magna eu enim placerat blandit. Cras et viverra risus. Proin in scelerisque magna, a viverra nibh. Proin in quam felis. Vivamus et felis aliquam purus hendrerit mollis in at lorem. Fusce euismod at mauris eget laoreet. Nulla erat quam, sollicitudin ut malesuada in, pellentesque at turpis. Duis tempor quis nulla ut interdum. Quisque facilisis at orci vitae feugiat.Phasellus ac odio libero. Curabitur ac feugiat lacus, nec placerat sem. Sed aliquam nunc quis metus eleifend faucibus. Maecenas pellentesque mi augue, vulputate sollicitudin ipsum venenatis ac. Proin a accumsan leo. Integer pretium cursus neque, sit amet hendrerit risus dapibus non. Nulla sodales quam eu tortor tristique venenatis. Praesent elementum magna risus, at suscipit nisl ullamcorper et. Morbi vehicula hendrerit ipsum vitae ullamcorper. Vivamus facilisis nisl non lorem ultrices, sit amet bibendum nibh consectetur.'),
+(59, 32, 'FR', 'Grande capacité et intelligente Votre pile de lavage disparaîtra encore plus rapidement avec cette laveuse LG à super grande capacité de 5,0 pi3. Vous aurez ainsi plus de temps pour profiter de la vie ou, du moins, accomplir d’autres tâches. Des tas de se\n\nTechnologie NFC\nTechnologie 6MotionMC\nSystème anti-vibration TrueBalanceMC\nTechnologie ColdWashMC\nMoteur DirectDriveMC + garantie de 10 ans'),
+(60, 32, 'EN', 'Big and Smart Your mounds of laundry will disappear faster when you have this LG 5.0 cu.ft. ultra large capacity washer, giving you more time to enjoy life or at least get your other stuff done. Towels, jeans and delicates? No problem. Smart innovations l\n\nCustomize cycles with a simple tap of a smart phone\n6Motion™ Technology\nNeveRust™ Stainless Steel Drum\nDirect Drive Motor with 10-Year Limited Warranty\nColdWash™ Option'),
+(61, 33, 'FR', ''),
+(62, 33, 'EN', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent risus elit, tempor nec accumsan at, vestibulum et est. Donec tempus lectus sed dui semper, sed pharetra leo auctor. Vestibulum commodo elit quis dignissim suscipit. Vestibulum pharetra lacus ut aliquet molestie. Donec laoreet urna sit amet nisi sollicitudin placerat. Integer viverra magna eu enim placerat blandit. Cras et viverra risus. Proin in scelerisque magna, a viverra nibh. Proin in quam felis. Vivamus et felis aliquam purus hendrerit mollis in at lorem. Fusce euismod at mauris eget laoreet. Nulla erat quam, sollicitudin ut malesuada in, pellentesque at turpis. Duis tempor quis nulla ut interdum. Quisque facilisis at orci vitae feugiat.Phasellus ac odio libero. Curabitur ac feugiat lacus, nec placerat sem. Sed aliquam nunc quis metus eleifend faucibus. Maecenas pellentesque mi augue, vulputate sollicitudin ipsum venenatis ac. Proin a accumsan leo. Integer pretium cursus neque, sit amet hendrerit risus dapibus non. Nulla sodales quam eu tortor tristique venenatis. Praesent elementum magna risus, at suscipit nisl ullamcorper et. Morbi vehicula hendrerit ipsum vitae ullamcorper. Vivamus facilisis nisl non lorem ultrices, sit amet bibendum nibh consectetur.'),
+(65, 35, 'FR', ''),
+(66, 35, 'EN', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent risus elit, tempor nec accumsan at, vestibulum et est. Donec tempus lectus sed dui semper, sed pharetra leo auctor. Vestibulum commodo elit quis dignissim suscipit. Vestibulum pharetra lacus ut aliquet molestie. Donec laoreet urna sit amet nisi sollicitudin placerat. Integer viverra magna eu enim placerat blandit. Cras et viverra risus. Proin in scelerisque magna, a viverra nibh. Proin in quam felis. Vivamus et felis aliquam purus hendrerit mollis in at lorem. Fusce euismod at mauris eget laoreet. Nulla erat quam, sollicitudin ut malesuada in, pellentesque at turpis. Duis tempor quis nulla ut interdum. Quisque facilisis at orci vitae feugiat.Phasellus ac odio libero. Curabitur ac feugiat lacus, nec placerat sem. Sed aliquam nunc quis metus eleifend faucibus. Maecenas pellentesque mi augue, vulputate sollicitudin ipsum venenatis ac. Proin a accumsan leo. Integer pretium cursus neque, sit amet hendrerit risus dapibus non. Nulla sodales quam eu tortor tristique venenatis. Praesent elementum magna risus, at suscipit nisl ullamcorper et. Morbi vehicula hendrerit ipsum vitae ullamcorper. Vivamus facilisis nisl non lorem ultrices, sit amet bibendum nibh consectetur.');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_fees`
+-- Table structure for table `product_fee`
 --
 
-CREATE TABLE IF NOT EXISTS `product_fees` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
-  `value` varchar(45) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '0',
-  `added_time` varchar(45) DEFAULT NULL,
-  `added_by` datetime DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `product_fee` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `value` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_product` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
+
+--
+-- Dumping data for table `product_fee`
+--
+
+INSERT INTO `product_fee` (`id`, `product_id`, `title`, `type`, `value`) VALUES
+(14, 9, 'SHIPPING', 'AMOUNT', 11.41),
+(16, 11, 'SHIPPING', 'AMOUNT', 12.00),
+(17, 12, 'ECO', 'AMOUNT', 0.25),
+(19, 14, 'SHIPPING', 'AMOUNT', 0.00),
+(20, 14, 'ECO', 'AMOUNT', 0.25),
+(22, 16, 'SHIPPING', 'AMOUNT', 0.00),
+(26, 20, 'SHIPPING', 'AMOUNT', 24.99),
+(28, 22, 'IMPORT', 'AMOUNT', 73.40),
+(29, 22, 'SHIPPING', 'AMOUNT', 13.87),
+(30, 22, 'ECO', 'AMOUNT', 0.00),
+(31, 33, 'SHIPPING', 'AMOUNT', 13.87),
+(32, 33, 'ECO', 'AMOUNT', 0.00),
+(33, 33, 'IMPORT', 'AMOUNT', 73.40),
+(37, 35, 'SHIPPING', 'AMOUNT', 13.87),
+(38, 35, 'ECO', 'AMOUNT', 0.00),
+(39, 35, 'IMPORT', 'AMOUNT', 73.40);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_images`
+-- Table structure for table `product_image`
 --
 
-CREATE TABLE IF NOT EXISTS `product_images` (
+CREATE TABLE IF NOT EXISTS `product_image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `url` varchar(512) NOT NULL,
+  `alt` varchar(256) DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_product` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+
+--
+-- Dumping data for table `product_image`
+--
+
+INSERT INTO `product_image` (`id`, `product_id`, `url`, `alt`, `width`, `height`) VALUES
+(11, 9, 'http://i.ebayimg.com/00/s/MTIwMFgxMjAw/z/804AAOSw3ydVgcJ8/$_57.JPG', 'Garmin nuvi 2597LMT 5" Bluetooth GPS Navigation System w/ Lifetime Maps, Traffic', 0, 0),
+(13, 11, 'http://i.ebayimg.com/00/s/NjY1WDk1MA==/z/A8gAAOSwT6pViEvk/$_57.JPG', 'air', 0, 0),
+(14, 12, 'http://www.bestbuy.ca/multimedia/Products/500x500/B00/B0005/B0005411.jpg', 'New! Nikon D3200 24.2MP DSLR Camera with 18-55mm / 55-200mm Lenses & Accessory Kit', 0, 0),
+(16, 14, 'http://www.bestbuy.ca/multimedia/Products/500x500/103/10323/10323638_FS.jpg', 'Acer Aspire E 14" Laptop - Blue (Intel Pentium N3540 / 500GB HDD / 4GB RAM / Windows 8.1)', 0, 0),
+(18, 11, 'http://i.ebayimg.com/00/s/NzAwWDEwMDA=/z/An0AAOSwv0tVe1tv/$_35.JPG', 'secound', 0, 0),
+(21, 14, 'http://www.bestbuy.ca/multimedia/Products/500x500/103/10323/10323638_1_FS.jpg', 'Acer Aspire E 14" Laptop - Blue (Intel Pentium N3540 / 500GB HDD / 4GB RAM / Windows 8.1)', 0, 0),
+(23, 16, 'http://i.ebayimg.com/00/s/MTEyNVgxNTAw/z/k74AAOSwBLlVU7jw/$_57.JPG', 'Brand New - PS4 500GB The Last of Us Remastered Hardware Bundle', 0, 0),
+(30, 20, 'http://i.ebayimg.com/00/s/NjAwWDYwMA==/z/w5sAAOSweW5VXLk1/$_12.JPG', 'Samsung Galaxy Tab 4 10.1" SM-T530 16GB Android WiFI Tablet White INTERNATIONAL', 0, 0),
+(33, 22, 'http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/BNMAAOSwqu9VHBpA/$_57.JPG', '', 0, 0),
+(43, 32, 'http://www.homedepot.ca/wcsstore/HomeDepotCanada/images/catalog/WM3175CW_4.jpg', '', 0, 0),
+(44, 33, 'http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/BNMAAOSwqu9VHBpA/$_57.JPG', '', 0, 0),
+(46, 35, 'http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/BNMAAOSwqu9VHBpA/$_57.JPG', '', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_like`
+--
+
+CREATE TABLE IF NOT EXISTS `product_like` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
-  `type` varchar(16) NOT NULL,
-  `URL` varchar(512) NOT NULL,
-  `alt` varchar(256) NOT NULL,
-  `width` int(11) NOT NULL,
-  `height` int(11) NOT NULL,
-  `size` int(11) NOT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `language` varchar(16) NOT NULL,
-  `last_modified` datetime DEFAULT NULL,
-  `last_modified_by` int(11) DEFAULT NULL,
-  `added_time` datetime NOT NULL,
-  `added_by` int(11) NOT NULL,
+  `session` varchar(45) DEFAULT NULL,
+  `ip` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
-  KEY `added_by` (`added_by`)
+  KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_likes`
+-- Table structure for table `product_link`
 --
 
-CREATE TABLE IF NOT EXISTS `product_likes` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `browser` varchar(45) DEFAULT NULL,
-  `ip` varchar(45) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `added_time` varchar(45) DEFAULT NULL,
-  `added_by` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_links`
---
-
-CREATE TABLE IF NOT EXISTS `product_links` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
   `url` varchar(45) DEFAULT NULL,
   `rating` varchar(45) DEFAULT NULL,
-  `reivew_number` varchar(45) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `last_modified` datetime DEFAULT NULL,
-  `last_modified_by` int(11) DEFAULT NULL,
-  `added_time` datetime DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL,
+  `review_number` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_metas`
+-- Table structure for table `product_meta`
 --
 
-CREATE TABLE IF NOT EXISTS `product_metas` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_meta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
   `key` varchar(45) DEFAULT NULL,
   `value` varchar(45) DEFAULT NULL,
-  `last_modified` varchar(45) DEFAULT NULL,
-  `last_modified_by` varchar(45) DEFAULT NULL,
-  `added_time` varchar(45) DEFAULT NULL,
-  `added_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_names`
+-- Table structure for table `product_name`
 --
 
-CREATE TABLE IF NOT EXISTS `product_names` (
+CREATE TABLE IF NOT EXISTS `product_name` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) DEFAULT NULL,
-  `language` varchar(16) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `language` varchar(2) NOT NULL,
   `value` varchar(256) NOT NULL,
-  `last_modified` datetime DEFAULT NULL,
-  `last_modified_by` int(11) DEFAULT NULL,
-  `added_time` datetime NOT NULL,
-  `added_by` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_product_name_language` (`product_id`,`language`),
-  KEY `added_by` (`added_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `fk_product_idx` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=51 ;
+
+--
+-- Dumping data for table `product_name`
+--
+
+INSERT INTO `product_name` (`id`, `product_id`, `language`, `value`) VALUES
+(15, 9, 'EN', 'Garmin nuvi 2597LMT 5" Bluetooth GPS Navigation System w/ Lifetime Maps, Traffic'),
+(17, 9, 'FR', 'Garmin nuvi 2597LMT 5" Bluetooth GPS Navigation System w/ Lifetime Maps, Traffic'),
+(18, 11, 'EN', 'Apple Macbook Air 11.6" Latest Model 2015 MJVM2LL/A Intel i5 128GB'),
+(19, 12, 'FR', 'Nouveau! Appareil photo reflex num. D3200 de 24,2 Mpx Nikon, obj. 18-55 mm/55-200 mm et trousse d''accessoires'),
+(20, 12, 'EN', 'New! Nikon D3200 24.2MP DSLR Camera with 18-55mm / 55-200mm Lenses & Accessory Kit'),
+(23, 14, 'EN', 'Acer Aspire E 14" Laptop - Blue (Intel Pentium N3540 / 500GB HDD / 4GB RAM / Windows 8.1)'),
+(24, 14, 'FR', 'Acer Aspire E 14" Laptop - Blue (Intel Pentium N3540 / 500GB HDD / 4GB RAM / Windows 8.1)'),
+(27, 16, 'EN', 'Brand New - PS4 500GB The Last of Us Remastered Hardware Bundle'),
+(28, 16, 'FR', 'Brand New - PS4 500GB The Last of Us Remastered Hardware Bundle'),
+(31, 20, 'FR', 'Samsung Galaxy Tab 4 10.1" SM-T530 16GB Android WiFI Tablet White INTERNATIONAL'),
+(32, 20, 'EN', 'Samsung Galaxy Tab 4 10.1" SM-T530 16GB Android WiFI Tablet White INTERNATIONAL'),
+(35, 22, 'EN', 'Samsung Galaxy S6 SM-G920F 32GB Factory Unlocked LTE Smartphone GSM'),
+(46, 32, 'EN', 'LG  5.0 Cu.Ft. Ultra Large Capacity Washer with 6Motion Technology - WM3175CW'),
+(47, 32, 'FR', 'LG  Laveuse à vapeur SteamWasher d''une super grande capacité de 5,0 pi.cu. avec technologie 6Motion - WM3175CW'),
+(48, 33, 'EN', 'Samsung Galaxy S6 SM-G920F 32GB Factory Unlocked LTE Smartphone GSM'),
+(50, 35, 'EN', 'Samsung Galaxy S6 SM-G920F 32GB Factory Unlocked LTE Smartphone GSM');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_options`
+-- Table structure for table `product_option`
 --
 
-CREATE TABLE IF NOT EXISTS `product_options` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `value` varchar(45) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `last_modified` datetime DEFAULT NULL,
-  `last_modified_by` int(11) DEFAULT NULL,
-  `added_time` datetime DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_prices`
---
-
-CREATE TABLE IF NOT EXISTS `product_prices` (
+CREATE TABLE IF NOT EXISTS `product_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
   `type` varchar(45) DEFAULT NULL,
-  `currency` varchar(16) NOT NULL,
-  `value` double(13,4) NOT NULL,
-  `status` tinyint(4) DEFAULT NULL,
-  `added_time` datetime NOT NULL,
-  `added_by` int(11) NOT NULL,
+  `value` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
-  KEY `added_by` (`added_by`)
+  KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_reviews`
+-- Table structure for table `product_price`
 --
 
-CREATE TABLE IF NOT EXISTS `product_reviews` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_price` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `currency` varchar(3) NOT NULL,
+  `value` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_product` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+
+--
+-- Dumping data for table `product_price`
+--
+
+INSERT INTO `product_price` (`id`, `product_id`, `currency`, `value`) VALUES
+(9, 9, 'USD', 144.99),
+(11, 11, 'USD', 749.00),
+(12, 12, 'CAD', 599.99),
+(14, 14, 'CAD', 349.99),
+(15, 9, 'CAD', 179.50),
+(17, 16, 'CAD', 399.99),
+(19, 20, 'USD', 229.97),
+(21, 22, 'CAD', 599.99),
+(22, 22, 'USD', 499.99),
+(40, 32, 'CAD', 734.94),
+(41, 33, 'USD', 499.99),
+(42, 33, 'CAD', 599.99),
+(45, 35, 'USD', 499.99),
+(46, 35, 'CAD', 599.99);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_review`
+--
+
+CREATE TABLE IF NOT EXISTS `product_review` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
-  `rating` varchar(45) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   `content` varchar(45) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `added_time` datetime DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_statuses`
+-- Table structure for table `product_tag`
 --
 
-CREATE TABLE IF NOT EXISTS `product_statuses` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
-  `value` varchar(45) DEFAULT NULL,
-  `comment` varchar(45) DEFAULT NULL,
-  `current` tinyint(1) DEFAULT NULL,
-  `added_time` datetime DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
-  KEY `added_by` (`added_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_tags`
---
-
-CREATE TABLE IF NOT EXISTS `product_tags` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `tag` int(11) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  `last_modified_by` varchar(45) DEFAULT NULL,
-  `last_modified` varchar(45) DEFAULT NULL,
-  `added_time` varchar(45) DEFAULT NULL,
-  `added_by` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_taxes`
---
-
-CREATE TABLE IF NOT EXISTS `product_taxes` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
   `type` varchar(45) DEFAULT NULL,
   `value` varchar(45) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `added_time` datetime DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `product_tag`
+--
+
+INSERT INTO `product_tag` (`id`, `product_id`, `type`, `value`) VALUES
+(1, 35, 'EN', 'ssssss');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_validations`
+-- Table structure for table `product_tax`
 --
 
-CREATE TABLE IF NOT EXISTS `product_validations` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_tax` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `value` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_product` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
+
+--
+-- Dumping data for table `product_tax`
+--
+
+INSERT INTO `product_tax` (`id`, `product_id`, `title`, `type`, `value`) VALUES
+(9, 9, 'DUTY', 'AMOUNT', 23.94),
+(11, 11, 'DUTY', 'AMOUNT', 100.00),
+(12, 12, 'FEDERAL', 'PERCENTAGE', 5.00),
+(13, 12, 'PROVINCE', 'PERCENTAGE', 9.50),
+(16, 14, 'FEDERAL', 'PERCENTAGE', 5.00),
+(17, 14, 'PROVINCE', 'PERCENTAGE', 9.50),
+(20, 16, 'FEDERAL', 'PERCENTAGE', 5.00),
+(21, 16, 'PROVINCE', 'PERCENTAGE', 9.50),
+(24, 22, 'PROVINCE', 'PERCENTAGE', 0.00),
+(25, 22, 'FEDERAL', 'PERCENTAGE', 0.00),
+(44, 32, 'PROVINCE', 'PERCENTAGE', 9.75),
+(45, 32, 'FEDERAL', 'PERCENTAGE', 5.00),
+(46, 33, 'PROVINCE', 'PERCENTAGE', 0.00),
+(47, 33, 'FEDERAL', 'PERCENTAGE', 0.00),
+(48, 35, 'PROVINCE', 'PERCENTAGE', 0.00),
+(49, 35, 'FEDERAL', 'PERCENTAGE', 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_validation`
+--
+
+CREATE TABLE IF NOT EXISTS `product_validation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
-  `from` datetime NOT NULL,
-  `to` datetime NOT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `added_time` datetime DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stores`
+-- Table structure for table `store`
 --
 
-CREATE TABLE IF NOT EXISTS `stores` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `logo` varchar(45) DEFAULT NULL,
-  `website` varchar(45) DEFAULT NULL,
-  `deal_page` varchar(45) DEFAULT NULL,
-  `category` varchar(45) DEFAULT NULL,
-  `last_modified` datetime DEFAULT NULL,
-  `last_modified_by` int(11) DEFAULT NULL,
-  `added_time` datetime DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `store` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` tinyint(2) NOT NULL DEFAULT '0',
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `name` varchar(45) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `website` varchar(255) NOT NULL,
+  `deal_page` varchar(512) NOT NULL,
+  `type` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='NULL';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='store' AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `store`
+--
+
+INSERT INTO `store` (`id`, `status`, `modified_at`, `created_at`, `name`, `logo`, `website`, `deal_page`, `type`) VALUES
+(1, 0, '2015-07-07 19:46:30', '2015-06-16 16:40:02', 'WALMART', 'images/box.png', 'http://www.walmart.ca/', '', 'ONLINE'),
+(2, 0, '2015-07-07 19:46:30', '2015-07-02 15:43:28', 'ebay Canada', '', 'http://www.ebay.ca/', '', 'ONLINE');
 
 -- --------------------------------------------------------
 
@@ -456,119 +582,67 @@ CREATE TABLE IF NOT EXISTS `timo_tpl` (
 --
 
 --
--- Constraints for table `member_addresses`
+-- Constraints for table `member_address`
 --
-ALTER TABLE `member_addresses`
-  ADD CONSTRAINT `member_addresses_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`);
+ALTER TABLE `member_address`
+  ADD CONSTRAINT `member_address_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`);
 
 --
--- Constraints for table `member_emails`
+-- Constraints for table `member_email`
 --
-ALTER TABLE `member_emails`
-  ADD CONSTRAINT `member_emails_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`);
+ALTER TABLE `member_email`
+  ADD CONSTRAINT `member_email_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `member_phones`
+-- Constraints for table `member_phone`
 --
-ALTER TABLE `member_phones`
-  ADD CONSTRAINT `member_phones_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`);
+ALTER TABLE `member_phone`
+  ADD CONSTRAINT `member_phone_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`);
 
 --
--- Constraints for table `products`
+-- Constraints for table `order_address`
 --
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`),
-  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`),
-  ADD CONSTRAINT `products_ibfk_3` FOREIGN KEY (`last_modified_by`) REFERENCES `members` (`id`);
+ALTER TABLE `order_address`
+  ADD CONSTRAINT `fk_order` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `product_descriptions`
+-- Constraints for table `product`
 --
-ALTER TABLE `product_descriptions`
-  ADD CONSTRAINT `product_descriptions_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+ALTER TABLE `product`
+  ADD CONSTRAINT `FK_product_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `product_fees`
+-- Constraints for table `product_description`
 --
-ALTER TABLE `product_fees`
-  ADD CONSTRAINT `product_fees_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+ALTER TABLE `product_description`
+  ADD CONSTRAINT `product_description_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `product_images`
+-- Constraints for table `product_fee`
 --
-ALTER TABLE `product_images`
-  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `product_images_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`);
+ALTER TABLE `product_fee`
+  ADD CONSTRAINT `product_fee_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `product_likes`
+-- Constraints for table `product_image`
 --
-ALTER TABLE `product_likes`
-  ADD CONSTRAINT `product_likes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+ALTER TABLE `product_image`
+  ADD CONSTRAINT `fk_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `product_links`
+-- Constraints for table `product_name`
 --
-ALTER TABLE `product_links`
-  ADD CONSTRAINT `product_links_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+ALTER TABLE `product_name`
+  ADD CONSTRAINT `product_name_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `product_metas`
+-- Constraints for table `product_price`
 --
-ALTER TABLE `product_metas`
-  ADD CONSTRAINT `product_metas_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+ALTER TABLE `product_price`
+  ADD CONSTRAINT `product_price_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `product_names`
+-- Constraints for table `product_tax`
 --
-ALTER TABLE `product_names`
-  ADD CONSTRAINT `product_names_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `product_names_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`);
-
---
--- Constraints for table `product_options`
---
-ALTER TABLE `product_options`
-  ADD CONSTRAINT `product_options_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
-
---
--- Constraints for table `product_prices`
---
-ALTER TABLE `product_prices`
-  ADD CONSTRAINT `product_prices_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `product_prices_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`);
-
---
--- Constraints for table `product_reviews`
---
-ALTER TABLE `product_reviews`
-  ADD CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
-
---
--- Constraints for table `product_statuses`
---
-ALTER TABLE `product_statuses`
-  ADD CONSTRAINT `product_statuses_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `product_statuses_ibfk_2` FOREIGN KEY (`added_by`) REFERENCES `members` (`id`);
-
---
--- Constraints for table `product_tags`
---
-ALTER TABLE `product_tags`
-  ADD CONSTRAINT `product_tags_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
-
---
--- Constraints for table `product_taxes`
---
-ALTER TABLE `product_taxes`
-  ADD CONSTRAINT `product_taxes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
-
---
--- Constraints for table `product_validations`
---
-ALTER TABLE `product_validations`
-  ADD CONSTRAINT `product_validations_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ALTER TABLE `product_tax`
+  ADD CONSTRAINT `product_tax_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
