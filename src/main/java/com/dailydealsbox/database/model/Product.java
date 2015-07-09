@@ -3,6 +3,7 @@
  */
 package com.dailydealsbox.database.model;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -40,6 +41,16 @@ public class Product extends BaseEntityModel {
   @Column(name = "`key`", nullable = false, length = 64)
   private String                  key;
 
+  @NotNull
+  @Column(name = "enable", nullable = false)
+  private boolean                 enable;
+
+  @Column(name = "expired_at", nullable = true)
+  private Date                    expiredAt;
+
+  @Column(name = "activate_at", nullable = true)
+  private Date                    activateAt;
+
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -68,6 +79,19 @@ public class Product extends BaseEntityModel {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTax>         taxes;
+
+  /**
+   * isActive
+   * 
+   * @return
+   */
+  public boolean isActive() {
+    long now = System.currentTimeMillis();
+    if (!this.isEnable()) return false;
+    if (this.getActivateAt() != null && now < this.getActivateAt().getTime()) { return false; }
+    if (this.getExpiredAt() != null && now > this.getExpiredAt().getTime()) { return false; }
+    return true;
+  }
 
   /**
    * validate
@@ -241,6 +265,51 @@ public class Product extends BaseEntityModel {
    */
   public void setKey(String key) {
     this.key = key;
+  }
+
+  /**
+   * @return the expiredAt
+   */
+  public Date getExpiredAt() {
+    return this.expiredAt;
+  }
+
+  /**
+   * @param expiredAt
+   *          the expiredAt to set
+   */
+  public void setExpiredAt(Date expiredAt) {
+    this.expiredAt = expiredAt;
+  }
+
+  /**
+   * @return the enable
+   */
+  public boolean isEnable() {
+    return this.enable;
+  }
+
+  /**
+   * @param enable
+   *          the enable to set
+   */
+  public void setEnable(boolean enable) {
+    this.enable = enable;
+  }
+
+  /**
+   * @return the activateAt
+   */
+  public Date getActivateAt() {
+    return this.activateAt;
+  }
+
+  /**
+   * @param activateAt
+   *          the activateAt to set
+   */
+  public void setActivateAt(Date activateAt) {
+    this.activateAt = activateAt;
   }
 
   /**

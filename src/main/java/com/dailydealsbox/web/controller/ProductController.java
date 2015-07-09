@@ -65,8 +65,7 @@ public class ProductController {
     if (product == null) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      System.out.println("store=" + product.getStore());
-
+      System.out.println("product=" + product);
       return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
     }
   }

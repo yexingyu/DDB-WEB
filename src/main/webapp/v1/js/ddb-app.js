@@ -2,11 +2,7 @@ angular.module('ddbApp',
         [ 'ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap' ])
 
 .config([ '$routeProvider', function($routeProvider) {
-    $routeProvider.when('/login', {
-        templateUrl : 'tpl-login.html',
-        controller : 'LoginCtrl'
-
-    }).when('/home', {
+    $routeProvider.when('/home', {
         templateUrl : 'tpl-home.html',
         controller : 'HomeCtrl'
 
