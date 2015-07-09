@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -44,10 +43,6 @@ public class ProductReview extends BaseModel {
    * 
    * @return
    */
-  public boolean validate() {
-    if (StringUtils.isBlank(this.getRating())) { return false; }
-    return true;
-  }
 
   /**
    * @return the product
