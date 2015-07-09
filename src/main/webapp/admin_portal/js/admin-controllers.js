@@ -70,8 +70,6 @@ angular
                                 ProductService.edit($scope.product, function(response) {
                                     if (response.status == 'SUCCESS') {
                                         $scope.product = response.data;
-                                        console.log(response);
-                                        
                                     }
                                 });
                             };
@@ -156,15 +154,14 @@ angular
                                 language : 'FR',
                                 value : ""
                             } ];
-                            $scope.product.store = {
-                                    id : 2
-                                };
+
                             // sample data
-                            /*
                             $scope.product.url = "http://www.ebay.com/itm/Samsung-Galaxy-S6-SM-G920F-32GB-Factory-Unlocked-LTE-Smartphone-GSM/301678036602";
                             $scope.product.key = "301678036602";
                             $scope.product.status = "AVAILABLE";
-
+                            $scope.product.store = {
+                                id : 2
+                            };
 
                             $scope.product.prices[0].currency = 'CAD';
                             $scope.product.prices[0].value = '599.99';
@@ -180,15 +177,24 @@ angular
                             $scope.product.fees[0].value = '13.87';
                             $scope.product.fees[1].title = 'IMPORT';
                             $scope.product.fees[1].value = '73.40';
-*/
+                            $scope.product.links = [];
+                            $scope.product.likes = [];
+                            $scope.product.metas = [];
+                            $scope.product.options = [];
+                            $scope.product.reviews = [];
+                            $scope.product.tags = [];
+                            $scope.product.validations = [];
+
                             // usd
                             $scope.Math = window.Math;
-                            $scope.product.total = parseFloat($scope.product.prices[0].value);
+                            $scope.product.total = parseFloat($scope.product.prices[1].value)
+                                    + parseFloat($scope.product.fees[0].value)
+                                    + parseFloat($scope.product.fees[1].value);
                             $scope.exchange_rate = 1.2573;
 
                             // total
                             $scope.product.total_raw = $scope.product.total * $scope.exchange_rate;
-                            $scope.product.total = $scope.Math.round($scope.product.total_raw * 100) / 100;
+                            $scope.product.total = Math.round($scope.product.total_raw * 100) / 100;
 
                             // down
                             $scope.product.down_raw = $scope.product.total_raw * 0.382;
@@ -215,13 +221,15 @@ angular
                                     * $scope.number_of_payments - $scope.product.principal;
                             $scope.interest = Math.round($scope.interest_raw * 100) / 100;
 
-                             $scope.add = function() {
+                            $scope.product.names[0].value = 'Samsung Galaxy S6 SM-G920F 32GB Factory Unlocked LTE Smartphone GSM';
+                            $scope.product.images[0].url = 'http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/BNMAAOSwqu9VHBpA/$_57.JPG';
+
+                            $scope.product.descriptions[0].value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent risus elit, tempor nec accumsan at, vestibulum et est. Donec tempus lectus sed dui semper, sed pharetra leo auctor. Vestibulum commodo elit quis dignissim suscipit. Vestibulum pharetra lacus ut aliquet molestie. Donec laoreet urna sit amet nisi sollicitudin placerat. Integer viverra magna eu enim placerat blandit. Cras et viverra risus. Proin in scelerisque magna, a viverra nibh. Proin in quam felis. Vivamus et felis aliquam purus hendrerit mollis in at lorem. Fusce euismod at mauris eget laoreet. Nulla erat quam, sollicitudin ut malesuada in, pellentesque at turpis. Duis tempor quis nulla ut interdum. Quisque facilisis at orci vitae feugiat.Phasellus ac odio libero. Curabitur ac feugiat lacus, nec placerat sem. Sed aliquam nunc quis metus eleifend faucibus. Maecenas pellentesque mi augue, vulputate sollicitudin ipsum venenatis ac. Proin a accumsan leo. Integer pretium cursus neque, sit amet hendrerit risus dapibus non. Nulla sodales quam eu tortor tristique venenatis. Praesent elementum magna risus, at suscipit nisl ullamcorper et. Morbi vehicula hendrerit ipsum vitae ullamcorper. Vivamus facilisis nisl non lorem ultrices, sit amet bibendum nibh consectetur.";
+
+                            $scope.add = function() {
                                 console.log($scope.product);
                                 ProductService.add($scope.product, function(response) {
-                                	if (response.status == 'SUCCESS') {
-                                		window.location.href="/admin_portal/index.html#/product";
-                                	} 
-                                	console.log(response);
+                                    console.log(response);
                                 });
                             };
                         } ])

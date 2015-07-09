@@ -109,8 +109,18 @@
 			                </textarea> [<a ng-click="product.descriptions.splice($index, 1)">X</a>] <br />
           </span> <span> [<a ng-click="product.descriptions.push({productId:product.id})">Add</a>]
           </span>
-        </p>
+        </p>      
       </div>
+      <div class="form-group">
+        <label>Test Tag:</label>
+        <p>
+          <span ng-repeat="tag in product.tags"> <select ng-model="tag.type" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <textarea
+              class="form-control" rows="3" ng-model="tag.value">
+			                </textarea> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />
+          </span> <span> [<a ng-click="product.tags.push({productId:product.id})">Add</a>]
+          </span>
+        </p>      
+      </div>      
     </div>
     <div class="panel-footer"></div>
   </div>
