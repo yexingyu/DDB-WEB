@@ -59,45 +59,82 @@ public class Product extends BaseEntityModel {
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Store                   store;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductName>        names;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductDescription> descriptions;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductImage>       images;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductPrice>       prices;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductFee>         fees;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTax>         taxes;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductLink>        links;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductMeta>        metas;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductOption>      options;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTag>         tags;
+
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Set<ProductWarranty>    warrantys;
 
   /**
    * isActive
@@ -297,6 +334,21 @@ public class Product extends BaseEntityModel {
    * @param tags
    *          the tags to set
    */
+  public void setWarrantys(Set<ProductWarranty> warrantys) {
+    this.warrantys = warrantys;
+  }
+
+  /**
+   * @return the tags
+   */
+  public Set<ProductWarranty> getWarrantys() {
+    return this.warrantys;
+  }
+
+  /**
+   * @param tags
+   *          the tags to set
+   */
   public void setTags(Set<ProductTag> tags) {
     this.tags = tags;
   }
@@ -440,6 +492,8 @@ public class Product extends BaseEntityModel {
     for (ProductTag o : this.getTags()) {
       o.setProduct(this);
     }
-
+    for (ProductWarranty o : this.getWarrantys()) {
+      o.setProduct(this);
+    }
   }
 }
