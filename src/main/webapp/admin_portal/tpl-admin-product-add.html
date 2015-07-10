@@ -22,14 +22,6 @@
             <label>Store:</label> <select class="form-control" ng-model="product.store.id" ng-options="s.id as s.name group by s.type for s in stores">
             </select>
           </div>
-          <div class="form-group">
-            <label>TEST Modified:</label>
-            <p class="form-control-static">{{ product.modifiedAt | date:'medium' }}</p>
-          </div>
-          <div class="form-group">
-            <label>TEST Added:</label>
-            <p class="form-control-static">{{ product.createdAt | date:'medium' }}</p>
-          </div>
         </div>
         <div class="panel-footer"></div>
       </div>
@@ -101,6 +93,18 @@
           </span>
         </p>
       </div>
+      <form class="form-inline">
+      <div class="form-group">
+        <label>Test Tag or Topics:</label>
+        <p>
+          <span ng-repeat="tag in product.tags"> <select ng-model="tag.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <input
+              class="form-control"  ng-model="tag.value"> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />
+          </span> <span> [<a ng-click="product.tags.push({productId:product.id})">Add</a>]
+          </span>
+        </p>      
+      </div>
+      </form>
+           
       <div class="form-group">
         <label>Test Description:</label>
         <p>
@@ -110,20 +114,75 @@
           </span> <span> [<a ng-click="product.descriptions.push({productId:product.id})">Add</a>]
           </span>
         </p>      
-      </div>
-      <div class="form-group">
-        <label>Test Tag:</label>
-        <p>
-          <span ng-repeat="tag in product.tags"> <select ng-model="tag.type" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <textarea
-              class="form-control" rows="3" ng-model="tag.value">
-			                </textarea> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />
-          </span> <span> [<a ng-click="product.tags.push({productId:product.id})">Add</a>]
-          </span>
-        </p>      
-      </div>      
+      </div>    
     </div>
     <div class="panel-footer"></div>
   </div>
+  <!-- product reference link panel-->
+  <div class="panel panel-info">
+    <div class="panel-heading">TEST Reference Link</div>
+    <div class="panel-body">
+      <div class="form-group">
+        <label>Reference Link:</label>
+        <p>
+          <span ng-repeat="link in product.links"> 
+          URL: <input class="form-control" type="text" ng-model="link.url" /> 
+          Site Domain Name: <input class="form-control" type="text" ng-model="link.name" />
+           Rating: <input class="form-control" type="text" ng-model="link.rating" />
+           Number of Reviews: <input class="form-control" type="text" ng-model="link.review_number" />
+            [<a ng-click="product.links.splice($index, 1)">X</a>] <br />
+          </span> <span> [<a ng-click="product.links.push({productId:product.id})">Add</a>]
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="panel-footer"></div>
+  </div>  
+
+
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- product options-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">Test Options:</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label>Options:</label>
+            <p>
+              <span ng-repeat="option in product.options"> <select ng-model="option.type" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
+                ng-model="option.value" /> [<a ng-click="product.options.splice($index, 1)">X</a>] <br />
+              </span> <span> [<a ng-click="product.options.push({productId:product.id})">Add</a>]
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <!-- product meta-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">SEO Metas</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label>Metas</label>
+            <p>
+              <span ng-repeat="meta in product.metas"> <select ng-model="meta.key" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
+                ng-model="meta.value" /> [<a ng-click="product.metas.splice($index, 1)">X</a>] <br />
+              </span> <span> [<a ng-click="product.metas.push({productId:product.id})">Add</a>]
+              </span>
+            </p>
+          </div>
+
+
+        </div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+  </div>
+
+
+  
   <!-- product index preview-->
   <div class="panel panel-green">
     <div class="panel-heading">Test Index Preview</div>
@@ -146,6 +205,7 @@
           <div class="col-lg-12">
             <h2>
               <span>Price: {{product.prices[0].currency}}${{product.prices[0].value}}</span>
+            </h2>
           </div>
         </div>
         <div class="row">
