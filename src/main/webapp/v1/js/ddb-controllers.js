@@ -67,11 +67,13 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
  */
 .controller('ProductCtrl',
         [ '$scope', '$location', 'ProductService', function($scope, $location, ProductService) {
+            $scope.page = 0;
+            $scope.size = 9;
             ProductService.list(function(response) {
                 if (response.status == 'SUCCESS') {
                     $scope.items = response.data;
                 }
-            }, 0, 2);
+            }, $scope.page, $scope.size);
         } ])
 
 /*
@@ -240,7 +242,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
         [ '$scope', '$location', 'ProductService', function($scope, $location, ProductService) {
             // init product list
             $scope.page = 0;
-            $scope.size = 3;
+            $scope.size = 9;
             ProductService.list(function(response) {
                 if (response.status == 'SUCCESS') {
                     $scope.items = response.data;

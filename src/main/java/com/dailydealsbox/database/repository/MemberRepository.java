@@ -19,4 +19,5 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
    * @return
    */
   public Member findByAccount(String account);
+
 }

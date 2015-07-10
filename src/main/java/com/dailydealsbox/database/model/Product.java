@@ -59,96 +59,45 @@ public class Product extends BaseEntityModel {
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Store                   store;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductName>        names;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductDescription> descriptions;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductImage>       images;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductPrice>       prices;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductFee>         fees;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTax>         taxes;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductLike>        likes;
-
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductLink>        links;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductMeta>        metas;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductOption>      options;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductReview>      reviews;
-
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTag>         tags;
-
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductValidation>  validations;
 
   /**
    * isActive
@@ -293,21 +242,6 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @return the likes
-   */
-  public Set<ProductLike> getLikes() {
-    return this.likes;
-  }
-
-  /**
-   * @param likes
-   *          the likes to set
-   */
-  public void setLikes(Set<ProductLike> likes) {
-    this.likes = likes;
-  }
-
-  /**
    * @return the links
    */
   public Set<ProductLink> getLinks() {
@@ -353,21 +287,6 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @return the reviews
-   */
-  public Set<ProductReview> getReviews() {
-    return this.reviews;
-  }
-
-  /**
-   * @param reviews
-   *          the reviews to set
-   */
-  public void setReviews(Set<ProductReview> reviews) {
-    this.reviews = reviews;
-  }
-
-  /**
    * @return the tags
    */
   public Set<ProductTag> getTags() {
@@ -380,21 +299,6 @@ public class Product extends BaseEntityModel {
    */
   public void setTags(Set<ProductTag> tags) {
     this.tags = tags;
-  }
-
-  /**
-   * @return the validations
-   */
-  public Set<ProductValidation> getValidations() {
-    return this.validations;
-  }
-
-  /**
-   * @param validations
-   *          the validations to set
-   */
-  public void setValidations(Set<ProductValidation> validations) {
-    this.validations = validations;
   }
 
   /**
@@ -524,9 +428,6 @@ public class Product extends BaseEntityModel {
     for (ProductTax o : this.getTaxes()) {
       o.setProduct(this);
     }
-    for (ProductLike o : this.getLikes()) {
-      o.setProduct(this);
-    }
     for (ProductLink o : this.getLinks()) {
       o.setProduct(this);
     }
@@ -536,14 +437,9 @@ public class Product extends BaseEntityModel {
     for (ProductOption o : this.getOptions()) {
       o.setProduct(this);
     }
-    for (ProductReview o : this.getReviews()) {
-      o.setProduct(this);
-    }
     for (ProductTag o : this.getTags()) {
       o.setProduct(this);
     }
-    for (ProductValidation o : this.getValidations()) {
-      o.setProduct(this);
-    }
+
   }
 }
