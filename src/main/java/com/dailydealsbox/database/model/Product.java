@@ -64,7 +64,7 @@ public class Product extends BaseEntityModel {
     cascade = { CascadeType.ALL },
     orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductName>        names;
+  private Set<ProductText>        texts;
 
   @OneToMany(fetch = FetchType.LAZY,
     mappedBy = "product",
@@ -137,18 +137,18 @@ public class Product extends BaseEntityModel {
     if (StringUtils.isBlank(this.getKey())) { return false; }
     if (StringUtils.isBlank(this.getUrl())) { return false; }
 
-    // validate product name
-    Iterator<ProductName> itNames = this.getNames().iterator();
-    while (itNames.hasNext()) {
-      ProductName name = itNames.next();
+    // validate product text info
+    Iterator<ProductText> itTexts = this.getTexts().iterator();
+    while (itTexts.hasNext()) {
+    	ProductText name = itTexts.next();
       if (!name.validate()) {
-        itNames.remove();
+        itTexts.remove();
       }
     }
 
     // validate product image
     Iterator<ProductImage> itImages = this.getImages().iterator();
-    while (itNames.hasNext()) {
+    while (itTexts.hasNext()) {
       ProductImage value = itImages.next();
       if (!value.validate()) {
         itImages.remove();
@@ -157,7 +157,7 @@ public class Product extends BaseEntityModel {
 
     // validate product price
     Iterator<ProductPrice> itPrices = this.getPrices().iterator();
-    while (itNames.hasNext()) {
+    while (itTexts.hasNext()) {
       ProductPrice value = itPrices.next();
       if (!value.validate()) {
         itPrices.remove();
@@ -228,18 +228,18 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @return the names
+   * @return the texts
    */
-  public Set<ProductName> getNames() {
-    return this.names;
+  public Set<ProductText> getTexts() {
+    return this.texts;
   }
 
   /**
-   * @param names
-   *          the names to set
+   * @param texts
+   *          the texts to set
    */
-  public void setNames(Set<ProductName> names) {
-    this.names = names;
+  public void setTexts(Set<ProductText> texts) {
+    this.texts = texts;
   }
 
   /**
@@ -402,7 +402,7 @@ public class Product extends BaseEntityModel {
     for (ProductImage o : this.getImages()) {
       o.setProduct(this);
     }
-    for (ProductName o : this.getNames()) {
+    for (ProductText o : this.getTexts()) {
       o.setProduct(this);
     }
     for (ProductPrice o : this.getPrices()) {
