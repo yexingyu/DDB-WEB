@@ -71,13 +71,6 @@ public class Product extends BaseEntityModel {
     cascade = { CascadeType.ALL },
     orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductDescription> descriptions;
-
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductImage>       images;
 
   @OneToMany(fetch = FetchType.LAZY,
@@ -113,13 +106,6 @@ public class Product extends BaseEntityModel {
     cascade = { CascadeType.ALL },
     orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductMeta>        metas;
-
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductOption>      options;
 
   @OneToMany(fetch = FetchType.LAZY,
@@ -128,13 +114,6 @@ public class Product extends BaseEntityModel {
     orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTag>         tags;
-
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductWarranty>    warrantys;
 
   /**
    * isActive
@@ -249,21 +228,6 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @return the descriptions
-   */
-  public Set<ProductDescription> getDescriptions() {
-    return this.descriptions;
-  }
-
-  /**
-   * @param descriptions
-   *          the descriptions to set
-   */
-  public void setDescriptions(Set<ProductDescription> descriptions) {
-    this.descriptions = descriptions;
-  }
-
-  /**
    * @return the names
    */
   public Set<ProductName> getNames() {
@@ -294,21 +258,6 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @return the metas
-   */
-  public Set<ProductMeta> getMetas() {
-    return this.metas;
-  }
-
-  /**
-   * @param metas
-   *          the metas to set
-   */
-  public void setMetas(Set<ProductMeta> metas) {
-    this.metas = metas;
-  }
-
-  /**
    * @return the options
    */
   public Set<ProductOption> getOptions() {
@@ -328,21 +277,6 @@ public class Product extends BaseEntityModel {
    */
   public Set<ProductTag> getTags() {
     return this.tags;
-  }
-
-  /**
-   * @param tags
-   *          the tags to set
-   */
-  public void setWarrantys(Set<ProductWarranty> warrantys) {
-    this.warrantys = warrantys;
-  }
-
-  /**
-   * @return the tags
-   */
-  public Set<ProductWarranty> getWarrantys() {
-    return this.warrantys;
   }
 
   /**
@@ -462,9 +396,6 @@ public class Product extends BaseEntityModel {
    * setProductForChildren
    */
   public void setProductForChildren() {
-    for (ProductDescription o : this.getDescriptions()) {
-      o.setProduct(this);
-    }
     for (ProductFee o : this.getFees()) {
       o.setProduct(this);
     }
@@ -483,16 +414,10 @@ public class Product extends BaseEntityModel {
     for (ProductLink o : this.getLinks()) {
       o.setProduct(this);
     }
-    for (ProductMeta o : this.getMetas()) {
-      o.setProduct(this);
-    }
     for (ProductOption o : this.getOptions()) {
       o.setProduct(this);
     }
     for (ProductTag o : this.getTags()) {
-      o.setProduct(this);
-    }
-    for (ProductWarranty o : this.getWarrantys()) {
       o.setProduct(this);
     }
   }
