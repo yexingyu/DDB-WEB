@@ -86,8 +86,8 @@
     <div class="panel-body">
 		<form class="form-horizontal">
 		<div class="row">
-			<span ng-repeat="text in product.texts">
-				<div class="col-lg-6">
+
+				<div class="col-lg-6" ng-repeat="text in product.texts">
 		    	  <div class="form-group">
 					    <label class="col-sm-2 control-label">Language:</label>
 					    <div class="col-sm-10">
@@ -103,25 +103,25 @@
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Description:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.description" />
+					     <textarea class="form-control" ng-model="text.description" ></textarea>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Warranty:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.warranty" />
+					     <textarea class="form-control" ng-model="text.warranty" ></textarea>
 					    </div>
 					  </div>			  
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Return Policy:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.return_policy" />
+					     <textarea class="form-control" ng-model="text.return_policy" ></textarea>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Shipping Info:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.shipping_info" />
+					     <textarea class="form-control" ng-model="text.shipping_info" ></textarea>
 					    </div>
 					  </div>						  			  
 					  <div class="form-group">
@@ -139,7 +139,7 @@
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Meta Description:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.meta_description" />
+					     <textarea class="form-control" ng-model="text.meta_description" ></textarea>
 					    </div>
 					  </div>
 					  <div class="form-group">
@@ -149,7 +149,6 @@
 					    </div>
 					  </div>
 					</div>	  			  		  			  			  			  
-				</span>	 
 			</div> 
 		</form>
         [<a ng-click="product.texts.push({productId:product.id})">Add</a>]
@@ -185,7 +184,7 @@
           <div class="form-group">
             <label>Options:</label>
             <p>
-              <span ng-repeat="option in product.options"> <select ng-model="option.type" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
+              <span ng-repeat="option in product.options"> <select ng-model="option.type" ng-options="o as o for o in $root.constant.OPTION_TYPE"></select> : <input type="text"
                 ng-model="option.value" /> [<a ng-click="product.options.splice($index, 1)">X</a>] <br />
               </span> <span> [<a ng-click="product.options.push({productId:product.id})">Add</a>]
               </span>
@@ -248,13 +247,13 @@
             </h2>
           </div>
         </div>
-        <div class="row" ng-repeat ="tax in product.taxes"">
+        <div class="row" ng-repeat ="tax in product.taxes">
           <div class="col-lg-12">
             <h2>{{tax.title}}({{tax.type}}):YES </h2>
 
           </div>
         </div>         
-        <div class="row" ng-repeat ="fee in product.fees"">
+        <div class="row" ng-repeat ="fee in product.fees">
           <div class="col-lg-12">
             <h2>{{fee.title}}: {{fee.value}}</h2>
 
@@ -297,4 +296,3 @@
     <button type="submit" class="btn btn-default" ng-click="add()">Add Button</button>
 
   </div>
-</div>

@@ -111,11 +111,11 @@ angular
                             } ];
 
                             $scope.product.taxes = [ {
-                                title : 'FEDERAL',
+                                title : 'CAFEDERAL',
                                 type : 'PERCENTAGE',
                                 value : ''
                             }, {
-                                title : 'PROVINCE',
+                                title : 'CAPROVINCE',
                                 type : 'PERCENTAGE',
                                 value : ''
                             } ];
@@ -126,12 +126,6 @@ angular
                                 value : ''
                             }, {
                                 title : 'IMPORT',
-                                type : 'AMOUNT',
-                                value : ''
-                            },
-
-                            {
-                                title : 'ECO',
                                 type : 'AMOUNT',
                                 value : ''
                             } ];
@@ -188,7 +182,13 @@ angular
                             }];
                             
                             
-                            $scope.product.options = [];                            
+                            $scope.product.options = [{
+                                type : "COLOR",
+                                value: ""
+                            },{
+                                type : "COLOR",
+                                value: ""
+                            }];                            
                             
                             $scope.product.reviews = [];                            
                             $scope.product.likes = [];                            
@@ -201,7 +201,7 @@ angular
                             
                             
                             // sample data
-                            $scope.product.url = "http://shop.nordstrom.com/s/steve-madden-troopa-boot/3132609?origin=shoppingbag";
+                            $scope.product.url = "http://shop.nordstrom.com/s/steve-madden-troopa-boot/3132609";
                             $scope.product.key = "33132609";
                             $scope.product.status = "AVAILABLE";
                             $scope.product.store = {
@@ -213,10 +213,10 @@ angular
                             }];
 
                             $scope.product.taxes = [ {
-                                title : 'FEDERAL',
+                                title : 'CAFEDERAL',
                                 type : 'PERCENTAGE',
                             }, {
-                                title : 'PROVINCE',
+                                title : 'CAPROVINCE',
                                 type : 'PERCENTAGE',
 
                             } ];
@@ -285,8 +285,12 @@ angular
                             
                             
                             $scope.product.options = [{
-                            	
-                            }];                            
+                                type : "COLOR",
+                                value: ""
+                            },{
+                                type : "COLOR",
+                                value: ""
+                            }];                       
                             
 
                             

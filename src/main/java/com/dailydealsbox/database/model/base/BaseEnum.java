@@ -49,7 +49,7 @@ public class BaseEnum {
   }
 
   public static enum LANGUAGE {
-    EN, FR;
+    EN, FR, CN;
   }
 
   public static enum CURRENCY {
@@ -65,7 +65,7 @@ public class BaseEnum {
   }
 
   public static enum PRODUCT_TAX_TITLE {
-    FEDERAL, PROVINCE, DUTY;
+    CAFEDERAL, CAPROVINCE, CADUTY;
   }
 
   public static enum PRODUCT_TAX_TYPE {
@@ -78,6 +78,10 @@ public class BaseEnum {
 
   public static enum STORE_TYPE {
     ONLINE, LOCAL
+  }
+
+  public static enum OPTION_TYPE {
+    COLOR, SIZE, STORAGE, WIDTH
   }
 
   /**
