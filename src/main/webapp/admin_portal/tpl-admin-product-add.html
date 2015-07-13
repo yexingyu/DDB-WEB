@@ -44,7 +44,7 @@
             <label>Tax:</label>
             <p>
               <span ng-repeat="tax in product.taxes"> <select ng-model="tax.title" ng-options="title as title for title in $root.constant.PRODUCT_TAX_TITLE"></select> <select
-                ng-model="tax.type" ng-options="type as type for type in $root.constant.PRODUCT_TAX_TYPE"></select> : <input type="text" ng-model="tax.value" /> [<a
+                ng-model="tax.type" ng-options="type as type for type in $root.constant.PRODUCT_TAX_TYPE"></select>  [<a
                 ng-click="product.taxes.splice($index, 1)">X</a>] <br />
               </span> <span> [<a ng-click="product.taxes.push({productId:product.id})">Add</a>]
               </span>
@@ -65,7 +65,7 @@
     </div>
   </div>
   <!-- product image panel-->
-  <div class="panel panel-info">
+  <div class="panel panel-primary">
     <div class="panel-heading">TEST Image</div>
     <div class="panel-body">
       <div class="form-group">
@@ -80,46 +80,125 @@
     </div>
     <div class="panel-footer"></div>
   </div>
-  <!-- product name, description panel-->
-  <div class="panel panel-info">
-    <div class="panel-heading">TEST Name, Description</div>
+  <!-- product text info panel-->
+  <div class="panel panel-primary">
+    <div class="panel-heading">TEST Name, Description, Warranty, Return Policy, Meta</div>
     <div class="panel-body">
-      <div class="form-group">
-        <label>Test Name:</label>
-        <p>
-          <span ng-repeat="name in product.names"> <select ng-model="name.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <input
-            class="form-control" type="text" ng-model="name.value" /> [<a ng-click="product.names.splice($index, 1)">X</a>] <br />
-          </span> <span> [<a ng-click="product.names.push({productId:product.id})">Add</a>]
-          </span>
-        </p>
+		<form class="form-horizontal">
+		<div class="row">
+			<span ng-repeat="text in product.texts">
+				<div class="col-lg-6">
+		    	  <div class="form-group">
+					    <label class="col-sm-2 control-label">Language:</label>
+					    <div class="col-sm-10">
+		          		<select ng-model="text.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> 
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Name:</label>
+					    <div class="col-sm-10">
+					      <input class="form-control" type="text" ng-model="text.name" />
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Description:</label>
+					    <div class="col-sm-10">
+					     <textarea class="form-control" ng-model="text.description" />
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Warranty:</label>
+					    <div class="col-sm-10">
+					     <textarea class="form-control" ng-model="text.warranty" />
+					    </div>
+					  </div>			  
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Return Policy:</label>
+					    <div class="col-sm-10">
+					     <textarea class="form-control" ng-model="text.return_policy" />
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Shipping Info:</label>
+					    <div class="col-sm-10">
+					     <textarea class="form-control" ng-model="text.shipping_info" />
+					    </div>
+					  </div>						  			  
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Meta Keyword:</label>
+					    <div class="col-sm-10">
+					      <input class="form-control" type="text" ng-model="text.meta_keyword" />
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Meta Title:</label>
+					    <div class="col-sm-10">
+					      <input class="form-control" type="text" ng-model="text.meta_title" />
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Meta Description:</label>
+					    <div class="col-sm-10">
+					     <textarea class="form-control" ng-model="text.meta_description" />
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Delete: </label>
+					    <div class="col-sm-10">
+					    [<a ng-click="product.texts.splice($index, 1)">X</a>]	
+					    </div>
+					  </div>
+					</div>	  			  		  			  			  			  
+				</span>	 
+			</div> 
+		</form>
+        [<a ng-click="product.texts.push({productId:product.id})">Add</a>]
       </div>
-      <form class="form-inline">
-      <div class="form-group">
-        <label>Test Tag or Topics:</label>
-        <p>
-          <span ng-repeat="tag in product.tags"> <select ng-model="tag.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <input
-              class="form-control"  ng-model="tag.value"> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />
-          </span> <span> [<a ng-click="product.tags.push({productId:product.id})">Add</a>]
-          </span>
-        </p>      
-      </div>
-      </form>
-           
-      <div class="form-group">
-        <label>Test Description:</label>
-        <p>
-          <span ng-repeat="description in product.descriptions"> <select ng-model="description.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <textarea
-              class="form-control" rows="3" ng-model="description.value">
-			                </textarea> [<a ng-click="product.descriptions.splice($index, 1)">X</a>] <br />
-          </span> <span> [<a ng-click="product.descriptions.push({productId:product.id})">Add</a>]
-          </span>
-        </p>      
-      </div>    
     </div>
     <div class="panel-footer"></div>
   </div>
+  <!-- product tag and option panel-->
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- product options-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">Test Tags:</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label>Tags:</label>
+            <p>
+	          <span ng-repeat="tag in product.tags"> <select ng-model="tag.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <input
+	              class="form-control"  ng-model="tag.value"> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />
+	          </span> <span> [<a ng-click="product.tags.push({productId:product.id})">Add</a>]
+	          </span>
+            </p>
+          </div>
+        </div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>  
+    <div class="col-lg-6">
+      <!-- product options-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">Test Options:</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label>Options:</label>
+            <p>
+              <span ng-repeat="option in product.options"> <select ng-model="option.type" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
+                ng-model="option.value" /> [<a ng-click="product.options.splice($index, 1)">X</a>] <br />
+              </span> <span> [<a ng-click="product.options.push({productId:product.id})">Add</a>]
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+  </div>  
+  
   <!-- product reference link panel-->
-  <div class="panel panel-info">
+  <div class="panel panel-primary">
     <div class="panel-heading">TEST Reference Link</div>
     <div class="panel-body">
       <div class="form-group">
@@ -140,57 +219,18 @@
   </div>  
 
 
-  <div class="row">
-    <div class="col-lg-6">
-      <!-- product options-->
-      <div class="panel panel-primary">
-        <div class="panel-heading">Test Options:</div>
-        <div class="panel-body">
-          <div class="form-group">
-            <label>Options:</label>
-            <p>
-              <span ng-repeat="option in product.options"> <select ng-model="option.type" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
-                ng-model="option.value" /> [<a ng-click="product.options.splice($index, 1)">X</a>] <br />
-              </span> <span> [<a ng-click="product.options.push({productId:product.id})">Add</a>]
-              </span>
-            </p>
-          </div>
-        </div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-    <div class="col-lg-6">
-      <!-- product meta-->
-      <div class="panel panel-primary">
-        <div class="panel-heading">SEO Metas</div>
-        <div class="panel-body">
-          <div class="form-group">
-            <label>Metas</label>
-            <p>
-              <span ng-repeat="meta in product.metas"> <select ng-model="meta.key" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
-                ng-model="meta.value" /> [<a ng-click="product.metas.splice($index, 1)">X</a>] <br />
-              </span> <span> [<a ng-click="product.metas.push({productId:product.id})">Add</a>]
-              </span>
-            </p>
-          </div>
 
-
-        </div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-  </div>
 
 
   
   <!-- product index preview-->
-  <div class="panel panel-green">
+  <div class="panel panel-primary">
     <div class="panel-heading">Test Index Preview</div>
     <div class="panel-body">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-            <h2>{{product.names[0].value}}</h2>
+            <h2>{{product.texts[0].name}}</h2>
           </div>
         </div>
         <div class="row" align="center">
@@ -199,7 +239,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12">{{product.descriptions[0].value | limitTo:360}} ...</div>
+          <div class="col-lg-12">{{product.texts[0].description | limitTo:360}} ...</div>
         </div>
         <div class="row">
           <div class="col-lg-12">
@@ -208,9 +248,16 @@
             </h2>
           </div>
         </div>
+        <div class="row" ng-repeat ="fee in product.fees"">
+          <div class="col-lg-12">
+            <h2>{{fee.title}}: {{fee.value}}</h2>
+
+          </div>
+        </div>  
+            (Exchange Rate: {{exchange_rate}})              
         <div class="row">
           <div class="col-lg-12">
-            <h2>Total: ${{product.prices[0].value}}</h2>
+            <h2>Total: ${{product.total}}</h2>
             (Exchange Rate: {{exchange_rate}})
           </div>
         </div>
@@ -239,7 +286,7 @@
             <div class="panel-footer">
             </div>
         </div>
-end of product detail preview-->
+<--end of product detail preview-->
     <div><h2>{{response.status}}</h2></div>
     <button type="submit" class="btn btn-default" ng-click="add()">Add Button</button>
 

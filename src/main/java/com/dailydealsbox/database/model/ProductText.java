@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.lang3.StringUtils;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,7 +28,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "product_text")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ProductText extends BaseModel {
+  @NotNull
+  @Column(name = "language", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private LANGUAGE language;
 
+	
   @NotNull
   @Column(name = "name", nullable = false, length = 256)
   private String   name;
@@ -37,31 +42,30 @@ public class ProductText extends BaseModel {
   @Column(name = "description", nullable = false, length = 256)
   private String   description;
   
-  @NotNull
-  @Column(name = "warranty", nullable = false, length = 1024)
+  @Column(name = "warranty", length = 1024)
   private String   warranty;
   
-  @NotNull
-  @Column(name = "return_policy", nullable = false, length = 1024)
-  private String   return_policy;
-  
-  @NotNull
-  @Column(name = "meta_title", nullable = false, length = 128)
-  private String   meta_title;
-  
-  @NotNull
-  @Column(name = "meta_keyword", nullable = false, length = 64)
-  private String   meta_keyword;
-  
-  @NotNull
-  @Column(name = "meta_desciption", nullable = false, length = 512)
-  private String   meta_desciption;
+
+  @Column(name = "return_policy", length = 1024)
+  private String   returnPolicy;
   
 
-  @NotNull
-  @Column(name = "language", nullable = false)
-  @Enumerated(EnumType.STRING)
-  private LANGUAGE language;
+  @Column(name = "shipping_info", length = 254)
+  private String   shippingInfo;
+  
+
+  @Column(name = "meta_title", length = 128)
+  private String   metaTitle;
+  
+
+  @Column(name = "meta_keyword", length = 64)
+  private String   metaKeyword;
+  
+
+  @Column(name = "meta_description", length = 512)
+  private String   metaDescription;
+  
+
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
@@ -74,7 +78,7 @@ public class ProductText extends BaseModel {
    * @return
    */
   public boolean validate() {
-    if (StringUtils.isBlank(this.getName())) { return false; }
+   
     return true;
   }
 
@@ -142,61 +146,75 @@ public class ProductText extends BaseModel {
    * @return the return_policy
    */
   public String getReturnPolicy() {
-    return this.return_policy;
+    return this.returnPolicy;
   }
 
   /**
    * @param return_policy
    *          the return_policy to set
    */
-  public void setReturnPolicy(String return_policy) {
-    this.return_policy = return_policy;
+  public void setReturnPolicy(String returnPolicy) {
+    this.returnPolicy = returnPolicy;
   }
   
+  /**
+   * @return the shipping_info
+   */
+  public String getShippingInfo() {
+    return this.shippingInfo;
+  }
+
+  /**
+   * @param shipping_info
+   *          the shipping_info to set
+   */
+  public void setShippingInfo(String shippingInfo) {
+    this.shippingInfo = shippingInfo;
+  }
   
   /**
    * @return the meta_title
    */
   public String getMetaTitle() {
-    return this.meta_title;
+    return this.metaTitle;
   }
 
   /**
    * @param meta_title
    *          the meta_title to set
    */
-  public void setMetaTitle(String meta_title) {
-    this.meta_title = meta_title;
+  public void setMetaTitle(String metaTitle) {
+    this.metaTitle = metaTitle;
   }
   
   /**
    * @return the meta_keyword
    */
   public String getMetaKeyword() {
-    return this.meta_keyword;
+    return this.metaKeyword;
   }
 
   /**
    * @param meta_keyword
    *          the meta_keyword to set
    */
-  public void setMetaKeyword(String meta_keyword) {
-    this.meta_keyword = meta_keyword;
+  public void setMetaKeyword(String metaKeyword) {
+    this.metaKeyword = metaKeyword;
   }
   
   /**
    * @return the meta_desciption
    */
   public String getMetaDesciption() {
-    return this.meta_desciption;
+    return this.metaDescription;
   }
 
   /**
    * @param meta_desciption
    *          the meta_desciption to set
    */
-  public void setMetaDesciption(String meta_desciption) {
-    this.meta_desciption = meta_desciption;
+  public void setMetaDescription(String metaDescription) {
+    this.metaDescription = metaDescription;
   }
   
   /**

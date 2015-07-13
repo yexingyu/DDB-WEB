@@ -137,18 +137,11 @@ public class Product extends BaseEntityModel {
     if (StringUtils.isBlank(this.getKey())) { return false; }
     if (StringUtils.isBlank(this.getUrl())) { return false; }
 
-    // validate product text info
-    Iterator<ProductText> itTexts = this.getTexts().iterator();
-    while (itTexts.hasNext()) {
-    	ProductText name = itTexts.next();
-      if (!name.validate()) {
-        itTexts.remove();
-      }
-    }
+
 
     // validate product image
     Iterator<ProductImage> itImages = this.getImages().iterator();
-    while (itTexts.hasNext()) {
+    while (itImages.hasNext()) {
       ProductImage value = itImages.next();
       if (!value.validate()) {
         itImages.remove();
@@ -157,7 +150,7 @@ public class Product extends BaseEntityModel {
 
     // validate product price
     Iterator<ProductPrice> itPrices = this.getPrices().iterator();
-    while (itTexts.hasNext()) {
+    while (itPrices.hasNext()) {
       ProductPrice value = itPrices.next();
       if (!value.validate()) {
         itPrices.remove();

@@ -102,15 +102,14 @@ angular
                                     $scope.stores = response.data;
                                 }
                             });
-
+                            // add input field
                             $scope.product = {};
+                            
                             $scope.product.prices = [ {
                                 currency : 'CAD',
                                 value : ''
-                            }, {
-                                currency : 'USD',
-                                value : ''
                             } ];
+                            
                             $scope.product.taxes = [ {
                                 title : 'FEDERAL',
                                 type : 'PERCENTAGE',
@@ -120,6 +119,7 @@ angular
                                 type : 'PERCENTAGE',
                                 value : ''
                             } ];
+                            
                             $scope.product.fees = [ {
                                 title : 'SHIPPING',
                                 type : 'AMOUNT',
@@ -136,83 +136,196 @@ angular
                                 value : ''
                             } ];
 
+                            
                             $scope.product.images = [ {
-                                url : 'http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/BNMAAOSwqu9VHBpA/$_57.JPG',
-                                alt : 'Samsung Galaxy S6 SM-G920F 32GB Factory Unlocked LTE Smartphone GSM'
+                                url : '',
+                                alt : ''
                             } ];
-                            $scope.product.names = [ {
+                            
+                            $scope.product.texts = [ {
                                 language : 'EN',
-                                value : "Samsung Galaxy S6 SM-G920F 32GB Factory Unlocked LTE Smartphone GSM"
+                                name : "",
+                                description : "",
+                                warranty : "",
+                                return_policy : "",
+                                shipping_info : "",
+                                meta_keyword : "",
+                                meta_title : "",
+                                meta_description : ""
                             }, {
                                 language : 'FR',
-                                value : "Samsung Galaxy S6 SM-G920F 32GB Factory Unlocked LTE Smartphone GSM"
+                                name : "",
+                                description : "",
+                                warranty : "",
+                                return_policy : "",
+                                shipping_info : "",
+                                meta_keyword : "",
+                                meta_title : "",
+                                meta_description : ""
                             } ];
                             
                             $scope.product.tags = [ {
                             	language : 'EN',
-                                value : "a"
+                                value : ""
                             }, {
                             	language : 'EN',
-                                value : "b"
-                            },  {
-                            	language : 'EN',
-                                value : "c"
-                            } , {
+                                value : ""
+                            }, {
                             	language : 'FR',
-                                value : "a"
-                            } ];                            
+                                value : ""
+                            }, {
+                            	language : 'FR',
+                                value : ""
+                            }  ];                            
                             
                           
-                            $scope.product.descriptions = [ {
-                                language : 'EN',
-                                value : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent risus elit, tempor nec accumsan at, vestibulum et est. Donec tempus lectus sed dui semper, sed pharetra leo auctor. Vestibulum commodo elit quis dignissim suscipit. Vestibulum pharetra lacus ut aliquet molestie. Donec laoreet urna sit amet nisi sollicitudin placerat. Integer viverra magna eu enim placerat blandit. Cras et viverra risus. Proin in scelerisque magna, a viverra nibh. Proin in quam felis. Vivamus et felis aliquam purus hendrerit mollis in at lorem. Fusce euismod at mauris eget laoreet. Nulla erat quam, sollicitudin ut malesuada in, pellentesque at turpis. Duis tempor quis nulla ut interdum. Quisque facilisis at orci vitae feugiat.Phasellus ac odio libero. Curabitur ac feugiat lacus, nec placerat sem. Sed aliquam nunc quis metus eleifend faucibus. Maecenas pellentesque mi augue, vulputate sollicitudin ipsum venenatis ac. Proin a accumsan leo. Integer pretium cursus neque, sit amet hendrerit risus dapibus non. Nulla sodales quam eu tortor tristique venenatis. Praesent elementum magna risus, at suscipit nisl ullamcorper et. Morbi vehicula hendrerit ipsum vitae ullamcorper. Vivamus facilisis nisl non lorem ultrices, sit amet bibendum nibh consectetur."
-                            }, {
-                                language : 'FR',
-                                value : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent risus elit, tempor nec accumsan at, vestibulum et est. Donec tempus lectus sed dui semper, sed pharetra leo auctor. Vestibulum commodo elit quis dignissim suscipit. Vestibulum pharetra lacus ut aliquet molestie. Donec laoreet urna sit amet nisi sollicitudin placerat. Integer viverra magna eu enim placerat blandit. Cras et viverra risus. Proin in scelerisque magna, a viverra nibh. Proin in quam felis. Vivamus et felis aliquam purus hendrerit mollis in at lorem. Fusce euismod at mauris eget laoreet. Nulla erat quam, sollicitudin ut malesuada in, pellentesque at turpis. Duis tempor quis nulla ut interdum. Quisque facilisis at orci vitae feugiat.Phasellus ac odio libero. Curabitur ac feugiat lacus, nec placerat sem. Sed aliquam nunc quis metus eleifend faucibus. Maecenas pellentesque mi augue, vulputate sollicitudin ipsum venenatis ac. Proin a accumsan leo. Integer pretium cursus neque, sit amet hendrerit risus dapibus non. Nulla sodales quam eu tortor tristique venenatis. Praesent elementum magna risus, at suscipit nisl ullamcorper et. Morbi vehicula hendrerit ipsum vitae ullamcorper. Vivamus facilisis nisl non lorem ultrices, sit amet bibendum nibh consectetur."
-                            } ];
+
                             $scope.product.links = [ {
-                                url : 'url',
-                                name : "name",
-                                rating : "rating",
-                                review_number : "review_numbers"
+                                url : '',
+                                name : "",
+                                rating : "",
+                                review_number : ""
                             }];
+                            
+                            
+                            $scope.product.options = [];                            
+                            
+                            $scope.product.reviews = [];                            
+                            $scope.product.likes = [];                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             // sample data
-                            $scope.product.url = "http://www.ebay.com/itm/Samsung-Galaxy-S6-SM-G920F-32GB-Factory-Unlocked-LTE-Smartphone-GSM/301678036602";
-                            $scope.product.key = "301678036602";
+                            $scope.product.url = "http://shop.nordstrom.com/s/steve-madden-troopa-boot/3132609?origin=shoppingbag";
+                            $scope.product.key = "33132609";
                             $scope.product.status = "AVAILABLE";
                             $scope.product.store = {
                                 id : 2
                             };
+                            $scope.product.prices = [ {
+                                currency : 'CAD',
+                                value : '106.39'
+                            }];
+                            
+                            $scope.product.taxes = [ {
+                                title : 'FEDERAL',
+                                type : 'PERCENTAGE',
+                            }, {
+                                title : 'PROVINCE',
+                                type : 'PERCENTAGE',
 
-                            $scope.product.prices[0].currency = 'CAD';
-                            $scope.product.prices[0].value = '599.99';
-                            $scope.product.prices[1].currency = 'USD';
-                            $scope.product.prices[1].value = '499.99';
+                            } ];
+                            
+                            $scope.product.fees = [ {
+                                title : 'SHIPPING',
+                                type : 'AMOUNT',
+                                value : '9.75'
+                            }, {
+                                title : 'IMPORT',
+                                type : 'AMOUNT',
+                                value : '33.11'
+                            },
 
-                            $scope.product.taxes[0].title = 'FEDERAL';
-                            $scope.product.taxes[0].value = '0';
-                            $scope.product.taxes[1].title = 'PROVINCE';
-                            $scope.product.taxes[1].value = '0';
+                            {
+                                title : 'ECO',
+                                type : 'AMOUNT',
+                                value : ''
+                            } ];
 
-                            $scope.product.fees[0].title = 'SHIPPING';
-                            $scope.product.fees[0].value = '13.87';
-                            $scope.product.fees[1].title = 'IMPORT';
-                            $scope.product.fees[1].value = '73.40';
-                            $scope.product.likes = [];
-                            $scope.product.tags = [];
-                            $scope.product.metas = [];
-                            $scope.product.links = [];
-                            $scope.product.options = [];
-                            $scope.product.reviews = [];
-                            $scope.product.warrantys = [];
+                            
+                            $scope.product.images = [ {
+                                url : 'http://g.nordstromimage.com/imagegallery/store/product/Large/6/_6787726.jpg',
+                                alt : 'Steve Boot'
+                            } ];
+                            
+                            $scope.product.texts = [ {
+                                language : 'EN',
+                                name : "Steve 'Troopa' Boot",
+                                description : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus cursus blandit leo, ac interdum erat fringilla at. Sed molestie nulla risus, ut volutpat sem lacinia eget. Suspendisse ut porttitor purus. Mauris tempus porta sapien, at aliquet ex elementum at. Praesent luctus feugiat dui, sit amet posuere elit tincidunt sit amet. Aenean ac justo tortor. Aenean maximus ipsum neque, non fermentum urna blandit ut. Praesent iaculis elit nec tortor dapibus pretium. Proin mollis odio nunc, et ultricies metus venenatis sit amet. Ut vel faucibus dolor. Mauris placerat porta nisi nec tempor. Ut convallis ac eros vel consequat. Nam a felis non ligula lobortis lacinia et laoreet sem. Nam rhoncus diam at lorem tristique vehicula a sed odio. In nec orci id ligula sagittis lacinia vel non magna. Maecenas pellentesque nibh risus, ac luctus nunc dapibus et.",
+                                warranty : "n/a",
+                                return_policy : "Nunc ac elit a ligula euismod efficitur vel ut urna. Morbi accumsan, nisi sit amet vestibulum consequat, lorem augue gravida enim, a feugiat diam dolor in odio. ",
+                                shipping_info : "Usually arrives in 5-13 business days.",
+                                meta_keyword : "Steve Madden , Boot",
+                                meta_title : "Steve Madden Boot On sale",
+                                meta_description : "Steve Madden Boot On sale"
+                            }, {
+                                language : 'FR',
+                                name : "Steve 'Troopa' Boot",
+                                description : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus cursus blandit leo, ac interdum erat fringilla at. Sed molestie nulla risus, ut volutpat sem lacinia eget. Suspendisse ut porttitor purus. Mauris tempus porta sapien, at aliquet ex elementum at. Praesent luctus feugiat dui, sit amet posuere elit tincidunt sit amet. Aenean ac justo tortor. Aenean maximus ipsum neque, non fermentum urna blandit ut. Praesent iaculis elit nec tortor dapibus pretium. Proin mollis odio nunc, et ultricies metus venenatis sit amet. Ut vel faucibus dolor. Mauris placerat porta nisi nec tempor. Ut convallis ac eros vel consequat. Nam a felis non ligula lobortis lacinia et laoreet sem. Nam rhoncus diam at lorem tristique vehicula a sed odio. In nec orci id ligula sagittis lacinia vel non magna. Maecenas pellentesque nibh risus, ac luctus nunc dapibus et.",
+                                warranty : "n/a",
+                                return_policy : "Nunc ac elit a ligula euismod efficitur vel ut urna. Morbi accumsan, nisi sit amet vestibulum consequat, lorem augue gravida enim, a feugiat diam dolor in odio. ",
+                                shipping_info : "Usually arrives in 5-13 business days.",
+                                meta_keyword : "Steve Madden , Boot",
+                                meta_title : "Steve Madden Boot On sale",
+                                meta_description : "Steve Madden Boot On sale"
+                            } ];
+                            
+                            $scope.product.tags = [ {
+                            	language : 'EN',
+                                value : "Steve Madden"
+                            }, {
+                            	language : 'EN',
+                                value : "Boot"
+                            }, {
+                            	language : 'FR',
+                                value : "Steve Madden"
+                            }, {
+                            	language : 'FR',
+                                value : "Boot"
+                            }  ];                            
+                            
+                          
+
+                            $scope.product.links = [ {
+                                url : 'http://shop.nordstrom.com/s/steve-madden-troopa-boot/3132609',
+                                name : "nordstrom.com",
+                                rating : "4.6",
+                                review_number : "1789"
+                            }];
+                            
+                            
+                            $scope.product.options = [];                            
+                            
+
+                            
 
 
-                            // usd
+
+
+                            // payment term calculation
                             $scope.Math = window.Math;
-                            $scope.product.total = parseFloat($scope.product.prices[1].value)
-                                    + parseFloat($scope.product.fees[0].value)
-                                    + parseFloat($scope.product.fees[1].value);
-                            $scope.exchange_rate = 1.2573;
+                            $scope.product.total = parseFloat($scope.product.prices[0].value);
+                            //add taxes
+                            for (var i=0; i<$scope.product.taxes.length; i++) {
+                            	if ( $scope.product.taxes[i].type == "AMOUNT") {
+                                  	 $scope.product.total = $scope.product.total + parseFloat($scope.product.taxes[i].value);                            		
+                            	}
+                            	if ( $scope.product.taxes[i].type == "PERCENTAGE") {
+                                 	 $scope.product.total = $scope.product.total * (1+ parseFloat($scope.product.taxes[i].value));                            		
+                           	    }                            	
+
+                           }                            
+                            //add fees
+                            for (var i=0; i<$scope.product.fees.length; i++) {
+                            	if ( $scope.product.fees[i].type == "AMOUNT") {
+                                 	 $scope.product.total = $scope.product.total + parseFloat($scope.product.fees[i].value);                            		
+                           	    }
+                           	    if ( $scope.product.fees[i].type == "PERCENTAGE") {
+                                	 $scope.product.total = $scope.product.total * (1+ parseFloat($scope.product.fees[i].value));                            		
+                          	    }   
+                            }
+                            
+                            if ($scope.product.prices[0].currency == 'USD') {
+                            	$scope.exchange_rate = 1.2573;
+                            }
+                            if ($scope.product.prices[0].currency == 'CAD') {
+                            	$scope.exchange_rate = 1;
+                            }                            
 
                             // total
                             $scope.product.total_raw = $scope.product.total * $scope.exchange_rate;
