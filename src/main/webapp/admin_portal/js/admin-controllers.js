@@ -143,6 +143,7 @@ angular
                                 warranty : "",
                                 return_policy : "",
                                 shipping_info : "",
+                                coupon : "",
                                 meta_keyword : "",
                                 meta_title : "",
                                 meta_description : ""
@@ -153,6 +154,7 @@ angular
                                 warranty : "",
                                 return_policy : "",
                                 shipping_info : "",
+                                coupon : "",
                                 meta_keyword : "",
                                 meta_title : "",
                                 meta_description : ""
@@ -198,7 +200,7 @@ angular
                             
                             
                             
-                            
+                         
                             
                             // sample data
                             $scope.product.url = "http://shop.nordstrom.com/s/steve-madden-troopa-boot/3132609";
@@ -232,7 +234,7 @@ angular
                             }
                             ];
 
-                            
+
                             $scope.product.images = [ {
                                 url : 'http://g.nordstromimage.com/imagegallery/store/product/Large/6/_6787726.jpg',
                                 alt : 'Steve Boot'
@@ -290,7 +292,7 @@ angular
                             },{
                                 type : "COLOR",
                                 value: ""
-                            }];                       
+                            }];                      
                             
 
                             
@@ -300,58 +302,62 @@ angular
 
                             // payment term calculation
                             $scope.Math = window.Math;
-                            $scope.product.total = parseFloat($scope.product.prices[0].value);
-                        
+                            
+                            $scope.getExchangeRate = function() {
+                            	if ( $scope.product.prices[0].currency == "CAD") {
+                            		exchange_rate = 1;                         		
+                           	    }
+                            	if ( $scope.product.prices[0].currency == "USD") {
+                            		exchange_rate = 1.25;                         		
+                           	    }                               
+                            return exchange_rate
+                            
+                            }
+                            
                             $scope.getTotal = function() {
-                                //add fees
+                                $scope.product.total = parseFloat($scope.product.prices[0].value);
+                            	//add fees
                             	total_fee = 0;
                                 for (var i=0; i<$scope.product.fees.length; i++) {
                                 	if ( $scope.product.fees[i].type == "AMOUNT") {
                                 		total_fee = total_fee + parseFloat($scope.product.fees[i].value);                            		
                                	    }
                                	    if ( $scope.product.fees[i].type == "PERCENTAGE") {
-                               	    	total_fee = total_fee * (1+ parseFloat($scope.product.fees[i].value));                            		
+                               	    	total_fee = total_fee + $scope.product.prices[0].value *  parseFloat($scope.product.fees[i].value/100);                            		
                               	    }   
                                 }
                                 total = total_fee +$scope.product.total;
+
                                 return total ;
-                            } 
-                            
-                            if ($scope.product.prices[0].currency == 'USD') {
-                            	$scope.exchange_rate = 1.2573;
                             }
-                            if ($scope.product.prices[0].currency == 'CAD') {
-                            	$scope.exchange_rate = 1;
-                            }                            
-
-                            // total
-                            $scope.product.total_raw = $scope.product.total * $scope.exchange_rate;
-                            $scope.product.total = Math.round($scope.product.total_raw * 100) / 100;
-
-                            // down
-                            $scope.product.down_raw = $scope.product.total_raw * 0.382;
-                            $scope.product.down = Math.round($scope.product.down_raw * 100) / 100;
-
-                            // interest
+                            
                             $scope.yearly_interest_rate = 0.24;
                             $scope.number_of_payments = 12;
-                            $scope.monthly_interest_rate = $scope.yearly_interest_rate
-                                    / $scope.number_of_payments;
-
-                            // principal
-                            $scope.product.principal_raw = $scope.product.total_raw * 0.618;
-                            $scope.product.principal = Math
-                                    .round($scope.product.principal_raw * 100) / 100;
-
-                            $scope.monthly_payment_raw = $scope.monthly_interest_rate
-                                    * $scope.product.principal_raw
-                                    / (1 - Math.pow((1 + $scope.monthly_interest_rate),
-                                            -$scope.number_of_payments));
-                            $scope.monthly_payment = Math.round($scope.monthly_payment_raw * 100) / 100;
-
-                            $scope.interest_raw = $scope.monthly_payment
-                                    * $scope.number_of_payments - $scope.product.principal;
-                            $scope.interest = Math.round($scope.interest_raw * 100) / 100;
+                            $scope.monthly_interest_rate = $scope.yearly_interest_rate/ $scope.number_of_payments;
+                            
+                            $scope.getMonthlyPayment = function() {
+                                $scope.product.total = parseFloat($scope.product.prices[0].value);
+                            	//add fees
+                            	total_fee = 0;
+                                for (var i=0; i<$scope.product.fees.length; i++) {
+                                	if ( $scope.product.fees[i].type == "AMOUNT") {
+                                		total_fee = total_fee + parseFloat($scope.product.fees[i].value);                            		
+                               	    }
+                               	    if ( $scope.product.fees[i].type == "PERCENTAGE") {
+                               	    	total_fee = total_fee + $scope.product.prices[0].value *  parseFloat($scope.product.fees[i].value/100);                             		
+                              	    }   
+                                }
+                                principal = total*0.618;
+                                MonthlyPayment = $scope.monthly_interest_rate
+                                * principal
+                                / (1 - Math.pow((1 + $scope.monthly_interest_rate),
+                                        -$scope.number_of_payments));
+                                MonthlyPayment = Math.round(MonthlyPayment*100)/100;
+                                return MonthlyPayment ;
+                            }  
+                            
+                            
+                            
 
                             $scope.add = function() {
                                 console.log($scope.product);

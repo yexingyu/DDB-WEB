@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -33,39 +32,34 @@ public class ProductText extends BaseModel {
   @Enumerated(EnumType.STRING)
   private LANGUAGE language;
 
-	
   @NotNull
   @Column(name = "name", nullable = false, length = 256)
   private String   name;
-  
+
   @NotNull
   @Column(name = "description", nullable = false, length = 256)
   private String   description;
-  
+
   @Column(name = "warranty", length = 1024)
   private String   warranty;
-  
 
   @Column(name = "return_policy", length = 1024)
   private String   returnPolicy;
-  
 
   @Column(name = "shipping_info", length = 254)
   private String   shippingInfo;
-  
+
+  @Column(name = "coupon", length = 45)
+  private String   coupon;
 
   @Column(name = "meta_title", length = 128)
   private String   metaTitle;
-  
 
   @Column(name = "meta_keyword", length = 64)
   private String   metaKeyword;
-  
 
   @Column(name = "meta_description", length = 512)
   private String   metaDescription;
-  
-
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
@@ -78,7 +72,7 @@ public class ProductText extends BaseModel {
    * @return
    */
   public boolean validate() {
-   
+
     return true;
   }
 
@@ -111,7 +105,7 @@ public class ProductText extends BaseModel {
   public void setName(String name) {
     this.name = name;
   }
-  
+
   /**
    * @return the description
    */
@@ -126,7 +120,7 @@ public class ProductText extends BaseModel {
   public void setDescription(String description) {
     this.description = description;
   }
-  
+
   /**
    * @return the warranty
    */
@@ -156,7 +150,7 @@ public class ProductText extends BaseModel {
   public void setReturnPolicy(String returnPolicy) {
     this.returnPolicy = returnPolicy;
   }
-  
+
   /**
    * @return the shipping_info
    */
@@ -171,7 +165,22 @@ public class ProductText extends BaseModel {
   public void setShippingInfo(String shippingInfo) {
     this.shippingInfo = shippingInfo;
   }
-  
+
+  /**
+   * @return the warranty
+   */
+  public String getCoupon() {
+    return this.coupon;
+  }
+
+  /**
+   * @param warranty
+   *          the warranty to set
+   */
+  public void setCoupon(String coupon) {
+    this.coupon = coupon;
+  }
+
   /**
    * @return the meta_title
    */
@@ -186,7 +195,7 @@ public class ProductText extends BaseModel {
   public void setMetaTitle(String metaTitle) {
     this.metaTitle = metaTitle;
   }
-  
+
   /**
    * @return the meta_keyword
    */
@@ -201,7 +210,7 @@ public class ProductText extends BaseModel {
   public void setMetaKeyword(String metaKeyword) {
     this.metaKeyword = metaKeyword;
   }
-  
+
   /**
    * @return the meta_desciption
    */
@@ -216,7 +225,7 @@ public class ProductText extends BaseModel {
   public void setMetaDescription(String metaDescription) {
     this.metaDescription = metaDescription;
   }
-  
+
   /**
    * @return the language
    */

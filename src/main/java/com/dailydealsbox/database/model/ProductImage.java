@@ -30,8 +30,7 @@ public class ProductImage extends BaseModel {
   @Column(name = "url", nullable = false, length = 512)
   private String  url;
 
-  @NotNull
-  @Column(name = "alt", nullable = false, length = 256)
+  @Column(name = "alt", length = 256)
   private String  alt;
 
   @NotNull

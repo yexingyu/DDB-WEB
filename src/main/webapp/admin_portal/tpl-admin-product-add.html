@@ -6,13 +6,13 @@
         <div class="panel-heading">Test Info</div>
         <div class="panel-body">
           <div class="form-group">
-            <label>TEST URL:</label> <input class="form-control" ng-model="product.url">
+            <label>TEST URL:</label> <input class="form-control" ng-model="product.url" placeholder = "Enter the product URL">
             <p class="help-block">
               <a href="{{product.url}}" taget="_blank">Preview</a>
             </p>
           </div>
           <div class="form-group">
-            <label>TEST Key:</label> <input class="form-control" ng-model="product.key">
+            <label>TEST Key:</label> <input class="form-control" ng-model="product.key" placeholder = "Enter the product key (id) in the URL">
           </div>
           <div class="form-group">
             <label>TEST Status:</label> <select class="form-control" ng-model="product.status" ng-options="s.name as s.name for s in status">
@@ -21,6 +21,7 @@
           <div class="form-group">
             <label>Store:</label> <select class="form-control" ng-model="product.store.id" ng-options="s.id as s.name group by s.type for s in stores">
             </select>
+            <a href="#/store/add">Add New Store</a>
           </div>
         </div>
         <div class="panel-footer"></div>
@@ -32,16 +33,16 @@
         <div class="panel-heading">Test Price, Tax and Fee</div>
         <div class="panel-body">
           <div class="form-group">
-            <label>Price:</label>
+            <label>Test Price:</label>
             <p>
               <span ng-repeat="price in product.prices"> <select ng-model="price.currency" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
-                ng-model="price.value" /> [<a ng-click="product.prices.splice($index, 1)">X</a>] <br />
+                ng-model="price.value" placeholder ="Enter the product price"/> [<a ng-click="product.prices.splice($index, 1)">X</a>] <br />
               </span> <span> [<a ng-click="product.prices.push({productId:product.id})">Add</a>]
               </span>
             </p>
           </div>
           <div class="form-group">
-            <label>Tax:</label>
+            <label>Tax (Available Tax will be applied when checkout):</label>
             <p>
               <span ng-repeat="tax in product.taxes"> <select ng-model="tax.title" ng-options="title as title for title in $root.constant.PRODUCT_TAX_TITLE"></select> <select
                 ng-model="tax.type" ng-options="type as type for type in $root.constant.PRODUCT_TAX_TYPE"></select>  [<a
@@ -51,10 +52,10 @@
             </p>
           </div>
           <div class="form-group">
-            <label>Fee:</label>
+            <label>Fees:</label>
             <p>
               <span ng-repeat="fee in product.fees"> <select ng-model="fee.title" ng-options="title as title for title in $root.constant.PRODUCT_FEE_TITLE"></select> <select ng-model="fee.type"
-                ng-options="type as type for type in $root.constant.PRODUCT_FEE_TYPE"></select> : <input type="text" ng-model="fee.value" /> [<a ng-click="product.fees.splice($index, 1)">X</a>] <br />
+                ng-options="type as type for type in $root.constant.PRODUCT_FEE_TYPE"></select> : <input type="text" ng-model="fee.value" placeholder ="Enter the fee value"/> [<a ng-click="product.fees.splice($index, 1)">X</a>] <br />
               </span> <span> [<a ng-click="product.fees.push({productId:product.id})">Add</a>]
               </span>
             </p>
@@ -71,7 +72,7 @@
       <div class="form-group">
         <label>Image:</label>
         <p>
-          <span ng-repeat="image in product.images"> URL: <input class="form-control" type="text" ng-model="image.url" /> ALT: <input class="form-control" type="text" ng-model="image.alt" />
+          <span ng-repeat="image in product.images"> URL: <input class="form-control" type="text" ng-model="image.url" placeholder ="Enter the product image URL"/> ALT: <input class="form-control" type="text" ng-model="image.alt" placeholder ="Enter the product image description"/>
             [<a ng-click="product.images.splice($index, 1)">X</a>] <br />
           </span> <span> [<a ng-click="product.images.push({productId:product.id})">Add</a>]
           </span>
@@ -97,49 +98,55 @@
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Name:</label>
 					    <div class="col-sm-10">
-					      <input class="form-control" type="text" ng-model="text.name" />
+					      <input class="form-control" type="text" ng-model="text.name" placeholder ="Enter the product name"/>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Description:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.description" ></textarea>
+					     <textarea class="form-control" ng-model="text.description" placeholder ="Enter the product description"></textarea>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Warranty:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.warranty" ></textarea>
+					     <textarea class="form-control" ng-model="text.warranty" placeholder ="Enter the product warranty"></textarea>
 					    </div>
 					  </div>			  
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Return Policy:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.return_policy" ></textarea>
+					     <textarea class="form-control" ng-model="text.return_policy" placeholder ="Enter the product return policy"></textarea>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Shipping Info:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.shipping_info" ></textarea>
+					     <textarea class="form-control" ng-model="text.shipping_info" placeholder ="Enter the product shipping info"></textarea>
 					    </div>
-					  </div>						  			  
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Coupon Info:</label>
+					    <div class="col-sm-10">
+					     <textarea class="form-control" ng-model="text.coupon" placeholder ="Enter the product coupon info"></textarea>
+					    </div>
+					  </div>					  						  			  
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Meta Keyword:</label>
 					    <div class="col-sm-10">
-					      <input class="form-control" type="text" ng-model="text.meta_keyword" />
+					      <input class="form-control" type="text" ng-model="text.meta_keyword" placeholder ="Enter meta keywords"/>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Meta Title:</label>
 					    <div class="col-sm-10">
-					      <input class="form-control" type="text" ng-model="text.meta_title" />
+					      <input class="form-control" type="text" ng-model="text.meta_title" placeholder ="Enter meta title"/>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Meta Description:</label>
 					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.meta_description" ></textarea>
+					     <textarea class="form-control" ng-model="text.meta_description" placeholder ="Enter meta description"></textarea>
 					    </div>
 					  </div>
 					  <div class="form-group">
@@ -167,7 +174,7 @@
             <label>Tags:</label>
             <p>
 	          <span ng-repeat="tag in product.tags"> <select ng-model="tag.language" ng-options="language as language for language in $root.constant.LANGUAGE"></select> <input
-	              class="form-control"  ng-model="tag.value"> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />
+	              class="form-control"  ng-model="tag.value" placeholder ="Enter tag word"> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />
 	          </span> <span> [<a ng-click="product.tags.push({productId:product.id})">Add</a>]
 	          </span>
             </p>
@@ -185,7 +192,7 @@
             <label>Options:</label>
             <p>
               <span ng-repeat="option in product.options"> <select ng-model="option.type" ng-options="o as o for o in $root.constant.OPTION_TYPE"></select> : <input type="text"
-                ng-model="option.value" /> [<a ng-click="product.options.splice($index, 1)">X</a>] <br />
+                ng-model="option.value" placeholder ="Enter option value"/> [<a ng-click="product.options.splice($index, 1)">X</a>] <br />
               </span> <span> [<a ng-click="product.options.push({productId:product.id})">Add</a>]
               </span>
             </p>
@@ -204,10 +211,10 @@
         <label>Reference Link:</label>
         <p>
           <span ng-repeat="link in product.links"> 
-          URL: <input class="form-control" type="text" ng-model="link.url" /> 
-          Site Domain Name: <input class="form-control" type="text" ng-model="link.name" />
-           Rating: <input class="form-control" type="text" ng-model="link.rating" />
-           Number of Reviews: <input class="form-control" type="text" ng-model="link.review_number" />
+          URL: <input class="form-control" type="text" ng-model="link.url" placeholder ="Enter reference link URL"/> 
+          Site Domain Name: <input class="form-control" type="text" ng-model="link.name" placeholder ="Enter domain name of the URL"/>
+           Rating: <input class="form-control" type="text" ng-model="link.rating" placeholder ="Enter 5 star rating value"/>
+           Number of Reviews: <input class="form-control" type="text" ng-model="link.review_number" placeholder ="Enter number of reviews"/>
             [<a ng-click="product.links.splice($index, 1)">X</a>] <br />
           </span> <span> [<a ng-click="product.links.push({productId:product.id})">Add</a>]
           </span>
@@ -258,22 +265,21 @@
             <h2>{{fee.title}}: {{fee.value}}</h2>
 
           </div>
-        </div>  
-            (Exchange Rate: {{exchange_rate}})              
+        </div>             
         <div class="row">
           <div class="col-lg-12">
-            <h2>Total: {{getTotal()}}</h2>
-            (Exchange Rate: {{exchange_rate}})
+            <h2>Total: {{getTotal()*getExchangeRate()}}</h2>
+            (Exchange Rate: {{getExchangeRate()}})
           </div>
         </div>
         <div class="row">
           <div class="col-lg-12">
-            <h2>Down Payment: ${{product.down}} + ${{monthly_payment }} * {{number_of_payments }} Monthes</h2>
+            <h2>Down Payment: ${{Math.round(getTotal()*0.382*getExchangeRate()*100)/100;}} + ${{getMonthlyPayment()*getExchangeRate()}} * {{number_of_payments }} Monthes</h2>
           </div>
         </div>
         <!--  principal -->
         <div class="row">
-          <div class="col-lg-12">(Principal: ${{product.principal}} Interest: {{interest}})</div>
+          <div class="col-lg-12">(Principal: ${{Math.round(getTotal()*0.618*getExchangeRate()*100)/100;}} Interest: {{Math.round((getMonthlyPayment()*number_of_payments-getTotal()*0.618)*getExchangeRate()*100)/100}})</div>
         </div>
         <!--end of principal-->
       </div>
