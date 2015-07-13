@@ -6,7 +6,7 @@
         <div class="panel-heading">Test Info</div>
         <div class="panel-body">
           <div class="form-group">
-            <label>TEST URL:</label> <input class="form-control" ng-model="product.url" placeholder = "Enter the product URL">
+            <label>TEST URL *:</label> <input class="form-control" ng-model="product.url" placeholder = "Enter the product URL">
             <p class="help-block">
               <a href="{{product.url}}" taget="_blank">Preview</a>
             </p>
@@ -233,7 +233,6 @@
   <div class="panel panel-primary">
     <div class="panel-heading">Test Index Preview</div>
     <div class="panel-body">
-      <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <h2>{{product.texts[0].name}}</h2>
@@ -282,9 +281,9 @@
           <div class="col-lg-12">(Principal: ${{Math.round(getTotal()*0.618*getExchangeRate()*100)/100;}} Interest: {{Math.round((getMonthlyPayment()*number_of_payments-getTotal()*0.618)*getExchangeRate()*100)/100}})</div>
         </div>
         <!--end of principal-->
-      </div>
-      <div class="panel-footer"></div>
-    </div>
+        </div>
+        <div class="panel-footer"></div>
+</div>
     <!-- end of product detail preview-->
     <!-- product detail preview       
         <div class="panel panel-green">
@@ -301,4 +300,4 @@
     <div><h2>{{response.status}}</h2></div>
     <button type="submit" class="btn btn-default" ng-click="add()">Add Button</button>
 
-  </div>
+
