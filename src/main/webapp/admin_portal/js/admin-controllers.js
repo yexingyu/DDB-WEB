@@ -109,7 +109,7 @@ angular
                                 currency : 'CAD',
                                 value : ''
                             } ];
-                            
+
                             $scope.product.taxes = [ {
                                 title : 'FEDERAL',
                                 type : 'PERCENTAGE',
@@ -119,7 +119,7 @@ angular
                                 type : 'PERCENTAGE',
                                 value : ''
                             } ];
-                            
+
                             $scope.product.fees = [ {
                                 title : 'SHIPPING',
                                 type : 'AMOUNT',
@@ -211,7 +211,7 @@ angular
                                 currency : 'CAD',
                                 value : '106.39'
                             }];
-                            
+
                             $scope.product.taxes = [ {
                                 title : 'FEDERAL',
                                 type : 'PERCENTAGE',
@@ -229,13 +229,8 @@ angular
                                 title : 'IMPORT',
                                 type : 'AMOUNT',
                                 value : '33.11'
-                            },
-
-                            {
-                                title : 'ECO',
-                                type : 'AMOUNT',
-                                value : ''
-                            } ];
+                            }
+                            ];
 
                             
                             $scope.product.images = [ {
@@ -289,7 +284,9 @@ angular
                             }];
                             
                             
-                            $scope.product.options = [];                            
+                            $scope.product.options = [{
+                            	
+                            }];                            
                             
 
                             
@@ -300,25 +297,21 @@ angular
                             // payment term calculation
                             $scope.Math = window.Math;
                             $scope.product.total = parseFloat($scope.product.prices[0].value);
-                            //add taxes
-                            for (var i=0; i<$scope.product.taxes.length; i++) {
-                            	if ( $scope.product.taxes[i].type == "AMOUNT") {
-                                  	 $scope.product.total = $scope.product.total + parseFloat($scope.product.taxes[i].value);                            		
-                            	}
-                            	if ( $scope.product.taxes[i].type == "PERCENTAGE") {
-                                 	 $scope.product.total = $scope.product.total * (1+ parseFloat($scope.product.taxes[i].value));                            		
-                           	    }                            	
-
-                           }                            
-                            //add fees
-                            for (var i=0; i<$scope.product.fees.length; i++) {
-                            	if ( $scope.product.fees[i].type == "AMOUNT") {
-                                 	 $scope.product.total = $scope.product.total + parseFloat($scope.product.fees[i].value);                            		
-                           	    }
-                           	    if ( $scope.product.fees[i].type == "PERCENTAGE") {
-                                	 $scope.product.total = $scope.product.total * (1+ parseFloat($scope.product.fees[i].value));                            		
-                          	    }   
-                            }
+                        
+                            $scope.getTotal = function() {
+                                //add fees
+                            	total_fee = 0;
+                                for (var i=0; i<$scope.product.fees.length; i++) {
+                                	if ( $scope.product.fees[i].type == "AMOUNT") {
+                                		total_fee = total_fee + parseFloat($scope.product.fees[i].value);                            		
+                               	    }
+                               	    if ( $scope.product.fees[i].type == "PERCENTAGE") {
+                               	    	total_fee = total_fee * (1+ parseFloat($scope.product.fees[i].value));                            		
+                              	    }   
+                                }
+                                total = total_fee +$scope.product.total;
+                                return total ;
+                            } 
                             
                             if ($scope.product.prices[0].currency == 'USD') {
                             	$scope.exchange_rate = 1.2573;

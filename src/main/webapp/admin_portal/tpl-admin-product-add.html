@@ -248,6 +248,12 @@
             </h2>
           </div>
         </div>
+        <div class="row" ng-repeat ="tax in product.taxes"">
+          <div class="col-lg-12">
+            <h2>{{tax.title}}({{tax.type}}):YES </h2>
+
+          </div>
+        </div>         
         <div class="row" ng-repeat ="fee in product.fees"">
           <div class="col-lg-12">
             <h2>{{fee.title}}: {{fee.value}}</h2>
@@ -257,7 +263,7 @@
             (Exchange Rate: {{exchange_rate}})              
         <div class="row">
           <div class="col-lg-12">
-            <h2>Total: ${{product.total}}</h2>
+            <h2>Total: {{getTotal()}}</h2>
             (Exchange Rate: {{exchange_rate}})
           </div>
         </div>

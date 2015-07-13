@@ -29,9 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ProductTax extends BaseModel {
 
-  @NotNull
-  @Column(name = "value", nullable = false)
-  private double            value;
+
 
   @NotNull
   @Column(name = "title", nullable = false)
@@ -54,7 +52,6 @@ public class ProductTax extends BaseModel {
    * @return
    */
   public boolean validate() {
-    if (this.getValue() <= 0) { return false; }
     return true;
   }
 
@@ -103,19 +100,5 @@ public class ProductTax extends BaseModel {
     this.product = product;
   }
 
-  /**
-   * @return the value
-   */
-  public double getValue() {
-    return this.value;
-  }
-
-  /**
-   * @param value
-   *          the value to set
-   */
-  public void setValue(double value) {
-    this.value = value;
-  }
 
 }
