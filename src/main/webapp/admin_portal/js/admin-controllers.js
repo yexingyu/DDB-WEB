@@ -362,6 +362,31 @@ angular
                         } ])
 
         /*
+         * PMStoreAdd definition
+         */
+        .controller('PMStoreAdd',[ '$scope', '$location', '$routeParams',  'StoreService',
+                                                     function($scope, $location, $routeParams, StoreService) {
+            // add input field
+        	$scope.store ={};
+            
+            $scope.store.name = "NordStorm";
+            $scope.store.website = "nordstorm.com";
+            $scope.store.dealPage = "nordstorm.com";
+            $scope.store.logo = "nordstore.jpg";
+            $scope.store.country = "US";
+            $scope.store.province = "";
+            $scope.store.type = "ONLINE";
+            $scope.store.status = "AVAILABLE";
+        	
+            $scope.add = function() {
+                console.log($scope.store);
+                StoreService.add($scope.store, function(response) {
+                    console.log(response);
+                });
+            };        	
+        	
+        } ])                        
+        /*
          * FlotCtrl definition
          */
         .controller('FlotCtrl', [ '$scope', '$location', function($scope, $location) {

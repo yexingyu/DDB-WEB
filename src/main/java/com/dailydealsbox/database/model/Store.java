@@ -27,7 +27,7 @@ import com.dailydealsbox.database.model.base.BaseEnum.STORE_TYPE;
 public class Store extends BaseEntityModel {
 
   @NotNull
-  @Size(min = 10, max = 100)
+  @Size(min = 4, max = 100)
   @Column(name = "name", nullable = false, length = 45)
   private String     name;
 

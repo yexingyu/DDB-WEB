@@ -42,4 +42,23 @@ public class StoreServiceImpl implements StoreService {
     return (List<Store>) repo.findAll();
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.service.StoreService#update(com.dailydealsbox.database.model.Store)
+   */
+  @Override
+  public Store update(Store store) {
+
+    return repo.save(store);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.service.StoreService#insert(com.dailydealsbox.database.model.Product)
+   */
+  @Override
+  public Store insert(Store store) {
+    return this.update(store);
+  }
+
 }

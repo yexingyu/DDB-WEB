@@ -25,7 +25,11 @@ angular.module(
     }).when('/product/:id', {
         templateUrl : 'tpl-admin-product-edit.html',
         controller : 'PMProductEdit'
-
+    
+    }).when('/store/add', {
+        templateUrl : 'tpl-admin-store-add.html',
+        controller : 'PMStoreAdd'
+        	
     }).when('/flot', {
         templateUrl : 'tpl-admin-flot.html',
         controller : 'FlotCtrl'

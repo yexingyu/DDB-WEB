@@ -26,4 +26,7 @@ public interface StoreService {
    */
   public List<Store> getAll();
 
+  public Store update(Store store);
+
+  public Store insert(Store store);
 }

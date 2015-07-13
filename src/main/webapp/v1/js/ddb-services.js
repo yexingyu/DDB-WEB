@@ -103,7 +103,16 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                     isArray : false
                 }
             }).query(callback);
-        }
+        },
+        add : function(store, callback) {
+            var storeResource = $resource('/api/store', {}, {
+                'login' : {
+                    method : 'POST',
+                    isArray : false
+                }
+            });
+            new storeResource(store).$login(callback);
+        }        
     };
 } ])
 

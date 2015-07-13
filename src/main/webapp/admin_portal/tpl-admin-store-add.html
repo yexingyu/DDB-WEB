@@ -1,0 +1,40 @@
+<div ng-form="myForm">
+  <div class="row">
+
+      <!-- product URL panel-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">Test Info</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label>Test name:</label> <input class="form-control" ng-model="store.name">
+          </div>
+          <div class="form-group">
+            <label>Test Domain Name:</label> <input class="form-control" ng-model="store.website">
+            <p class="help-block">
+              <a href="http://www.{{store.website}}" taget="_blank">Preview</a>
+            </p>
+          </div>
+          <div class="form-group">
+            <label>Test Deal Page:</label> <input class="form-control" ng-model="store.dealPage">
+          </div>
+          <div class="form-group">
+            <label>Test Logo:</label> <input class="form-control" ng-model="store.logo">
+          </div>                              
+          <div class="form-group">
+            <label>TEST Country:</label> <input class="form-control" ng-model="store.country">
+          </div>
+          <div class="form-group">
+            <label>TEST Province:</label> <input class="form-control" ng-model="store.province">
+          </div>
+          <div class="form-group">
+            <label>TEST Type:</label> <input class="form-control" ng-model="store.type">
+          </div>                      
+          <div class="form-group">
+            <label>TEST Status:</label> <input class="form-control" ng-model="store.status">
+          </div>
+    <button type="submit" class="btn btn-default" ng-click="add()">Add Button</button>            
+        </div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+</div>
