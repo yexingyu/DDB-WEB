@@ -3,8 +3,6 @@
  */
 package com.dailydealsbox.database.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,16 +32,24 @@ public class Store extends BaseEntityModel {
   private String     name;
 
   @NotNull
-  @Column(name = "logo", nullable = false, length = 255)
-  private String     logo;
-
-  @NotNull
   @Column(name = "website", nullable = false, length = 255)
   private String     website;
 
   @NotNull
   @Column(name = "deal_page", nullable = false, length = 512)
   private String     dealPage;
+
+  @NotNull
+  @Column(name = "country", nullable = false, length = 512)
+  private String     country;
+
+  @NotNull
+  @Column(name = "province", nullable = false, length = 512)
+  private String     province;
+
+  @NotNull
+  @Column(name = "logo", nullable = false, length = 255)
+  private String     logo;
 
   @NotNull
   @Column(name = "type", nullable = false)
@@ -146,4 +152,33 @@ public class Store extends BaseEntityModel {
     this.dealPage = dealPage;
   }
 
+  /**
+   * @return the country
+   */
+  public String getCountry() {
+    return this.country;
+  }
+
+  /**
+   * @param country
+   *          the country to set
+   */
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
+  /**
+   * @return the province
+   */
+  public String getProvince() {
+    return this.province;
+  }
+
+  /**
+   * @param province
+   *          the province to set
+   */
+  public void setProvince(String province) {
+    this.province = province;
+  }
 }
