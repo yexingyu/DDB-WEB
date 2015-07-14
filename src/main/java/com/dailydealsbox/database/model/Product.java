@@ -35,85 +35,61 @@ public class Product extends BaseEntityModel {
   @NotNull
   @Size(min = 10, max = 512)
   @Column(name = "url", nullable = false, length = 512)
-  private String                  url;
+  private String             url;
 
   @NotNull
   @Column(name = "`key`", nullable = false, length = 64)
-  private String                  key;
+  private String             key;
 
   @NotNull
   @Column(name = "enable", nullable = false)
-  private boolean                 enable;
+  private boolean            enable;
 
   @Column(name = "expired_at", nullable = true)
-  private Date                    expiredAt;
+  private Date               expiredAt;
 
   @Column(name = "activate_at", nullable = true)
-  private Date                    activateAt;
+  private Date               activateAt;
 
   @Column(name = "add_by", nullable = true)
-  private int                     addBy;
+  private int                addBy;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Store                   store;
+  private Store              store;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductText>        texts;
+  private Set<ProductText>   texts;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductImage>       images;
+  private Set<ProductImage>  images;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductPrice>       prices;
+  private Set<ProductPrice>  prices;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductFee>         fees;
+  private Set<ProductFee>    fees;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductTax>         taxes;
+  private Set<ProductTax>    taxes;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductLink>        links;
+  private Set<ProductLink>   links;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductOption>      options;
+  private Set<ProductOption> options;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductTag>         tags;
+  private Set<ProductTag>    tags;
 
   /**
    * isActive
@@ -121,8 +97,9 @@ public class Product extends BaseEntityModel {
    * @return
    */
   public boolean isActive() {
-    long now = System.currentTimeMillis();
     if (!this.isEnable()) return false;
+    if (this.getStatus() == BaseEntityModel.STATUS.INACTIVE) return false;
+    long now = System.currentTimeMillis();
     if (this.getActivateAt() != null && now < this.getActivateAt().getTime()) { return false; }
     if (this.getExpiredAt() != null && now > this.getExpiredAt().getTime()) { return false; }
     return true;
@@ -136,8 +113,6 @@ public class Product extends BaseEntityModel {
   public boolean validate() {
     if (StringUtils.isBlank(this.getKey())) { return false; }
     if (StringUtils.isBlank(this.getUrl())) { return false; }
-
-
 
     // validate product image
     Iterator<ProductImage> itImages = this.getImages().iterator();

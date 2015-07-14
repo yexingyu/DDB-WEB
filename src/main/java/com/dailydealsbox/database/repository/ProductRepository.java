@@ -30,6 +30,17 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   Page<Product> findByStoreId(int storeId, Pageable pageable);
 
   /**
+   * findByStoreIdAndStatusAndEnableOrderByCreateAtDesc
+   * 
+   * @param storeId
+   * @param status
+   * @param enable
+   * @param pageable
+   * @return
+   */
+  Page<Product> findByStoreIdAndStatusAndEnableOrderByCreatedAtDesc(int storeId, BaseEntityModel.STATUS status, boolean enable, Pageable pageable);
+
+  /**
    * findByStatus
    * 
    * @param status
@@ -37,4 +48,15 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    * @return
    */
   Page<Product> findByStatus(BaseEntityModel.STATUS status, Pageable pageable);
+
+  /**
+   * findByStatusAndEnableOrderByCreateAtDesc
+   * 
+   * @param status
+   * @param enable
+   * @param pageable
+   * @return
+   */
+  Page<Product> findByStatusAndEnableOrderByCreatedAtDesc(BaseEntityModel.STATUS status, boolean enable, Pageable pageable);
+
 }

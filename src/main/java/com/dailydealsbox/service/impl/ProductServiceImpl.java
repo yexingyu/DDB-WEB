@@ -36,15 +36,6 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.service.ProductService#getAll(org.springframework.data.domain.Pageable)
-   */
-  @Override
-  public Page<Product> getAll(Pageable pageable) {
-    return repo.findByStatus(BaseEntityModel.STATUS.AVAILABLE, pageable);
-  }
-
-  /*
-   * (non-Javadoc)
    * @see com.dailydealsbox.service.ProductService#update(com.dailydealsbox.database.model.Product)
    */
   @Override
@@ -62,8 +53,37 @@ public class ProductServiceImpl implements ProductService {
     return this.update(product);
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.service.ProductService#delete(int)
+   */
   @Override
-  public Page<Product> findByStoreId(int storeId, Pageable pageable) {
-    return repo.findByStoreId(storeId, pageable);
+  public void delete(int id) {
+    Product product = repo.findOne(id);
+    if (product != null) {
+      product.setStatus(BaseEntityModel.STATUS.INACTIVE);
+      repo.save(product);
+    }
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see
+   * com.dailydealsbox.service.ProductService#listAllOnFrontEnd(org.springframework.data.domain.
+   * Pageable)
+   */
+  @Override
+  public Page<Product> listAllOnFrontEnd(Pageable pageable) {
+    return repo.findByStatusAndEnableOrderByCreatedAtDesc(BaseEntityModel.STATUS.AVAILABLE, true, pageable);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.service.ProductService#listByStoreIdOnFrontEnd(int,
+   * org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Product> listByStoreIdOnFrontEnd(int storeId, Pageable pageable) {
+    return repo.findByStoreIdAndStatusAndEnableOrderByCreatedAtDesc(storeId, BaseEntityModel.STATUS.AVAILABLE, true, pageable);
   }
 }

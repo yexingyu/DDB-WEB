@@ -29,7 +29,6 @@ import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
  * @author x_ye
  */
 @Entity
-//@Table(name = "member", uniqueConstraints = { @UniqueConstraint(columnNames = "account") })
 @Table(name = "member")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Member extends BaseEntityModel {

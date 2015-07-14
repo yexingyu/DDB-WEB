@@ -50,6 +50,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     $scope.login = function() {
                         $scope.isFail = false;
                         $scope.member.password = md5.createHash($scope.member.passwd || '');
+                        delete $scope.member.passwd;
                         LoginService.login($scope.member, function(response) {
                             if (response.status == "SUCCESS") {
                                 $scope.$root.profile = response.data;

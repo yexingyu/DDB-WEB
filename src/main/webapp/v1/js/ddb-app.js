@@ -43,10 +43,19 @@ angular.module('ddbApp',
         [ '$rootScope', '$window', 'CookieService', 'ConstantService',
                 function($rootScope, $window, CookieService, ConstantService) {
                     ConstantService.init();
-                    $rootScope.language = {
+                    
+                    // set language
+                    $rootScope['language'] = {
                         'language' : CookieService.getLanguage()
                     };
-
+                    
+                    // set fingerprint
+                    $rootScope['fingerprint'] = new Fingerprint({
+                        canvas : true,
+                        ie_activex : true
+                    }).get();
+                    CookieService.setFingerprint($rootScope['fingerprint']);
+                    
                     // Load the SDK asynchronously
                     /*
                      * (function(d, s, id) { var js, fjs =

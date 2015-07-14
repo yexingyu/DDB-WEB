@@ -21,22 +21,6 @@ public interface ProductService {
   public Product get(int id);
 
   /**
-   * getAll
-   * 
-   * @param pageable
-   * @return
-   */
-  public Page<Product> getAll(Pageable pageable);
-
-  /**
-   * findByStoreId
-   * 
-   * @param storeId
-   * @return
-   */
-  public Page<Product> findByStoreId(int storeId, Pageable pageable);
-
-  /**
    * update
    * 
    * @param product
@@ -51,4 +35,29 @@ public interface ProductService {
    * @return
    */
   public Product insert(Product product);
+
+  /**
+   * delete
+   * 
+   * @param id
+   */
+  public void delete(int id);
+
+  /**
+   * listAllOnFrontEnd
+   * 
+   * @param pageable
+   * @return
+   */
+  public Page<Product> listAllOnFrontEnd(Pageable pageable);
+
+  /**
+   * listByStoreIdOnFrontEnd
+   * 
+   * @param storeId
+   * @param pageable
+   * @return
+   */
+  public Page<Product> listByStoreIdOnFrontEnd(int storeId, Pageable pageable);
+
 }

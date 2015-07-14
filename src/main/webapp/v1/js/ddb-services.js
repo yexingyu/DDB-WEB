@@ -11,7 +11,9 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             });
         },
         setLanguage : function(lang) {
-            $cookies.put('lang', lang.toUpperCase());
+            $cookies.put('lang', lang.toUpperCase(), {
+                path : '/'
+            });
         },
         getLanguage : function() {
             var lang = $cookies.get('lang');
@@ -24,6 +26,11 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                 path : '/'
             });
             return lang;
+        },
+        setFingerprint : function(fingerprint) {
+            $cookies.put('fingerprint', fingerprint, {
+                path : '/'
+            });
         }
     };
 } ])
@@ -39,13 +46,8 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                         login : function(member, callback) {
                             var LoginResource = $resource('/api/login', {
                                 'rememberMe' : member.rememberMe
-                            }, {
-                                'login' : {
-                                    method : 'POST',
-                                    isArray : false
-                                }
-                            });
-                            new LoginResource(member).$login(callback);
+                            }, {});
+                            new LoginResource(member).$save(callback);
                         },
                         showLoginBox : function(success, dismiss) {
                             return $modal.open({
@@ -126,21 +128,15 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('ProfileService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         profile : function(callback) {
-            return $resource('/api/profile', {}, {
-                'query' : {
-                    method : 'GET',
-                    isArray : false
-                }
-            }).query(callback);
+            return $resource('/api/profile', {}, {}).get(callback);
         },
         edit : function(profile, callback) {
             var profileResource = $resource('/api/profile', {}, {
-                'login' : {
-                    method : 'PUT',
-                    isArray : false
+                'update' : {
+                    method : 'PUT'
                 }
             });
-            new profileResource(profile).$login(callback);
+            new profileResource(profile).$update(callback);
         }
     };
 } ])
@@ -151,31 +147,16 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('StoreService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
         list : function(callback) {
-            return $resource('/api/store', {}, {
-                'query' : {
-                    method : 'GET',
-                    isArray : false
-                }
-            }).query(callback);
+            return $resource('/api/store', {}, {}).get(callback);
         },
         get : function(storeId, callback) {
             return $resource('/api/store/:storeId', {
                 'storeId' : storeId
-            }, {
-                'query' : {
-                    method : 'GET',
-                    isArray : false
-                }
-            }).query(callback);
+            }, {}).get(callback);
         },
         add : function(store, callback) {
-            var storeResource = $resource('/api/store', {}, {
-                'login' : {
-                    method : 'POST',
-                    isArray : false
-                }
-            });
-            new storeResource(store).$login(callback);
+            var storeResource = $resource('/api/store', {}, {});
+            new storeResource(store).$save(callback);
         }
     };
 } ])
@@ -200,21 +181,15 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
         },
         edit : function(product, callback) {
             var productResource = $resource('/api/product', {}, {
-                'login' : {
-                    method : 'PUT',
-                    isArray : false
+                'update' : {
+                    method : 'PUT'
                 }
             });
-            new productResource(product).$login(callback);
+            new productResource(product).$update(callback);
         },
         add : function(product, callback) {
-            var productResource = $resource('/api/product', {}, {
-                'login' : {
-                    method : 'POST',
-                    isArray : false
-                }
-            });
-            new productResource(product).$login(callback);
+            var productResource = $resource('/api/product', {}, {});
+            new productResource(product).$save(callback);
         },
         fix : function(product) {
             // fix texts
