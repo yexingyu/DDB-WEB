@@ -53,7 +53,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                         LoginService.login($scope.member, function(response) {
                             if (response.status == "SUCCESS") {
                                 $scope.$root.profile = response.data;
-                                $modalInstance.close();
+                                $modalInstance.close(response.data);
                                 $scope.isFail = false;
                             } else {
                                 $scope.isFail = true;
@@ -99,12 +99,14 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
         [
                 '$scope',
                 '$location',
+                '$window',
                 '$routeParams',
                 'ProductService',
                 'ProfileService',
+                'OrderService',
                 'LoginService',
-                function($scope, $location, $routeParams, ProductService, ProfileService,
-                        LoginService) {
+                function($scope, $location, $window, $routeParams, ProductService, ProfileService,
+                        OrderService, LoginService) {
                     var id = $routeParams.id;
                     $scope.order = {};
 
@@ -123,64 +125,20 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                         if (response.status == 'SUCCESS') {
                             $scope.$root.profile = response.data;
                             $scope.profile = response.data;
-                            $scope.order.memberId = $scope.profile.id;
-
-                            // set addresses for order
-                            var haveBillingAddress = false;
-                            var haveShippingAddress = false;
-                            if (angular.isArray($scope.profile.addresses)
-                                    && $scope.profile.addresses.length > 0) {
-                                $scope.order.addresses = [];
-                                // set billing address
-                                for (var i = 0; i < $scope.profile.addresses.length; i++) {
-                                    if ($scope.profile.addresses[i].type === 'BILLING') {
-                                        var obj = {};
-                                        angular.copy($scope.profile.addresses[i], obj);
-                                        obj.id = 0;
-                                        $scope.order.addresses.push(obj);
-                                        haveBillingAddress = true;
-                                        break;
-                                    }
-                                }
-                                if (haveBillingAddress === false) {
-                                    var obj = {};
-                                    angular.copy($scope.profile.addresses[0], obj);
-                                    obj.id = 0;
-                                    obj.type = 'BILLING';
-                                    $scope.order.addresses.push(obj);
-                                }
-
-                                // set shipping address
-                                for (var i = 0; i < $scope.profile.addresses.length; i++) {
-                                    if ($scope.profile.addresses[i].type === 'SHIPPING') {
-                                        var obj = {};
-                                        angular.copy($scope.profile.addresses[i], obj);
-                                        obj.id = 0;
-                                        $scope.order.addresses.push(obj);
-                                        haveShippingAddress = true;
-                                        break;
-                                    }
-                                }
-                                if (haveShippingAddress === false) {
-                                    var obj = {};
-                                    angular.copy($scope.profile.addresses[0], obj);
-                                    obj.id = 0;
-                                    obj.type = 'SHIPPING';
-                                    $scope.order.addresses.push(obj);
-                                }
-                            } else {
-                                $scope.order.addresses.push({
-                                    type : 'BILLING'
-                                });
-                                $scope.order.addresses.push({
-                                    type : 'SHIPPING'
-                                });
-                            }
+                            OrderService.fix($scope.order, $scope.profile);
                         } else if (response.status == 'NEED_LOGIN') {
-                            LoginService.showLoginBox();
+                            LoginService.showLoginBox(function(profile) {
+                                $scope.$root.profile = profile;
+                                $scope.profile = profile;
+                                OrderService.fix($scope.order, $scope.profile);
+                            }, function(reason) {
+                                $window.history.back();
+                            });
                         } else {
                             $location.path('/home');
+                            return;
                         }
+
                     });
 
                     // submit order

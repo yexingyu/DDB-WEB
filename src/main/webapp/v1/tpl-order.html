@@ -46,11 +46,13 @@
   </div>
   <div class="row">
     <h3>
-      <a href="#/product/{{product.id}}">{{product.names[$root.language.language].value}}</a>
+      <a href="#/product/{{product.id}}">{{product.texts[$root.language.language].name}}</a>
     </h3>
   </div>
-  <div class="row">{{product.descriptions[$root.language.language].value}}</div>
+  <div class="row">{{product.texts[$root.language.language].description}}</div>
+  <div class="row"><b>Warranty:</b> {{product.texts[$root.language.language].warranty}}</div>
 </div>
+<!-- 
 <div class="well">
   <span> <pre>{{product |json}}</pre>
   </span>
@@ -65,3 +67,4 @@
   <span> <pre>{{order | json}}</pre>
   </span>
 </div>
+ -->

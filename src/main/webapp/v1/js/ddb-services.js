@@ -31,30 +31,94 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 /*
  * LoginService
  */
-.factory('LoginService',
-        [ '$rootScope', '$resource', '$modal', function($rootScope, $resource, $modal) {
-            return {
-                login : function(member, callback) {
-                    var LoginResource = $resource('/api/login', {
-                        'rememberMe' : member.rememberMe
-                    }, {
-                        'login' : {
-                            method : 'POST',
-                            isArray : false
+.factory(
+        'LoginService',
+        [ '$rootScope', '$resource', '$modal', '$location', '$window',
+                function($rootScope, $resource, $modal, $location, $window) {
+                    return {
+                        login : function(member, callback) {
+                            var LoginResource = $resource('/api/login', {
+                                'rememberMe' : member.rememberMe
+                            }, {
+                                'login' : {
+                                    method : 'POST',
+                                    isArray : false
+                                }
+                            });
+                            new LoginResource(member).$login(callback);
+                        },
+                        showLoginBox : function(success, dismiss) {
+                            return $modal.open({
+                                animation : true,
+                                templateUrl : 'tpl-login.html',
+                                controller : 'LoginCtrl',
+                                size : 'sm'
+                            }).result.then(success, dismiss);
                         }
-                    });
-                    new LoginResource(member).$login(callback);
-                },
-                showLoginBox : function() {
-                    $modal.open({
-                        animation : true,
-                        templateUrl : 'tpl-login.html',
-                        controller : 'LoginCtrl',
-                        size : 'sm'
-                    });
+                    };
+                } ])
+
+/*
+ * OrderService
+ */
+.factory('OrderService', [ '$rootScope', '$resource', function($rootScope, $resource) {
+    return {
+        fix : function(order, profile) {
+            order.memberId = profile.id;
+
+            // set addresses for order
+            order.addresses = [];
+            var haveBillingAddress = false;
+            var haveShippingAddress = false;
+            if (angular.isArray(profile.addresses) && profile.addresses.length > 0) {
+                // set billing address
+                for (var i = 0; i < profile.addresses.length; i++) {
+                    if (profile.addresses[i].type === 'BILLING') {
+                        var obj = {};
+                        angular.copy(profile.addresses[i], obj);
+                        obj.id = 0;
+                        order.addresses.push(obj);
+                        haveBillingAddress = true;
+                        break;
+                    }
                 }
-            };
-        } ])
+                if (haveBillingAddress === false) {
+                    var obj = {};
+                    angular.copy(profile.addresses[0], obj);
+                    obj.id = 0;
+                    obj.type = 'BILLING';
+                    order.addresses.push(obj);
+                }
+
+                // set shipping address
+                for (var i = 0; i < profile.addresses.length; i++) {
+                    if (profile.addresses[i].type === 'SHIPPING') {
+                        var obj = {};
+                        angular.copy(profile.addresses[i], obj);
+                        obj.id = 0;
+                        order.addresses.push(obj);
+                        haveShippingAddress = true;
+                        break;
+                    }
+                }
+                if (haveShippingAddress === false) {
+                    var obj = {};
+                    angular.copy(profile.addresses[0], obj);
+                    obj.id = 0;
+                    obj.type = 'SHIPPING';
+                    order.addresses.push(obj);
+                }
+            } else {
+                order.addresses.push({
+                    type : 'BILLING'
+                });
+                order.addresses.push({
+                    type : 'SHIPPING'
+                });
+            }
+        }
+    };
+} ])
 
 /*
  * ProfileService
@@ -112,7 +176,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                 }
             });
             new storeResource(store).$login(callback);
-        }        
+        }
     };
 } ])
 
@@ -163,37 +227,20 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             new productResource(product).$login(callback);
         },
         fix : function(product) {
-            // fix names
-            var names = product.names;
-            product.names = {};
-            if (angular.isArray(names) && names.length > 0) {
-                product.names = {};
-                names.forEach(function(item) {
-                    product.names[item.language] = item;
+            // fix texts
+            var texts = product.texts;
+            product.texts = {};
+            if (angular.isArray(texts) && texts.length > 0) {
+                texts.forEach(function(item) {
+                    product.texts[item.language] = item;
                 });
                 angular.forEach($rootScope.constant.LANGUAGE, function(key, value) {
-                    if (!product.names[value]) {
-                        product.names[value] = names[0];
+                    if (!product.texts[value]) {
+                        product.texts[value] = texts[0];
                     }
                 });
             }
-            names = [];
-
-            // fix description
-            var descriptions = product.descriptions;
-            product.descriptions = {};
-            if (angular.isArray(descriptions) && descriptions.length > 0) {
-                descriptions.forEach(function(item) {
-                    product.descriptions[item.language] = item;
-                });
-                angular.forEach($rootScope.constant.LANGUAGE, function(key, value) {
-                    if (!product.descriptions[value]) {
-                        product.descriptions[value] = descriptions[0];
-                    }
-                });
-            }
-            descriptions = [];
-
+            texts = [];
             return product;
         }
 
