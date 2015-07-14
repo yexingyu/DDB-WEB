@@ -21,6 +21,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
+import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -34,6 +36,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PropertySource(value = { "classpath:database.properties" })
 @EnableJpaRepositories("com.dailydealsbox.database.repository")
+@EnableHypermediaSupport(type = { HypermediaType.HAL })
 public class WebApplication extends SpringBootServletInitializer {
   public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
 

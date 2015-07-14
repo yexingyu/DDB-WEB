@@ -3,8 +3,7 @@
  */
 package com.dailydealsbox.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.dailydealsbox.database.model.Product;
@@ -27,7 +26,7 @@ public interface ProductService {
    * @param pageable
    * @return
    */
-  public List<Product> getAll(Pageable pageable);
+  public Page<Product> getAll(Pageable pageable);
 
   /**
    * findByStoreId
@@ -35,7 +34,7 @@ public interface ProductService {
    * @param storeId
    * @return
    */
-  public List<Product> findByStoreId(int storeId, Pageable pageable);
+  public Page<Product> findByStoreId(int storeId, Pageable pageable);
 
   /**
    * update

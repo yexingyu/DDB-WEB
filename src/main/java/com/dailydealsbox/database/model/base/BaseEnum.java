@@ -17,14 +17,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class BaseEnum {
 
-  public static enum MEMBER_ROLE {
-    MEMBER, ADMIN;
-  }
-
+  /**
+   * @author x_ye
+   */
   public static enum MEMBER_LOGIN_TYPE {
-    DAILYDEALSBOX, FACEBOOK;
+    DAILYDEALSBOX("DailyDealsBox"), FACEBOOK("Facebook");
+    private final String name;
+
+    private MEMBER_LOGIN_TYPE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum COUNTRY {
     CA("Canada"), US("United States");
 
@@ -40,48 +52,182 @@ public class BaseEnum {
     }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum MEMBER_ADDRESS_TYPE {
-    BILLING, LIVING, SHIPPING;
+    BILLING("BILLING"), LIVING("LIVING"), SHIPPING("SHIPPING");
+    private final String name;
+
+    private MEMBER_ADDRESS_TYPE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum MEMBER_PHONE_TYPE {
-    MOBILE, HOME, WORK, FAX;
+    MOBILE("MOBILE"), HOME("HOME"), WORK("WORK"), FAX("FAX");
+    private final String name;
+
+    private MEMBER_PHONE_TYPE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum LANGUAGE {
-    EN, FR, CN;
+    EN("ENGLISH"), FR("FRENCH"), CN("CHINESE");
+    private final String name;
+
+    private LANGUAGE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum CURRENCY {
-    CAD, USD;
+    CAD("CAD"), USD("USD");
+    private final String name;
+
+    private CURRENCY(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum PRODUCT_FEE_TITLE {
-    SHIPPING, ECO, IMPORT;
+    SHIPPING("SHIPPING"), ECO("ECO"), IMPORT("IMPORT");
+    private final String name;
+
+    private PRODUCT_FEE_TITLE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum PRODUCT_FEE_TYPE {
-    PERCENTAGE, AMOUNT;
+    PERCENTAGE("PERCENTAGE"), AMOUNT("AMOUNT");
+    private final String name;
+
+    private PRODUCT_FEE_TYPE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum PRODUCT_TAX_TITLE {
-    CAFEDERAL, CAPROVINCE, CADUTY;
+    CAFEDERAL("CAFEDERAL"), CAPROVINCE("CAPROVINCE"), CADUTY("CADUTY");
+    private final String name;
+
+    private PRODUCT_TAX_TITLE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum PRODUCT_TAX_TYPE {
-    PERCENTAGE, AMOUNT;
+    PERCENTAGE("PERCENTAGE"), AMOUNT("AMOUNT");
+    private final String name;
+
+    private PRODUCT_TAX_TYPE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
+  }
+
+  /**
+   * @author x_ye
+   */
+  public static enum STORE_TYPE {
+    ONLINE("ONLINE"), LOCAL("ONLINE");
+    private final String name;
+
+    private STORE_TYPE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
+  }
+
+  /**
+   * @author x_ye
+   */
+  public static enum OPTION_TYPE {
+    COLOR("COLOR"), SIZE("SIZE"), STORAGE("STORAGE"), WIDTH("WIDTH");
+    private final String name;
+
+    private OPTION_TYPE(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
+  }
+
+  public static enum MEMBER_ROLE {
+    MEMBER, ADMIN;
   }
 
   public static enum RESPONSE_STATUS {
     SUCCESS, FAIL, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT;
-  }
-
-  public static enum STORE_TYPE {
-    ONLINE, LOCAL
-  }
-
-  public static enum OPTION_TYPE {
-    COLOR, SIZE, STORAGE, WIDTH
   }
 
   /**

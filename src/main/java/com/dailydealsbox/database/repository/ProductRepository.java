@@ -3,8 +3,7 @@
  */
 package com.dailydealsbox.database.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
@@ -28,7 +27,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    * @param pageable
    * @return
    */
-  List<Product> findByStoreId(int storeId, Pageable pageable);
+  Page<Product> findByStoreId(int storeId, Pageable pageable);
 
   /**
    * findByStatus
@@ -37,5 +36,5 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    * @param pageable
    * @return
    */
-  List<Product> findByStatus(BaseEntityModel.STATUS status, Pageable pageable);
+  Page<Product> findByStatus(BaseEntityModel.STATUS status, Pageable pageable);
 }

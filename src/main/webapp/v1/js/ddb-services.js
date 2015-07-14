@@ -191,22 +191,12 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             return $resource('/api/product', {
                 'page' : page,
                 'size' : size
-            }, {
-                'query' : {
-                    method : 'GET',
-                    isArray : false
-                }
-            }).query(callback);
+            }, {}).get(callback);
         },
         get : function(id, callback) {
             return $resource('/api/product/:id', {
                 'id' : id
-            }, {
-                'query' : {
-                    method : 'GET',
-                    isArray : false
-                }
-            }).query(callback);
+            }, {}).get(callback);
         },
         edit : function(product, callback) {
             var productResource = $resource('/api/product', {}, {

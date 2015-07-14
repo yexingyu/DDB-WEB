@@ -13,25 +13,29 @@
 <script src="bower_components/angular-md5/angular-md5.js"></script>
 <script src="bower_components/angular-gettext/dist/angular-gettext.js"></script>
 <script src="bower_components/fingerprint/fingerprint.js"></script>
-
 <script>
-//var fingerprint = new Fingerprint({canvas: true, screen_resolution: true}).get();
-//console.log(fingerprint);
+    //var fingerprint = new Fingerprint({canvas: true, screen_resolution: true}).get();
+    //console.log(fingerprint);
 
-var app = angular.module('app', []);
-app.run(function($rootScope) {
-    $rootScope['fingerprint'] = new Fingerprint({canvas: true, ie_activex: true}).get();
-    console.log($rootScope);
-    console.log($rootScope.fingerprint);
-});
+    var app = angular.module('app', [ 'ngResource' ]);
+    app.run(function($rootScope, $resource) {
+        $rootScope['fingerprint'] = new Fingerprint({
+            canvas : true,
+            ie_activex : true
+        }).get();
+        console.log($rootScope);
+        console.log($rootScope.fingerprint);
 
+        $resource('/api/product/test', {}, {
 
+        }).get(function(response) {
+            console.log(response);
+        });
+
+    });
 </script>
-
 </head>
 <body>
-    <div>
-    TEST
-    </div>
+  <div>TEST</div>
 </body>
 </html>

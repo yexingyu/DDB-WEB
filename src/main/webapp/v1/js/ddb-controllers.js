@@ -71,7 +71,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
             $scope.size = 9;
             ProductService.list(function(response) {
                 if (response.status == 'SUCCESS') {
-                    $scope.items = response.data;
+                    $scope.items = response.data.content;
                 }
             }, $scope.page, $scope.size);
         } ])
@@ -203,17 +203,16 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
             $scope.size = 9;
             ProductService.list(function(response) {
                 if (response.status == 'SUCCESS') {
-                    $scope.items = response.data;
+                    $scope.items = response.data.content;
                 }
             }, $scope.page, $scope.size);
 
             // load more product
             $scope.loadMore = function() {
                 $scope.page++;
-                console.log("page=" + $scope.page);
                 ProductService.list(function(response) {
                     if (response.status == 'SUCCESS') {
-                        response.data.forEach(function(item) {
+                        response.data.content.forEach(function(item) {
                             $scope.items.push(item);
                         });
                     } else if (response.status == 'EMPTY_RESULT') {
