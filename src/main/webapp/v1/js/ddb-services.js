@@ -38,27 +38,24 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 /*
  * LoginService
  */
-.factory(
-        'LoginService',
-        [ '$rootScope', '$resource', '$modal', '$location', '$window',
-                function($rootScope, $resource, $modal, $location, $window) {
-                    return {
-                        login : function(member, callback) {
-                            var LoginResource = $resource('/api/login', {
-                                'rememberMe' : member.rememberMe
-                            }, {});
-                            new LoginResource(member).$save(callback);
-                        },
-                        showLoginBox : function(success, dismiss) {
-                            return $modal.open({
-                                animation : true,
-                                templateUrl : 'tpl-login.html',
-                                controller : 'LoginCtrl',
-                                size : 'sm'
-                            }).result.then(success, dismiss);
-                        }
-                    };
-                } ])
+.factory('LoginService', [ '$rootScope', '$resource', '$modal', '$location', '$window', function($rootScope, $resource, $modal, $location, $window) {
+    return {
+        login : function(member, callback) {
+            var LoginResource = $resource('/api/login', {
+                'rememberMe' : member.rememberMe
+            }, {});
+            new LoginResource(member).$save(callback);
+        },
+        showLoginBox : function(success, dismiss) {
+            return $modal.open({
+                animation : true,
+                templateUrl : 'tpl-login.html',
+                controller : 'LoginCtrl',
+                size : 'sm'
+            }).result.then(success, dismiss);
+        }
+    };
+} ])
 
 /*
  * OrderService

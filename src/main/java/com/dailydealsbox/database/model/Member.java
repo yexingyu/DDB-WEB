@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -36,41 +36,41 @@ public class Member extends BaseEntityModel {
   @NotNull
   @Size(min = 10, max = 100)
   @Column(name = "account", nullable = false, length = 100)
-  private String             account;
+  private String account;
 
   @NotNull
   @Column(name = "password", nullable = false, length = 32)
-  private String             password;
+  private String password;
 
   @NotNull
   @Column(name = "first_name", nullable = false, length = 100)
-  private String             firstName;
+  private String firstName;
 
   @NotNull
   @Column(name = "middle_name", nullable = false, length = 100)
-  private String             middleName;
+  private String middleName;
 
   @NotNull
   @Column(name = "last_name", nullable = false, length = 100)
-  private String             lastName;
+  private String lastName;
 
   @NotNull
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_ROLE        role;
+  private MEMBER_ROLE role;
 
   @NotNull
   @Column(name = "login_type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_LOGIN_TYPE  loginType;
+  private MEMBER_LOGIN_TYPE loginType;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<MemberPhone>   phones;
+  private Set<MemberPhone> phones;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<MemberEmail>   emails;
+  private Set<MemberEmail> emails;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -78,7 +78,7 @@ public class Member extends BaseEntityModel {
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {
