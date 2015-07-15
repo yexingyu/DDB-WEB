@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model.base;
 
@@ -22,15 +22,15 @@ public abstract class BaseEntityModel extends BaseModel {
   @NotNull
   @Column(name = "status", nullable = false, insertable = false)
   @Enumerated(EnumType.ORDINAL)
-  private STATUS status     = STATUS.AVAILABLE;
+  private STATUS status = STATUS.AVAILABLE;
 
   @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
-  private Date   createdAt  = new Date();
+  private Date createdAt = new Date();
 
   @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = "modified_at", nullable = false, updatable = false, insertable = false)
-  private Date   modifiedAt = new Date();
+  private Date modifiedAt = new Date();
 
   /**
    * @return the createdAt
@@ -81,7 +81,7 @@ public abstract class BaseEntityModel extends BaseModel {
    * @author x_ye
    */
   public static enum STATUS {
-    AVAILABLE, INACTIVE
+    AVAILABLE, UNAVAILABLE
   }
 
 }

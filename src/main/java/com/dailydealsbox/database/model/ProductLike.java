@@ -1,22 +1,21 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.database.model.base.BaseModel;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author x_ye
@@ -27,56 +26,73 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ProductLike extends BaseModel {
 
   @NotNull
-  @Column(name = "session", nullable = false, length = 256)
-  private String  session;
+  @Column(name = "fingerprint", nullable = false)
+  private String fingerprint;
 
   @NotNull
   @Column(name = "ip", nullable = false)
-  private String  ip;
+  private String ip;
 
-  @JsonIgnore
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_id")
-  private Product product;
+  @NotNull
+  @Column(name = "product_id", nullable = false)
+  private int productId;
+
+  @Temporal(value = TemporalType.TIMESTAMP)
+  @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
+  private Date createdAt = new Date();
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {
-    if (StringUtils.isBlank(this.getSession())) { return false; }
     return true;
   }
 
   /**
-   * @return the product
+   * @return the fingerprint
    */
-  public Product getProduct() {
-    return this.product;
+  public String getFingerprint() {
+    return this.fingerprint;
   }
 
   /**
-   * @param product
-   *          the product to set
+   * @param fingerprint
+   *          the fingerprint to set
    */
-  public void setProduct(Product product) {
-    this.product = product;
+  public void setFingerprint(String fingerprint) {
+    this.fingerprint = fingerprint;
   }
 
   /**
-   * @return the session
+   * @return the productId
    */
-  public String getSession() {
-    return this.session;
+  public int getProductId() {
+    return this.productId;
   }
 
   /**
-   * @param session
-   *          the session to set
+   * @param productId
+   *          the productId to set
    */
-  public void setSession(String session) {
-    this.session = session;
+  public void setProductId(int productId) {
+    this.productId = productId;
+  }
+
+  /**
+   * @return the createdAt
+   */
+  public Date getCreatedAt() {
+    return this.createdAt;
+  }
+
+  /**
+   * @param createdAt
+   *          the createdAt to set
+   */
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
   }
 
   /**

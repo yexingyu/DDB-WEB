@@ -1,5 +1,4 @@
-angular.module('ddbApp',
-        [ 'ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap' ])
+angular.module('ddbApp', [ 'ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap' ])
 
 .config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {
@@ -39,33 +38,29 @@ angular.module('ddbApp',
     });
 } ])
 
-.run(
-        [ '$rootScope', '$window', 'CookieService', 'ConstantService',
-                function($rootScope, $window, CookieService, ConstantService) {
-                    ConstantService.init();
-                    
-                    // set language
-                    $rootScope['language'] = {
-                        'language' : CookieService.getLanguage()
-                    };
-                    
-                    // set fingerprint
-                    $rootScope['fingerprint'] = new Fingerprint({
-                        canvas : true,
-                        ie_activex : true
-                    }).get();
-                    CookieService.setFingerprint($rootScope['fingerprint']);
-                    
-                    // Load the SDK asynchronously
-                    /*
-                     * (function(d, s, id) { var js, fjs =
-                     * d.getElementsByTagName(s)[0]; if (d.getElementById(id))
-                     * return; js = d.createElement(s); js.id = id; js.src =
-                     * "//connect.facebook.net/en_US/sdk.js";
-                     * fjs.parentNode.insertBefore(js, fjs); }(document,
-                     * 'script', 'facebook-jssdk')); // Initial fb SDK
-                     * $window.fbAsyncInit = function() { FB.init({ appId :
-                     * '1170711572955238', cookie : true, xfbml : true, version :
-                     * 'v2.3' }); };
-                     */
-                } ]);
+.run([ '$rootScope', '$window', 'CookieService', 'ConstantService', function($rootScope, $window, CookieService, ConstantService) {
+    ConstantService.init();
+
+    // set language
+    $rootScope['language'] = {
+        'language' : CookieService.getLanguage()
+    };
+
+    // set fingerprint
+    $rootScope['fingerprint'] = new Fingerprint({
+        canvas : true,
+        ie_activex : true
+    }).get();
+    CookieService.setFingerprint($rootScope['fingerprint']);
+
+    // Load the SDK asynchronously
+    /*
+     * (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if
+     * (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+     * js.src = "//connect.facebook.net/en_US/sdk.js";
+     * fjs.parentNode.insertBefore(js, fjs); }(document, 'script',
+     * 'facebook-jssdk')); // Initial fb SDK $window.fbAsyncInit = function() {
+     * FB.init({ appId : '1170711572955238', cookie : true, xfbml : true,
+     * version : 'v2.3' }); };
+     */
+} ]);

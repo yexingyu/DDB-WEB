@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -35,53 +35,61 @@ public class Product extends BaseEntityModel {
   @NotNull
   @Size(min = 10, max = 512)
   @Column(name = "url", nullable = false, length = 512)
-  private String             url;
+  private String url;
 
   @NotNull
   @Column(name = "`key`", nullable = false, length = 64)
-  private String             key;
+  private String key;
 
   @NotNull
   @Column(name = "enable", nullable = false)
-  private boolean            enable;
+  private boolean enable;
 
   @Column(name = "expired_at", nullable = true)
-  private Date               expiredAt;
+  private Date expiredAt;
 
   @Column(name = "activate_at", nullable = true)
-  private Date               activateAt;
+  private Date activateAt;
 
   @Column(name = "add_by", nullable = true)
-  private int                addBy;
+  private int addBy;
+
+  @NotNull
+  @Column(name = "count_likes", nullable = false, insertable = false, updatable = false)
+  private int countLikes;
+
+  @NotNull
+  @Column(name = "count_reviews", nullable = false, insertable = false, updatable = false)
+  private int countReviews;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Store              store;
+  private Store store;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductText>   texts;
+  private Set<ProductText> texts;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductImage>  images;
+  private Set<ProductImage> images;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductPrice>  prices;
+  private Set<ProductPrice> prices;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductFee>    fees;
+  private Set<ProductFee> fees;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductTax>    taxes;
+  private Set<ProductTax> taxes;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductLink>   links;
+  private Set<ProductLink> links;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -89,16 +97,16 @@ public class Product extends BaseEntityModel {
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductTag>    tags;
+  private Set<ProductTag> tags;
 
   /**
    * isActive
-   * 
+   *
    * @return
    */
   public boolean isActive() {
-    if (!this.isEnable()) return false;
-    if (this.getStatus() == BaseEntityModel.STATUS.INACTIVE) return false;
+    if (!this.isEnable()) { return false; }
+    if (this.getStatus() == BaseEntityModel.STATUS.UNAVAILABLE) { return false; }
     long now = System.currentTimeMillis();
     if (this.getActivateAt() != null && now < this.getActivateAt().getTime()) { return false; }
     if (this.getExpiredAt() != null && now > this.getExpiredAt().getTime()) { return false; }
@@ -107,7 +115,7 @@ public class Product extends BaseEntityModel {
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {
@@ -305,6 +313,36 @@ public class Product extends BaseEntityModel {
    */
   public Date getExpiredAt() {
     return this.expiredAt;
+  }
+
+  /**
+   * @return the countLikes
+   */
+  public int getCountLikes() {
+    return this.countLikes;
+  }
+
+  /**
+   * @param countLikes
+   *          the countLikes to set
+   */
+  public void setCountLikes(int countLikes) {
+    this.countLikes = countLikes;
+  }
+
+  /**
+   * @return the countReviews
+   */
+  public int getCountReviews() {
+    return this.countReviews;
+  }
+
+  /**
+   * @param countReviews
+   *          the countReviews to set
+   */
+  public void setCountReviews(int countReviews) {
+    this.countReviews = countReviews;
   }
 
   /**

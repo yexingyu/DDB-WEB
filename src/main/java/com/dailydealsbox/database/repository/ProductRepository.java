@@ -1,10 +1,12 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.dailydealsbox.database.model.Product;
@@ -22,41 +24,58 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
   /**
    * findByStoreId
-   * 
+   *
    * @param storeId
    * @param pageable
    * @return
    */
-  Page<Product> findByStoreId(int storeId, Pageable pageable);
+  public Page<Product> findByStoreId(int storeId, Pageable pageable);
 
   /**
    * findByStoreIdAndStatusAndEnableOrderByCreateAtDesc
-   * 
+   *
    * @param storeId
    * @param status
    * @param enable
    * @param pageable
    * @return
    */
-  Page<Product> findByStoreIdAndStatusAndEnableOrderByCreatedAtDesc(int storeId, BaseEntityModel.STATUS status, boolean enable, Pageable pageable);
+  public Page<Product> findByStoreIdAndStatusAndEnableOrderByCreatedAtDesc(int storeId, BaseEntityModel.STATUS status, boolean enable, Pageable pageable);
 
   /**
    * findByStatus
-   * 
+   *
    * @param status
    * @param pageable
    * @return
    */
-  Page<Product> findByStatus(BaseEntityModel.STATUS status, Pageable pageable);
+  public Page<Product> findByStatus(BaseEntityModel.STATUS status, Pageable pageable);
 
   /**
    * findByStatusAndEnableOrderByCreateAtDesc
-   * 
+   *
    * @param status
    * @param enable
    * @param pageable
    * @return
    */
-  Page<Product> findByStatusAndEnableOrderByCreatedAtDesc(BaseEntityModel.STATUS status, boolean enable, Pageable pageable);
+  public Page<Product> findByStatusAndEnableOrderByCreatedAtDesc(BaseEntityModel.STATUS status, boolean enable, Pageable pageable);
 
+  /**
+   * increaseCountLikes
+   *
+   * @param productId
+   */
+  @Modifying
+  @Query("update Product p set p.countLikes = p.countLikes + 1 where p.id = ?1")
+  public void increaseCountLikes(int productId);
+
+  /**
+   * increaseCountReviews
+   * 
+   * @param productId
+   */
+  @Modifying
+  @Query("update Product p set p.countReviews = p.countReviews + 1 where p.id = ?1")
+  public void increaseCountReviews(int productId);
 }

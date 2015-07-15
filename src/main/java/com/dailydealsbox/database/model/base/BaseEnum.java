@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model.base;
 
@@ -30,7 +30,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -48,7 +48,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -65,7 +65,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -82,7 +82,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -99,7 +99,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -116,7 +116,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -133,7 +133,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -150,7 +150,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -167,7 +167,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -184,7 +184,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -201,7 +201,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -218,7 +218,7 @@ public class BaseEnum {
 
     @Override
     public String toString() {
-      return name;
+      return this.name;
     }
   }
 
@@ -227,12 +227,12 @@ public class BaseEnum {
   }
 
   public static enum RESPONSE_STATUS {
-    SUCCESS, FAIL, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT;
+    SUCCESS, FAIL, ERROR, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT;
   }
 
   /**
    * toMap
-   * 
+   *
    * @param clz
    * @return
    */
@@ -246,7 +246,7 @@ public class BaseEnum {
 
   /**
    * enums
-   * 
+   *
    * @return
    */
   @SuppressWarnings({ "unchecked" })

@@ -1,21 +1,21 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.database.model.base.BaseModel;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author x_ye
@@ -26,37 +26,87 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ProductReview extends BaseModel {
 
   @NotNull
-  @Column(name = "rating")
-  private int     rating;
+  @Column(name = "product_id", nullable = false)
+  private int productId;
+
+  @NotNull
+  @Column(name = "ip", nullable = false)
+  private String ip;
+
+  @NotNull
+  @Column(name = "fingerprint", nullable = false)
+  private String fingerprint;
+
+  @Temporal(value = TemporalType.TIMESTAMP)
+  @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
+  private Date createdAt = new Date();
+
+  @NotNull
+  @Column(name = "rating", nullable = false)
+  private int rating;
 
   @NotNull
   @Column(name = "content", nullable = false)
-  private String  content;
-
-  @JsonIgnore
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_id")
-  private Product product;
+  private String content;
 
   /**
-   * validate
-   * 
-   * @return
+   * @return the productId
    */
-
-  /**
-   * @return the product
-   */
-  public Product getProduct() {
-    return this.product;
+  public int getProductId() {
+    return this.productId;
   }
 
   /**
-   * @param product
-   *          the product to set
+   * @param productId
+   *          the productId to set
    */
-  public void setProduct(Product product) {
-    this.product = product;
+  public void setProductId(int productId) {
+    this.productId = productId;
+  }
+
+  /**
+   * @return the ip
+   */
+  public String getIp() {
+    return this.ip;
+  }
+
+  /**
+   * @param ip
+   *          the ip to set
+   */
+  public void setIp(String ip) {
+    this.ip = ip;
+  }
+
+  /**
+   * @return the fingerprint
+   */
+  public String getFingerprint() {
+    return this.fingerprint;
+  }
+
+  /**
+   * @param fingerprint
+   *          the fingerprint to set
+   */
+  public void setFingerprint(String fingerprint) {
+    this.fingerprint = fingerprint;
+  }
+
+  /**
+   * @return the createdAt
+   */
+  public Date getCreatedAt() {
+    return this.createdAt;
+  }
+
+  /**
+   * @param createdAt
+   *          the createdAt to set
+   */
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
   }
 
   /**

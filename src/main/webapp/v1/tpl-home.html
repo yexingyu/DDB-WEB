@@ -8,10 +8,25 @@
         <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:90}}</p>
         <h3>{{item.prices[0].currency}} {{item.prices[0].value}}</h3>
         <h4 ng-repeat ="fee in item.fees">{{fee.title}}: {{fee.value}}</h4>
-        
+
         <p>
           <a class="btn btn-default" href="#/product/{{item.id}}" role="button">View details &raquo;</a> <a class="btn btn-primary" href="#/order/{{item.id}}" role="button">ORDER</a>
         </p>
+        <p>
+            <a ng-click="like(item);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
+            <a popover-placement="top" popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
+        </p>
+        <script type="text/ng-template" id="tpl-product-review.html">
+        <h4>REVIEW</h4>
+        <div class="form-group">
+          <label>
+            <rating ng-model="rate.rate" max="5" on-hover="hoveringOver(value)" on-leave="rate.overStar = rate.rate"></rating>
+            <span class="label" ng-class="{'label-warning': rate.overStar<3, 'label-info': rate.overStar>=3 && rate.overStar<=4, 'label-success': rate.overStar>=5}" ng-show="true">Rate: {{rate.overStar}}</span>
+          </label>
+          <input type="text" ng-model="review.content" class="form-control">
+          <button class="btn btn-primary form-control">SUBMIT</button>
+        </div>
+        </script>
       </div>
     </div>
   </div>

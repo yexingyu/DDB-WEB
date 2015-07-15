@@ -43,71 +43,55 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * LoginCtrl definition
  */
-.controller(
-        'LoginCtrl',
-        [ '$scope', '$location', 'LoginService', 'md5', '$modalInstance',
-                function($scope, $location, LoginService, md5, $modalInstance) {
-                    $scope.login = function() {
-                        $scope.isFail = false;
-                        $scope.member.password = md5.createHash($scope.member.passwd || '');
-                        delete $scope.member.passwd;
-                        LoginService.login($scope.member, function(response) {
-                            if (response.status == "SUCCESS") {
-                                $scope.$root.profile = response.data;
-                                $modalInstance.close(response.data);
-                                $scope.isFail = false;
-                            } else {
-                                $scope.isFail = true;
-                            }
-                        });
-                    };
-                } ])
+.controller('LoginCtrl', [ '$scope', '$location', 'LoginService', 'md5', '$modalInstance', function($scope, $location, LoginService, md5, $modalInstance) {
+    $scope.login = function() {
+        $scope.isFail = false;
+        $scope.member.password = md5.createHash($scope.member.passwd || '');
+        delete $scope.member.passwd;
+        LoginService.login($scope.member, function(response) {
+            if (response.status == "SUCCESS") {
+                $scope.$root.profile = response.data;
+                $modalInstance.close(response.data);
+                $scope.isFail = false;
+            } else {
+                $scope.isFail = true;
+            }
+        });
+    };
+} ])
 
 /*
  * ProductCtrl definition
  */
-.controller('ProductCtrl',
-        [ '$scope', '$location', 'ProductService', function($scope, $location, ProductService) {
-            $scope.page = 0;
-            $scope.size = 9;
-            ProductService.list(function(response) {
-                if (response.status == 'SUCCESS') {
-                    $scope.items = response.data.content;
-                }
-            }, $scope.page, $scope.size);
-        } ])
+.controller('ProductCtrl', [ '$scope', '$location', 'ProductService', function($scope, $location, ProductService) {
+    $scope.page = 0;
+    $scope.size = 9;
+    ProductService.list(function(response) {
+        if (response.status == 'SUCCESS') {
+            $scope.items = response.data.content;
+        }
+    }, $scope.page, $scope.size);
+} ])
 
 /*
  * ProductDetailsCtrl definition
  */
-.controller(
-        'ProductDetailsCtrl',
-        [ '$scope', '$location', '$routeParams', 'ProductService',
-                function($scope, $location, $routeParams, ProductService) {
-                    var id = $routeParams.id;
-                    ProductService.get(id, function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.product = response.data;
-                        }
-                    });
-                } ])
+.controller('ProductDetailsCtrl', [ '$scope', '$location', '$routeParams', 'ProductService', function($scope, $location, $routeParams, ProductService) {
+    var id = $routeParams.id;
+    ProductService.get(id, function(response) {
+        if (response.status == 'SUCCESS') {
+            $scope.product = response.data;
+        }
+    });
+} ])
 
 /*
  * OrderCtrl definition
  */
 .controller(
         'OrderCtrl',
-        [
-                '$scope',
-                '$location',
-                '$window',
-                '$routeParams',
-                'ProductService',
-                'ProfileService',
-                'OrderService',
-                'LoginService',
-                function($scope, $location, $window, $routeParams, ProductService, ProfileService,
-                        OrderService, LoginService) {
+        [ '$scope', '$location', '$window', '$routeParams', 'ProductService', 'ProfileService', 'OrderService', 'LoginService',
+                function($scope, $location, $window, $routeParams, ProductService, ProfileService, OrderService, LoginService) {
                     var id = $routeParams.id;
                     $scope.order = {};
 
@@ -151,77 +135,97 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * ProfileCtrl definition
  */
-.controller(
-        'ProfileCtrl',
-        [ '$scope', '$location', 'ProfileService', 'LoginService',
-                function($scope, $location, ProfileService, LoginService) {
-                    ProfileService.profile(function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.$root.profile = response.data;
-                            $scope.profile = response.data;
-                        } else {
-                            LoginService.showLoginBox();
-                        }
-                    });
-                } ])
+.controller('ProfileCtrl', [ '$scope', '$location', 'ProfileService', 'LoginService', function($scope, $location, ProfileService, LoginService) {
+    ProfileService.profile(function(response) {
+        if (response.status == 'SUCCESS') {
+            $scope.$root.profile = response.data;
+            $scope.profile = response.data;
+        } else {
+            LoginService.showLoginBox();
+        }
+    });
+} ])
 
 /*
  * ProfileEditCtrl definition
  */
-.controller(
-        'ProfileEditCtrl',
-        [ '$scope', '$location', 'ProfileService', 'LoginService',
-                function($scope, $location, ProfileService) {
-                    // retrieve profile information
-                    ProfileService.profile(function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.$root.profile = response.data;
-                            $scope.profile = response.data;
-                        } else {
-                            LoginService.showLoginBox();
-                        }
-                    });
+.controller('ProfileEditCtrl', [ '$scope', '$location', 'ProfileService', 'LoginService', function($scope, $location, ProfileService) {
+    // retrieve profile information
+    ProfileService.profile(function(response) {
+        if (response.status == 'SUCCESS') {
+            $scope.$root.profile = response.data;
+            $scope.profile = response.data;
+        } else {
+            LoginService.showLoginBox();
+        }
+    });
 
-                    // submit profile modification
-                    $scope.submit = function() {
-                        ProfileService.edit($scope.profile, function(response) {
-                            if (response.status == 'SUCCESS') {
-                                $scope.$root.profile = response.data;
-                            } else {
-                                $location.path('/profile/edit');
-                            }
-                        });
-                    };
-                } ])
+    // submit profile modification
+    $scope.submit = function() {
+        ProfileService.edit($scope.profile, function(response) {
+            if (response.status == 'SUCCESS') {
+                $scope.$root.profile = response.data;
+            } else {
+                $location.path('/profile/edit');
+            }
+        });
+    };
+} ])
 
 /*
  * HomeCtrl definition
  */
-.controller('HomeCtrl',
-        [ '$scope', '$location', 'ProductService', function($scope, $location, ProductService) {
-            // init product list
-            $scope.page = 0;
-            $scope.size = 9;
-            ProductService.list(function(response) {
-                if (response.status == 'SUCCESS') {
-                    $scope.items = response.data.content;
-                }
-            }, $scope.page, $scope.size);
+.controller('HomeCtrl', [ '$scope', '$location', 'ProductService', function($scope, $location, ProductService) {
+    // init product list
+    $scope.page = 0;
+    $scope.size = 9;
+    ProductService.list(function(response) {
+        if (response.status == 'SUCCESS') {
+            $scope.items = response.data.content;
+            angular.forEach($scope.items, function(item) {
+                item.review = {
+                    productId : item.id,
+                    content : '',
+                    rating : 3,
+                    overStar : 3
+                };
+            });
+        }
+    }, $scope.page, $scope.size);
 
-            // load more product
-            $scope.loadMore = function() {
-                $scope.page++;
-                ProductService.list(function(response) {
-                    if (response.status == 'SUCCESS') {
-                        response.data.content.forEach(function(item) {
-                            $scope.items.push(item);
-                        });
-                    } else if (response.status == 'EMPTY_RESULT') {
-                        $scope.page--;
-                    }
-                }, $scope.page, $scope.size);
-            };
-        } ])
+    // load more product
+    $scope.loadMore = function() {
+        $scope.page++;
+        ProductService.list(function(response) {
+            if (response.status == 'SUCCESS') {
+                response.data.content.forEach(function(item) {
+                    $scope.items.push(item);
+                });
+            } else if (response.status == 'EMPTY_RESULT') {
+                $scope.page--;
+            }
+        }, $scope.page, $scope.size);
+    };
+
+    // product like
+    $scope.like = function(product) {
+        ProductService.like(product.id, function(response) {
+            if (response.status === 'SUCCESS') {
+                if (response.data === 'Success') {
+                    product.countLikes++;
+                }
+            }
+        });
+    };
+
+    // public review   /////////////////////////not finish
+    $scope.reviewPopover = {
+        templateUrl : 'tpl-product-review.html'
+    };
+    $scope.hoveringOver = function(value) {
+        $scope.rate.overStar = value;
+    };
+} ])
 
 /*
  * ContactCtrl definition

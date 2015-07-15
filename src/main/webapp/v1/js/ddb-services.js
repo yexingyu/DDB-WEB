@@ -188,6 +188,11 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             var productResource = $resource('/api/product', {}, {});
             new productResource(product).$save(callback);
         },
+        like : function(productId, callback) {
+            return $resource('/api/product/:productId/like', {
+                'productId' : productId
+            }, {}).save(callback);
+        },
         fix : function(product) {
             // fix texts
             var texts = product.texts;
@@ -205,6 +210,5 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             texts = [];
             return product;
         }
-
     };
 } ]);
