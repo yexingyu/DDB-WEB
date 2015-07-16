@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductReview;
+import com.dailydealsbox.database.model.base.BaseEntityModel;
 
 /**
  * @author x_ye
@@ -46,6 +47,13 @@ public interface ProductService {
   public void delete(int id);
 
   /**
+   * deleteReview
+   *
+   * @param reviewId
+   */
+  public void deleteReview(int reviewId);
+
+  /**
    * listAllOnFrontEnd
    *
    * @param pageable
@@ -74,10 +82,20 @@ public interface ProductService {
 
   /**
    * review
-   * 
+   *
    * @param review
    * @return
    */
   public int review(ProductReview review);
+
+  /**
+   * listReview
+   * 
+   * @param productId
+   * @param status
+   * @param pageable
+   * @return
+   */
+  public Page<ProductReview> listReview(int productId, BaseEntityModel.STATUS status, Pageable pageable);
 
 }

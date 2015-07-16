@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.web;
 
@@ -21,8 +21,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.hateoas.config.EnableHypermediaSupport;
-import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -36,56 +34,55 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PropertySource(value = { "classpath:database.properties" })
 @EnableJpaRepositories("com.dailydealsbox.database.repository")
-@EnableHypermediaSupport(type = { HypermediaType.HAL })
 public class WebApplication extends SpringBootServletInitializer {
   public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
 
   @Autowired
-  private Environment  environment;
+  private Environment environment;
 
   /**
    * dataSource
-   * 
+   *
    * @return
    */
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-    dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-    dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-    dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+    dataSource.setDriverClassName(this.environment.getRequiredProperty("jdbc.driverClassName"));
+    dataSource.setUrl(this.environment.getRequiredProperty("jdbc.url"));
+    dataSource.setUsername(this.environment.getRequiredProperty("jdbc.username"));
+    dataSource.setPassword(this.environment.getRequiredProperty("jdbc.password"));
     return dataSource;
   }
 
   /**
    * entityManagerFactory
-   * 
+   *
    * @return
    */
   @Bean
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-    entityManagerFactoryBean.setDataSource(dataSource());
+    entityManagerFactoryBean.setDataSource(this.dataSource());
     entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
     entityManagerFactoryBean.setPackagesToScan("com.dailydealsbox.database.model");
-    entityManagerFactoryBean.setJpaProperties(hibernateProperties());
+    entityManagerFactoryBean.setJpaProperties(this.hibernateProperties());
     entityManagerFactoryBean.setSharedCacheMode(SharedCacheMode.ALL);
     return entityManagerFactoryBean;
   }
 
   /**
    * hibernateProperties
-   * 
+   *
    * @return
    */
   private Properties hibernateProperties() {
     Properties properties = new Properties();
 
     // hibernate connection settings
-    properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-    properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-    properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+    properties.put("hibernate.dialect", this.environment.getRequiredProperty("hibernate.dialect"));
+    properties.put("hibernate.show_sql", this.environment.getRequiredProperty("hibernate.show_sql"));
+    properties.put("hibernate.format_sql", this.environment.getRequiredProperty("hibernate.format_sql"));
     properties.put("hibernate.enable_lazy_load_no_trans", true);
 
     // Second Cache Settings
@@ -100,19 +97,19 @@ public class WebApplication extends SpringBootServletInitializer {
 
   /**
    * transactionManager
-   * 
+   *
    * @return
    */
   @Bean
   public JpaTransactionManager transactionManager() {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
-    transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+    transactionManager.setEntityManagerFactory(this.entityManagerFactory().getObject());
     return transactionManager;
   }
 
   /**
    * mappingJackson2HttpMessageConverter
-   * 
+   *
    * @return
    */
   //  @Bean
@@ -136,7 +133,7 @@ public class WebApplication extends SpringBootServletInitializer {
 
   /**
    * main
-   * 
+   *
    * @param args
    */
   public static void main(String[] args) {

@@ -14,6 +14,7 @@ import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductLike;
 import com.dailydealsbox.database.model.ProductReview;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
+import com.dailydealsbox.database.model.base.BaseEntityModel.STATUS;
 import com.dailydealsbox.database.repository.ProductLikeRepository;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
@@ -137,4 +138,28 @@ public class ProductServiceImpl implements ProductService {
 
     return 0;
   }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.service.ProductService#deleteReview(int)
+   */
+  @Override
+  public void deleteReview(int reviewId) {
+    ProductReview review = this.repoReview.findOne(reviewId);
+    if (review != null) {
+      review.setStatus(BaseEntityModel.STATUS.UNAVAILABLE);
+      this.repoReview.save(review);
+    }
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.service.ProductService#listReview(int, com.dailydealsbox.database.model.base.BaseEntityModel.STATUS,
+   * org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<ProductReview> listReview(int productId, STATUS status, Pageable pageable) {
+    return this.repoReview.findByProductIdAndStatusOrderByCreatedAtDesc(productId, status, pageable);
+  }
+
 }

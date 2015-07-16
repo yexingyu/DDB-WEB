@@ -193,6 +193,19 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
                 'productId' : productId
             }, {}).save(callback);
         },
+        review : function(review, callback) {
+            var reviewObj = $resource('/api/product/:productId/review', {
+                'productId' : review.productId
+            }, {});
+            new reviewObj(review).$save(callback);
+        },
+        reviews : function(productId, page, size, callback) {
+            return $resource('/api/product/:productId/review', {
+                'productId' : productId,
+                'page' : page,
+                'size' : size
+            }, {}).get(callback);
+        },
         fix : function(product) {
             // fix texts
             var texts = product.texts;

@@ -78,9 +78,22 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
  */
 .controller('ProductDetailsCtrl', [ '$scope', '$location', '$routeParams', 'ProductService', function($scope, $location, $routeParams, ProductService) {
     var id = $routeParams.id;
+
+    // retrieve product details
     ProductService.get(id, function(response) {
         if (response.status == 'SUCCESS') {
             $scope.product = response.data;
+        }
+    });
+
+    // retrieve product reviews
+    $scope.reviews = {
+        page : 0,
+        size : 20
+    };
+    ProductService.reviews(id, $scope.reviews.page, $scope.reviews.size, function(response) {
+        if (response.status == 'SUCCESS') {
+            $scope.reviews = response.data;
         }
     });
 } ])
@@ -187,7 +200,9 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     productId : item.id,
                     content : '',
                     rating : 3,
-                    overStar : 3
+                    overStar : 3,
+                    showMsg : 'None',
+                    msg : ''
                 };
             });
         }
@@ -199,6 +214,14 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
         ProductService.list(function(response) {
             if (response.status == 'SUCCESS') {
                 response.data.content.forEach(function(item) {
+                    item.review = {
+                        productId : item.id,
+                        content : '',
+                        rating : 3,
+                        overStar : 3,
+                        showMsg : 'None',
+                        msg : ''
+                    };
                     $scope.items.push(item);
                 });
             } else if (response.status == 'EMPTY_RESULT') {
@@ -210,20 +233,31 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
     // product like
     $scope.like = function(product) {
         ProductService.like(product.id, function(response) {
-            if (response.status === 'SUCCESS') {
-                if (response.data === 'Success') {
-                    product.countLikes++;
-                }
+            if (response.status === 'SUCCESS' && response.data === 'Success') {
+                product.countLikes++;
             }
         });
     };
 
-    // public review   /////////////////////////not finish
+    // public review
     $scope.reviewPopover = {
         templateUrl : 'tpl-product-review.html'
     };
-    $scope.hoveringOver = function(value) {
-        $scope.rate.overStar = value;
+    $scope.hoveringOver = function(value, item) {
+        item.review.overStar = value;
+        console.log(item.review);
+    };
+    $scope.review = function(product) {
+        ProductService.review(product.review, function(response) {
+            if (response.status === 'SUCCESS' && response.data === 'Success') {
+                product.countReviews++;
+                product.review.showMsg = 'message';
+                product.review.msg = 'Review success';
+            } else {
+                product.review.showMsg = 'error';
+                product.review.msg = response.data;
+            }
+        });
     };
 } ])
 
