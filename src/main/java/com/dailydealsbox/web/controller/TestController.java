@@ -4,14 +4,13 @@
 package com.dailydealsbox.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.repository.ProductRepository;
+import com.dailydealsbox.database.repository.ProductReviewRepository;
 import com.dailydealsbox.service.ProductService;
 import com.dailydealsbox.web.base.GeneralResponseData;
 
@@ -23,9 +22,11 @@ import com.dailydealsbox.web.base.GeneralResponseData;
 public class TestController {
 
   @Autowired
-  private ProductRepository productRepo;
+  private ProductRepository       productRepo;
   @Autowired
-  private ProductService    productService;
+  private ProductService          productService;
+  @Autowired
+  private ProductReviewRepository reviewRepo;
 
   @RequestMapping(method = RequestMethod.GET)
   public GeneralResponseData test() {
@@ -34,8 +35,10 @@ public class TestController {
     //Page<Product> products = this.productRepo.findByStatus(BaseEntityModel.STATUS.AVAILABLE, null);
     //Page<Product> products = this.productRepo.findByStatusAndEnableOrderByCreatedAtDesc(BaseEntityModel.STATUS.AVAILABLE, true, null);
     //Page<Product> products = this.productService.listAllOnFrontEnd(null);
-    Page<Product> products = null;
-    return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
+    //Page<Product> products = null;
+
+    this.reviewRepo.delete(1);
+    return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
   }
 
 }

@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductLike;
 import com.dailydealsbox.database.model.ProductReview;
-import com.dailydealsbox.database.model.base.BaseEntityModel;
-import com.dailydealsbox.database.model.base.BaseEntityModel.STATUS;
 import com.dailydealsbox.database.repository.ProductLikeRepository;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
@@ -70,11 +68,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public void delete(int id) {
-    Product product = this.repo.findOne(id);
-    if (product != null) {
-      product.setStatus(BaseEntityModel.STATUS.UNAVAILABLE);
-      this.repo.save(product);
-    }
+    this.repo.delete(id);
   }
 
   /*
@@ -85,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> listAllOnFrontEnd(Pageable pageable) {
-    return this.repo.findByStatusAndEnableOrderByCreatedAtDesc(BaseEntityModel.STATUS.AVAILABLE, true, pageable);
+    return this.repo.findByDeletedAndEnableOrderByCreatedAtDesc(0, true, pageable);
   }
 
   /*
@@ -95,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> listByStoreIdOnFrontEnd(int storeId, Pageable pageable) {
-    return this.repo.findByStoreIdAndStatusAndEnableOrderByCreatedAtDesc(storeId, BaseEntityModel.STATUS.AVAILABLE, true, pageable);
+    return this.repo.findByStoreIdAndDeletedAndEnableOrderByCreatedAtDesc(storeId, 0, true, pageable);
   }
 
   /*
@@ -145,21 +139,16 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public void deleteReview(int reviewId) {
-    ProductReview review = this.repoReview.findOne(reviewId);
-    if (review != null) {
-      review.setStatus(BaseEntityModel.STATUS.UNAVAILABLE);
-      this.repoReview.save(review);
-    }
+    this.repoReview.delete(reviewId);
   }
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.service.ProductService#listReview(int, com.dailydealsbox.database.model.base.BaseEntityModel.STATUS,
-   * org.springframework.data.domain.Pageable)
+   * @see com.dailydealsbox.service.ProductService#listReview(int, int, org.springframework.data.domain.Pageable)
    */
   @Override
-  public Page<ProductReview> listReview(int productId, STATUS status, Pageable pageable) {
-    return this.repoReview.findByProductIdAndStatusOrderByCreatedAtDesc(productId, status, pageable);
+  public Page<ProductReview> listReview(int productId, int deleted, Pageable pageable) {
+    return this.repoReview.findByProductIdAndDeletedOrderByCreatedAtDesc(productId, 0, pageable);
   }
 
 }

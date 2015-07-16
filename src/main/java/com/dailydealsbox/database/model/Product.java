@@ -106,7 +106,7 @@ public class Product extends BaseEntityModel {
    */
   public boolean isActive() {
     if (!this.isEnable()) { return false; }
-    if (this.getStatus() == BaseEntityModel.STATUS.UNAVAILABLE) { return false; }
+    if (this.getDeleted() != 0) { return false; }
     long now = System.currentTimeMillis();
     if (this.getActivateAt() != null && now < this.getActivateAt().getTime()) { return false; }
     if (this.getExpiredAt() != null && now > this.getExpiredAt().getTime()) { return false; }

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductReview;
-import com.dailydealsbox.database.model.base.BaseEntityModel;
 
 /**
  * @author x_ye
@@ -90,12 +89,12 @@ public interface ProductService {
 
   /**
    * listReview
-   * 
+   *
    * @param productId
    * @param status
    * @param pageable
    * @return
    */
-  public Page<ProductReview> listReview(int productId, BaseEntityModel.STATUS status, Pageable pageable);
+  public Page<ProductReview> listReview(int productId, int deleted, Pageable pageable);
 
 }

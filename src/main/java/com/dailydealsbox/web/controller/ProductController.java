@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductReview;
-import com.dailydealsbox.database.model.base.BaseEntityModel;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.service.AuthorizationService;
@@ -93,7 +92,7 @@ public class ProductController {
 
   /**
    * reviews
-   * 
+   *
    * @param productId
    * @param fingerprint
    * @param pageable
@@ -104,7 +103,7 @@ public class ProductController {
   @RequestMapping(value = "{productId}/review", method = { RequestMethod.GET })
   public GeneralResponseData reviews(@PathVariable("productId") int productId, @CookieValue(value = "fingerprint", required = true) String fingerprint,
       Pageable pageable, HttpServletRequest request) throws Exception {
-    Page<ProductReview> reviews = this.productService.listReview(productId, BaseEntityModel.STATUS.AVAILABLE, pageable);
+    Page<ProductReview> reviews = this.productService.listReview(productId, 0, pageable);
     if (reviews == null || reviews.getNumberOfElements() == 0) {
       return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {

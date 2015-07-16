@@ -6,8 +6,6 @@ package com.dailydealsbox.database.model.base;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,9 +18,8 @@ import javax.validation.constraints.NotNull;
 public abstract class BaseEntityModel extends BaseModel {
 
   @NotNull
-  @Column(name = "status", nullable = false, insertable = false)
-  @Enumerated(EnumType.ORDINAL)
-  private STATUS status = STATUS.AVAILABLE;
+  @Column(name = "deleted", nullable = false, insertable = false)
+  private int deleted = 0;
 
   @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
@@ -63,25 +60,18 @@ public abstract class BaseEntityModel extends BaseModel {
   }
 
   /**
-   * @return the status
+   * @return the deleted
    */
-  public STATUS getStatus() {
-    return this.status;
+  public int getDeleted() {
+    return this.deleted;
   }
 
   /**
-   * @param status
-   *          the status to set
+   * @param deleted
+   *          the deleted to set
    */
-  public void setStatus(STATUS status) {
-    this.status = status;
-  }
-
-  /**
-   * @author x_ye
-   */
-  public static enum STATUS {
-    AVAILABLE, UNAVAILABLE
+  public void setDeleted(int deleted) {
+    this.deleted = deleted;
   }
 
 }

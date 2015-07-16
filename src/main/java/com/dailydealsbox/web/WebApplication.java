@@ -3,6 +3,8 @@
  */
 package com.dailydealsbox.web;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 
 import javax.persistence.SharedCacheMode;
@@ -20,11 +22,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 /**
  * @author x_ye
@@ -39,6 +45,21 @@ public class WebApplication extends SpringBootServletInitializer {
 
   @Autowired
   private Environment environment;
+
+  @Bean
+  public SimpleUrlHandlerMapping faviconHandlerMapping() {
+    SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
+    mapping.setOrder(Integer.MIN_VALUE);
+    mapping.setUrlMap(Collections.singletonMap("favicon.ico", this.faviconRequestHandler()));
+    return mapping;
+  }
+
+  @Bean
+  protected ResourceHttpRequestHandler faviconRequestHandler() {
+    ResourceHttpRequestHandler requestHandler = new ResourceHttpRequestHandler();
+    requestHandler.setLocations(Arrays.<Resource> asList(new ClassPathResource("/")));
+    return requestHandler;
+  }
 
   /**
    * dataSource

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.dailydealsbox.database.model.Product;
-import com.dailydealsbox.database.model.base.BaseEntityModel;
 
 /**
  * @author x_ye
@@ -32,34 +31,34 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   public Page<Product> findByStoreId(int storeId, Pageable pageable);
 
   /**
-   * findByStoreIdAndStatusAndEnableOrderByCreateAtDesc
+   * findByStoreIdAndDeletedAndEnableOrderByCreatedAtDesc
    *
    * @param storeId
-   * @param status
+   * @param deleted
    * @param enable
    * @param pageable
    * @return
    */
-  public Page<Product> findByStoreIdAndStatusAndEnableOrderByCreatedAtDesc(int storeId, BaseEntityModel.STATUS status, boolean enable, Pageable pageable);
+  public Page<Product> findByStoreIdAndDeletedAndEnableOrderByCreatedAtDesc(int storeId, int deleted, boolean enable, Pageable pageable);
 
   /**
-   * findByStatus
+   * findByDeleted
    *
-   * @param status
+   * @param deleted
    * @param pageable
    * @return
    */
-  public Page<Product> findByStatus(BaseEntityModel.STATUS status, Pageable pageable);
+  public Page<Product> findByDeleted(int deleted, Pageable pageable);
 
   /**
-   * findByStatusAndEnableOrderByCreateAtDesc
-   *
-   * @param status
+   * findByDeletedAndEnableOrderByCreatedAtDesc
+   * 
+   * @param deleted
    * @param enable
    * @param pageable
    * @return
    */
-  public Page<Product> findByStatusAndEnableOrderByCreatedAtDesc(BaseEntityModel.STATUS status, boolean enable, Pageable pageable);
+  public Page<Product> findByDeletedAndEnableOrderByCreatedAtDesc(int deleted, boolean enable, Pageable pageable);
 
   /**
    * increaseCountLikes
@@ -72,7 +71,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
   /**
    * increaseCountReviews
-   * 
+   *
    * @param productId
    */
   @Modifying
