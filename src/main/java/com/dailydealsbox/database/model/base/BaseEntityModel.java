@@ -19,7 +19,7 @@ public abstract class BaseEntityModel extends BaseModel {
 
   @NotNull
   @Column(name = "deleted", nullable = false, insertable = false)
-  private int deleted = 0;
+  private boolean deleted;
 
   @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
@@ -62,7 +62,7 @@ public abstract class BaseEntityModel extends BaseModel {
   /**
    * @return the deleted
    */
-  public int getDeleted() {
+  public boolean isDeleted() {
     return this.deleted;
   }
 
@@ -70,7 +70,7 @@ public abstract class BaseEntityModel extends BaseModel {
    * @param deleted
    *          the deleted to set
    */
-  public void setDeleted(int deleted) {
+  public void setDeleted(boolean deleted) {
     this.deleted = deleted;
   }
 

@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.SQLDelete;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_LOGIN_TYPE;
@@ -30,6 +31,7 @@ import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
  */
 @Entity
 @Table(name = "member")
+@SQLDelete(sql = "update member set deleted = 1 where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Member extends BaseEntityModel {
 

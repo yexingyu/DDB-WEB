@@ -19,7 +19,7 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
  */
 @Entity
 @Table(name = "product_review")
-@SQLDelete(sql = "update product_review set status = 1 where id = ?")
+@SQLDelete(sql = "update product_review set deleted = 1 where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ProductReview extends BaseEntityModel {
 

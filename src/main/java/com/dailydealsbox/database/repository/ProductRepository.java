@@ -22,43 +22,25 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   //  List<Product> findByStoreId(@Param("storeId") int storeId, @Param("offset") int offset, @Param("cnt") int cnt);
 
   /**
-   * findByStoreId
+   * findByStoreIdAndDisabledAndDeletedOrderByCreatedAtDesc
    *
    * @param storeId
-   * @param pageable
-   * @return
-   */
-  public Page<Product> findByStoreId(int storeId, Pageable pageable);
-
-  /**
-   * findByStoreIdAndDeletedAndEnableOrderByCreatedAtDesc
-   *
-   * @param storeId
-   * @param deleted
-   * @param enable
-   * @param pageable
-   * @return
-   */
-  public Page<Product> findByStoreIdAndDeletedAndEnableOrderByCreatedAtDesc(int storeId, int deleted, boolean enable, Pageable pageable);
-
-  /**
-   * findByDeleted
-   *
+   * @param disabled
    * @param deleted
    * @param pageable
    * @return
    */
-  public Page<Product> findByDeleted(int deleted, Pageable pageable);
+  public Page<Product> findByStoreIdAndDisabledAndDeletedOrderByCreatedAtDesc(int storeId, boolean disabled, boolean deleted, Pageable pageable);
 
   /**
-   * findByDeletedAndEnableOrderByCreatedAtDesc
+   * findByDisabledAndDeletedOrderByCreatedAtDesc
    * 
+   * @param disabled
    * @param deleted
-   * @param enable
    * @param pageable
    * @return
    */
-  public Page<Product> findByDeletedAndEnableOrderByCreatedAtDesc(int deleted, boolean enable, Pageable pageable);
+  public Page<Product> findByDisabledAndDeletedOrderByCreatedAtDesc(boolean disabled, boolean deleted, Pageable pageable);
 
   /**
    * increaseCountLikes

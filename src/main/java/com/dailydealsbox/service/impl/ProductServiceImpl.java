@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> listAllOnFrontEnd(Pageable pageable) {
-    return this.repo.findByDeletedAndEnableOrderByCreatedAtDesc(0, true, pageable);
+    return this.repo.findByDisabledAndDeletedOrderByCreatedAtDesc(false, false, pageable);
   }
 
   /*
@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> listByStoreIdOnFrontEnd(int storeId, Pageable pageable) {
-    return this.repo.findByStoreIdAndDeletedAndEnableOrderByCreatedAtDesc(storeId, 0, true, pageable);
+    return this.repo.findByStoreIdAndDisabledAndDeletedOrderByCreatedAtDesc(storeId, false, false, pageable);
   }
 
   /*

@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.SQLDelete;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 
@@ -29,6 +30,7 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
  */
 @Entity
 @Table(name = "product")
+@SQLDelete(sql = "update product set deleted = 1 where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Product extends BaseEntityModel {
 
@@ -42,8 +44,8 @@ public class Product extends BaseEntityModel {
   private String key;
 
   @NotNull
-  @Column(name = "enable", nullable = false)
-  private boolean enable;
+  @Column(name = "disabled", nullable = false)
+  private boolean disabled;
 
   @Column(name = "expired_at", nullable = true)
   private Date expiredAt;
@@ -105,8 +107,8 @@ public class Product extends BaseEntityModel {
    * @return
    */
   public boolean isActive() {
-    if (!this.isEnable()) { return false; }
-    if (this.getDeleted() != 0) { return false; }
+    if (this.isDisabled()) { return false; }
+    if (this.isDeleted()) { return false; }
     long now = System.currentTimeMillis();
     if (this.getActivateAt() != null && now < this.getActivateAt().getTime()) { return false; }
     if (this.getExpiredAt() != null && now > this.getExpiredAt().getTime()) { return false; }
@@ -354,18 +356,18 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @return the enable
+   * @return the disabled
    */
-  public boolean isEnable() {
-    return this.enable;
+  public boolean isDisabled() {
+    return this.disabled;
   }
 
   /**
-   * @param enable
-   *          the enable to set
+   * @param disabled
+   *          the disabled to set
    */
-  public void setEnable(boolean enable) {
-    this.enable = enable;
+  public void setDisabled(boolean disabled) {
+    this.disabled = disabled;
   }
 
   /**
