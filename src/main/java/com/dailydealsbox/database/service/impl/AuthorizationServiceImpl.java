@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.dailydealsbox.service.impl;
+package com.dailydealsbox.database.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.dailydealsbox.service.AuthorizationService;
+import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.web.base.BaseAuthorization;
 
 /**

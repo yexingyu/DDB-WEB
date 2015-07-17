@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
-import com.dailydealsbox.service.ProductService;
-import com.dailydealsbox.web.base.GeneralResponseData;
+import com.dailydealsbox.database.service.ProductService;
+import com.dailydealsbox.web.base.GenericResponseData;
 
 /**
  * @author x_ye
@@ -29,7 +28,7 @@ public class TestController {
   private ProductReviewRepository reviewRepo;
 
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData test() {
+  public GenericResponseData test() throws Exception {
     //this.productService.delete(75);
     //List<Product> products = (List<Product>) this.productRepo.findAll();
     //Page<Product> products = this.productRepo.findByStatus(BaseEntityModel.STATUS.AVAILABLE, null);
@@ -37,8 +36,9 @@ public class TestController {
     //Page<Product> products = this.productService.listAllOnFrontEnd(null);
     //Page<Product> products = null;
 
-    this.reviewRepo.delete(1);
-    return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
+    //this.reviewRepo.delete(1);
+    throw new Exception("tttt");
+    //return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
   }
 
 }

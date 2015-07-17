@@ -3,8 +3,11 @@
  */
 package com.dailydealsbox.database.repository;
 
+import javax.persistence.QueryHint;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.CrudRepository;
 
 import com.dailydealsbox.database.model.ProductReview;
@@ -35,11 +38,12 @@ public interface ProductReviewRepository extends CrudRepository<ProductReview, I
 
   /**
    * findByProductIdAndDeletedOrderByCreatedAtDesc
-   * 
+   *
    * @param productId
    * @param deleted
    * @param pageable
    * @return
    */
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Page<ProductReview> findByProductIdAndDeletedOrderByCreatedAtDesc(int productId, int deleted, Pageable pageable);
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dailydealsbox.service.impl;
+package com.dailydealsbox.database.service.impl;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.repository.StoreRepository;
-import com.dailydealsbox.service.StoreService;
+import com.dailydealsbox.database.service.StoreService;
 
 /**
  * @author x_ye

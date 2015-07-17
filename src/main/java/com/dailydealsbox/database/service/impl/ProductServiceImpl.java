@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.service.impl;
+package com.dailydealsbox.database.service.impl;
 
 import javax.annotation.Resource;
 
@@ -16,7 +16,7 @@ import com.dailydealsbox.database.model.ProductReview;
 import com.dailydealsbox.database.repository.ProductLikeRepository;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
-import com.dailydealsbox.service.ProductService;
+import com.dailydealsbox.database.service.ProductService;
 
 /**
  * @author x_ye

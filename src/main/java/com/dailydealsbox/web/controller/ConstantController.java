@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.base.BaseEnum;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.web.base.GeneralResponseData;
+import com.dailydealsbox.web.base.GenericResponseData;
 
 /**
  * @author x_ye
@@ -19,8 +19,8 @@ import com.dailydealsbox.web.base.GeneralResponseData;
 public class ConstantController {
 
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData retrieve() {
-    return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, BaseEnum.enums());
+  public GenericResponseData retrieve() {
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, BaseEnum.enums());
   }
 
 }

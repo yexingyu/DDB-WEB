@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.service.AuthorizationService;
-import com.dailydealsbox.service.StoreService;
+import com.dailydealsbox.database.service.AuthorizationService;
+import com.dailydealsbox.database.service.StoreService;
 import com.dailydealsbox.web.base.AuthorizationToken;
-import com.dailydealsbox.web.base.GeneralResponseData;
+import com.dailydealsbox.web.base.GenericResponseData;
 
 /**
  * @author x_ye
@@ -40,12 +40,12 @@ public class StoreController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData all() {
+  public GenericResponseData all() {
     List<Store> stores = storeService.getAll();
     if (stores == null || stores.isEmpty()) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, stores);
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, stores);
     }
   }
 
@@ -56,12 +56,12 @@ public class StoreController {
    * @return
    */
   @RequestMapping(value = "{id}", method = RequestMethod.GET)
-  public GeneralResponseData retrieve(@PathVariable("id") int id) {
+  public GenericResponseData retrieve(@PathVariable("id") int id) {
     Store store = storeService.get(id);
     if (store == null) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, store);
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, store);
     }
   }
 
@@ -73,21 +73,21 @@ public class StoreController {
    * @return
    */
   @RequestMapping(method = { RequestMethod.POST })
-  public GeneralResponseData insert(
+  public GenericResponseData insert(
       @CookieValue(value = "token", required = false) String tokenString, @RequestBody Store store) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
       System.out.println(store);
       if (store.validate()) {
         Store storeFromDb = storeService.insert(store);
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, storeFromDb);
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, storeFromDb);
       } else {
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+        return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
       }
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
     }
   }
 }

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.service.AuthorizationService;
-import com.dailydealsbox.service.MemberService;
+import com.dailydealsbox.database.service.AuthorizationService;
+import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.web.base.AuthorizationToken;
-import com.dailydealsbox.web.base.GeneralResponseData;
+import com.dailydealsbox.web.base.GenericResponseData;
 
 /**
  * @author x_ye
@@ -37,16 +37,16 @@ public class ProfileController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData profile(@CookieValue(value = "token", required = false) String tokenString) {
+  public GenericResponseData profile(@CookieValue(value = "token", required = false) String tokenString) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else {
       Member member = memberService.get(token.getMemberId());
       if (member == null) {
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+        return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
       } else {
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, member);
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, member);
       }
     }
   }
@@ -58,16 +58,16 @@ public class ProfileController {
    * @return
    */
   @RequestMapping(method = RequestMethod.PUT)
-  public GeneralResponseData edit(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Member member) {
+  public GenericResponseData edit(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Member member) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else {
       if (member.validate()) {
         Member memberFromDb = memberService.update(member);
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, memberFromDb);
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, memberFromDb);
       } else {
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+        return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
       }
     }
   }

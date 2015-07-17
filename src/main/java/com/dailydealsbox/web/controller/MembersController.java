@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.service.AuthorizationService;
-import com.dailydealsbox.service.MemberService;
+import com.dailydealsbox.database.service.AuthorizationService;
+import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseResponseData;
-import com.dailydealsbox.web.base.GeneralResponseData;
+import com.dailydealsbox.web.base.GenericResponseData;
 
 /**
  * @author x_ye
@@ -41,20 +41,20 @@ public class MembersController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData all(@CookieValue(value = "token", required = false) String tokenString) {
+  public GenericResponseData all(@CookieValue(value = "token", required = false) String tokenString) {
     AuthorizationToken token = authorizationService.verify(tokenString);
     if (token == null) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
       List<Member> members = service.getAll();
       //System.out.println(members);
       if (members == null || members.size() == 0) {
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+        return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
       } else {
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, members);
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, members);
       }
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
     }
   }
 

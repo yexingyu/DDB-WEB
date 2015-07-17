@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dailydealsbox.service;
+package com.dailydealsbox.database.service;
 
 import java.util.List;
 

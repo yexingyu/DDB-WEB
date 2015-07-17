@@ -19,10 +19,10 @@ import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductReview;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.service.AuthorizationService;
-import com.dailydealsbox.service.ProductService;
+import com.dailydealsbox.database.service.AuthorizationService;
+import com.dailydealsbox.database.service.ProductService;
 import com.dailydealsbox.web.base.AuthorizationToken;
-import com.dailydealsbox.web.base.GeneralResponseData;
+import com.dailydealsbox.web.base.GenericResponseData;
 
 /**
  * @author x_ye
@@ -47,18 +47,18 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(value = "{productId}/like", method = { RequestMethod.GET, RequestMethod.POST })
-  public GeneralResponseData like(@PathVariable("productId") int productId, @CookieValue(value = "fingerprint", required = true) String fingerprint,
+  public GenericResponseData like(@PathVariable("productId") int productId, @CookieValue(value = "fingerprint", required = true) String fingerprint,
       HttpServletRequest request) throws Exception {
     //System.out.println(request.getRemoteAddr());
     int rst = this.productService.like(productId, fingerprint, request.getRemoteAddr());
     if (rst == 0) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
     } else if (rst == -1) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Already liked");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Already liked");
     } else if (rst == -2) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Too many likes from the same ip");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Too many likes from the same ip");
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
     }
   }
 
@@ -73,20 +73,20 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(value = "{productId}/review", method = { RequestMethod.POST })
-  public GeneralResponseData review(@PathVariable("productId") int productId, @RequestBody ProductReview review,
+  public GenericResponseData review(@PathVariable("productId") int productId, @RequestBody ProductReview review,
       @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request) throws Exception {
     review.setProductId(productId);
     review.setIp(request.getRemoteAddr());
     review.setFingerprint(fingerprint);
     int rst = this.productService.review(review);
     if (rst == 0) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
     } else if (rst == -1) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Already reviewed");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Already reviewed");
     } else if (rst == -2) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Too many reviews from the same ip");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Too many reviews from the same ip");
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
     }
   }
 
@@ -101,13 +101,13 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(value = "{productId}/review", method = { RequestMethod.GET })
-  public GeneralResponseData reviews(@PathVariable("productId") int productId, @CookieValue(value = "fingerprint", required = true) String fingerprint,
+  public GenericResponseData reviews(@PathVariable("productId") int productId, @CookieValue(value = "fingerprint", required = true) String fingerprint,
       Pageable pageable, HttpServletRequest request) throws Exception {
     Page<ProductReview> reviews = this.productService.listReview(productId, 0, pageable);
     if (reviews == null || reviews.getNumberOfElements() == 0) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, reviews);
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, reviews);
     }
   }
 
@@ -119,12 +119,12 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GeneralResponseData list(Pageable pageable) throws Exception {
+  public GenericResponseData list(Pageable pageable) throws Exception {
     Page<Product> products = this.productService.listAllOnFrontEnd(pageable);
     if (products == null || products.getNumberOfElements() == 0) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
     }
   }
 
@@ -136,13 +136,13 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(value = "{productId}", method = RequestMethod.GET)
-  public GeneralResponseData retrieve(@PathVariable("productId") int productId) throws Exception {
+  public GenericResponseData retrieve(@PathVariable("productId") int productId) throws Exception {
     Product product = this.productService.get(productId);
     if (product == null) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
       System.out.println("product=" + product);
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
     }
   }
 
@@ -154,19 +154,19 @@ public class ProductController {
    * @return
    */
   @RequestMapping(method = { RequestMethod.PUT })
-  public GeneralResponseData update(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Product product) {
+  public GenericResponseData update(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Product product) {
     AuthorizationToken token = this.authorizationService.verify(tokenString);
     if (token == null) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
       if (product.validate()) {
         Product productFromDb = this.productService.update(product);
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
       } else {
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+        return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
       }
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
     }
   }
 
@@ -178,20 +178,20 @@ public class ProductController {
    * @return
    */
   @RequestMapping(method = { RequestMethod.POST })
-  public GeneralResponseData insert(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Product product) {
+  public GenericResponseData insert(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Product product) {
     AuthorizationToken token = this.authorizationService.verify(tokenString);
     if (token == null) {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
       System.out.println(product);
       if (product.validate()) {
         Product productFromDb = this.productService.insert(product);
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
       } else {
-        return GeneralResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+        return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
       }
     } else {
-      return GeneralResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
     }
   }
 }
