@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.SQLDelete;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 
@@ -23,16 +24,17 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
  */
 @Entity
 @Table(name = "order")
+@SQLDelete(sql = "update order set deleted = true where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Order extends BaseEntityModel {
 
   @NotNull
   @Column(name = "product_id", nullable = false)
-  private int               productId;
+  private int productId;
 
   @NotNull
   @Column(name = "member_id", nullable = false)
-  private int               memberId;
+  private int memberId;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -40,7 +42,7 @@ public class Order extends BaseEntityModel {
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {

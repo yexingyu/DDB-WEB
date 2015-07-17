@@ -35,12 +35,12 @@ public class GlobalErrorController implements ErrorController {
   /**
    * defaultErrorHandler
    *
-   * @param req
+   * @param request
    * @param e
    * @return
    */
   @ExceptionHandler(Exception.class)
-  public GenericResponseData defaultErrorHandler(HttpServletRequest req, Exception e) {
+  public GenericResponseData defaultErrorHandler(HttpServletRequest request, Exception e) {
     return GenericResponseData.newInstance(BaseEnum.RESPONSE_STATUS.ERROR, e.getMessage());
   }
 

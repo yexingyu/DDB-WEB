@@ -24,7 +24,7 @@ import com.dailydealsbox.database.model.base.BaseEnum.STORE_TYPE;
  */
 @Entity
 @Table(name = "store")
-@SQLDelete(sql = "update store set deleted = 1 where id = ?")
+@SQLDelete(sql = "update store set deleted = true where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Store extends BaseEntityModel {
 

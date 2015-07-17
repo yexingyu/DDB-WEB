@@ -31,7 +31,7 @@ import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
  */
 @Entity
 @Table(name = "member")
-@SQLDelete(sql = "update member set deleted = 1 where id = ?")
+@SQLDelete(sql = "update member set deleted = true where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Member extends BaseEntityModel {
 
