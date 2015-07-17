@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Properties;
 
 import javax.persistence.SharedCacheMode;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration;
 import javax.sql.DataSource;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
@@ -29,6 +31,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
@@ -46,6 +51,30 @@ public class WebApplication extends SpringBootServletInitializer {
   @Autowired
   private Environment environment;
 
+  @Override
+  public void onStartup(ServletContext container) {
+    // Create the 'root' Spring application context
+    AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+    rootContext.register(WebApplication.class);
+
+    // Manage the lifecycle of the root application context
+    container.addListener(new ContextLoaderListener(rootContext));
+
+    // Create the dispatcher servlet's Spring application context
+    AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
+    dispatcherContext.register(WebApplication.class);
+
+    // Register and map the dispatcher servlet
+    ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
+    dispatcher.setLoadOnStartup(1);
+    dispatcher.addMapping("/");
+  }
+
+  /**
+   * faviconHandlerMapping
+   *
+   * @return
+   */
   @Bean
   public SimpleUrlHandlerMapping faviconHandlerMapping() {
     SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
@@ -54,6 +83,11 @@ public class WebApplication extends SpringBootServletInitializer {
     return mapping;
   }
 
+  /**
+   * faviconRequestHandler
+   *
+   * @return
+   */
   @Bean
   protected ResourceHttpRequestHandler faviconRequestHandler() {
     ResourceHttpRequestHandler requestHandler = new ResourceHttpRequestHandler();
