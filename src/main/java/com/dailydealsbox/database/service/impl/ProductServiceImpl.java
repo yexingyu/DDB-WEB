@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> listAllOnFrontEnd(Pageable pageable) {
-    return this.repo.findByDisabledAndDeletedOrderByCreatedAtDesc(false, false, pageable);
+    return this.repo.findByDisabledFalseAndDeletedFalseOrderByCreatedAtDesc(pageable);
   }
 
   /*
@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> listByStoreIdOnFrontEnd(int storeId, Pageable pageable) {
-    return this.repo.findByStoreIdAndDisabledAndDeletedOrderByCreatedAtDesc(storeId, false, false, pageable);
+    return this.repo.findByStoreIdAndDisabledFalseAndDeletedFalseOrderByCreatedAtDesc(storeId, pageable);
   }
 
   /*
@@ -121,7 +121,8 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public int review(ProductReview review) {
-    if (null != this.repoReview.findFirstByProductIdAndIpAndFingerprint(review.getProductId(), review.getIp(), review.getFingerprint())) { return -1; }
+    if (null != this.repoReview.findFirstByProductIdAndIpAndFingerprintAndDeletedFalse(review.getProductId(), review.getIp(),
+        review.getFingerprint())) { return -1; }
     if (this.repoReview.countByProductIdAndIp(review.getProductId(), review.getIp()) > 10) { return -2; }
 
     // insert product like
@@ -148,7 +149,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<ProductReview> listReview(int productId, int deleted, Pageable pageable) {
-    return this.repoReview.findByProductIdAndDeletedOrderByCreatedAtDesc(productId, 0, pageable);
+    return this.repoReview.findByProductIdAndDeletedFalseOrderByCreatedAtDesc(productId, pageable);
   }
 
 }

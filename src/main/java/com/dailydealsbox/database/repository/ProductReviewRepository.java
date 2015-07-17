@@ -27,23 +27,22 @@ public interface ProductReviewRepository extends CrudRepository<ProductReview, I
   public long countByProductIdAndIp(int productId, String ip);
 
   /**
-   * findFirstByProductIdAndIpAndFingerprint
+   * findFirstByProductIdAndIpAndFingerprintAndDeletedFalse
    *
    * @param productId
    * @param ip
    * @param fingerprint
    * @return
    */
-  public ProductReview findFirstByProductIdAndIpAndFingerprint(int productId, String ip, String fingerprint);
+  public ProductReview findFirstByProductIdAndIpAndFingerprintAndDeletedFalse(int productId, String ip, String fingerprint);
 
   /**
-   * findByProductIdAndDeletedOrderByCreatedAtDesc
+   * findByProductIdAndDeletedFalseOrderByCreatedAtDesc
    *
    * @param productId
-   * @param deleted
    * @param pageable
    * @return
    */
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Page<ProductReview> findByProductIdAndDeletedOrderByCreatedAtDesc(int productId, int deleted, Pageable pageable);
+  public Page<ProductReview> findByProductIdAndDeletedFalseOrderByCreatedAtDesc(int productId, Pageable pageable);
 }
