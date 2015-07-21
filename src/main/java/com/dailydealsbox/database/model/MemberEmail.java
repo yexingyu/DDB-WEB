@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -37,7 +37,7 @@ public class MemberEmail extends BaseModel {
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {

@@ -1,7 +1,9 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model.base;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author x_ye
  */
 @MappedSuperclass
-public abstract class BaseModel {
+public abstract class BaseModel implements Serializable {
 
   @Id
   @Column(name = "id", insertable = false, updatable = false, unique = true, nullable = false)

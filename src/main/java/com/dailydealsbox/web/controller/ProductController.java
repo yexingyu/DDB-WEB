@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Product;
@@ -119,7 +120,13 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GenericResponseData list(Pageable pageable) throws Exception {
+  public GenericResponseData list(@RequestParam(value = "store_id", required = false, defaultValue = "0") int storeId,
+      @RequestParam(value = "add_by", required = false, defaultValue = "0") int addBy,
+      @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
+      @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
+      @RequestParam(value = "order_by", required = false, defaultValue = "createdAt") String orderBy,
+      @RequestParam(value = "sort", required = false, defaultValue = "DESC") String sort, Pageable pageable) throws Exception {
+
     Page<Product> products = this.productService.listAllOnFrontEnd(pageable);
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
@@ -141,7 +148,6 @@ public class ProductController {
     if (product == null) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      System.out.println("product=" + product);
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
     }
   }

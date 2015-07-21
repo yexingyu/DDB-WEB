@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.service.impl;
 
@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.database.model.Member;
+import com.dailydealsbox.database.model.MemberAddress;
+import com.dailydealsbox.database.model.MemberEmail;
+import com.dailydealsbox.database.model.MemberPhone;
 import com.dailydealsbox.database.repository.MemberRepository;
 import com.dailydealsbox.database.service.MemberService;
 
@@ -30,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public Member get(int id) {
-    return repo.findOne(id);
+    return this.repo.findOne(id);
   }
 
   /*
@@ -39,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public Member getByAccount(String account) {
-    return repo.findByAccount(account);
+    return this.repo.findByAccount(account);
   }
 
   /*
@@ -48,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public List<Member> getAll() {
-    return (List<Member>) repo.findAll();
+    return (List<Member>) this.repo.findAll();
   }
 
   /*
@@ -57,8 +60,8 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public Member update(Member member) {
-    member.setMemberForChildren();
-    return repo.save(member);
+    this.fixMember(member);
+    return this.repo.save(member);
   }
 
   /*
@@ -67,7 +70,27 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public Member insert(Member member) {
+    this.fixMember(member);
     return this.update(member);
+  }
+
+  /**
+   * fixMember
+   *
+   * @param member
+   * @return
+   */
+  private Member fixMember(Member member) {
+    for (MemberAddress o : member.getAddresses()) {
+      o.setMember(member);
+    }
+    for (MemberEmail o : member.getEmails()) {
+      o.setMember(member);
+    }
+    for (MemberPhone o : member.getPhones()) {
+      o.setMember(member);
+    }
+    return member;
   }
 
 }

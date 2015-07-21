@@ -3,6 +3,9 @@
  */
 package com.dailydealsbox.database.service.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
@@ -11,11 +14,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.ProductFee;
+import com.dailydealsbox.database.model.ProductImage;
 import com.dailydealsbox.database.model.ProductLike;
+import com.dailydealsbox.database.model.ProductLink;
+import com.dailydealsbox.database.model.ProductOption;
+import com.dailydealsbox.database.model.ProductPrice;
 import com.dailydealsbox.database.model.ProductReview;
+import com.dailydealsbox.database.model.ProductTag;
+import com.dailydealsbox.database.model.ProductTax;
+import com.dailydealsbox.database.model.ProductText;
 import com.dailydealsbox.database.repository.ProductLikeRepository;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
+import com.dailydealsbox.database.repository.ProductTagRepository;
 import com.dailydealsbox.database.service.ProductService;
 
 /**
@@ -34,6 +46,9 @@ public class ProductServiceImpl implements ProductService {
   @Resource
   private ProductReviewRepository repoReview;
 
+  @Resource
+  private ProductTagRepository repoTag;
+
   /*
    * (non-Javadoc)
    * @see com.dailydealsbox.service.ProductService#get(int)
@@ -43,13 +58,75 @@ public class ProductServiceImpl implements ProductService {
     return this.repo.findOne(id);
   }
 
+  /**
+   * fixProduct
+   *
+   * @param product
+   * @return
+   */
+  private Product fixProduct(Product product) {
+    // tag
+    this.fixTags(product);
+
+    // fee
+    for (ProductFee o : product.getFees()) {
+      o.setProduct(product);
+    }
+    // image
+    for (ProductImage o : product.getImages()) {
+      o.setProduct(product);
+    }
+    // text
+    for (ProductText o : product.getTexts()) {
+      o.setProduct(product);
+    }
+    // price
+    for (ProductPrice o : product.getPrices()) {
+      o.setProduct(product);
+    }
+    // tax
+    for (ProductTax o : product.getTaxes()) {
+      o.setProduct(product);
+    }
+    // link
+    for (ProductLink o : product.getLinks()) {
+      o.setProduct(product);
+    }
+    // option
+    for (ProductOption o : product.getOptions()) {
+      o.setProduct(product);
+    }
+
+    return product;
+  }
+
+  /**
+   * fixTags
+   *
+   * @param product
+   * @return
+   */
+  private Product fixTags(Product product) {
+    Set<ProductTag> tags = product.getTags();
+    product.setTags(new HashSet<ProductTag>());
+    for (ProductTag tag : tags) {
+      ProductTag tagDB = this.repoTag.findFirstByLanguageAndValue(tag.getLanguage(), tag.getValue());
+      if (tagDB != null) {
+        product.getTags().add(tagDB);
+      } else {
+        product.getTags().add(tag);
+      }
+    }
+    return product;
+  }
+
   /*
    * (non-Javadoc)
    * @see com.dailydealsbox.service.ProductService#update(com.dailydealsbox.database.model.Product)
    */
   @Override
   public Product update(Product product) {
-    product.setProductForChildren();
+    this.fixProduct(product);
     return this.repo.save(product);
   }
 
@@ -59,6 +136,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Product insert(Product product) {
+    this.fixProduct(product);
     return this.update(product);
   }
 

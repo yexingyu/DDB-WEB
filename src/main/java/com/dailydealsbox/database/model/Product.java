@@ -99,10 +99,9 @@ public class Product extends BaseEntityModel {
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductOption> options;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "products_tags", joinColumns = { 
-			@JoinColumn(name = "product_id") }, 
-			inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+  @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+  @JoinTable(name = "relation_product_tag", joinColumns = { @JoinColumn(name = "product_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTag> tags;
 
   /**
@@ -404,34 +403,4 @@ public class Product extends BaseEntityModel {
     this.addBy = addBy;
   }
 
-  /**
-   * setProductForChildren
-   */
-  public void setProductForChildren() {
-    for (ProductFee o : this.getFees()) {
-      o.setProduct(this);
-    }
-    for (ProductImage o : this.getImages()) {
-      o.setProduct(this);
-    }
-    for (ProductText o : this.getTexts()) {
-      o.setProduct(this);
-    }
-    for (ProductPrice o : this.getPrices()) {
-      o.setProduct(this);
-    }
-
-    for (ProductTax o : this.getTaxes()) {
-        o.setProduct(this);
-      }
-
-    for (ProductLink o : this.getLinks()) {
-      o.setProduct(this);
-    }
-    for (ProductOption o : this.getOptions()) {
-      o.setProduct(this);
-    }
-
-
-  }
 }

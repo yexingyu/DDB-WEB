@@ -1,12 +1,14 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -23,25 +25,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author x_ye
  */
 @Entity
-@Table(name = "product_tag",uniqueConstraints = {@UniqueConstraint(columnNames={"language","value"})})
+@Table(name = "product_tag", uniqueConstraints = { @UniqueConstraint(columnNames = { "language", "value" }) })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ProductTag extends BaseModel {
 
   @NotNull
   @Column(name = "language", nullable = false, length = 256)
-  private String  language;
+  private String language;
 
   @NotNull
   @Column(name = "value", nullable = false)
-  private String  value;
+  private String value;
 
   @JsonIgnore
-  @ManyToMany(mappedBy="tags")
+  @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<Product> products;
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {
@@ -52,7 +54,7 @@ public class ProductTag extends BaseModel {
   /**
    * @return the product
    */
-  public Set <Product> getProducts() {
+  public Set<Product> getProducts() {
     return this.products;
   }
 
@@ -60,7 +62,7 @@ public class ProductTag extends BaseModel {
    * @param product
    *          the product to set
    */
-  public void setProducts(Set <Product> products) {
+  public void setProducts(Set<Product> products) {
     this.products = products;
   }
 
