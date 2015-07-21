@@ -3,11 +3,13 @@
  */
 package com.dailydealsbox.database.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.ManyToMany;
+
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -35,9 +37,8 @@ public class ProductTag extends BaseModel {
   private String  value;
 
   @JsonIgnore
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_id")
-  private Product product;
+  @ManyToMany(mappedBy="tags")
+  private Set<Product> products;
 
   /**
    * validate
@@ -52,16 +53,16 @@ public class ProductTag extends BaseModel {
   /**
    * @return the product
    */
-  public Product getProduct() {
-    return this.product;
+  public Set <Product> getProducts() {
+    return this.products;
   }
 
   /**
    * @param product
    *          the product to set
    */
-  public void setProduct(Product product) {
-    this.product = product;
+  public void setProducts(Set <Product> products) {
+    this.products = products;
   }
 
   /**

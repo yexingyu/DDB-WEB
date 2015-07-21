@@ -12,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -97,8 +99,10 @@ public class Product extends BaseEntityModel {
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductOption> options;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "products_tags", joinColumns = { 
+			@JoinColumn(name = "product_id") }, 
+			inverseJoinColumns = { @JoinColumn(name = "tag_id") })
   private Set<ProductTag> tags;
 
   /**
@@ -416,17 +420,14 @@ public class Product extends BaseEntityModel {
     for (ProductPrice o : this.getPrices()) {
       o.setProduct(this);
     }
-    for (ProductTax o : this.getTaxes()) {
-      o.setProduct(this);
-    }
+    this.getTaxes().addAll(taxes);
+
     for (ProductLink o : this.getLinks()) {
       o.setProduct(this);
     }
     for (ProductOption o : this.getOptions()) {
       o.setProduct(this);
     }
-    for (ProductTag o : this.getTags()) {
-      o.setProduct(this);
-    }
+    //this.getTags().addAll(tags);
   }
 }
