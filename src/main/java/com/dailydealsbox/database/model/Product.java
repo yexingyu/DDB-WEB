@@ -420,7 +420,10 @@ public class Product extends BaseEntityModel {
     for (ProductPrice o : this.getPrices()) {
       o.setProduct(this);
     }
-    this.getTaxes().addAll(taxes);
+
+    for (ProductTax o : this.getTaxes()) {
+        o.setProduct(this);
+      }
 
     for (ProductLink o : this.getLinks()) {
       o.setProduct(this);
@@ -428,6 +431,6 @@ public class Product extends BaseEntityModel {
     for (ProductOption o : this.getOptions()) {
       o.setProduct(this);
     }
-    //this.getTags().addAll(tags);
+
   }
 }
