@@ -259,10 +259,10 @@ angular
                                 value : "Boot"
                             }, {
                                 language : 'FR',
-                                value : "Steve Madden"
+                                value : "Steve Madden f"
                             }, {
                                 language : 'FR',
-                                value : "Boot"
+                                value : "Boot f"
                             } ];
 
                             $scope.product.links = [ {

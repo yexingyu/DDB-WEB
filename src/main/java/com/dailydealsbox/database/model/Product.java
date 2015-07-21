@@ -432,5 +432,6 @@ public class Product extends BaseEntityModel {
       o.setProduct(this);
     }
 
+
   }
 }
