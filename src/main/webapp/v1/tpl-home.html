@@ -2,12 +2,12 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6 col-md-4" ng-repeat="item in items">
+		<div class="col-sm-4" ng-repeat="item in items">
 			<div class="row">
-			    <div class="col-xs-1">
+			    <div class="col-sm-1">
 			    <img src = "http://c.nordstromimage.com/Assets/IDEV/common/favicon/nordstrom-favicon-evergreen-16x16-7-adam-c64fe357-3f9b-497d-8d81-a1e90138e3dd-fil-file.png?Version=1">
 			    </div>
-			    <div class="col-xs-7">
+			    <div class="col-sm-11">
 			        <div class="row">
 		      			<div class="col-xs-12 col-sm-12">
 		        			<a>{{item.store.website}}</a>
@@ -26,63 +26,4 @@
 			</div>       
 		</div>
 	</div>
-</div>
-
-  
-    <div class="row">
-      <div class="col-xs-2 col-sm-1">
-        <img src = "http://c.nordstromimage.com/Assets/IDEV/common/favicon/nordstrom-favicon-evergreen-16x16-7-adam-c64fe357-3f9b-497d-8d81-a1e90138e3dd-fil-file.png?Version=1">
-      </div>
-      <div class="col-xs-10 col-sm-11">
-		    <div class="row">
-		      <div class="col-xs-12 col-sm-12">
-		        <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:90}}</p>
-		    </div> 
-      </div>     
-
-
-<div class="row">
-  <div class="col-sm-6 col-md-4" ng-repeat="item in items">
-    <div class="thumbnail">
-      <img ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}">
-      <div class="caption">
-        <h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3>
-
-        <h3>{{item.prices[0].currency}} {{item.prices[0].value}}</h3>
-        <h4 ng-repeat ="fee in item.fees">{{fee.title}}: {{fee.value}}</h4>
-
-        <p>
-          <a class="btn btn-default" href="#/product/{{item.id}}" role="button">View details &raquo;</a> <a class="btn btn-primary" href="#/order/{{item.id}}" role="button">ORDER</a>
-        </p>
-        <p>
-            <a ng-click="like(item);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
-            <a popover-placement="top" popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
-        </p>
-        <script type="text/ng-template" id="tpl-product-review.html">
-        <h4>REVIEW</h4>
-        <div class="form-group">
-          <label>
-            <rating ng-model="item.review.rating" max="5" on-hover="hoveringOver(value, item)" on-leave="item.review.overStar = item.review.rating"></rating>
-            <span class="label" ng-class="{'label-warning': item.review.overStar<3, 'label-info': item.review.overStar>=3 && item.review.overStar<=4, 'label-success': item.review.overStar>=5}" ng-show="item.review.rating">Rate: {{item.review.overStar}}</span>
-          </label>
-          <input type="text" ng-model="item.review.content" class="form-control">
-          <button class="btn btn-primary form-control" ng-click="review(item)">SUBMIT</button>
-          <div class="alert alert-success" role="alert" ng-show="item.review.showMsg === 'message'">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            <span class="sr-only">OK:</span> {{item.review.msg}}
-          </div>
-          <div class="alert alert-danger" role="alert" ng-show="item.review.showMsg === 'error'">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span> {{item.review.msg}}
-          </div>
-        </div>
-        </script>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="load-more-block text-center">
-    <a class="btn btn-thin btn-default" ng-click="loadMore()">+ load more products</a>
-  </div>
 </div>
