@@ -151,31 +151,10 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see
-   * com.dailydealsbox.service.ProductService#listAllOnFrontEnd(org.springframework.data.domain.
-   * Pageable)
+   * @see com.dailydealsbox.service.ProductService#addLike(int, java.lang.String, java.lang.String)
    */
   @Override
-  public Page<Product> listAllOnFrontEnd(Pageable pageable) {
-    return this.repo.findByDisabledFalseAndDeletedFalseOrderByCreatedAtDesc(pageable);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.service.ProductService#listByStoreIdOnFrontEnd(int,
-   * org.springframework.data.domain.Pageable)
-   */
-  @Override
-  public Page<Product> listByStoreIdOnFrontEnd(int storeId, Pageable pageable) {
-    return this.repo.findByStoreIdAndDisabledFalseAndDeletedFalseOrderByCreatedAtDesc(storeId, pageable);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.service.ProductService#like(int, java.lang.String, java.lang.String)
-   */
-  @Override
-  public int like(int productId, String fingerprint, String ip) {
+  public int addLike(int productId, String fingerprint, String ip) {
     if (null != this.repoLike.findFirstByProductIdAndIpAndFingerprint(productId, ip, fingerprint)) { return -1; }
     if (this.repoLike.countByProductIdAndIp(productId, ip) > 10) { return -2; }
 
@@ -195,10 +174,10 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.service.ProductService#review(com.dailydealsbox.database.model.ProductReview)
+   * @see com.dailydealsbox.service.ProductService#addReview(com.dailydealsbox.database.model.ProductReview)
    */
   @Override
-  public int review(ProductReview review) {
+  public int addReview(ProductReview review) {
     if (null != this.repoReview.findFirstByProductIdAndIpAndFingerprintAndDeletedFalse(review.getProductId(), review.getIp(),
         review.getFingerprint())) { return -1; }
     if (this.repoReview.countByProductIdAndIp(review.getProductId(), review.getIp()) > 10) { return -2; }
@@ -226,8 +205,35 @@ public class ProductServiceImpl implements ProductService {
    * @see com.dailydealsbox.service.ProductService#listReview(int, int, org.springframework.data.domain.Pageable)
    */
   @Override
-  public Page<ProductReview> listReview(int productId, int deleted, Pageable pageable) {
-    return this.repoReview.findByProductIdAndDeletedFalseOrderByCreatedAtDesc(productId, pageable);
+  public Page<ProductReview> listReview(int productId, boolean deleted, Pageable pageable) {
+    return this.repoReview.findByProductIdAndDeleted(productId, deleted, pageable);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#list(boolean, boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Product> list(boolean deleted, boolean disabled, Pageable pageable) {
+    return this.repo.findByDisabledAndDeleted(deleted, disabled, pageable);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#list(int, boolean, boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Product> list(int storeId, boolean deleted, boolean disabled, Pageable pageable) {
+    return this.repo.findByStoreIdAndDisabledAndDeleted(storeId, deleted, disabled, pageable);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#listLike(int, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<ProductLike> listLike(int productId, Pageable pageable) {
+    return this.repoLike.findByProductId(productId, pageable);
   }
 
 }

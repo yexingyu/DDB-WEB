@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.web.controller;
 
@@ -23,28 +23,39 @@ import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import springfox.documentation.annotations.ApiIgnore;
+
 /**
  * @author x_ye
  */
 @RestController
-@RequestMapping("/api/login")
-public class LoginController {
+@RequestMapping("/api/credential")
+@Api(value = "Credential", description = "Credential Api.")
+public class CredentialController {
 
   @Resource
-  MemberService        memberService;
+  MemberService memberService;
 
   @Resource
   AuthorizationService authorizationService;
 
   /**
    * checkCookie
-   * 
+   *
    * @param tokenString
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GenericResponseData checkCookie(@CookieValue(value = "token", required = false) String tokenString) {
-    AuthorizationToken token = authorizationService.verify(tokenString);
+  @ApiOperation(value = "Check credential",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Check credential.")
+  public GenericResponseData checkCookie(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString) {
+    AuthorizationToken token = this.authorizationService.verify(tokenString);
     if (token == null) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else {
@@ -54,22 +65,25 @@ public class LoginController {
 
   /**
    * login
-   * 
+   *
    * @param response
    * @return
    */
   @RequestMapping(method = RequestMethod.POST)
-  public GenericResponseData login(@RequestBody Member member,
-      @RequestParam(value = "rememberMe", required = false, defaultValue = "false") boolean rememberMe, HttpServletResponse response) {
-    Member member_from_db = memberService.getByAccount(member.getAccount());
+  @ApiOperation(value = "Login", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Login.")
+  public GenericResponseData login(
+      @ApiParam(value = "member object", required = true) @RequestBody Member member, @ApiParam(value = "remember me",
+        required = false,
+        defaultValue = "false") @RequestParam(value = "rememberMe", required = false, defaultValue = "false") boolean rememberMe,
+      HttpServletResponse response) {
+    Member member_from_db = this.memberService.getByAccount(member.getAccount());
     if (member_from_db != null && StringUtils.equals(member_from_db.getPassword(), member.getPassword())) {
       int expiry = -1;
       if (rememberMe) {
         expiry = (int) (BaseAuthorization.EXPIRY / 1000);
       }
-      Cookie cookie = authorizationService.buildCookie(
-          AuthorizationToken.newInstance(member_from_db.getId(), member_from_db.getAccount(), member_from_db.getPassword(),
-              authorizationService.buildExpiredStamp(), member_from_db.getRole()), expiry);
+      Cookie cookie = this.authorizationService.buildCookie(AuthorizationToken.newInstance(member_from_db.getId(), member_from_db.getAccount(),
+          member_from_db.getPassword(), this.authorizationService.buildExpiredStamp(), member_from_db.getRole()), expiry);
       if (cookie == null) {
         return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "FAIL_001");
       } else {

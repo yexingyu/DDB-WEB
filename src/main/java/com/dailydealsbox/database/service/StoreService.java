@@ -1,9 +1,10 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.dailydealsbox.database.model.Store;
 
@@ -13,20 +14,34 @@ import com.dailydealsbox.database.model.Store;
 public interface StoreService {
   /**
    * get
-   * 
+   *
    * @param id
    * @return
    */
   public Store get(int id);
 
   /**
-   * getAll
-   * 
+   * list
+   *
+   * @param deleted
+   * @param pageable
    * @return
    */
-  public List<Store> getAll();
+  public Page<Store> list(boolean deleted, Pageable pageable);
 
+  /**
+   * update
+   *
+   * @param store
+   * @return
+   */
   public Store update(Store store);
 
+  /**
+   * insert
+   *
+   * @param store
+   * @return
+   */
   public Store insert(Store store);
 }

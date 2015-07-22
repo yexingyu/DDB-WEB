@@ -37,12 +37,13 @@ public interface ProductReviewRepository extends CrudRepository<ProductReview, I
   public ProductReview findFirstByProductIdAndIpAndFingerprintAndDeletedFalse(int productId, String ip, String fingerprint);
 
   /**
-   * findByProductIdAndDeletedFalseOrderByCreatedAtDesc
-   *
+   * findByProductIdAndDeleted
+   * 
    * @param productId
+   * @param deleted
    * @param pageable
    * @return
    */
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Page<ProductReview> findByProductIdAndDeletedFalseOrderByCreatedAtDesc(int productId, Pageable pageable);
+  public Page<ProductReview> findByProductIdAndDeleted(int productId, boolean deleted, Pageable pageable);
 }

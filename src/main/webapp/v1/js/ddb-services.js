@@ -41,7 +41,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
 .factory('LoginService', [ '$rootScope', '$resource', '$modal', '$location', '$window', function($rootScope, $resource, $modal, $location, $window) {
     return {
         login : function(member, callback) {
-            var LoginResource = $resource('/api/login', {
+            var LoginResource = $resource('/api/credential', {
                 'rememberMe' : member.rememberMe
             }, {});
             new LoginResource(member).$save(callback);
@@ -147,7 +147,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             return $resource('/api/store', {}, {}).get(callback);
         },
         get : function(storeId, callback) {
-            return $resource('/api/store/:storeId', {
+            return $resource('/api/store/id/:storeId', {
                 'storeId' : storeId
             }, {}).get(callback);
         },
@@ -166,18 +166,22 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
         list : function(callback, page, size) {
             page = typeof page !== 'undefined' ? page : 0;
             size = typeof size !== 'undefined' ? size : 20;
+            sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
             return $resource('/api/product', {
                 'page' : page,
-                'size' : size
+                'size' : size,
+                'sort' : sort
             }, {}).get(callback);
         },
         get : function(id, callback) {
-            return $resource('/api/product/:id', {
+            return $resource('/api/product/id/:id', {
                 'id' : id
             }, {}).get(callback);
         },
         edit : function(product, callback) {
-            var productResource = $resource('/api/product', {}, {
+            var productResource = $resource('/api/product/id/:id', {
+                'id' : product.id
+            }, {
                 'update' : {
                     method : 'PUT'
                 }
@@ -189,19 +193,19 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
             new productResource(product).$save(callback);
         },
         like : function(productId, callback) {
-            return $resource('/api/product/:productId/like', {
-                'productId' : productId
+            return $resource('/api/product/id/:id/like', {
+                'id' : productId
             }, {}).save(callback);
         },
         review : function(review, callback) {
-            var reviewObj = $resource('/api/product/:productId/review', {
-                'productId' : review.productId
+            var reviewObj = $resource('/api/product/id/:id/review', {
+                'id' : review.productId
             }, {});
             new reviewObj(review).$save(callback);
         },
         reviews : function(productId, page, size, callback) {
-            return $resource('/api/product/:productId/review', {
-                'productId' : productId,
+            return $resource('/api/product/id/:id/review', {
+                'id' : productId,
                 'page' : page,
                 'size' : size
             }, {}).get(callback);

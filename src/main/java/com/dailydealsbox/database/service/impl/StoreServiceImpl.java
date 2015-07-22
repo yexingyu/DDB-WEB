@@ -1,12 +1,12 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.service.impl;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,16 +30,7 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Store get(int id) {
-    return repo.findOne(id);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.service.StoreService#getAll()
-   */
-  @Override
-  public List<Store> getAll() {
-    return (List<Store>) repo.findAll();
+    return this.repo.findOne(id);
   }
 
   /*
@@ -48,8 +39,7 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Store update(Store store) {
-
-    return repo.save(store);
+    return this.repo.save(store);
   }
 
   /*
@@ -58,7 +48,16 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Store insert(Store store) {
-    return this.update(store);
+    return this.repo.save(store);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#list(boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Store> list(boolean deleted, Pageable pageable) {
+    return this.repo.findByDeleted(deleted, pageable);
   }
 
 }

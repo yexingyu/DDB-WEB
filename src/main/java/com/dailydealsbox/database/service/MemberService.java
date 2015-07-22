@@ -1,9 +1,10 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.dailydealsbox.database.model.Member;
 
@@ -13,7 +14,7 @@ import com.dailydealsbox.database.model.Member;
 public interface MemberService {
   /**
    * get
-   * 
+   *
    * @param id
    * @return
    */
@@ -21,22 +22,24 @@ public interface MemberService {
 
   /**
    * getByAccount
-   * 
+   *
    * @param account
    * @return
    */
   public Member getByAccount(String account);
 
   /**
-   * getAll
-   * 
+   * list
+   *
+   * @param deleted
+   * @param pageable
    * @return
    */
-  public List<Member> getAll();
+  public Page<Member> list(boolean deleted, Pageable pageable);
 
   /**
    * update
-   * 
+   *
    * @param member
    * @return
    */
@@ -44,7 +47,7 @@ public interface MemberService {
 
   /**
    * insert
-   * 
+   *
    * @param member
    * @return
    */

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.ProductLike;
 import com.dailydealsbox.database.model.ProductReview;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
@@ -26,8 +27,11 @@ import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author x_ye
@@ -52,16 +56,16 @@ public class ProductController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "{productId}/like", method = { RequestMethod.POST })
+  @RequestMapping(value = "id/{productId}/like", method = { RequestMethod.POST })
   @ApiOperation(value = "Product like",
     response = GenericResponseData.class,
     responseContainer = "Map",
     produces = "application/json",
     notes = "Add new like for product.")
-  public GenericResponseData like(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
+  public GenericResponseData addLike(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
       @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request)
           throws Exception {
-    int rst = this.productService.like(productId, fingerprint, request.getRemoteAddr());
+    int rst = this.productService.addLike(productId, fingerprint, request.getRemoteAddr());
     if (rst == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
     } else if (rst == -1) {
@@ -70,6 +74,30 @@ public class ProductController {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Too many likes from the same ip");
     } else {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
+    }
+  }
+
+  /**
+   * listLikes
+   *
+   * @param productId
+   * @param pageable
+   * @param request
+   * @return
+   */
+  @RequestMapping(value = "id/{productId}/like", method = { RequestMethod.GET })
+  @ApiOperation(value = "List product likes",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "List pageable likes for product.")
+  public GenericResponseData listLike(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId, @ApiIgnore Pageable pageable,
+      HttpServletRequest request) {
+    Page<ProductLike> likes = this.productService.listLike(productId, pageable);
+    if (likes == null || likes.getNumberOfElements() == 0) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+    } else {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, likes);
     }
   }
 
@@ -83,20 +111,23 @@ public class ProductController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "{productId}/review", method = { RequestMethod.POST })
+  @RequestMapping(value = "id/{productId}/review", method = { RequestMethod.POST })
   @ApiOperation(value = "Add review",
     response = GenericResponseData.class,
     responseContainer = "Map",
     produces = "application/json",
     notes = "Add a new review for product.")
-  public GenericResponseData review(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
+  @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"), @ApiImplicitParam(
+        name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
+  public GenericResponseData addReview(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
       @ApiParam(value = "review", required = true) @RequestBody ProductReview review,
       @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request)
           throws Exception {
     review.setProductId(productId);
     review.setIp(request.getRemoteAddr());
     review.setFingerprint(fingerprint);
-    int rst = this.productService.review(review);
+    int rst = this.productService.addReview(review);
     if (rst == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
     } else if (rst == -1) {
@@ -118,16 +149,22 @@ public class ProductController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "{productId}/review", method = { RequestMethod.GET })
+  @RequestMapping(value = "id/{productId}/review", method = { RequestMethod.GET })
   @ApiOperation(value = "list reviews",
     response = GenericResponseData.class,
     responseContainer = "Map",
     produces = "application/json",
     notes = "List pageable reviews for product.")
-  public GenericResponseData reviews(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
-      @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint,
-      @ApiParam(value = "page", required = false) Pageable pageable, HttpServletRequest request) throws Exception {
-    Page<ProductReview> reviews = this.productService.listReview(productId, 0, pageable);
+  @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"), @ApiImplicitParam(
+        name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
+  public GenericResponseData listReview(
+      @ApiParam(value = "product id", required = true) @PathVariable("productId") int productId, @ApiParam(value = "filter: is deleted",
+        required = false,
+        defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
+      @ApiIgnore Pageable pageable, HttpServletRequest request) throws Exception {
+
+    Page<ProductReview> reviews = this.productService.listReview(productId, deleted, pageable);
     if (reviews == null || reviews.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
@@ -143,14 +180,23 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GenericResponseData list(@RequestParam(value = "store_id", required = false, defaultValue = "0") int storeId,
-      @RequestParam(value = "add_by", required = false, defaultValue = "0") int addBy,
-      @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
-      @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
-      @RequestParam(value = "order_by", required = false, defaultValue = "createdAt") String orderBy,
-      @RequestParam(value = "sort", required = false, defaultValue = "DESC") String sort, Pageable pageable) throws Exception {
-
-    Page<Product> products = this.productService.listAllOnFrontEnd(pageable);
+  @ApiOperation(value = "list product",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "List pageable products.")
+  @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"), @ApiImplicitParam(
+        name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
+  public GenericResponseData list(
+      @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted",
+        required = false,
+        defaultValue = "false") boolean deleted,
+      @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled",
+        required = false,
+        defaultValue = "false") boolean disabled,
+      @ApiIgnore Pageable pageable) throws Exception {
+    Page<Product> products = this.productService.list(deleted, disabled, pageable);
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
@@ -165,8 +211,13 @@ public class ProductController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "{productId}", method = RequestMethod.GET)
-  public GenericResponseData retrieve(@PathVariable("productId") int productId) throws Exception {
+  @RequestMapping(value = "id/{productId}", method = RequestMethod.GET)
+  @ApiOperation(value = "retrieve product",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Retrieve product information.")
+  public GenericResponseData retrieve(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId) throws Exception {
     Product product = this.productService.get(productId);
     if (product == null) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
@@ -182,15 +233,28 @@ public class ProductController {
    * @param product
    * @return
    */
-  @RequestMapping(method = { RequestMethod.PUT })
-  public GenericResponseData update(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Product product) {
+  @RequestMapping(value = "id/{productId}", method = { RequestMethod.PUT })
+  @ApiOperation(value = "update product",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Update product information.")
+  public GenericResponseData update(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
+      @ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
+      @ApiParam(value = "product object", required = true) @RequestBody Product product) {
     AuthorizationToken token = this.authorizationService.verify(tokenString);
     if (token == null) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
       if (product.validate()) {
-        Product productFromDb = this.productService.update(product);
-        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
+        Product productFromDb = this.productService.get(productId);
+        if (productFromDb == null) {
+          return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+        } else {
+          product.setId(productId);
+          productFromDb = this.productService.update(product);
+          return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
+        }
       } else {
         return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
       }
@@ -207,7 +271,13 @@ public class ProductController {
    * @return
    */
   @RequestMapping(method = { RequestMethod.POST })
-  public GenericResponseData insert(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Product product) {
+  @ApiOperation(value = "insert product",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Insert a new product.")
+  public GenericResponseData insert(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
+      @ApiParam(value = "product object", required = true) @RequestBody Product product) {
     AuthorizationToken token = this.authorizationService.verify(tokenString);
     if (token == null) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");

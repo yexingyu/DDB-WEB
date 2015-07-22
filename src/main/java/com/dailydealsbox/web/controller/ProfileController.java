@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.web.controller;
 
@@ -17,32 +17,43 @@ import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.GenericResponseData;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import springfox.documentation.annotations.ApiIgnore;
+
 /**
  * @author x_ye
  */
 @RestController
 @RequestMapping("/api/profile")
+@Api(value = "Profile", description = "Profile Management Operation")
 public class ProfileController {
 
   @Autowired
-  MemberService        memberService;
+  MemberService memberService;
 
   @Autowired
   AuthorizationService authorizationService;
 
   /**
    * profile
-   * 
+   *
    * @param tokenCookie
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  public GenericResponseData profile(@CookieValue(value = "token", required = false) String tokenString) {
-    AuthorizationToken token = authorizationService.verify(tokenString);
+  @ApiOperation(value = "Retrieve member profile",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Retrieve member profile.")
+  public GenericResponseData profile(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString) {
+    AuthorizationToken token = this.authorizationService.verify(tokenString);
     if (token == null) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else {
-      Member member = memberService.get(token.getMemberId());
+      Member member = this.memberService.get(token.getMemberId());
       if (member == null) {
         return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
       } else {
@@ -53,18 +64,20 @@ public class ProfileController {
 
   /**
    * edit
-   * 
+   *
    * @param tokenString
    * @return
    */
   @RequestMapping(method = RequestMethod.PUT)
-  public GenericResponseData edit(@CookieValue(value = "token", required = false) String tokenString, @RequestBody Member member) {
-    AuthorizationToken token = authorizationService.verify(tokenString);
+  @ApiOperation(value = "Edit profile", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Edit profile.")
+  public GenericResponseData edit(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
+      @ApiParam(value = "member object", required = true) @RequestBody Member member) {
+    AuthorizationToken token = this.authorizationService.verify(tokenString);
     if (token == null) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
     } else {
       if (member.validate()) {
-        Member memberFromDb = memberService.update(member);
+        Member memberFromDb = this.memberService.update(member);
         return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, memberFromDb);
       } else {
         return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");

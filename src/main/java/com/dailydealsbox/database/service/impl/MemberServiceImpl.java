@@ -3,10 +3,10 @@
  */
 package com.dailydealsbox.database.service.impl;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,15 +47,6 @@ public class MemberServiceImpl implements MemberService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.service.MemberService#getAll()
-   */
-  @Override
-  public List<Member> getAll() {
-    return (List<Member>) this.repo.findAll();
-  }
-
-  /*
-   * (non-Javadoc)
    * @see com.dailydealsbox.service.MemberService#update(com.dailydealsbox.database.model.Member)
    */
   @Override
@@ -91,6 +82,15 @@ public class MemberServiceImpl implements MemberService {
       o.setMember(member);
     }
     return member;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.MemberService#list(boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Member> list(boolean deleted, Pageable pageable) {
+    return this.repo.findByDeleted(deleted, pageable);
   }
 
 }

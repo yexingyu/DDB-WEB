@@ -25,23 +25,27 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   //  List<Product> findByStoreId(@Param("storeId") int storeId, @Param("offset") int offset, @Param("cnt") int cnt);
 
   /**
-   * findByStoreIdAndDisabledFalseAndDeletedFalseOrderByCreatedAtDesc
-   *
+   * findByStoreIdAndDisabledAndDeleted
+   * 
    * @param storeId
+   * @param deleted
+   * @param disabled
    * @param pageable
    * @return
    */
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Page<Product> findByStoreIdAndDisabledFalseAndDeletedFalseOrderByCreatedAtDesc(int storeId, Pageable pageable);
+  public Page<Product> findByStoreIdAndDisabledAndDeleted(int storeId, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
-   * findByDisabledFalseAndDeletedFalseOrderByCreatedAtDesc
+   * findByDisabledAndDeleted
    *
+   * @param deleted
+   * @param disabled
    * @param pageable
    * @return
    */
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Page<Product> findByDisabledFalseAndDeletedFalseOrderByCreatedAtDesc(Pageable pageable);
+  public Page<Product> findByDisabledAndDeleted(boolean deleted, boolean disabled, Pageable pageable);
 
   /**
    * increaseCountLikes
