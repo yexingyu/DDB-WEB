@@ -25,11 +25,16 @@ import com.dailydealsbox.database.service.ProductService;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.GenericResponseData;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 /**
  * @author x_ye
  */
 @RestController
 @RequestMapping("/api/product")
+@Api(value = "Product", description = "Product Management Operation")
 public class ProductController {
 
   @Autowired
@@ -47,10 +52,15 @@ public class ProductController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "{productId}/like", method = { RequestMethod.GET, RequestMethod.POST })
-  public GenericResponseData like(@PathVariable("productId") int productId, @CookieValue(value = "fingerprint", required = true) String fingerprint,
-      HttpServletRequest request) throws Exception {
-    //System.out.println(request.getRemoteAddr());
+  @RequestMapping(value = "{productId}/like", method = { RequestMethod.POST })
+  @ApiOperation(value = "Product like",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Add new like for product.")
+  public GenericResponseData like(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
+      @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request)
+          throws Exception {
     int rst = this.productService.like(productId, fingerprint, request.getRemoteAddr());
     if (rst == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
@@ -74,8 +84,15 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(value = "{productId}/review", method = { RequestMethod.POST })
-  public GenericResponseData review(@PathVariable("productId") int productId, @RequestBody ProductReview review,
-      @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request) throws Exception {
+  @ApiOperation(value = "Add review",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Add a new review for product.")
+  public GenericResponseData review(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
+      @ApiParam(value = "review", required = true) @RequestBody ProductReview review,
+      @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request)
+          throws Exception {
     review.setProductId(productId);
     review.setIp(request.getRemoteAddr());
     review.setFingerprint(fingerprint);
@@ -102,8 +119,14 @@ public class ProductController {
    * @throws Exception
    */
   @RequestMapping(value = "{productId}/review", method = { RequestMethod.GET })
-  public GenericResponseData reviews(@PathVariable("productId") int productId, @CookieValue(value = "fingerprint", required = true) String fingerprint,
-      Pageable pageable, HttpServletRequest request) throws Exception {
+  @ApiOperation(value = "list reviews",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "List pageable reviews for product.")
+  public GenericResponseData reviews(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
+      @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint,
+      @ApiParam(value = "page", required = false) Pageable pageable, HttpServletRequest request) throws Exception {
     Page<ProductReview> reviews = this.productService.listReview(productId, 0, pageable);
     if (reviews == null || reviews.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");

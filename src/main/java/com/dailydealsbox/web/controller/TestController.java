@@ -13,11 +13,14 @@ import com.dailydealsbox.database.repository.ProductReviewRepository;
 import com.dailydealsbox.database.service.ProductService;
 import com.dailydealsbox.web.base.GenericResponseData;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 /**
  * @author x_ye
  */
 @RestController
 @RequestMapping("/api/test")
+@ApiIgnore
 public class TestController {
 
   @Autowired

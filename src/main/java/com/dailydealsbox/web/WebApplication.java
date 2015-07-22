@@ -5,6 +5,7 @@ package com.dailydealsbox.web;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 import javax.persistence.SharedCacheMode;
@@ -18,6 +19,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
@@ -29,8 +34,17 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
+
+import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ResponseMessage;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author x_ye
@@ -40,11 +54,40 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 @EnableTransactionManagement
 @PropertySource(value = { "classpath:database.properties" })
 @EnableJpaRepositories("com.dailydealsbox.database.repository")
+@EnableSwagger2
+@EnableCaching
 public class WebApplication extends SpringBootServletInitializer {
   public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
 
   @Autowired
   private Environment environment;
+
+  /**
+   * confApi
+   *
+   * @return
+   */
+  @Bean
+  public Docket confApi() {
+    ResponseMessage msg_500 = new ResponseMessageBuilder().code(500).message("500 message").responseModel(new ModelRef("Error")).build();
+    return new Docket(DocumentationType.SWAGGER_2).globalResponseMessage(RequestMethod.GET, Collections.singletonList(msg_500))
+        .globalResponseMessage(RequestMethod.POST, Collections.singletonList(msg_500))
+        .apiInfo(new ApiInfo("Api Documentation", "Api Documentation, Version: 0.0.1", "0.0.1", null, "xingyu.ye@dailydealsbox.com", null, null));
+  }
+
+  /**
+   * cacheManager
+   *
+   * @param caches
+   * @return
+   */
+  @Bean
+  @Autowired
+  public CacheManager cacheManager(List<Cache> caches) {
+    SimpleCacheManager cacheManager = new SimpleCacheManager();
+    cacheManager.setCaches(caches);
+    return cacheManager;
+  }
 
   /**
    * faviconHandlerMapping

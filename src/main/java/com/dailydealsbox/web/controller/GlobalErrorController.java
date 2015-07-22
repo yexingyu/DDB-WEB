@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dailydealsbox.database.model.base.BaseEnum;
 import com.dailydealsbox.web.base.GenericResponseData;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 /**
  * @author x_ye
  */
 @ControllerAdvice
 @RestController
+@ApiIgnore
 public class GlobalErrorController implements ErrorController {
   private static final String PATH = "/error";
 
