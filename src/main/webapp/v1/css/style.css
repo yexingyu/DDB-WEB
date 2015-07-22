@@ -30,3 +30,33 @@
     color: #BDC3C7;
     background: none;
 }
+
+
+h4 a {
+  font-family: 'Source Sans Pro',sans-serif;
+  font-weight: normal;
+}
+
+h4 a {
+  color: #2c3e50;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.image {
+	height :300;
+}
+
+.index_product_image {
+	height:200;
+}
+
+.store_favicon {
+	max-width:16px;
+}
+
+.product_list_image {
+	width: 80%;
+	
+}
+

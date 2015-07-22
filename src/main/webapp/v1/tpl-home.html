@@ -1,11 +1,53 @@
 
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6 col-md-4" ng-repeat="item in items">
+			<div class="row">
+			    <div class="col-xs-1">
+			    <img src = "http://c.nordstromimage.com/Assets/IDEV/common/favicon/nordstrom-favicon-evergreen-16x16-7-adam-c64fe357-3f9b-497d-8d81-a1e90138e3dd-fil-file.png?Version=1">
+			    </div>
+			    <div class="col-xs-7">
+			        <div class="row">
+		      			<div class="col-xs-12 col-sm-12">
+		        			<a>{{item.store.website}}</a>
+		    			</div>			        
+		      			<div class="col-xs-12 col-sm-12">
+		        			<h4 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h4>
+		    			</div>
+		      			<div class="col-xs-12 col-sm-12">
+		        			<img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}">
+		    			</div>		    			
+		      			<div class="col-xs-12 col-sm-12">
+		        			<p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:90}}</p>
+		    			</div>
+		    		</div>	
+			    </div>
+			</div>       
+		</div>
+	</div>
+</div>
+
+  
+    <div class="row">
+      <div class="col-xs-2 col-sm-1">
+        <img src = "http://c.nordstromimage.com/Assets/IDEV/common/favicon/nordstrom-favicon-evergreen-16x16-7-adam-c64fe357-3f9b-497d-8d81-a1e90138e3dd-fil-file.png?Version=1">
+      </div>
+      <div class="col-xs-10 col-sm-11">
+		    <div class="row">
+		      <div class="col-xs-12 col-sm-12">
+		        <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:90}}</p>
+		    </div> 
+      </div>     
+
+
 <div class="row">
   <div class="col-sm-6 col-md-4" ng-repeat="item in items">
     <div class="thumbnail">
       <img ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}">
       <div class="caption">
         <h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3>
-        <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:90}}</p>
+
         <h3>{{item.prices[0].currency}} {{item.prices[0].value}}</h3>
         <h4 ng-repeat ="fee in item.fees">{{fee.title}}: {{fee.value}}</h4>
 
