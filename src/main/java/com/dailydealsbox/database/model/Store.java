@@ -31,27 +31,31 @@ public class Store extends BaseEntityModel {
   @NotNull
   @Size(min = 4, max = 100)
   @Column(name = "name", nullable = false, length = 45)
-  private String name;
+  private String     name;
 
   @NotNull
   @Column(name = "website", nullable = false, length = 255)
-  private String website;
+  private String     website;
 
   @NotNull
   @Column(name = "deal_page", nullable = false, length = 512)
-  private String dealPage;
+  private String     dealPage;
 
   @NotNull
   @Column(name = "country", nullable = false, length = 512)
-  private String country;
+  private String     country;
 
   @NotNull
   @Column(name = "province", nullable = false, length = 512)
-  private String province;
+  private String     province;
 
   @NotNull
   @Column(name = "logo", nullable = false, length = 255)
-  private String logo;
+  private String     logo;
+
+  @NotNull
+  @Column(name = "favicon", nullable = false, length = 255)
+  private String     favicon;
 
   @NotNull
   @Column(name = "type", nullable = false)
@@ -122,6 +126,21 @@ public class Store extends BaseEntityModel {
    */
   public void setLogo(String logo) {
     this.logo = logo;
+  }
+
+  /**
+   * @return the favicon
+   */
+  public String getFavicon() {
+    return this.favicon;
+  }
+
+  /**
+   * @param favicon
+   *          the favicon to set
+   */
+  public void setFavicon(String favicon) {
+    this.favicon = favicon;
   }
 
   /**
