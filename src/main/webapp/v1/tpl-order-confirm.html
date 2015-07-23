@@ -1,0 +1,54 @@
+<div class="well">
+  <a class="btn btn-primary" ng-click="submit()">Submit Order</a>
+</div>
+<div class="panel panel-default" ng-repeat="address in order.addresses">
+  <div class="panel-heading">{{$root.constant.MEMBER_ADDRESS_TYPE[address.type]}} Address</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-2">
+        <select ng-model="address.type" class="form-control">
+          <option value="{{key}}" ng-selected="key === address.type" ng-repeat="(key, value) in $root.constant.MEMBER_ADDRESS_TYPE">{{value}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <input type="text" class="form-control" ng-model="address.address1" placeholder="Address Line 1">
+      </div>
+      <div class="col-xs-6">
+        <input type="text" class="form-control" ng-model="address.address2" placeholder="Address Line 2">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">
+        <input type="text" placeholder="City" ng-model="address.city" class="form-control" />
+      </div>
+      <div class="col-xs-3">
+        <input type="text" placeholder="Province" ng-model="address.region" class="form-control" />
+      </div>
+      <div class="col-xs-3">
+        <select ng-model="address.country" class="form-control">
+          <option value="{{key}}" ng-selected="key === address.country" ng-repeat="(key, value) in $root.constant.COUNTRY">{{value}}</option>
+        </select>
+      </div>
+      <div class="col-xs-3">
+        <input type="text" placeholder="Postal Code" ng-model="address.postCode" class="form-control" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="well">
+  <div class="row">
+    <div class="col-xs-6 col-md-3" ng-repeat="image in product.images">
+      <a class="thumbnail"> <img ng-src="{{image.url}}" alt="{{image.alt}}">
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <h3>
+      <a href="#/product/{{product.id}}">{{product.texts[$root.language.language].name}}</a>
+    </h3>
+  </div>
+  <div class="row">{{product.texts[$root.language.language].description}}</div>
+  <div class="row"><b>Warranty:</b> {{product.texts[$root.language.language].warranty}}</div>
+</div>
