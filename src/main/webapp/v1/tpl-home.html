@@ -10,7 +10,7 @@
         <h4 ng-repeat ="fee in item.fees">{{fee.title}}: {{fee.value}}</h4>
 
         <p>
-          <a class="btn btn-default" href="#/product/{{item.id}}" role="button">View details &raquo;</a> <a class="btn btn-primary" href="#/order/{{item.id}}" role="button">ORDER</a>
+          <a class="btn btn-default" href="#/product/{{item.id}}" role="button">View details &raquo;</a> <a class="btn btn-primary" href="#/product/{{item.id}}/order" role="button">ORDER</a>
         </p>
         <p>
             <a ng-click="like(item);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>

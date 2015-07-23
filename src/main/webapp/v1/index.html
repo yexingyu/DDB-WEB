@@ -46,6 +46,8 @@
                 aria-expanded="false">Welcome {{$root.profile.firstName +
                   $root.profile.lastName}}</a>
                 <ul class="dropdown-menu">
+                  <li><a href="#/order">My Orders</a></li>
+                  <li role="separator" class="divider"></li>
                   <li><a href="#/profile">Profile</a></li>
                   <li><a href="#/profile/edit">Profile Edit</a></li>
                   <li><a ng-click="logout()">Sign Out</a></li>

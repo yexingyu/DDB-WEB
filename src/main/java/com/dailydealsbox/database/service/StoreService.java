@@ -44,4 +44,11 @@ public interface StoreService {
    * @return
    */
   public Store insert(Store store);
+
+  /**
+   * delete
+   *
+   * @param id
+   */
+  public void delete(int id);
 }

@@ -222,6 +222,24 @@ public class BaseEnum {
     }
   }
 
+  /**
+   * @author x_ye
+   */
+  public static enum ORDER_STATUS {
+    NEW("New Order"), CONFIRMED("Customer Confirmed"), WF_DOWNPAYMENT("Waiting For Downpayment"), APPROVED("Approved Order"), SHIPPED("Shipped Order"), FIN(
+        "Finished Order");
+    private final String name;
+
+    private ORDER_STATUS(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return this.name;
+    }
+  }
+
   public static enum MEMBER_ROLE {
     MEMBER, ADMIN;
   }

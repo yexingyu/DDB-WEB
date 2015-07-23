@@ -99,10 +99,10 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 } ])
 
 /*
- * OrderCtrl definition
+ * ProductOrderCtrl definition
  */
 .controller(
-        'OrderCtrl',
+        'ProductOrderCtrl',
         [ '$scope', '$location', '$window', '$routeParams', 'ProductService', 'ProfileService', 'OrderService', 'LoginService',
                 function($scope, $location, $window, $routeParams, ProductService, ProfileService, OrderService, LoginService) {
                     var id = $routeParams.id;
@@ -142,6 +142,62 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                     // submit order
                     $scope.submit = function() {
                         console.log($scope.order);
+                        OrderService.add($scope.order, function(response) {
+                            if (response.status === 'SUCCESS') {
+                                $scope.order = response.data;
+                                $location.path('/order/' + $scope.order.id + '/confirm');
+                            } else {
+                                $location.path('/home');
+                                return;
+                            }
+                        });
+                    };
+                } ])
+
+/*
+ * OrderConfirmCtrl definition
+ */
+.controller(
+        'OrderConfirmCtrl',
+        [ '$scope', '$location', '$window', '$routeParams', 'ProductService', 'OrderService', 'ProfileService', 'LoginService',
+                function($scope, $location, $window, $routeParams, ProductService, ProfileService, OrderService, LoginService) {
+                    var orderId = $routeParams.id;
+                    $scope.order = {};
+
+                    // retrieve product details
+                    ProductService.get(id, function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.product = ProductService.fix(response.data);
+                            $scope.order.productId = $scope.product.id;
+                        } else {
+                            $location.path('/home');
+                        }
+                    });
+
+                    // retrieve profile information
+                    ProfileService.profile(function(response) {
+                        if (response.status == 'SUCCESS') {
+                            $scope.$root.profile = response.data;
+                            $scope.profile = response.data;
+                            OrderService.fix($scope.order, $scope.profile);
+                        } else if (response.status == 'NEED_LOGIN') {
+                            LoginService.showLoginBox(function(profile) {
+                                $scope.$root.profile = profile;
+                                $scope.profile = profile;
+                                OrderService.fix($scope.order, $scope.profile);
+                            }, function(reason) {
+                                $window.history.back();
+                            });
+                        } else {
+                            $location.path('/home');
+                            return;
+                        }
+
+                    });
+
+                    // submit order
+                    $scope.submit = function() {
+
                     };
                 } ])
 

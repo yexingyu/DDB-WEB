@@ -62,6 +62,25 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
  */
 .factory('OrderService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
+        get : function(orderId, callback) {
+            return $resource('/api/order/id/:id', {
+                'id' : orderId
+            }, {}).get(callback);
+        },
+        list : function(callback, page, size, sort) {
+            page = typeof page !== 'undefined' ? page : 0;
+            size = typeof size !== 'undefined' ? size : 20;
+            sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
+            return $resource('/api/order', {
+                'page' : page,
+                'size' : size,
+                'sort' : sort
+            }, {}).get(callback);
+        },
+        add : function(order, callback) {
+            var OrderResource = $resource('/api/order', {}, {});
+            new OrderResource(order).$save(callback);
+        },
         fix : function(order, profile) {
             order.memberId = profile.id;
 
@@ -163,7 +182,7 @@ angular.module('ddbApp.services', [ 'ngResource', 'ngCookies' ])
  */
 .factory('ProductService', [ '$rootScope', '$resource', function($rootScope, $resource) {
     return {
-        list : function(callback, page, size) {
+        list : function(callback, page, size, sort) {
             page = typeof page !== 'undefined' ? page : 0;
             size = typeof size !== 'undefined' ? size : 20;
             sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
