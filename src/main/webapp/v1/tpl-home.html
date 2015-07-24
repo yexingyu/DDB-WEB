@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="row" >
-		<div class="col-sm-3" ng-repeat="item in items" style=" margin:15px; height:660px">
+		<div class="col-sm-3" ng-repeat="item in items" style=" margin:15px; height:700px">
 			<div class="row" style="padding:15px">
 		        <div class="row">
 	      			<div class="col-xs-12 col-sm-12">
@@ -17,10 +17,11 @@
 	      			<div class="col-xs-12 col-sm-12" align="center">
 	        			<img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}">
 	    			</div>			        
-	        
+        
 	      			<div class="col-xs-12 col-sm-12">
-	        			<h4 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h4>
-	    			</div>		    			
+	        			<h4 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name | limitTo:52}}</h4>
+	    			</div>
+	    					    			
 	      			<div class="col-xs-12 col-sm-12">
 	        			<p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:90}}</p>
 	    			</div>
@@ -32,17 +33,20 @@
 	    			</div>
 	      			<div class="col-xs-12 col-sm-12">
 					    <div class="row">
-					        <div class="col-sm-8">
+					        <div class="col-xs-8"  align="left">
 					        <span style="color:RoyalBlue   ;font-weight: bold;">Down: {{item.prices[0].currency}}${{item.down | number:2}}</span>
-					        <br>
 					        <span style="color:RoyalBlue  ;font-weight: bold">Installment:{{item.prices[0].currency}}${{item.MonthlyPayment | number:2}}</span>
 					        </div>
-					        <div class="col-sm-1">
+					        <div class="col-xs-4" align="right">
 					        <a href="#/order/{{item.id}}"><img alt="Order this product, pay monthly" src = "./images/pay-monthly-logo-mono.png" width=60px></a>
 					        </div>
 				        </div>
-                           <hr></hr>
-                       </div>
+				        <hr></hr>
+                    </div>
+	      			<div class="col-xs-12 col-sm-12">
+	        			<span ng-repeat="link in item.links ">{{link.rating}} of {{link.reviewNumber}} reviews @ {{link.name}}</span>
+	        			<hr></hr>
+	    			</div>		                       
 	      			<div class="col-xs-12 col-sm-12" align="left">
 	      			       <div class="row">
 				      			<div class="col-sm-7" align="left">
