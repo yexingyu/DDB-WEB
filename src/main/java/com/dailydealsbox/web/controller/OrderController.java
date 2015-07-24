@@ -172,4 +172,31 @@ public class OrderController {
       return GenericResponseData.newInstance (RESPONSE_STATUS.SUCCESS, order);
     }
   }
+
+  /**
+   * switchStatus
+   *
+   * @param orderId
+   * @param status
+   * @param tokenString
+   * @return
+   */
+  @RequestMapping(value = "id/{id}/switch_status", method = { RequestMethod.PUT })
+  @ApiOperation(value = "switch status",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Switch status of order.")
+  public GenericResponseData switchStatus(@ApiParam(value = "order id", required = true) @PathVariable("id") int orderId,
+      @ApiParam(value = "order object", required = true) @RequestBody String status,
+      @ApiIgnore @CookieValue(value = "token", required = false) String tokenString) {
+    AuthorizationToken token = this.authorizationService.verify(tokenString);
+    if (token == null) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
+    } else if (token.getRole() == MEMBER_ROLE.ADMIN) { return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, ""); }
+
+    BaseEnum.ORDER_STATUS orderStatus = BaseEnum.ORDER_STATUS.valueOf(status);
+    this.orderService.modifiyStatus(orderId, orderStatus);
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, orderStatus);
+  }
 }
