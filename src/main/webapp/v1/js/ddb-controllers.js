@@ -6,7 +6,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 .controller(
         'NavBarCtrl',
         [ '$scope', '$location', '$modal', 'ProfileService', 'CookieService', 'LoginService',
-                function($scope, $location, $modal, ProfileService, CookieService, LoginService) {
+              function($scope, $location, $modal, ProfileService, CookieService, LoginService) {
 
                     // retreive profile
                     $scope.$root.profile = {};

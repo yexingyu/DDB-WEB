@@ -3,7 +3,7 @@
 		<div class="col-sm-4" ng-repeat="item in items">
 			<div class="row">
 			    <div class="col-sm-1">
-			    <img src = "./images/favicon/{{item.store.favicon}}">
+			    <img src="./images/favicon/{{item.store.favicon}}">
 			    </div>
 			    <div class="col-sm-11">
 			        <div class="row">
@@ -23,7 +23,7 @@
 		    			</div>
 		      			<div class="col-xs-12 col-sm-12">
 		        			<span>{{item.prices[0].currency}}$ {{item.prices[0].value | number:2}}</span>
-		        			<span ng-repeat ="fee in item.fees">{{fee.title}} $: {{fee.value | number:2}}</span>
+		        			<span ng-repeat="fee in item.fees">{{fee.title}} $: {{fee.value | number:2}}</span>
 		        			<h4>Total: </h4>
 		    			</div>
 		      			<div class="col-xs-12 col-sm-12">
@@ -33,7 +33,8 @@
 		      			<div class="col-xs-12 col-sm-12">
 			      			<p>
 		                        <a ng-click="like(item);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
-		                        <a popover-placement="top" popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
+		                        <a popover-placement="top" popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span
+                                        class="badge">{{item.countReviews}}</span></a>
 	                        </p>
 		    			</div>			    			
 		    		</div>	
@@ -54,7 +55,9 @@
         <div class="form-group">
           <label>
             <rating ng-model="item.review.rating" max="5" on-hover="hoveringOver(value, item)" on-leave="item.review.overStar = item.review.rating"></rating>
-            <span class="label" ng-class="{'label-warning': item.review.overStar<3, 'label-info': item.review.overStar>=3 && item.review.overStar<=4, 'label-success': item.review.overStar>=5}" ng-show="item.review.rating">Rate: {{item.review.overStar}}</span>
+            <span class="label"
+                  ng-class="{'label-warning': item.review.overStar<3, 'label-info': item.review.overStar>=3 && item.review.overStar<=4, 'label-success': item.review.overStar>=5}"
+                  ng-show="item.review.rating">Rate: {{item.review.overStar}}</span>
           </label>
           <input type="text" ng-model="item.review.content" class="form-control">
           <button class="btn btn-primary form-control" ng-click="review(item)">SUBMIT</button>
