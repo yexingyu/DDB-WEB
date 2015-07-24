@@ -294,6 +294,7 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                 $scope.monthly_interest_rate = $scope.yearly_interest_rate / $scope.number_of_payments;
                 
                 item.principal = item.total * 0.618;
+                item.down = item.total * 0.382;
                 
                 item.MonthlyPayment = $scope.monthly_interest_rate
                         * item.principal

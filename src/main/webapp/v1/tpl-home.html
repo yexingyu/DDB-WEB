@@ -1,45 +1,66 @@
 <div class="container">
-	<div class="row">
-		<div class="col-sm-4" ng-repeat="item in items">
-			<div class="row">
-			    <div class="col-sm-1">
-			    <img src = "./images/favicon/{{item.store.favicon}}">
-			    </div>
-			    <div class="col-sm-11">
-			        <div class="row">
-		      			<div class="col-xs-12 col-sm-12">
-		        			<span><button type="button" class="btn btn-primary btn-xs">+ follow</button></span>
-		        			<span><a>{{item.store.website}}</a></span>
-
-		    			</div>				        
-		      			<div class="col-xs-12 col-sm-12" align="center">
-		        			<img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}">
-		    			</div>			        
-		        
-		      			<div class="col-xs-12 col-sm-12">
-		        			<h4 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h4>
-		    			</div>		    			
-		      			<div class="col-xs-12 col-sm-12">
-		        			<p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:90}}</p>
-		    			</div>
-		      			<div class="col-xs-12 col-sm-12">
-		        			<span>{{item.prices[0].currency}}$ {{item.prices[0].value | number:2}}</span>
-		        			<span ng-repeat ="fee in item.fees">{{fee.title}} $: {{fee.value | number:2}}</span>
-		        			<h4>Before Tax: {{item.prices[0].currency}}${{item.total}}</h4>
-		    			</div>
-		      			<div class="col-xs-12 col-sm-12">
-		        			Payment Monthly:
-		        			
-		    			</div>			    							    						    				    			
-		      			<div class="col-xs-12 col-sm-12">
-			      			<p>
-		                        <a ng-click="like(item);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
-		                        <a popover-placement="top" popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
-	                        </p>
-		    			</div>			    			
-		    		</div>	
-			    </div>
+	<div class="row" >
+		<div class="col-sm-3" ng-repeat="item in items" style=" margin:15px;" >
+			<div class="row" style="padding:15px">
+		        <div class="row">
+	      			<div class="col-xs-12 col-sm-12">
+	      			    <div class="row">
+	      			    <div  class="col-xs-9" align="left">
+	      			    	<img src = "./images/favicon/{{item.store.favicon}}"><span><a> {{item.store.website}}</a></span>
+	      			    </div>
+	      			    <div class="col-xs-3" align="right">
+	      			    	<span><button type="button" class="btn btn-primary btn-xs">+ follow</button></span>
+	      			    </div>
+	      			    </div>
+	      			     <hr></hr>
+	    			</div>				        
+	      			<div class="col-xs-12 col-sm-12" align="center">
+	        			<img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}">
+	    			</div>			        
+	        
+	      			<div class="col-xs-12 col-sm-12">
+	        			<h4 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h4>
+	    			</div>		    			
+	      			<div class="col-xs-12 col-sm-12">
+	        			<p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:90}}</p>
+	    			</div>
+	      			<div class="col-xs-12 col-sm-12">
+	        			<span>{{item.prices[0].currency}}${{item.prices[0].value | number:2}}</span>
+	        			<span ng-repeat ="fee in item.fees">+{{fee.title}} $ {{fee.value | number:2}} </span>
+	        			<br><span>Before Tax: {{item.prices[0].currency}}${{item.total}}</span>
+	        			<hr></hr>
+	    			</div>
+	      			<div class="col-xs-12 col-sm-12">
+					    <div class="row">
+					        <div class="col-sm-8">
+					        Down: {{item.prices[0].currency}}${{item.down | number:2}}
+					        <br>
+					        Installment:{{item.prices[0].currency}}${{item.MonthlyPayment | number:2}}
+					        </div>
+					        <div class="col-sm-1">
+					        <a href="#/order/{{item.id}}"><img alt="Order this product, pay monthly" src = "./images/pay-monthly-logo-mono.png" width=60px></a>
+					        </div>
+				        </div>
+                           <hr></hr>
+                       </div>
+	      			<div class="col-xs-12 col-sm-12" align="left">
+	      			       <div class="row">
+				      			<div class="col-sm-7" align="left">
+								<span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags | filter: {language: $root.language.language}"><span><a>{{tag.value}}</a></span>
+								</span>
+								</div>		      			       
+				      			<div class="col-sm-5" align="right">
+				                        <a  ng-click="like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
+				                        <a  popover-placement="top" popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
+				    			</div>	      			       
+	      			       
+	      			       </div>
+	                            			
+	                </div>	                       			    							    						    				    			
+			    			
+	    		</div>	
 			</div>       
+			<hr></hr>
 		</div>
 	</div>
 </div>
