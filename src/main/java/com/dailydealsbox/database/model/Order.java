@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,13 +20,14 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
+import com.dailydealsbox.database.model.base.BaseEnum.ORDER_STATUS;
 
 /**
  * @author x_ye
  */
 @Entity
-@Table(name = "order")
-@SQLDelete(sql = "update order set deleted = true where id = ?")
+@Table(name = "`order`")
+@SQLDelete(sql = "update `order` set deleted = true where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Order extends BaseEntityModel {
 
@@ -35,6 +38,11 @@ public class Order extends BaseEntityModel {
   @NotNull
   @Column(name = "member_id", nullable = false)
   private int memberId;
+
+  @NotNull
+  @Column(name = "status", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private ORDER_STATUS status;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -47,6 +55,21 @@ public class Order extends BaseEntityModel {
    */
   public boolean validate() {
     return true;
+  }
+
+  /**
+   * @return the status
+   */
+  public ORDER_STATUS getStatus() {
+    return this.status;
+  }
+
+  /**
+   * @param status
+   *          the status to set
+   */
+  public void setStatus(ORDER_STATUS status) {
+    this.status = status;
   }
 
   /**

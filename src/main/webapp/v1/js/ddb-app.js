@@ -22,9 +22,13 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
       templateUrl: 'tpl-product-details.html',
       controller: 'ProductDetailsCtrl'
 
-    }).when('/order/:id', {
-      templateUrl: 'tpl-order.html',
-      controller: 'OrderCtrl'
+    }).when('/product/:id/order', {
+        templateUrl : 'tpl-product-order.html',
+        controller : 'ProductOrderCtrl'
+
+    }).when('/order/:id/confirm', {
+        templateUrl : 'tpl-order-confirm.html',
+        controller : 'OrderConfirmCtrl'
 
     }).when('/profile', {
       templateUrl: 'tpl-profile.html',

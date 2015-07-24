@@ -60,4 +60,13 @@ public class StoreServiceImpl implements StoreService {
     return this.repo.findByDeleted(deleted, pageable);
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#delete(int)
+   */
+  @Override
+  public void delete(int id) {
+    this.repo.delete(id);
+  }
+
 }
