@@ -48,25 +48,26 @@ public class StoreController {
    *
    * @param deleted
    * @param pageable
+   *
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
   @ApiOperation(value = "list stores",
-    response = GenericResponseData.class,
-    responseContainer = "Map",
-    produces = "application/json",
-    notes = "List pageable stores.")
-  @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
+      response = GenericResponseData.class,
+      responseContainer = "Map",
+      produces = "application/json",
+      notes = "List pageable stores.")
+  @ApiImplicitParams({@ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"), @ApiImplicitParam(
-        name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
-  public GenericResponseData list(@ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted",
-    required = false,
-    defaultValue = "false") boolean deleted, @ApiIgnore Pageable pageable) {
-    Page<Store> stores = this.storeService.list(deleted, pageable);
-    if (stores == null || stores.getNumberOfElements() == 0) {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query")})
+  public GenericResponseData list (@ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted",
+      required = false,
+      defaultValue = "false") boolean deleted, @ApiIgnore Pageable pageable) {
+    Page<Store> stores = this.storeService.list (deleted, pageable);
+    if (stores == null || stores.getNumberOfElements () == 0) {
+      return GenericResponseData.newInstance (RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, stores);
+      return GenericResponseData.newInstance (RESPONSE_STATUS.SUCCESS, stores);
     }
   }
 
@@ -74,20 +75,21 @@ public class StoreController {
    * retrieve
    *
    * @param id
+   *
    * @return
    */
   @RequestMapping(value = "id/{id}", method = RequestMethod.GET)
   @ApiOperation(value = "retrieve store details",
-    response = GenericResponseData.class,
-    responseContainer = "Map",
-    produces = "application/json",
-    notes = "Retrieve store details.")
-  public GenericResponseData retrieve(@ApiParam(value = "store id", required = true) @PathVariable("id") int id) {
-    Store store = this.storeService.get(id);
+      response = GenericResponseData.class,
+      responseContainer = "Map",
+      produces = "application/json",
+      notes = "Retrieve store details.")
+  public GenericResponseData retrieve (@ApiParam(value = "store id", required = true) @PathVariable("id") int id) {
+    Store store = this.storeService.get (id);
     if (store == null) {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      return GenericResponseData.newInstance (RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, store);
+      return GenericResponseData.newInstance (RESPONSE_STATUS.SUCCESS, store);
     }
   }
 
@@ -95,66 +97,69 @@ public class StoreController {
    * insert
    *
    * @param tokenString
-   * @param product
+   * @param store
+   *
    * @return
    */
-  @RequestMapping(method = { RequestMethod.POST })
+  @RequestMapping(method = {RequestMethod.POST})
   @ApiOperation(value = "insert store",
-    response = GenericResponseData.class,
-    responseContainer = "Map",
-    produces = "application/json",
-    notes = "Insert a new store.")
-  public GenericResponseData insert(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
-      @ApiParam(value = "store object", required = true) @RequestBody Store store) {
-    AuthorizationToken token = this.authorizationService.verify(tokenString);
+      response = GenericResponseData.class,
+      responseContainer = "Map",
+      produces = "application/json",
+      notes = "Insert a new store.")
+  public GenericResponseData insert (@ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
+                                     @ApiParam(value = "store object", required = true) @RequestBody Store store) {
+    AuthorizationToken token = this.authorizationService.verify (tokenString);
     if (token == null) {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
-    } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
-      if (store.validate()) {
-        Store storeFromDb = this.storeService.insert(store);
-        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, storeFromDb);
+      return GenericResponseData.newInstance (RESPONSE_STATUS.NEED_LOGIN, "");
+    } else if (token.getRole () == MEMBER_ROLE.ADMIN) {
+      if (store.validate ()) {
+        Store storeFromDb = this.storeService.insert (store);
+        return GenericResponseData.newInstance (RESPONSE_STATUS.SUCCESS, storeFromDb);
       } else {
-        return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+        return GenericResponseData.newInstance (RESPONSE_STATUS.FAIL, "");
       }
     } else {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
+      return GenericResponseData.newInstance (RESPONSE_STATUS.NO_PERMISSION, "");
     }
   }
 
   /**
    * update
    *
+   * @param storeId
    * @param tokenString
-   * @param product
+   * @param store
+   *
    * @return
    */
-  @RequestMapping(value = "id/:id", method = { RequestMethod.PUT })
+  @RequestMapping(value = "id/:id", method = {RequestMethod.PUT})
   @ApiOperation(value = "update store",
-    response = GenericResponseData.class,
-    responseContainer = "Map",
-    produces = "application/json",
-    notes = "Update store details.")
-  public GenericResponseData update(@ApiParam(value = "store id", required = true) @PathVariable("id") int storeId,
-      @ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
-      @ApiParam(value = "store object", required = true) @RequestBody Store store) {
-    AuthorizationToken token = this.authorizationService.verify(tokenString);
+      response = GenericResponseData.class,
+      responseContainer = "Map",
+      produces = "application/json",
+      notes = "Update store details.")
+  public GenericResponseData update (@ApiParam(value = "store id", required = true) @PathVariable("id") int storeId,
+                                     @ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
+                                     @ApiParam(value = "store object", required = true) @RequestBody Store store) {
+    AuthorizationToken token = this.authorizationService.verify (tokenString);
     if (token == null) {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
-    } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
-      if (store.validate()) {
-        Store storeFromDb = this.storeService.get(storeId);
+      return GenericResponseData.newInstance (RESPONSE_STATUS.NEED_LOGIN, "");
+    } else if (token.getRole () == MEMBER_ROLE.ADMIN) {
+      if (store.validate ()) {
+        Store storeFromDb = this.storeService.get (storeId);
         if (storeFromDb != null) {
-          store.setId(storeId);
-          storeFromDb = this.storeService.update(store);
-          return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, storeFromDb);
+          store.setId (storeId);
+          storeFromDb = this.storeService.update (store);
+          return GenericResponseData.newInstance (RESPONSE_STATUS.SUCCESS, storeFromDb);
         } else {
-          return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+          return GenericResponseData.newInstance (RESPONSE_STATUS.FAIL, "");
         }
       } else {
-        return GenericResponseData.newInstance(RESPONSE_STATUS.FAIL, "");
+        return GenericResponseData.newInstance (RESPONSE_STATUS.FAIL, "");
       }
     } else {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
+      return GenericResponseData.newInstance (RESPONSE_STATUS.NO_PERMISSION, "");
     }
   }
 

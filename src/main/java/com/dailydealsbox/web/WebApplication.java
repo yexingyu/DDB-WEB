@@ -52,12 +52,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @ComponentScan("com.dailydealsbox")
 @EnableTransactionManagement
-@PropertySource(value = { "classpath:database.properties" })
+@PropertySource(value = {"classpath:database.properties"})
 @EnableJpaRepositories("com.dailydealsbox.database.repository")
 @EnableSwagger2
 @EnableCaching
 public class WebApplication extends SpringBootServletInitializer {
-  public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
+  public static Logger logger = LoggerFactory.getLogger (WebApplication.class);
 
   @Autowired
   private Environment environment;
@@ -68,24 +68,25 @@ public class WebApplication extends SpringBootServletInitializer {
    * @return
    */
   @Bean
-  public Docket confApi() {
-    ResponseMessage msg_500 = new ResponseMessageBuilder().code(500).message("500 message").responseModel(new ModelRef("Error")).build();
-    return new Docket(DocumentationType.SWAGGER_2).globalResponseMessage(RequestMethod.GET, Collections.singletonList(msg_500))
-        .globalResponseMessage(RequestMethod.POST, Collections.singletonList(msg_500))
-        .apiInfo(new ApiInfo("Api Documentation", "Api Documentation, Version: 0.0.1", "0.0.1", null, "xingyu.ye@dailydealsbox.com", null, null));
+  public Docket confApi () {
+    ResponseMessage msg_500 = new ResponseMessageBuilder ().code (500).message ("500 message").responseModel (new ModelRef ("Error")).build ();
+    return new Docket (DocumentationType.SWAGGER_2).globalResponseMessage (RequestMethod.GET, Collections.singletonList (msg_500))
+        .globalResponseMessage (RequestMethod.POST, Collections.singletonList (msg_500))
+        .apiInfo (new ApiInfo ("Api Documentation", "Api Documentation, Version: 0.0.1", "0.0.1", null, "xingyu.ye@dailydealsbox.com", null, null));
   }
 
   /**
    * cacheManager
    *
    * @param caches
+   *
    * @return
    */
   @Bean
   @Autowired
-  public CacheManager cacheManager(List<Cache> caches) {
-    SimpleCacheManager cacheManager = new SimpleCacheManager();
-    cacheManager.setCaches(caches);
+  public CacheManager cacheManager (List<Cache> caches) {
+    SimpleCacheManager cacheManager = new SimpleCacheManager ();
+    cacheManager.setCaches (caches);
     return cacheManager;
   }
 
@@ -95,10 +96,10 @@ public class WebApplication extends SpringBootServletInitializer {
    * @return
    */
   @Bean
-  public SimpleUrlHandlerMapping faviconHandlerMapping() {
-    SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
-    mapping.setOrder(Integer.MIN_VALUE);
-    mapping.setUrlMap(Collections.singletonMap("favicon.ico", this.faviconRequestHandler()));
+  public SimpleUrlHandlerMapping faviconHandlerMapping () {
+    SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping ();
+    mapping.setOrder (Integer.MIN_VALUE);
+    mapping.setUrlMap (Collections.singletonMap ("favicon.ico", this.faviconRequestHandler ()));
     return mapping;
   }
 
@@ -108,9 +109,9 @@ public class WebApplication extends SpringBootServletInitializer {
    * @return
    */
   @Bean
-  protected ResourceHttpRequestHandler faviconRequestHandler() {
-    ResourceHttpRequestHandler requestHandler = new ResourceHttpRequestHandler();
-    requestHandler.setLocations(Arrays.<Resource> asList(new ClassPathResource("/")));
+  protected ResourceHttpRequestHandler faviconRequestHandler () {
+    ResourceHttpRequestHandler requestHandler = new ResourceHttpRequestHandler ();
+    requestHandler.setLocations (Arrays.<Resource>asList (new ClassPathResource ("/")));
     return requestHandler;
   }
 
@@ -120,12 +121,12 @@ public class WebApplication extends SpringBootServletInitializer {
    * @return
    */
   @Bean
-  public DataSource dataSource() {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName(this.environment.getRequiredProperty("jdbc.driverClassName"));
-    dataSource.setUrl(this.environment.getRequiredProperty("jdbc.url"));
-    dataSource.setUsername(this.environment.getRequiredProperty("jdbc.username"));
-    dataSource.setPassword(this.environment.getRequiredProperty("jdbc.password"));
+  public DataSource dataSource () {
+    DriverManagerDataSource dataSource = new DriverManagerDataSource ();
+    dataSource.setDriverClassName (this.environment.getRequiredProperty ("jdbc.driverClassName"));
+    dataSource.setUrl (this.environment.getRequiredProperty ("jdbc.url"));
+    dataSource.setUsername (this.environment.getRequiredProperty ("jdbc.username"));
+    dataSource.setPassword (this.environment.getRequiredProperty ("jdbc.password"));
     return dataSource;
   }
 
@@ -135,13 +136,13 @@ public class WebApplication extends SpringBootServletInitializer {
    * @return
    */
   @Bean
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-    entityManagerFactoryBean.setDataSource(this.dataSource());
-    entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-    entityManagerFactoryBean.setPackagesToScan("com.dailydealsbox.database.model");
-    entityManagerFactoryBean.setJpaProperties(this.hibernateProperties());
-    entityManagerFactoryBean.setSharedCacheMode(SharedCacheMode.ALL);
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory () {
+    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean ();
+    entityManagerFactoryBean.setDataSource (this.dataSource ());
+    entityManagerFactoryBean.setPersistenceProviderClass (HibernatePersistenceProvider.class);
+    entityManagerFactoryBean.setPackagesToScan ("com.dailydealsbox.database.model");
+    entityManagerFactoryBean.setJpaProperties (this.hibernateProperties ());
+    entityManagerFactoryBean.setSharedCacheMode (SharedCacheMode.ALL);
     return entityManagerFactoryBean;
   }
 
@@ -150,22 +151,22 @@ public class WebApplication extends SpringBootServletInitializer {
    *
    * @return
    */
-  private Properties hibernateProperties() {
-    Properties properties = new Properties();
+  private Properties hibernateProperties () {
+    Properties properties = new Properties ();
 
     // hibernate connection settings
-    properties.put("hibernate.dialect", this.environment.getRequiredProperty("hibernate.dialect"));
-    properties.put("hibernate.show_sql", this.environment.getRequiredProperty("hibernate.show_sql"));
-    properties.put("hibernate.format_sql", this.environment.getRequiredProperty("hibernate.format_sql"));
-    properties.put("hibernate.enable_lazy_load_no_trans", true);
+    properties.put ("hibernate.dialect", this.environment.getRequiredProperty ("hibernate.dialect"));
+    properties.put ("hibernate.show_sql", this.environment.getRequiredProperty ("hibernate.show_sql"));
+    properties.put ("hibernate.format_sql", this.environment.getRequiredProperty ("hibernate.format_sql"));
+    properties.put ("hibernate.enable_lazy_load_no_trans", true);
 
     // Second Cache Settings
-    properties.put("hibernate.cache.provider_class", "org.hibernate.cache.EhCacheProvider");
-    properties.put("hibernate.cache.use_structured_entries", true);
-    properties.put("hibernate.cache.use_query_cache", true);
-    properties.put("hibernate.cache.use_second_level_cache", true);
-    properties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
-    properties.put("net.sf.ehcache.configurationResourceName", "ehcache.xml");
+    properties.put ("hibernate.cache.provider_class", "org.hibernate.cache.EhCacheProvider");
+    properties.put ("hibernate.cache.use_structured_entries", true);
+    properties.put ("hibernate.cache.use_query_cache", true);
+    properties.put ("hibernate.cache.use_second_level_cache", true);
+    properties.put ("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+    properties.put ("net.sf.ehcache.configurationResourceName", "ehcache.xml");
     return properties;
   }
 
@@ -175,9 +176,9 @@ public class WebApplication extends SpringBootServletInitializer {
    * @return
    */
   @Bean
-  public JpaTransactionManager transactionManager() {
-    JpaTransactionManager transactionManager = new JpaTransactionManager();
-    transactionManager.setEntityManagerFactory(this.entityManagerFactory().getObject());
+  public JpaTransactionManager transactionManager () {
+    JpaTransactionManager transactionManager = new JpaTransactionManager ();
+    transactionManager.setEntityManagerFactory (this.entityManagerFactory ().getObject ());
     return transactionManager;
   }
 
@@ -201,8 +202,8 @@ public class WebApplication extends SpringBootServletInitializer {
    * .boot.builder.SpringApplicationBuilder)
    */
   @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-    return application.sources(WebApplication.class);
+  protected SpringApplicationBuilder configure (SpringApplicationBuilder application) {
+    return application.sources (WebApplication.class);
   }
 
   /**
@@ -210,8 +211,8 @@ public class WebApplication extends SpringBootServletInitializer {
    *
    * @param args
    */
-  public static void main(String[] args) {
-    SpringApplication.run(WebApplication.class, args).registerShutdownHook();
+  public static void main (String[] args) {
+    SpringApplication.run (WebApplication.class, args).registerShutdownHook ();
   }
 
 }
