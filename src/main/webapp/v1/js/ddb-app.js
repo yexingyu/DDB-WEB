@@ -1,55 +1,56 @@
-angular.module('ddbApp', [ 'ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap' ])
+angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap'])
 
-.config([ '$routeProvider', function($routeProvider) {
+
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/home', {
-        templateUrl : 'tpl-home.html',
-        controller : 'HomeCtrl'
+      templateUrl: 'tpl-home.html',
+      controller: 'HomeCtrl'
 
     }).when('/contact', {
-        templateUrl : 'tpl-contact.html',
-        controller : 'ContactCtrl'
+      templateUrl: 'tpl-contact.html',
+      controller: 'ContactCtrl'
 
     }).when('/about', {
-        templateUrl : 'tpl-about.html',
-        controller : 'AboutCtrl'
+      templateUrl: 'tpl-about.html',
+      controller: 'AboutCtrl'
 
     }).when('/product', {
-        templateUrl : 'tpl-product.html',
-        controller : 'ProductCtrl'
+      templateUrl: 'tpl-product.html',
+      controller: 'ProductCtrl'
 
     }).when('/product/:id', {
-        templateUrl : 'tpl-product-details.html',
-        controller : 'ProductDetailsCtrl'
+      templateUrl: 'tpl-product-details.html',
+      controller: 'ProductDetailsCtrl'
 
     }).when('/order/:id', {
-        templateUrl : 'tpl-order.html',
-        controller : 'OrderCtrl'
+      templateUrl: 'tpl-order.html',
+      controller: 'OrderCtrl'
 
     }).when('/profile', {
-        templateUrl : 'tpl-profile.html',
-        controller : 'ProfileCtrl'
+      templateUrl: 'tpl-profile.html',
+      controller: 'ProfileCtrl'
 
     }).when('/profile/edit', {
-        templateUrl : 'tpl-profile-edit.html',
-        controller : 'ProfileEditCtrl'
+      templateUrl: 'tpl-profile-edit.html',
+      controller: 'ProfileEditCtrl'
 
     }).otherwise({
-        redirectTo : '/home'
+      redirectTo: '/home'
     });
-} ])
+  }])
 
-.run([ '$rootScope', '$window', 'CookieService', 'ConstantService', function($rootScope, $window, CookieService, ConstantService) {
+  .run(['$rootScope', '$window', 'CookieService', 'ConstantService', function ($rootScope, $window, CookieService, ConstantService) {
     ConstantService.init();
 
     // set language
     $rootScope['language'] = {
-        'language' : CookieService.getLanguage()
+      'language': CookieService.getLanguage()
     };
 
     // set fingerprint
     $rootScope['fingerprint'] = new Fingerprint({
-        canvas : true,
-        ie_activex : true
+      canvas: true,
+      ie_activex: true
     }).get();
     CookieService.setFingerprint($rootScope['fingerprint']);
 
@@ -63,4 +64,4 @@ angular.module('ddbApp', [ 'ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 
      * FB.init({ appId : '1170711572955238', cookie : true, xfbml : true,
      * version : 'v2.3' }); };
      */
-} ]);
+  }]);
