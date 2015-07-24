@@ -99,7 +99,7 @@ angular
                             $scope.stores = [];
                             StoreService.list(function(response) {
                                 if (response.status === "SUCCESS") {
-                                    $scope.stores = response.data;
+                                    $scope.stores = response.data.content;
                                 }
                             });
                             // add input field
@@ -192,15 +192,15 @@ angular
                             $scope.product.likes = [];
 
                             // sample data
-                            $scope.product.url = "http://shop.nordstrom.com/s/steve-madden-troopa-boot/3132609";
-                            $scope.product.key = "33132609";
+                            $scope.product.url = "";
+                            $scope.product.key = "";
                             $scope.product.status = "AVAILABLE";
                             $scope.product.store = {
                                 id : 2
                             };
                             $scope.product.prices = [ {
                                 currency : 'CAD',
-                                value : '106.39'
+                                value : ''
                             } ];
 
                             $scope.product.taxes = [ {
@@ -215,61 +215,61 @@ angular
                             $scope.product.fees = [ {
                                 title : 'SHIPPING',
                                 type : 'AMOUNT',
-                                value : '9.75'
+                                value : ''
                             }, {
                                 title : 'IMPORT',
                                 type : 'AMOUNT',
-                                value : '33.11'
+                                value : ''
                             } ];
 
                             $scope.product.images = [ {
-                                url : 'http://g.nordstromimage.com/imagegallery/store/product/Large/6/_6787726.jpg',
-                                alt : 'Steve Boot'
+                                url : '',
+                                alt : ''
                             } ];
 
                             $scope.product.texts = [
                                     {
                                         language : 'EN',
-                                        name : "Steve 'Troopa' Boot",
-                                        description : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus cursus blandit leo, ac interdum erat fringilla at. Sed molestie nulla risus, ut volutpat sem lacinia eget. Suspendisse ut porttitor purus. Mauris tempus porta sapien, at aliquet ex elementum at. Praesent luctus feugiat dui, sit amet posuere elit tincidunt sit amet. Aenean ac justo tortor. Aenean maximus ipsum neque, non fermentum urna blandit ut. Praesent iaculis elit nec tortor dapibus pretium. Proin mollis odio nunc, et ultricies metus venenatis sit amet. Ut vel faucibus dolor. Mauris placerat porta nisi nec tempor. Ut convallis ac eros vel consequat. Nam a felis non ligula lobortis lacinia et laoreet sem. Nam rhoncus diam at lorem tristique vehicula a sed odio. In nec orci id ligula sagittis lacinia vel non magna. Maecenas pellentesque nibh risus, ac luctus nunc dapibus et.",
+                                        name : "",
+                                        description : "",
                                         warranty : "n/a",
-                                        return_policy : "Nunc ac elit a ligula euismod efficitur vel ut urna. Morbi accumsan, nisi sit amet vestibulum consequat, lorem augue gravida enim, a feugiat diam dolor in odio. ",
-                                        shipping_info : "Usually arrives in 5-13 business days.",
-                                        meta_keyword : "Steve Madden , Boot",
-                                        meta_title : "Steve Madden Boot On sale",
-                                        meta_description : "Steve Madden Boot On sale"
+                                        return_policy : "",
+                                        shipping_info : "",
+                                        meta_keyword : "",
+                                        meta_title : "",
+                                        meta_description : ""
                                     },
                                     {
                                         language : 'FR',
-                                        name : "Steve 'Troopa' Boot",
-                                        description : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus cursus blandit leo, ac interdum erat fringilla at. Sed molestie nulla risus, ut volutpat sem lacinia eget. Suspendisse ut porttitor purus. Mauris tempus porta sapien, at aliquet ex elementum at. Praesent luctus feugiat dui, sit amet posuere elit tincidunt sit amet. Aenean ac justo tortor. Aenean maximus ipsum neque, non fermentum urna blandit ut. Praesent iaculis elit nec tortor dapibus pretium. Proin mollis odio nunc, et ultricies metus venenatis sit amet. Ut vel faucibus dolor. Mauris placerat porta nisi nec tempor. Ut convallis ac eros vel consequat. Nam a felis non ligula lobortis lacinia et laoreet sem. Nam rhoncus diam at lorem tristique vehicula a sed odio. In nec orci id ligula sagittis lacinia vel non magna. Maecenas pellentesque nibh risus, ac luctus nunc dapibus et.",
-                                        warranty : "n/a",
-                                        return_policy : "Nunc ac elit a ligula euismod efficitur vel ut urna. Morbi accumsan, nisi sit amet vestibulum consequat, lorem augue gravida enim, a feugiat diam dolor in odio. ",
-                                        shipping_info : "Usually arrives in 5-13 business days.",
-                                        meta_keyword : "Steve Madden , Boot",
-                                        meta_title : "Steve Madden Boot On sale",
-                                        meta_description : "Steve Madden Boot On sale"
+                                        name : "",
+                                        description : "",
+                                        warranty : "",
+                                        return_policy : "",
+                                        shipping_info : "",
+                                        meta_keyword : "",
+                                        meta_title : "",
+                                        meta_description : ""
                                     } ];
 
                             $scope.product.tags = [ {
                                 language : 'EN',
-                                value : "Steve Madden"
+                                value : ""
                             }, {
                                 language : 'EN',
-                                value : "Boot"
+                                value : ""
                             }, {
                                 language : 'FR',
-                                value : "Steve Madden f"
+                                value : ""
                             }, {
                                 language : 'FR',
-                                value : "Boot f"
+                                value : ""
                             } ];
 
                             $scope.product.links = [ {
-                                url : 'http://shop.nordstrom.com/s/steve-madden-troopa-boot/3132609',
-                                name : "nordstrom.com",
-                                rating : "4.6",
-                                review_number : "1789"
+                                url : '',
+                                name : "",
+                                rating : "",
+                                review_number : ""
                             } ];
 
                             $scope.product.options = [ {
