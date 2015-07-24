@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.web.base;
 
@@ -9,6 +9,7 @@ import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
  * @author x_ye
  */
 public class AuthorizationToken {
+
   private int         memberId;
   private String      account;
   private String      password;
@@ -17,7 +18,7 @@ public class AuthorizationToken {
 
   /**
    * newInstance
-   * 
+   *
    * @return
    */
   public static AuthorizationToken newInstance() {
@@ -26,7 +27,7 @@ public class AuthorizationToken {
 
   /**
    * newInstance
-   * 
+   *
    * @param memberId
    * @param account
    * @param password
@@ -34,8 +35,7 @@ public class AuthorizationToken {
    * @param role
    * @return
    */
-  public static AuthorizationToken newInstance(int memberId, String account, String password,
-      long expired, MEMBER_ROLE role) {
+  public static AuthorizationToken newInstance(int memberId, String account, String password, long expired, MEMBER_ROLE role) {
     return new AuthorizationToken(memberId, account, password, expired, role);
   }
 
@@ -44,8 +44,7 @@ public class AuthorizationToken {
    */
   public AuthorizationToken() {}
 
-  public AuthorizationToken(int memberId, String account, String password, long expired,
-      MEMBER_ROLE role) {
+  public AuthorizationToken(int memberId, String account, String password, long expired, MEMBER_ROLE role) {
     this.setMemberId(memberId);
     this.setAccount(account);
     this.setPassword(password);
@@ -130,7 +129,6 @@ public class AuthorizationToken {
 
   @Override
   public String toString() {
-    return String.format("%d,%s,%d,%s", this.getMemberId(), this.getAccount(), this.getExpired(),
-        this.getRole());
+    return String.format("%d,%s,%d,%s", this.getMemberId(), this.getAccount(), this.getExpired(), this.getRole());
   }
 }

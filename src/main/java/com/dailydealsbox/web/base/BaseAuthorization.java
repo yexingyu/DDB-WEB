@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.web.base;
 
@@ -21,14 +21,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 
 public class BaseAuthorization {
+  public final static String TOKEN  = AuthorizationToken.class.toString();
   public final static long   EXPIRY = 3600 * 24 * 7 * 1000;
   private final String       KEY    = "BZV@Zk+sJTs$xa=p";
   private final ObjectMapper mapper = new ObjectMapper();
-  private final Key          aesKey = new SecretKeySpec(KEY.getBytes(), "AES");
+  private final Key          aesKey = new SecretKeySpec(this.KEY.getBytes(), "AES");
 
   /**
    * buildExpiredStamp
-   * 
+   *
    * @return
    */
   public long buildExpiredStamp() {
@@ -37,7 +38,7 @@ public class BaseAuthorization {
 
   /**
    * verify
-   * 
+   *
    * @param cookieValue
    * @return
    */
@@ -48,7 +49,7 @@ public class BaseAuthorization {
     byte[] md5hash = ArrayUtils.subarray(cookieBytes, 0, 16);
     byte[] cookieData = ArrayUtils.subarray(cookieBytes, 16, cookieBytes.length);
     try {
-      AuthorizationToken token = convertToAuthorization(cookieData);
+      AuthorizationToken token = this.convertToAuthorization(cookieData);
       if (token != null && StringUtils.equals(Base64.encodeBase64String(DigestUtils.md5(token.toString())), Base64.encodeBase64String(md5hash))
           && token.getExpired() > System.currentTimeMillis()) {
         return token;
@@ -63,18 +64,18 @@ public class BaseAuthorization {
 
   /**
    * convertToAuthorization
-   * 
+   *
    * @param bytes
    * @return
    * @throws Exception
    */
   private synchronized AuthorizationToken convertToAuthorization(byte[] bytes) throws Exception {
-    return mapper.readValue(this.decrypt(bytes), AuthorizationToken.class);
+    return this.mapper.readValue(this.decrypt(bytes), AuthorizationToken.class);
   }
 
   /**
    * buildCookie
-   * 
+   *
    * @param token
    * @param expiry
    * @return
@@ -93,40 +94,40 @@ public class BaseAuthorization {
 
   /**
    * buildCookieString
-   * 
+   *
    * @param token
    * @return
    * @throws Exception
    */
   private synchronized String buildCookieString(AuthorizationToken token) throws Exception {
     byte[] md5hash = DigestUtils.md5(token.toString());
-    byte[] cookieData = this.encrypt(mapper.writeValueAsBytes(token));
+    byte[] cookieData = this.encrypt(this.mapper.writeValueAsBytes(token));
     return Base64.encodeBase64URLSafeString(ArrayUtils.addAll(md5hash, cookieData));
   }
 
   /**
    * encrypt
-   * 
+   *
    * @param bytes
    * @return
    * @throws Exception
    */
   private byte[] encrypt(byte[] bytes) throws Exception {
     Cipher cipher = Cipher.getInstance("AES");
-    cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+    cipher.init(Cipher.ENCRYPT_MODE, this.aesKey);
     return cipher.doFinal(bytes);
   }
 
   /**
    * decrypt
-   * 
+   *
    * @param bytes
    * @return
    * @throws Exception
    */
   private byte[] decrypt(byte[] bytes) throws Exception {
     Cipher cipher = Cipher.getInstance("AES");
-    cipher.init(Cipher.DECRYPT_MODE, aesKey);
+    cipher.init(Cipher.DECRYPT_MODE, this.aesKey);
     return cipher.doFinal(bytes);
   }
 

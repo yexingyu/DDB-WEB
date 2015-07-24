@@ -3,6 +3,8 @@
  */
 package com.dailydealsbox.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
 import com.dailydealsbox.database.service.ProductService;
+import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -31,7 +34,7 @@ public class TestController {
   private ProductReviewRepository reviewRepo;
 
   @RequestMapping(method = RequestMethod.GET)
-  public GenericResponseData test() throws Exception {
+  public GenericResponseData test(HttpServletRequest request) throws Exception {
     //this.productService.delete(75);
     //List<Product> products = (List<Product>) this.productRepo.findAll();
     //Page<Product> products = this.productRepo.findByStatus(BaseEntityModel.STATUS.AVAILABLE, null);
@@ -40,6 +43,9 @@ public class TestController {
     //Page<Product> products = null;
 
     //this.reviewRepo.delete(1);
+
+    System.out.println(BaseAuthorization.TOKEN);
+    System.out.println(request.getAttribute(BaseAuthorization.TOKEN));
     throw new Exception("tttt");
     //return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
   }

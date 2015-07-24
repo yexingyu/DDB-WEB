@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.service;
 
@@ -14,7 +14,7 @@ public interface AuthorizationService {
 
   /**
    * verify
-   * 
+   *
    * @param cookieValue
    * @return
    */
@@ -22,7 +22,7 @@ public interface AuthorizationService {
 
   /**
    * buildCookie
-   * 
+   *
    * @param token
    * @param expiry
    * @return
@@ -31,7 +31,7 @@ public interface AuthorizationService {
 
   /**
    * buildExpiredStamp
-   * 
+   *
    * @return
    */
   public long buildExpiredStamp();
