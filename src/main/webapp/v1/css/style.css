@@ -32,15 +32,12 @@
 }
 
 
-h4 a {
-  font-family: 'Source Sans Pro',sans-serif;
-  font-weight: normal;
-}
+
 
 h4 a {
   color: #2c3e50;
   text-decoration: none;
-  text-transform: uppercase;
+    font-weight: bold;
 }
 
 .image {
@@ -52,12 +49,19 @@ h4 a {
 }
 
 .store_favicon {
-	max-width:16px;
+	max-width:24px;
 }
 
 .product_list_image {
 
 	height: 180px;
 	
+}
+
+.old-price {
+  color: #666666;
+  font-size: 14px;
+  font-weight: normal;
+  text-decoration: line-through;
 }
 

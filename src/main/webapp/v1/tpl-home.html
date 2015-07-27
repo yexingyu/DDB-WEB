@@ -29,17 +29,17 @@
             <span ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:92}}</span>
           </div>
           <div class="col-xs-12 col-sm-12">
-            <span>{{item.prices[0].currency}}${{item.prices[0].value | number:2}}</span> <span ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px"
-              alt="{{fee.title}}"></img> ${{fee.value | number:2}}
+            <span class="old-price">{{item.prices[0].currency}}${{item.prices[0].compareValue | number:2}}</span> <span> {{item.prices[0].currency}}${{item.prices[0].value | number:2}}</span> <span
+              ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"></img> ${{fee.value | number:2}}
             </span> <br>
-            <span>SubTotal: {{item.prices[0].currency}}${{item.total}}</span>
+            <span>SubTotal: CAD${{item.total}}</span>
             <hr></hr>
           </div>
           <div class="col-xs-12 col-sm-12">
             <div class="row">
               <div class="col-xs-8" align="left">
-                <span style="color: RoyalBlue; font-weight: bold;">Down: {{item.prices[0].currency}}${{item.down | number:2}}</span> <span style="color: RoyalBlue; font-weight: bold">Installment:{{item.prices[0].currency}}${{item.MonthlyPayment
-                  | number:2}}</span>
+                <span style="color: RoyalBlue; font-weight: bold;">Down: CAD${{item.down | number:2}}</span> <span style="color: RoyalBlue; font-weight: bold">Monthly Payment:
+                  CAD${{item.MonthlyPayment | number:2}}*12</span>
               </div>
               <div class="col-xs-4" align="right">
                 <a href="#/order/{{item.id}}"><img alt="Order this product, pay monthly" src="./images/pay-monthly-logo-mono.png" width=60px></a>
@@ -50,11 +50,11 @@
           <div class="col-xs-12 col-sm-12" align="left">
             <div class="row">
               <div class="col-sm-7" align="left">
-                <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags | filter: {language: $root.language.language}"><span><a>{{tag.value}}</a></span> </span>
+                <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags | filter: {language: $root.language.language}"><a>{{tag.value}}</a></span>
               </div>
               <div class="col-sm-5" align="right">
-                <a ng-click="like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
-                <a popover-placement="top" popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
+                <a ng-click="like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
+                  popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
               </div>
             </div>
           </div>
@@ -71,4 +71,3 @@
     </div>
   </div>
 </div>
-
