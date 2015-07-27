@@ -1,34 +1,3 @@
-<!-- 
-<div ng-form="myForm">
-    <h1>Welcome {{profile.firstName}} {{profile.lastName}}.</h1>
-    <ul>
-        <li><pre>{{myForm.$error | json}}</pre></li>
-        <li>
-            First Name: 
-        </li>
-        <li>Middle Name: <input type="text" ng-model="profile.middleName" /></li>
-        <li>
-            Last Name: 
-        </li>
-        
-        <li>
-            <span>Phone Number:</span><br />
-            
-        </li>
-        <li>
-            <span>Email:</span><br />
-            
-        </li>
-        <li>
-            <span>Address:</span><br />
-            
-        </li>
-        <li>
-            
-        </li>
-    </ul>
-</div>
- -->
 <div ng-form="myForm">
   <div class="well">
     <h2>Modify Profile</h2>
@@ -154,5 +123,5 @@
     </div>
   </div>
   <div class="well">
-    <a class="btn btn-default" ng-click="submit()" ng-disabled="!myForm.$valid">Submit</a> <a class="btn btn-default" href="#/profile">Cancel</a>
+    <a class="btn btn-default" ng-click="submit()" ng-disabled="!myForm.$valid">Submit</a><a class="btn btn-default" href="#/profile">Cancel</a>
   </div>
