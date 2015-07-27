@@ -32,6 +32,9 @@ public class ProductPrice extends BaseModel {
   @Column(name = "value", nullable = false)
   private double   value;
 
+  @Column(name = "compare_value")
+  private double   compare_value;
+
   @NotNull
   @Column(name = "currency", nullable = false)
   @Enumerated(EnumType.STRING)
@@ -95,6 +98,21 @@ public class ProductPrice extends BaseModel {
    */
   public void setValue(double value) {
     this.value = value;
+  }
+
+  /**
+   * @return the compare value
+   */
+  public double getCompareValue() {
+    return this.compare_value;
+  }
+
+  /**
+   * @param compare value
+   *          the value to set
+   */
+  public void setCompareValue(double compare_value) {
+    this.compare_value = compare_value;
   }
 
 }

@@ -286,7 +286,16 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                                 * parseFloat(item.fees[i].value / 100);
                     }
                 }
+                
                 item.total = total_fee + item.total;
+                if (item.prices[0].currency == "CAD") {
+                    item.exchange_rate = 1;
+                }
+                if (item.prices[0].currency == "USD") {
+                    item.exchange_rate = 1.30;
+                }
+                
+                item.total = item.total*item.exchange_rate;
                 
                 //
                 $scope.yearly_interest_rate = 0.24;

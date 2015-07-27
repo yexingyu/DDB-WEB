@@ -233,8 +233,8 @@ angular
                                         name : "",
                                         description : "",
                                         warranty : "n/a",
-                                        return_policy : "",
-                                        shipping_info : "",
+                                        return_policy : "n/a",
+                                        shipping_info : "n/a",
                                         meta_keyword : "",
                                         meta_title : "",
                                         meta_description : ""
@@ -243,9 +243,9 @@ angular
                                         language : 'FR',
                                         name : "",
                                         description : "",
-                                        warranty : "",
-                                        return_policy : "",
-                                        shipping_info : "",
+                                        warranty : "n/a",
+                                        return_policy : "n/a",
+                                        shipping_info : "n/a",
                                         meta_keyword : "",
                                         meta_title : "",
                                         meta_description : ""
