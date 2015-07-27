@@ -35,8 +35,11 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
+
+import com.dailydealsbox.web.filter.DDBAuthorizationInterceptor;
 
 import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;
@@ -60,10 +63,22 @@ public class WebApplication extends SpringBootServletInitializer {
   public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
 
   @Autowired
-  private Environment environment;
+  private Environment         environment;
+  @Autowired
+  DDBAuthorizationInterceptor authInterceptor;
 
   //@Autowired
   //private RequestMappingHandlerAdapter adapter;
+
+  @Bean
+  WebMvcConfigurerAdapter getAdapter() {
+    return new WebMvcConfigurerAdapter() {
+      @Override
+      public void addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry registry) {
+        registry.addInterceptor(WebApplication.this.authInterceptor);
+      }
+    };
+  }
 
   /**
    * confApi

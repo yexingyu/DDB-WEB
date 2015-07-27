@@ -36,6 +36,26 @@ public class GlobalErrorController implements ErrorController {
   }
 
   /**
+   * needLogin
+   *
+   * @return
+   */
+  @RequestMapping(value = "/need_login")
+  public GenericResponseData needLogin() {
+    return GenericResponseData.newInstance(BaseEnum.RESPONSE_STATUS.NEED_LOGIN, "NEED_LOGIN");
+  }
+
+  /**
+   * noPermission
+   *
+   * @return
+   */
+  @RequestMapping(value = "/no_permission")
+  public GenericResponseData noPermission() {
+    return GenericResponseData.newInstance(BaseEnum.RESPONSE_STATUS.NO_PERMISSION, "NO_PERMISSION");
+  }
+
+  /**
    * defaultErrorHandler
    *
    * @param request

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.web.base;
 
@@ -20,7 +20,7 @@ public class GenericResponseData extends BaseResponseData {
 
   /**
    * newInstance
-   * 
+   *
    * @param status
    * @param data
    * @return

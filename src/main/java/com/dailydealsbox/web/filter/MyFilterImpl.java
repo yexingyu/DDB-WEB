@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.dailydealsbox.database.service.AuthorizationService;
@@ -25,7 +24,7 @@ import com.dailydealsbox.web.base.BaseAuthorization;
 /**
  * @author x_ye
  */
-@Component
+//@Component
 public class MyFilterImpl extends OncePerRequestFilter {
   @Autowired
   AuthorizationService authService;

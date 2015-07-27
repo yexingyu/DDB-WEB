@@ -226,8 +226,7 @@ public class BaseEnum {
    * @author x_ye
    */
   public static enum ORDER_STATUS {
-    NEW("New Order"), CONFIRMED("Customer Confirmed"), WF_DOWNPAYMENT("Waiting For Downpayment"), APPROVED("Approved Order"), SHIPPED("Shipped Order"), FIN(
-        "Finished Order");
+    NEW("New Order"), CONFIRMED("Customer Confirmed"), WF_DOWNPAYMENT("Waiting For Downpayment"), APPROVED("Approved Order"), SHIPPED("Shipped Order"), FIN("Finished Order");
     private final String name;
 
     private ORDER_STATUS(String name) {
@@ -245,7 +244,7 @@ public class BaseEnum {
   }
 
   public static enum RESPONSE_STATUS {
-    SUCCESS, FAIL, ERROR, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT;
+    SUCCESS, ERROR, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT;
   }
 
   /**
