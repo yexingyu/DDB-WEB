@@ -3,43 +3,40 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 /*
  * NavBarCtrl definition
  */
-.controller(
-        'NavBarCtrl',
-        [ '$scope', '$location', '$modal', 'ProfileService', 'CookieService', 'LoginService',
-              function($scope, $location, $modal, ProfileService, CookieService, LoginService) {
+.controller('NavBarCtrl', [ '$scope', '$location', '$modal', 'ProfileService', 'CookieService', 'LoginService', function($scope, $location, $modal, ProfileService, CookieService, LoginService) {
 
-                    // retreive profile
-                    $scope.$root.profile = {};
-                    ProfileService.profile(function(response) {
-                        if (response.status == 'SUCCESS') {
-                            $scope.$root.profile = response.data;
-                        }
-                    });
+    // retreive profile
+    $scope.$root.profile = {};
+    ProfileService.profile(function(response) {
+        if (response.status == 'SUCCESS') {
+            $scope.$root.profile = response.data;
+        }
+    });
 
-                    // display login modal
-                    $scope.login = function() {
-                        LoginService.showLoginBox();
-                    };
+    // display login modal
+    $scope.login = function() {
+        LoginService.showLoginBox();
+    };
 
-                    // logout
-                    $scope.logout = function() {
-                        CookieService.logout();
-                        $scope.$root.profile = {};
-                        $location.path('/home');
-                    };
+    // logout
+    $scope.logout = function() {
+        CookieService.logout();
+        $scope.$root.profile = {};
+        $location.path('/home');
+    };
 
-                    // switch language
-                    $scope.language = $scope.$root.language;
-                    $scope.switchLanguage = function() {
-                        if ($scope.$root.language.language == 'FR') {
-                            $scope.$root.language.language = 'EN';
-                        } else {
-                            $scope.$root.language.language = 'FR'
-                        }
-                        CookieService.setLanguage($scope.$root.language.language);
-                        console.log($scope.$root.language);
-                    };
-                } ])
+    // switch language
+    $scope.language = $scope.$root.language;
+    $scope.switchLanguage = function() {
+        if ($scope.$root.language.language == 'FR') {
+            $scope.$root.language.language = 'EN';
+        } else {
+            $scope.$root.language.language = 'FR';
+        }
+        CookieService.setLanguage($scope.$root.language.language);
+        console.log($scope.$root.language);
+    };
+} ])
 /*
  * LoginCtrl definition
  */
@@ -251,43 +248,40 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
     ProductService.list(function(response) {
         if (response.status == 'SUCCESS') {
             $scope.items = response.data.content;
-            
+
             $scope.getTotal = function() {
                 $scope.product.total = parseFloat($scope.product.prices[0].value);
                 // add fees
                 total_fee = 0;
                 for (var i = 0; i < $scope.product.fees.length; i++) {
                     if ($scope.product.fees[i].type == "AMOUNT") {
-                        total_fee = total_fee
-                                + parseFloat($scope.product.fees[i].value);
+                        total_fee = total_fee + parseFloat($scope.product.fees[i].value);
                     }
                     if ($scope.product.fees[i].type == "PERCENTAGE") {
-                        total_fee = total_fee + $scope.product.prices[0].value
-                                * parseFloat($scope.product.fees[i].value / 100);
+                        total_fee = total_fee + $scope.product.prices[0].value * parseFloat($scope.product.fees[i].value / 100);
                     }
                 }
                 total = total_fee + $scope.product.total;
 
                 return total;
-            }            
-            
+            };
+
             angular.forEach($scope.items, function(item) {
-                //item financial info
-            	item.total = parseFloat(item.prices[0].value);
-                //get toal, fees
+                // item financial info
+                item.total = parseFloat(item.prices[0].value);
+                // get toal, fees
                 total_fee = 0;
                 for (var i = 0; i < item.fees.length; i++) {
                     if (item.fees[i].type == "AMOUNT") {
-                        total_fee = total_fee
-                                + parseFloat(item.fees[i].value);
+                        total_fee = total_fee + parseFloat(item.fees[i].value);
                     }
                     if (item.fees[i].type == "PERCENTAGE") {
-                        total_fee = total_fee + item.prices[0].value
-                                * parseFloat(item.fees[i].value / 100);
+                        total_fee = total_fee + item.prices[0].value * parseFloat(item.fees[i].value / 100);
                     }
                 }
                 
                 item.total = total_fee + item.total;
+
                 if (item.prices[0].currency == "CAD") {
                     item.exchange_rate = 1;
                 }
@@ -296,21 +290,18 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
                 }
                 
                 item.total = item.total*item.exchange_rate;
-                
+
                 //
                 $scope.yearly_interest_rate = 0.24;
                 $scope.number_of_payments = 12;
                 $scope.monthly_interest_rate = $scope.yearly_interest_rate / $scope.number_of_payments;
-                
+
                 item.principal = item.total * 0.618;
                 item.down = item.total * 0.382;
-                
-                item.MonthlyPayment = $scope.monthly_interest_rate
-                        * item.principal
-                        / (1 - Math.pow((1 + $scope.monthly_interest_rate),
-                                -$scope.number_of_payments));
+
+                item.MonthlyPayment = $scope.monthly_interest_rate * item.principal / (1 - Math.pow((1 + $scope.monthly_interest_rate), -$scope.number_of_payments));
                 item.MonthlyPayment = Math.round(item.MonthlyPayment * 100) / 100;
-                
+
                 item.review = {
                     productId : item.id,
                     content : '',
