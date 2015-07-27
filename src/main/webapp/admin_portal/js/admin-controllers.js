@@ -363,6 +363,7 @@ angular
                             $scope.store.website = "nordstorm.com";
                             $scope.store.dealPage = "nordstorm.com";
                             $scope.store.logo = "nordstore.jpg";
+                            $scope.store.favicon = "";
                             $scope.store.country = "US";
                             $scope.store.province = "";
                             $scope.store.type = "ONLINE";
