@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.web.base;
 

@@ -17,7 +17,7 @@ import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.database.service.MemberService;
-import com.dailydealsbox.web.base.AuthorizationToken;
+import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import io.swagger.annotations.Api;
@@ -46,31 +46,19 @@ public class MembersController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  @ApiOperation(value = "List Members",
-    response = GenericResponseData.class,
-    responseContainer = "Map",
-    produces = "application/json",
-    notes = "List pageable members.")
+  @ApiOperation(value = "List Members", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "List pageable members.")
   @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
-      @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"), @ApiImplicitParam(
-        name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
-  public GenericResponseData list(
-      @ApiIgnore @CookieValue(value = "token", required = false) String tokenString, @ApiParam(value = "filter: is deleted",
-        required = false,
-        defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
+      @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
+  @DDBAuthorization({ MEMBER_ROLE.ADMIN })
+  public GenericResponseData list(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
+      @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiIgnore Pageable pageable) {
-    AuthorizationToken token = this.authorizationService.verify(tokenString);
-    if (token == null) {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "");
-    } else if (token.getRole() == MEMBER_ROLE.ADMIN) {
-      Page<Member> members = this.service.list(deleted, pageable);
-      if (members == null || members.getNumberOfElements() == 0) {
-        return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
-      } else {
-        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, members);
-      }
+    Page<Member> members = this.service.list(deleted, pageable);
+    if (members == null || members.getNumberOfElements() == 0) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "");
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, members);
     }
   }
 

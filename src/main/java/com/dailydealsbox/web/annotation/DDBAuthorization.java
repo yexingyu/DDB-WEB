@@ -1,7 +1,7 @@
 /**
  *
  */
-package test.annotation;
+package com.dailydealsbox.web.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -12,6 +12,8 @@ import java.lang.annotation.Target;
 
 import org.springframework.web.bind.annotation.Mapping;
 
+import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
+
 /**
  * @author x_ye
  */
@@ -20,6 +22,6 @@ import org.springframework.web.bind.annotation.Mapping;
 @Documented
 @Inherited
 @Mapping
-public @interface CheckSession {
-  boolean isAuthenticate() default false;
+public @interface DDBAuthorization {
+  MEMBER_ROLE[]value() default {};
 }

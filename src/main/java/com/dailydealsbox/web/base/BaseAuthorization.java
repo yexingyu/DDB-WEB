@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * @author x_ye
  */
-
 public class BaseAuthorization {
   public final static String TOKEN  = AuthorizationToken.class.toString();
   public final static long   EXPIRY = 3600 * 24 * 7 * 1000;
@@ -50,8 +49,7 @@ public class BaseAuthorization {
     byte[] cookieData = ArrayUtils.subarray(cookieBytes, 16, cookieBytes.length);
     try {
       AuthorizationToken token = this.convertToAuthorization(cookieData);
-      if (token != null && StringUtils.equals(Base64.encodeBase64String(DigestUtils.md5(token.toString())), Base64.encodeBase64String(md5hash))
-          && token.getExpired() > System.currentTimeMillis()) {
+      if (token != null && StringUtils.equals(Base64.encodeBase64String(DigestUtils.md5(token.toString())), Base64.encodeBase64String(md5hash)) && token.getExpired() > System.currentTimeMillis()) {
         return token;
       } else {
         return null;

@@ -28,11 +28,7 @@ public class ConstantController {
    * @return
    */
   @RequestMapping(method = RequestMethod.GET)
-  @ApiOperation(value = "Retrieve system constants",
-    response = GenericResponseData.class,
-    responseContainer = "Map",
-    produces = "application/json",
-    notes = "Retrieve system constants.")
+  @ApiOperation(value = "Retrieve system constants", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Retrieve system constants.")
   public GenericResponseData retrieve() {
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, BaseEnum.enums());
   }

@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
 import com.dailydealsbox.database.service.ProductService;
+import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
@@ -34,6 +36,8 @@ public class TestController {
   private ProductReviewRepository reviewRepo;
 
   @RequestMapping(method = RequestMethod.GET)
+  @DDBAuthorization
+  //@DDBAuthorization({ BaseEnum.MEMBER_ROLE.SUPER, BaseEnum.MEMBER_ROLE.MEMBER })
   public GenericResponseData test(HttpServletRequest request) throws Exception {
     //this.productService.delete(75);
     //List<Product> products = (List<Product>) this.productRepo.findAll();
@@ -46,8 +50,8 @@ public class TestController {
 
     System.out.println(BaseAuthorization.TOKEN);
     System.out.println(request.getAttribute(BaseAuthorization.TOKEN));
-    throw new Exception("tttt");
-    //return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
+    //throw new Exception("tttt");
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "test");
   }
 
 }
