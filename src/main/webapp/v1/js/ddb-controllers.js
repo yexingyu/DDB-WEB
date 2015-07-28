@@ -110,14 +110,14 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
  */
 .controller(
         'ProductOrderCtrl',
-        [ '$scope', '$location', '$window', '$routeParams', 'ProductService', 'ProfileService', 'OrderService', 'LoginService',
-                function($scope, $location, $window, $routeParams, ProductService, ProfileService, OrderService, LoginService) {
+        [ '$scope', '$location', '$window', '$modal', '$routeParams', 'ProductService', 'ProfileService', 'OrderService', 'LoginService',
+                function($scope, $location, $window, $modal, $routeParams, ProductService, ProfileService, OrderService, LoginService) {
                     var id = $routeParams.id;
                     $scope.order = {};
 
                     // retrieve product details
                     ProductService.get(id, function(response) {
-                        if (response.status == 'SUCCESS') {
+                        if (response.status === 'SUCCESS') {
                             $scope.product = ProductService.fix(response.data);
                             $scope.order.productId = $scope.product.id;
                         } else {
@@ -127,11 +127,11 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 
                     // retrieve profile information
                     ProfileService.profile(function(response) {
-                        if (response.status == 'SUCCESS') {
+                        if (response.status === 'SUCCESS') {
                             $scope.$root.profile = response.data;
                             $scope.profile = response.data;
                             OrderService.fix($scope.order, $scope.profile);
-                        } else if (response.status == 'NEED_LOGIN') {
+                        } else if (response.status === 'NEED_LOGIN') {
                             LoginService.showLoginBox(function(profile) {
                                 $scope.$root.profile = profile;
                                 $scope.profile = profile;
@@ -146,19 +146,51 @@ angular.module('ddbApp.controllers', [ 'angular-md5' ])
 
                     });
 
-                    // submit order
-                    $scope.submit = function() {
-                        OrderService.add($scope.order, function(response) {
-                            if (response.status === 'SUCCESS') {
-                                $scope.order = response.data;
-                                $location.path('/order/' + $scope.order.id + '/confirm');
-                            } else {
-                                $location.path('/home');
-                                return;
+                    $scope.next = function() {
+                        $modal.open({
+                            animation : true,
+                            templateUrl : 'tpl-product-order-confirm.html',
+                            controller : 'ProductOrderConfirmCtrl',
+                            size : 'lg',
+                            resolve : {
+                                product : function() {
+                                    return $scope.product;
+                                },
+                                order : function() {
+                                    return $scope.order;
+                                }
                             }
+                        }).result.then(function(profile) {
+                            // on success
+                            console.log('success');
+                        }, function(reason) {
+                            // on cancel
+                            console.log('dismiss');
                         });
                     };
+
                 } ])
+
+/*
+ * ProductOrderConfirmCtrl
+ */
+.controller('ProductOrderConfirmCtrl', [ '$scope', '$location', 'product', 'order', 'ProductService', 'OrderService', function($scope, $location, product, order, ProductService, OrderService) {
+    $scope.item = product;
+    $scope.order = order;
+
+    // submit order
+    $scope.submit = function() {
+        OrderService.add($scope.order, function(response) {
+            if (response.status === 'SUCCESS') {
+                $scope.order = response.data;
+                $location.path('/order/' + $scope.order.id + '/confirm');
+            } else {
+                $location.path('/home');
+                return;
+            }
+        });
+    };
+} ])
 
 /*
  * ProfileCtrl definition

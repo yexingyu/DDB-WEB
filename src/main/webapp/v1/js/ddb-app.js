@@ -25,10 +25,6 @@ angular.module('ddbApp', [ 'ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 
         templateUrl : 'tpl-product-order.html',
         controller : 'ProductOrderCtrl'
 
-    }).when('/order/:id/confirm', {
-        templateUrl : 'tpl-order-confirm.html',
-        controller : 'OrderConfirmCtrl'
-
     }).when('/profile', {
         templateUrl : 'tpl-profile.html',
         controller : 'ProfileCtrl'

@@ -6,7 +6,7 @@
         <h3 ng-repeat="name in item.names | filter: {language: $root.language.language}">{{name.value}}</h3>
         <p ng-repeat="desc in item.descriptions | filter: {language: $root.language.language}">{{desc.value | limitTo:90}}</p>
         <p>
-          <a class="btn btn-default" href="#/product/{{item.id}}" role="button">View details &raquo;</a> <a class="btn btn-primary" href="#/order/{{item.id}}" role="button">ORDER</a>
+          <a class="btn btn-default" href="#/product/{{item.id}}" role="button">View details &raquo;</a> <a class="btn btn-primary" href="#product/{{item.id}}/order" role="button">ORDER</a>
         </p>
         <div class="col-sm-5" align="right">
           <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
