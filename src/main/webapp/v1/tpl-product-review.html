@@ -1,12 +1,12 @@
 <h4>REVIEW</h4>
 <div class="form-group">
   <label>
-    <rating ng-model="item.review.rating" max="5" on-hover="hoveringOver(value, item)" on-leave="item.review.overStar = item.review.rating"></rating>
+    <rating ng-model="item.review.rating" max="5" on-hover="actions.reviewHoveringOver(value, item)" on-leave="item.review.overStar = item.review.rating"></rating>
     <span class="label" ng-class="{'label-warning': item.review.overStar<3, 'label-info': item.review.overStar>=3 && item.review.overStar<=4, 'label-success': item.review.overStar>=5}"
         ng-show="item.review.rating">Rate: {{item.review.overStar}}</span>
   </label>
   <input type="text" ng-model="item.review.content" class="form-control">
-  <button class="btn btn-primary form-control" ng-click="review(item)">SUBMIT</button>
+  <button class="btn btn-primary form-control" ng-click="actions.review(item)">SUBMIT</button>
   <div class="alert alert-success" role="alert" ng-show="item.review.showMsg === 'message'">
     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span class="sr-only">OK:</span> {{item.review.msg}}
   </div>
@@ -14,3 +14,5 @@
     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <span class="sr-only">Error:</span> {{item.review.msg}}
   </div>
 </div>
+
+

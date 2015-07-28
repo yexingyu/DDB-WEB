@@ -57,6 +57,11 @@ angular.module('ddbApp', [ 'ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 
     }).get();
     CookieService.setFingerprint($rootScope['fingerprint']);
 
+    // set templates
+    $rootScope.popoverTemplate = {
+        reviewTemplateUrl : 'tpl-product-review.html'
+    };
+
     // Load the SDK asynchronously
     /*
      * (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if

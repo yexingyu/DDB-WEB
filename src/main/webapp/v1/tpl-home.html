@@ -53,8 +53,8 @@
                 <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags | filter: {language: $root.language.language}"><a>{{tag.value}}</a></span>
               </div>
               <div class="col-sm-5" align="right">
-                <a ng-click="like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
-                  popover-template="reviewPopover.templateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
+                <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
+                  popover-template="$root.popoverTemplate.reviewTemplateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
               </div>
             </div>
           </div>
