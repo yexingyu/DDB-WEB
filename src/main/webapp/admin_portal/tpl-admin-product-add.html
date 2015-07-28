@@ -33,7 +33,7 @@
         <div class="panel-heading">Test Price, Tax and Fee</div>
         <div class="panel-body">
           <div class="form-group">
-            <label>Test Price:</label>
+            <label>Test Price & Compare Price:</label>
             <p>
               <span ng-repeat="price in product.prices"> <select ng-model="price.currency" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
                 ng-model="price.value" placeholder ="Enter the product price"/>
