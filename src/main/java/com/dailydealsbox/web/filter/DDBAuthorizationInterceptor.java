@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
@@ -39,6 +40,9 @@ public class DDBAuthorizationInterceptor implements HandlerInterceptor {
    */
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException, IOException {
+
+    if (handler instanceof ParameterizableViewController) { return true; }
+    //System.out.println(handler);
 
     DDBAuthorization authAnnotation = ((HandlerMethod) handler).getMethod().getDeclaredAnnotation(DDBAuthorization.class);
 
