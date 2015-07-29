@@ -1,2 +1,10 @@
+<div class="well">
+    <div class="row">Policy</div>
+    <hr>
+    <input type="checkbox" ng-model="agree"> I Agree
+    <hr>
+    <a class="btn btn-primary" ng-disabled="!agree" ng-click="submit()">SUBMIT</a>
+    <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+</div>
 <pre>{{item | json}}</pre>
 <pre>{{order | json}}</pre>

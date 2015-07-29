@@ -1,0 +1,6 @@
+<div ng-repeat="order in orders.content">
+    <a href="#/order/id/{{order.id}}">{{order.product.texts[0].name}}</a>
+    <hr>
+
+    <pre>{{order | json}}</pre>
+</div>

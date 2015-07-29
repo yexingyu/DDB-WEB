@@ -1,71 +1,79 @@
-angular.module('ddbApp', [ 'ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap' ])
+angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap'])
 
-.config([ '$routeProvider', function($routeProvider) {
-    $routeProvider.when('/home', {
-        templateUrl : 'tpl-home.html',
-        controller : 'HomeCtrl'
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/home', {
+            templateUrl: 'tpl-home.html',
+            controller: 'HomeCtrl'
 
-    }).when('/contact', {
-        templateUrl : 'tpl-contact.html',
-        controller : 'ContactCtrl'
+        }).when('/contact', {
+            templateUrl: 'tpl-contact.html',
+            controller: 'ContactCtrl'
 
-    }).when('/about', {
-        templateUrl : 'tpl-about.html',
-        controller : 'AboutCtrl'
+        }).when('/about', {
+            templateUrl: 'tpl-about.html',
+            controller: 'AboutCtrl'
 
-    }).when('/product', {
-        templateUrl : 'tpl-product.html',
-        controller : 'ProductCtrl'
+        }).when('/product', {
+            templateUrl: 'tpl-product.html',
+            controller: 'ProductCtrl'
 
-    }).when('/product/:id', {
-        templateUrl : 'tpl-product-details.html',
-        controller : 'ProductDetailsCtrl'
+        }).when('/product/:id', {
+            templateUrl: 'tpl-product-details.html',
+            controller: 'ProductDetailsCtrl'
 
-    }).when('/product/:id/order', {
-        templateUrl : 'tpl-product-order.html',
-        controller : 'ProductOrderCtrl'
+        }).when('/product/:id/order', {
+            templateUrl: 'tpl-product-order.html',
+            controller: 'ProductOrderCtrl'
 
-    }).when('/profile', {
-        templateUrl : 'tpl-profile.html',
-        controller : 'ProfileCtrl'
+        }).when('/order/me', {
+            templateUrl: 'tpl-order-me.html',
+            controller: 'OrderMeCtrl'
 
-    }).when('/profile/edit', {
-        templateUrl : 'tpl-profile-edit.html',
-        controller : 'ProfileEditCtrl'
+        }).when('/order/id/:id', {
+            templateUrl: 'tpl-order-details.html',
+            controller: 'OrderDetailsCtrl'
 
-    }).otherwise({
-        redirectTo : '/home'
-    });
-} ])
+        }).when('/profile', {
+            templateUrl: 'tpl-profile.html',
+            controller: 'ProfileCtrl'
 
-.run([ '$rootScope', '$window', 'CookieService', 'ConstantService', function($rootScope, $window, CookieService, ConstantService) {
-    ConstantService.init();
+        }).when('/profile/edit', {
+            templateUrl: 'tpl-profile-edit.html',
+            controller: 'ProfileEditCtrl'
 
-    // set language
-    $rootScope['language'] = {
-        'language' : CookieService.getLanguage()
-    };
+        }).otherwise({
+            redirectTo: '/home'
+        });
+    }])
 
-    // set fingerprint
-    $rootScope['fingerprint'] = new Fingerprint({
-        canvas : true,
-        ie_activex : true
-    }).get();
-    CookieService.setFingerprint($rootScope['fingerprint']);
+    .run(['$rootScope', '$window', 'CookieService', 'ConstantService', function ($rootScope, $window, CookieService, ConstantService) {
+        ConstantService.init();
 
-    // set templates
-    $rootScope.popoverTemplate = {
-        reviewTemplateUrl : 'tpl-product-review.html'
-    };
+        // set language
+        $rootScope['language'] = {
+            'language': CookieService.getLanguage()
+        };
 
-    // Load the SDK asynchronously
-    /*
-     * (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if
-     * (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
-     * js.src = "//connect.facebook.net/en_US/sdk.js";
-     * fjs.parentNode.insertBefore(js, fjs); }(document, 'script',
-     * 'facebook-jssdk')); // Initial fb SDK $window.fbAsyncInit = function() {
-     * FB.init({ appId : '1170711572955238', cookie : true, xfbml : true,
-     * version : 'v2.3' }); };
-     */
-} ]);
+        // set fingerprint
+        $rootScope['fingerprint'] = new Fingerprint({
+            canvas: true,
+            ie_activex: true
+        }).get();
+        CookieService.setFingerprint($rootScope['fingerprint']);
+
+        // set templates
+        $rootScope.popoverTemplate = {
+            reviewTemplateUrl: 'tpl-product-review.html'
+        };
+
+        // Load the SDK asynchronously
+        /*
+         * (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if
+         * (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+         * js.src = "//connect.facebook.net/en_US/sdk.js";
+         * fjs.parentNode.insertBefore(js, fjs); }(document, 'script',
+         * 'facebook-jssdk')); // Initial fb SDK $window.fbAsyncInit = function() {
+         * FB.init({ appId : '1170711572955238', cookie : true, xfbml : true,
+         * version : 'v2.3' }); };
+         */
+    }]);

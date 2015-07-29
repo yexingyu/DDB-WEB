@@ -33,10 +33,10 @@ public class OrderServiceImpl implements OrderService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.OrderService#list(boolean, org.springframework.data.domain.Pageable)
+   * @see com.dailydealsbox.database.service.OrderService#listAll(boolean, org.springframework.data.domain.Pageable)
    */
   @Override
-  public Page<Order> list(boolean deleted, Pageable pageable) {
+  public Page<Order> listAll(boolean deleted, Pageable pageable) {
     return this.repo.findByDeleted(deleted, pageable);
   }
 
@@ -93,5 +93,14 @@ public class OrderServiceImpl implements OrderService {
       o.setOrder(order);
     }
     return order;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.OrderService#listByMemberId(int, boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Order> listByMemberId(int memberId, boolean deleted, Pageable pageable) {
+    return this.repo.findByMemberIdAndDeleted(memberId, deleted, pageable);
   }
 }

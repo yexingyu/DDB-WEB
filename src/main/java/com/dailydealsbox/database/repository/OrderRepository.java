@@ -28,8 +28,18 @@ public interface OrderRepository extends CrudRepository<Order, Integer> {
   public Page<Order> findByDeleted(boolean deleted, Pageable pageable);
 
   /**
-   * modifyStatus
+   * findByMemberIdAndDeleted
    * 
+   * @param memberId
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  public Page<Order> findByMemberIdAndDeleted(int memberId, boolean deleted, Pageable pageable);
+
+  /**
+   * modifyStatus
+   *
    * @param orderId
    * @param status
    */

@@ -22,13 +22,23 @@ public interface OrderService {
   public Order get(int id);
 
   /**
-   * list
+   * listAll
    *
    * @param deleted
    * @param pageable
    * @return
    */
-  public Page<Order> list(boolean deleted, Pageable pageable);
+  public Page<Order> listAll(boolean deleted, Pageable pageable);
+
+  /**
+   * listByMemberId
+   * 
+   * @param memberId
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  public Page<Order> listByMemberId(int memberId, boolean deleted, Pageable pageable);
 
   /**
    * insert
@@ -55,7 +65,7 @@ public interface OrderService {
 
   /**
    * modifiyStatus
-   * 
+   *
    * @param id
    * @param status
    * @return

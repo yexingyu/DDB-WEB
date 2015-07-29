@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +48,7 @@ public class OrderController {
   AuthorizationService authorizationService;
 
   /**
-   * list
+   * listAll
    *
    * @param deleted
    * @param pageable
@@ -61,10 +60,36 @@ public class OrderController {
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
+  public GenericResponseData listAll(
+      @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
+      @ApiIgnore Pageable pageable) {
+    Page<Order> orders = this.orderService.listAll(deleted, pageable);
+    if (orders == null || orders.getNumberOfElements() == 0) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+    } else {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, orders);
+    }
+  }
+
+  /**
+   * list
+   * 
+   * @param deleted
+   * @param pageable
+   * @param request
+   * @return
+   */
+  @RequestMapping(value = "me", method = RequestMethod.GET)
+  @ApiOperation(value = "list my orders", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "List pageable orders of specific member.")
+  @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
+  @DDBAuthorization
   public GenericResponseData list(
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
-      @ApiIgnore @CookieValue(value = "token", required = false) String tokenString, @ApiIgnore Pageable pageable) {
-    Page<Order> orders = this.orderService.list(deleted, pageable);
+      @ApiIgnore Pageable pageable, HttpServletRequest request) {
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    Page<Order> orders = this.orderService.listByMemberId(token.getMemberId(), deleted, pageable);
     if (orders == null || orders.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
@@ -81,8 +106,7 @@ public class OrderController {
   @RequestMapping(value = "id/{id}", method = RequestMethod.GET)
   @ApiOperation(value = "retrieve order details", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Retrieve order details.")
   @DDBAuthorization
-  public GenericResponseData retrieve(@ApiParam(value = "order id", required = true) @PathVariable("id") int id, @ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
-      HttpServletRequest request) {
+  public GenericResponseData retrieve(@ApiParam(value = "order id", required = true) @PathVariable("id") int id, HttpServletRequest request) {
 
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
     if (token.getRole() == MEMBER_ROLE.ADMIN) {
@@ -112,7 +136,7 @@ public class OrderController {
   @RequestMapping(method = { RequestMethod.POST })
   @ApiOperation(value = "insert order", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Insert a new order.")
   @DDBAuthorization
-  public GenericResponseData insert(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString, @ApiParam(value = "order object", required = true) @RequestBody Order order) {
+  public GenericResponseData insert(@ApiParam(value = "order object", required = true) @RequestBody Order order) {
     order.setStatus(BaseEnum.ORDER_STATUS.NEW);
     Order orderFromDb = this.orderService.insert(order);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, orderFromDb);
@@ -129,8 +153,8 @@ public class OrderController {
   @RequestMapping(value = "id/{id}/switch_status", method = { RequestMethod.PUT })
   @ApiOperation(value = "switch status", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Switch status of order.")
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData switchStatus(@ApiParam(value = "order id", required = true) @PathVariable("id") int orderId, @ApiParam(value = "order object", required = true) @RequestBody String status,
-      @ApiIgnore @CookieValue(value = "token", required = false) String tokenString) {
+  public GenericResponseData switchStatus(@ApiParam(value = "order id", required = true) @PathVariable("id") int orderId,
+      @ApiParam(value = "order object", required = true) @RequestBody String status) {
     BaseEnum.ORDER_STATUS orderStatus = BaseEnum.ORDER_STATUS.valueOf(status);
     this.orderService.modifiyStatus(orderId, orderStatus);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, orderStatus);
