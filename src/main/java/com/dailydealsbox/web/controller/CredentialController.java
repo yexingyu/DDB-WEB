@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Member;
+import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_LOGIN_TYPE;
+import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.database.service.MemberService;
@@ -53,9 +55,32 @@ public class CredentialController {
   @RequestMapping(method = RequestMethod.GET)
   @ApiOperation(value = "Check credential", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Check credential.")
   @DDBAuthorization
-  public GenericResponseData checkCookie(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString, HttpServletRequest request) {
+  public GenericResponseData checkCookie(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString, HttpServletRequest request) throws Exception {
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, token);
+  }
+
+  /**
+   * register
+   *
+   * @param member
+   * @return
+   */
+  @RequestMapping(value = "register", method = RequestMethod.POST)
+  @ApiOperation(value = "new credential", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "new credential.")
+  public GenericResponseData register(@ApiParam(value = "member object", required = true) @RequestBody Member member) throws Exception {
+    // fix member data
+    if (member.getMiddleName() == null) {
+      member.setMiddleName("");
+    }
+    if (member.getLoginType() == null) {
+      member.setLoginType(MEMBER_LOGIN_TYPE.DAILYDEALSBOX);
+    }
+    member.setRole(MEMBER_ROLE.MEMBER);
+
+    // inserting member
+    Member memberFromDb = this.memberService.insert(member);
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, memberFromDb);
   }
 
   /**
@@ -68,7 +93,7 @@ public class CredentialController {
   @ApiOperation(value = "Login", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Login.")
   public GenericResponseData login(@ApiParam(value = "member object", required = true) @RequestBody Member member,
       @ApiParam(value = "remember me", required = false, defaultValue = "false") @RequestParam(value = "rememberMe", required = false, defaultValue = "false") boolean rememberMe,
-      HttpServletResponse response) {
+      HttpServletResponse response) throws Exception {
     Member member_from_db = this.memberService.getByAccount(member.getAccount());
     if (member_from_db != null && StringUtils.equals(member_from_db.getPassword(), member.getPassword())) {
       int expiry = -1;

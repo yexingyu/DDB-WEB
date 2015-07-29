@@ -46,12 +46,16 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 }, {});
                 new LoginResource(member).$save(callback);
             },
+            register: function (member, callback) {
+                var LoginResource = $resource('/api/credential/register', {}, {});
+                new LoginResource(member).$save(callback);
+            },
             showLoginBox: function (success, dismiss) {
                 return $modal.open({
                     animation: true,
                     templateUrl: 'tpl-login.html',
                     controller: 'LoginCtrl',
-                    size: 'sm'
+                    size: 'md'
                 }).result.then(success, dismiss);
             }
         };

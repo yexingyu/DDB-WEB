@@ -62,7 +62,7 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public Member insert(Member member) {
     this.fixMember(member);
-    return this.update(member);
+    return this.repo.save(member);
   }
 
   /**
@@ -72,14 +72,20 @@ public class MemberServiceImpl implements MemberService {
    * @return
    */
   private Member fixMember(Member member) {
-    for (MemberAddress o : member.getAddresses()) {
-      o.setMember(member);
+    if (member.getAddresses() != null) {
+      for (MemberAddress o : member.getAddresses()) {
+        o.setMember(member);
+      }
     }
-    for (MemberEmail o : member.getEmails()) {
-      o.setMember(member);
+    if (member.getEmails() != null) {
+      for (MemberEmail o : member.getEmails()) {
+        o.setMember(member);
+      }
     }
-    for (MemberPhone o : member.getPhones()) {
-      o.setMember(member);
+    if (member.getPhones() != null) {
+      for (MemberPhone o : member.getPhones()) {
+        o.setMember(member);
+      }
     }
     return member;
   }

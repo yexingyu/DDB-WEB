@@ -40,17 +40,42 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      * LoginCtrl definition
      */
     .controller('LoginCtrl', ['$scope', '$location', 'LoginService', 'md5', '$modalInstance', function ($scope, $location, LoginService, md5, $modalInstance) {
+        // member login
+        $scope.loginAccount = {};
+        $scope.isLoginFail = false;
         $scope.login = function () {
-            $scope.isFail = false;
-            $scope.member.password = md5.createHash($scope.member.passwd || '');
-            delete $scope.member.passwd;
-            LoginService.login($scope.member, function (response) {
+            $scope.isLoginFail = false;
+            $scope.loginAccount.password = md5.createHash($scope.loginAccount.passwd || '');
+            delete $scope.loginAccount.passwd;
+            LoginService.login($scope.loginAccount, function (response) {
                 if (response.status == "SUCCESS") {
                     $scope.$root.profile = response.data;
                     $modalInstance.close(response.data);
-                    $scope.isFail = false;
+                    $scope.isLoginFail = false;
                 } else {
-                    $scope.isFail = true;
+                    $scope.isLoginFail = true;
+                }
+            });
+        };
+
+        // member register
+        $scope.registerInfo = {};
+        $scope.isRegisterFail = false;
+        $scope.register = function () {
+            $scope.isRegisterFail = false;
+            $scope.registerInfo.password = md5.createHash($scope.registerInfo.firstPassword || '');
+            delete $scope.registerInfo.firstPassword;
+            delete $scope.registerInfo.rePassword;
+            $scope.registerInfo.emails = [{email: $scope.registerInfo.account}];
+            LoginService.register($scope.registerInfo, function (response) {
+                if (response.status === "SUCCESS") {
+                    // register success
+                    console.log('register success');
+                    $scope.isRegisterFail = false;
+                } else {
+                    // register fail
+                    console.log('register fail');
+                    $scope.isRegisterFail = true;
                 }
             });
         };
