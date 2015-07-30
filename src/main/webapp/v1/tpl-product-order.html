@@ -1,71 +1,227 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-8">
-		    <div class="row">		    
-					<div class="panel panel-primary">
-					<div class="panel panel-default" ng-repeat="address in order.addresses">
-					  <div class="panel-heading">{{$root.constant.MEMBER_ADDRESS_TYPE[address.type]}} Address</div>
-					  <div class="panel-body">
-					    <div class="row">
-					      <div class="col-xs-2">
-					        <select ng-model="address.type" class="form-control">
-					          <option value="{{key}}" ng-selected="key === address.type" ng-repeat="(key, value) in $root.constant.MEMBER_ADDRESS_TYPE">{{value}}</option>
-					        </select>
-					      </div>
-					    </div>
-					    <div class="row">
-					      <div class="col-xs-6">
-					        <input type="text" class="form-control" ng-model="address.address1" placeholder="Address Line 1">
-					      </div>
-					      <div class="col-xs-6">
-					        <input type="text" class="form-control" ng-model="address.address2" placeholder="Address Line 2">
-					      </div>
-					    </div>
-					    <div class="row">
-					      <div class="col-xs-3">
-					        <input type="text" placeholder="City" ng-model="address.city" class="form-control" />
-					      </div>
-					      <div class="col-xs-3">
-					        <input type="text" placeholder="Province" ng-model="address.region" class="form-control" />
-					      </div>
-					      <div class="col-xs-3">
-					        <select ng-model="address.country" class="form-control">
-					          <option value="{{key}}" ng-selected="key === address.country" ng-repeat="(key, value) in $root.constant.COUNTRY">{{value}}</option>
-					        </select>
-					      </div>
-					      <div class="col-xs-3">
-					        <input type="text" placeholder="Postal Code" ng-model="address.postCode" class="form-control" />
-					      </div>
+            <div class="row">
+            <div class="col-xs-12">
+	            <div class="panel panel-primary">
+	            <div class="panel-heading">Shipping Address
+	            </div>
+	            <div>
+	            	<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="firstName" class="col-xs-2 control-label">First Name</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="firstName" placeholder="">
 					    </div>
 					  </div>
-					</div>
-				</div>		        
-		        <div class="col-xs-12">Down Payment</div>
-		        
-		        <div class="col-xs-12">Terms and Conditions</div>
+					  <div class="form-group">
+					    <label for="lastName" class="col-xs-2 control-label">Last Name</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="lastName" placeholder="">
+					    </div>
+					  </div>					  
+					  <div class="form-group">
+					    <label for="addressLine1" class="col-xs-2 control-label">Apt./Suite # (optional)</label>
+					    <div class="col-xs-8">
+					      <input type="text" class="form-control" id="addressLine1" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="addressLine2" class="col-xs-2 control-label">Address</label>
+					    <div class="col-xs-8">
+					      <input type="text" class="form-control" id="addressLine2" placeholder="">
+                          <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#addressTips">Address Tips</button>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="city" class="col-xs-2 control-label">City</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="city" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="province" class="col-xs-2 control-label">Province</label>
+					    <div class="col-xs-4">
+							<select class="form-control">
+								<option value="0">-- Select --</option>
+								<option value="AB">Alberta</option>
+								<option value="BC">British Columbia</option>
+								<option value="MB">Manitoba</option>
+								<option value="NB">New Brunswick</option>
+								<option value="NL">Newfoundland and Labrador</option>
+								<option value="NS">Nova Scotia</option>
+								<option value="NT">Northwest Territories</option>
+								<option value="NU">Nunavut</option>
+								<option value="ON">Ontario</option>
+								<option value="PE">Prince Edward Island</option>
+								<option value="QC">Quebec</option>
+								<option value="SK">Saskatchewan</option>
+								<option value="YT">Yukon</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="postal code" class="col-xs-2 control-label">Postal Code</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="postal code" placeholder="A1A 1A1">
+					    </div>
+					  </div>					  
+					  <div class="form-group">
+					    <label for="country" class="col-xs-2 control-label">Country</label>
+					    <div class="col-xs-4">
+							<select class="form-control">
+								<option selected="selected" value="CA">Canada</option>
+							</select>
+					      
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="phone1" class="col-xs-2 control-label">Phone</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="phone1" placeholder="">
+					    </div>
+					  </div>	
+					  <div class="form-group">
+					    <label for="phone2" class="col-xs-2 control-label">Other Phone (optional)</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="phone2" placeholder="">
+					    </div>
+					  </div>						  				  					  					  					  
+					</form>  
+	            </div>
+            </div>
+            </div>
+            
+            </div>
+            <div class="row">
+            <div class="col-xs-12">
+		        <div class="panel panel-default">
+		            <div class="panel-heading">Shipment
+		            </div>
+		        </div>
+		    </div>
+		   </div>      
+            <div class="row">
+	            <!-- billing address
+	            <div class="panel panel-primary">
+	            <div class="panel-heading">Billing Address
+	            </div>
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox"> Same as Billing Address
+				    </label>
+				  </div>	            
+	            <div>
+	            	<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="firstName" class="col-xs-2 control-label">First Name</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="firstName" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="lastName" class="col-xs-2 control-label">Last Name</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="lastName" placeholder="">
+					    </div>
+					  </div>					  
+					  <div class="form-group">
+					    <label for="addressLine1" class="col-xs-2 control-label">Apt./Suite # (optional)</label>
+					    <div class="col-xs-8">
+					      <input type="text" class="form-control" id="addressLine1" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="addressLine2" class="col-xs-2 control-label">Address</label>
+					    <div class="col-xs-8">
+					      <input type="text" class="form-control" id="addressLine2" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="city" class="col-xs-2 control-label">City</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="city" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="province" class="col-xs-2 control-label">Province</label>
+					    <div class="col-xs-4">
+							<select class="form-control">
+								<option value="0">-- Select --</option>
+								<option value="AB">Alberta</option>
+								<option value="BC">British Columbia</option>
+								<option value="MB">Manitoba</option>
+								<option value="NB">New Brunswick</option>
+								<option value="NL">Newfoundland and Labrador</option>
+								<option value="NS">Nova Scotia</option>
+								<option value="NT">Northwest Territories</option>
+								<option value="NU">Nunavut</option>
+								<option value="ON">Ontario</option>
+								<option value="PE">Prince Edward Island</option>
+								<option value="QC">Quebec</option>
+								<option value="SK">Saskatchewan</option>
+								<option value="YT">Yukon</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="postal code" class="col-xs-2 control-label">Postal Code</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="postal code" placeholder="A1A 1A1">
+					    </div>
+					  </div>					  
+					  <div class="form-group">
+					    <label for="country" class="col-xs-2 control-label">Country</label>
+					    <div class="col-xs-4">
+							<select class="form-control">
+								<option selected="selected" value="CA">Canada</option>
+							</select>
+					      
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="phone1" class="col-xs-2 control-label">Phone</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="phone1" placeholder="">
+					    </div>
+					  </div>	
+					  <div class="form-group">
+					    <label for="phone2" class="col-xs-2 control-label">Other Phone (optional)</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="phone2" placeholder="">
+					    </div>
+					  </div>						  				  					  					  					  
+					</form>  
+	            </div>
+            </div>
+            -->
+            </div>            
+		    <div class="row">
+			    <div class="col-xs-12">
+				<div class="panel panel-primary">
+	            <div class="panel-heading">Loan Agreement
+	            </div>				
+			    </div>
+				</div>
 		    </div>
         </div>
         
         <div class="col-xs-4">
 		    <div class="row">
-				<div class="well">
-				  <div class="row">
-				    <div class="col-xs-6 col-md-3" ng-repeat="image in product.images">
-				      <a class="thumbnail"> <img ng-src="{{image.url}}" alt="{{image.alt}}">
-				      </a>
-				    </div>
-				  </div>
-				  <div class="row">
-				    <h3>
-				      <a href="#/product/{{product.id}}">{{product.texts[$root.language.language].name}}</a>
-				    </h3>
-				  </div>
-				  <div class="row">{{product.texts[$root.language.language].description}}</div>
-				  <div class="row"><b>Warranty:</b> {{product.texts[$root.language.language].warranty}}</div>
-				</div>		        
-		        <div class="col-xs-12">Payment Schedule</div>
+		        
+		        <div class="col-xs-12">
+		        Order total
+		        </div>
 		    </div>        
         </div>
+        <div class="col-xs-4">
+		    <div class="row">
+		        
+		        <div class="col-xs-12">
+		        Payment Schedule
+		        </div>
+		    </div>        
+        </div>        
     </div>
 </div>
 
@@ -93,3 +249,63 @@
   </span>
 </div>
  -->
+ 
+
+
+
+
+
+
+
+<!-- address tips -->
+<div id="addressTips" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Address Tips</h4>
+      </div>
+      <div class="modal-body">
+    <h3>Are there any tips to ensure fast delivery of my order to the correct address&#63;</h3>
+
+    
+
+    <div class="content-pmessage">
+        
+                    
+                    
+                <p>Enter your address information carefully. Ensure it is correct, accurate, and up-to-date. Incorrect address information will cause delays with your order. </p>
+<li>Shipping address can be any address in Canada and should include the apartment number (if applicable) </li>
+<li><strong>Billing address and phone number must be identical to what's on your monthly credit card statement</strong> </li>
+<li>Include the apartment buzzer number at the end of the address (2410 Mountain Rd. - Buzzer #120) (if applicable) </li>
+<li>To make sure that orders being sent to PO boxes and rural route addresses get to their proper destination, please include a physical street address or highway number with your order </li>
+<li>Scheduled Delivery items require a civic address. Delays will occur if only a PO box is provided as the shipping location <br />
+<br />
+Here are some common examples:<br />
+<br />
+<strong>Standard address:</strong> 2410 Mountain Rd.<br />
+<strong>Standard address with apartment and buzzer code:</strong> 2410 Mountain Rd. Apt. 12 - Buzzer #120<br />
+<strong>Standard PO BOX Address:</strong> PO BOX 4001 STN A 2410 Mountain Rd.<br />
+<br />
+To make sure that orders being sent to PO boxes and rural route addresses get to their proper destination, please include a physical street address or highway number in addition to your PO BOX number as shown above. </li>
+<p><strong>Please note:</strong> Scheduled Delivery items require a civic address. Delays will occur if only a PO box is provided as the shipping location.</p>
+    </div>
+</div>
+    
+
+        <div class="clear"> </div>
+    </div>
+
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
