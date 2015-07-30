@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
+import com.dailydealsbox.database.service.MailService;
 import com.dailydealsbox.database.service.ProductService;
-import com.dailydealsbox.web.annotation.DDBAuthorization;
-import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -29,6 +28,8 @@ import springfox.documentation.annotations.ApiIgnore;
 public class TestController {
 
   @Autowired
+  private MailService             mailService;
+  @Autowired
   private ProductRepository       productRepo;
   @Autowired
   private ProductService          productService;
@@ -36,7 +37,7 @@ public class TestController {
   private ProductReviewRepository reviewRepo;
 
   @RequestMapping(method = RequestMethod.GET)
-  @DDBAuthorization
+  //@DDBAuthorization
   //@DDBAuthorization({ BaseEnum.MEMBER_ROLE.SUPER, BaseEnum.MEMBER_ROLE.MEMBER })
   public GenericResponseData test(HttpServletRequest request) throws Exception {
     //this.productService.delete(75);
@@ -48,9 +49,11 @@ public class TestController {
 
     //this.reviewRepo.delete(1);
 
-    System.out.println(BaseAuthorization.TOKEN);
-    System.out.println(request.getAttribute(BaseAuthorization.TOKEN));
+    //System.out.println(BaseAuthorization.TOKEN);
+    //System.out.println(request.getAttribute(BaseAuthorization.TOKEN));
     //throw new Exception("tttt");
+
+    this.mailService.send("yexingyu@gmail.com", "no-reply email from ddb-web", "body: from ddb-web");
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "test");
   }
 
