@@ -30,6 +30,10 @@ public class MemberEmail extends BaseModel {
   @Column(name = "email", nullable = false, length = 100)
   private String email;
 
+  @NotNull
+  @Column(name = "verified", nullable = false)
+  private boolean verified;
+
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
@@ -43,6 +47,21 @@ public class MemberEmail extends BaseModel {
   public boolean validate() {
     if (StringUtils.isBlank(this.getEmail())) { return false; }
     return true;
+  }
+
+  /**
+   * @return the verified
+   */
+  public boolean isVerified() {
+    return this.verified;
+  }
+
+  /**
+   * @param verified
+   *          the verified to set
+   */
+  public void setVerified(boolean verified) {
+    this.verified = verified;
   }
 
   /**
