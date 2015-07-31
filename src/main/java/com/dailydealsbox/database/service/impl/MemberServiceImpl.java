@@ -97,6 +97,9 @@ public class MemberServiceImpl implements MemberService {
         member.getEmails().add(primaryEmail);
       }
       for (MemberEmail o : member.getEmails()) {
+        if (StringUtils.isBlank(o.getHashCode())) {
+          o.generateHashCode();
+        }
         o.setMember(member);
       }
     }

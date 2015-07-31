@@ -61,6 +61,13 @@ public class CredentialController {
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, token);
   }
 
+  /**
+   * verifyEmail
+   *
+   * @param hashCode
+   * @param request
+   * @return
+   */
   @RequestMapping(value = "verify_email", method = RequestMethod.POST)
   @ApiOperation(value = "email verification", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Email verification.")
   public GenericResponseData verifyEmail(@ApiParam(value = "hash_code", required = true) @RequestBody String hashCode, HttpServletRequest request) {
@@ -88,12 +95,9 @@ public class CredentialController {
   @DDBAuthorization
   public GenericResponseData sendEmailVerification(@ApiParam(value = "email", required = true) @RequestParam(value = "email", required = true) String email, HttpServletRequest request)
       throws Exception {
-    System.out.println("sendEmailVerification");
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
-    System.out.println(token);
     Member me = this.memberService.get(token.getMemberId());
 
-    System.out.println(me);
     // if no this member in database, return error(code=001)
     if (me == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
 
