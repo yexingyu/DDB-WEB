@@ -1,0 +1,6 @@
+<div class="well">
+    <div class="alert alert-info" role="alert" ng-if="rst === 0">Waiting for verify email.</div>
+    <div class="alert alert-success" role="alert" ng-if="rst === 1">Success verify email: {{email.email}} </div>
+    <div class="alert alert-danger" role="alert" ng-if="rst === 2">Fail verify email.</div>
+    <a class="btn btn-default" href="#/profile">Back to profile</a>
+</div>

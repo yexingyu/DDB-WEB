@@ -41,6 +41,10 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
             templateUrl: 'tpl-profile-edit.html',
             controller: 'ProfileEditCtrl'
 
+        }).when('/profile/verify_email/:hashCode', {
+            templateUrl: 'tpl-profile-verify-email.html',
+            controller: 'ProfileVerifyEmailCtrl'
+
         }).otherwise({
             redirectTo: '/home'
         });

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.database.model.Member;
+import com.dailydealsbox.database.model.MemberEmail;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_LOGIN_TYPE;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.service.AuthorizationService;
+import com.dailydealsbox.database.service.MailService;
 import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.AuthorizationToken;
@@ -30,7 +31,6 @@ import com.dailydealsbox.web.base.GenericResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author x_ye
@@ -41,8 +41,9 @@ import springfox.documentation.annotations.ApiIgnore;
 public class CredentialController {
 
   @Resource
-  MemberService memberService;
-
+  MemberService        memberService;
+  @Resource
+  MailService          mailService;
   @Resource
   AuthorizationService authorizationService;
 
@@ -55,9 +56,63 @@ public class CredentialController {
   @RequestMapping(method = RequestMethod.GET)
   @ApiOperation(value = "Check credential", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Check credential.")
   @DDBAuthorization
-  public GenericResponseData checkCookie(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString, HttpServletRequest request) throws Exception {
+  public GenericResponseData checkCookie(HttpServletRequest request) throws Exception {
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, token);
+  }
+
+  @RequestMapping(value = "verify_email", method = RequestMethod.POST)
+  @ApiOperation(value = "email verification", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Email verification.")
+  public GenericResponseData verifyEmail(@ApiParam(value = "hash_code", required = true) @RequestBody String hashCode, HttpServletRequest request) {
+    if (StringUtils.isBlank(hashCode) || hashCode.length() != 32) {
+      GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001");
+    }
+    MemberEmail email = this.mailService.verifyEmail(hashCode, request.getRemoteAddr());
+    if (email == null) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "002");
+    } else {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, email);
+    }
+  }
+
+  /**
+   * sendEmailVerification
+   *
+   * @param email
+   * @param request
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "verify_email", method = RequestMethod.GET)
+  @ApiOperation(value = "send email verification", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Request send email verification.")
+  @DDBAuthorization
+  public GenericResponseData sendEmailVerification(@ApiParam(value = "email", required = true) @RequestParam(value = "email", required = true) String email, HttpServletRequest request)
+      throws Exception {
+    System.out.println("sendEmailVerification");
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    System.out.println(token);
+    Member me = this.memberService.get(token.getMemberId());
+
+    System.out.println(me);
+    // if no this member in database, return error(code=001)
+    if (me == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
+
+    // if no emails in database, return no_permission(code=002)
+    if (me.getEmails() == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "002"); }
+
+    MemberEmail verifyEmail = null;
+    for (MemberEmail objEmail : me.getEmails()) {
+      if (StringUtils.equalsIgnoreCase(objEmail.getEmail(), email)) {
+        verifyEmail = objEmail;
+        break;
+      }
+    }
+
+    // if email is not belong to this member, return no_permission(code=003)
+    if (verifyEmail == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "003"); }
+
+    this.mailService.sendVerifyEmail(verifyEmail);
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
   }
 
   /**

@@ -5,6 +5,7 @@ package com.dailydealsbox.database.service.impl;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public Member update(Member member) {
-    this.fixMember(member);
+    this.fix(member);
     return this.repo.save(member);
   }
 
@@ -61,27 +62,46 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public Member insert(Member member) {
-    this.fixMember(member);
+    this.fix(member);
     return this.repo.save(member);
   }
 
   /**
-   * fixMember
+   * fix
    *
    * @param member
    * @return
    */
-  private Member fixMember(Member member) {
+  private Member fix(Member member) {
+    // fix addresses
     if (member.getAddresses() != null) {
       for (MemberAddress o : member.getAddresses()) {
         o.setMember(member);
       }
     }
+
+    // fix emails
     if (member.getEmails() != null) {
+      boolean hasPrimary = false;
+      for (MemberEmail o : member.getEmails()) {
+        if (StringUtils.equalsIgnoreCase(o.getEmail(), member.getAccount())) {
+          o.setPrimary(true);
+          hasPrimary = true;
+          break;
+        }
+      }
+      if (!hasPrimary) {
+        MemberEmail primaryEmail = new MemberEmail();
+        primaryEmail.setEmail(member.getAccount());
+        primaryEmail.setPrimary(true);
+        member.getEmails().add(primaryEmail);
+      }
       for (MemberEmail o : member.getEmails()) {
         o.setMember(member);
       }
     }
+
+    // fix phones
     if (member.getPhones() != null) {
       for (MemberPhone o : member.getPhones()) {
         o.setMember(member);

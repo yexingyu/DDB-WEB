@@ -46,20 +46,20 @@ public class Member extends BaseEntityModel {
 
   @NotNull
   @Column(name = "first_name", nullable = false, length = 100)
-  private String firstName;
+  private String firstName = "";
 
   @NotNull
   @Column(name = "middle_name", nullable = false, length = 100)
-  private String middleName;
+  private String middleName = "";
 
   @NotNull
   @Column(name = "last_name", nullable = false, length = 100)
-  private String lastName;
+  private String lastName = "";
 
   @NotNull
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_ROLE role;
+  private MEMBER_ROLE role = MEMBER_ROLE.MEMBER;
 
   @NotNull
   @Column(name = "login_type", nullable = false)

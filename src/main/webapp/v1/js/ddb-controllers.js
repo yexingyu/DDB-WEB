@@ -283,6 +283,36 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 LoginService.showLoginBox();
             }
         });
+
+        // sendEmailVerification
+        $scope.sendEmailVerification = function (email) {
+            ProfileService.sendEmailVerification(email, function (response) {
+                if (response.status === 'SUCCESS') {
+                    //success send email verification
+                    email.sent = 1;
+                } else {
+                    email.sent = 2;
+                }
+            });
+        };
+    }])
+
+    /*
+     * ProfileVerifyEmailCtrl definition
+     */
+    .controller('ProfileVerifyEmailCtrl', ['$scope', '$location', '$routeParams', 'ProfileService', function ($scope, $location, $routeParams, ProfileService) {
+        $scope.rst = 0;
+        $scope.email = {};
+        var hashCode = $routeParams.hashCode;
+        ProfileService.verifyEmail(hashCode, function (response) {
+            if (response.status === 'SUCCESS') {
+                // success
+                $scope.rst = 1;
+                $scope.email = response.data;
+            } else {
+                $scope.rst = 2;
+            }
+        });
     }])
 
     /*

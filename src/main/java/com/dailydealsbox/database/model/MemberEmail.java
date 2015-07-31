@@ -3,6 +3,9 @@
  */
 package com.dailydealsbox.database.model;
 
+import java.security.MessageDigest;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,12 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.primitives.Longs;
 
 /**
  * @author x_ye
@@ -31,6 +36,10 @@ public class MemberEmail extends BaseModel {
   private String email;
 
   @NotNull
+  @Column(name = "`primary`", nullable = false)
+  private boolean primary;
+
+  @NotNull
   @Column(name = "verified", nullable = false)
   private boolean verified;
 
@@ -38,6 +47,16 @@ public class MemberEmail extends BaseModel {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
+
+  @NotNull
+  @Column(name = "hash_code", nullable = false)
+  private String hashCode;
+
+  @Column(name = "verified_at")
+  private Date verifiedAt = null;
+
+  @Column(name = "verified_ip")
+  private String verifiedIp = null;
 
   /**
    * validate
@@ -47,6 +66,82 @@ public class MemberEmail extends BaseModel {
   public boolean validate() {
     if (StringUtils.isBlank(this.getEmail())) { return false; }
     return true;
+  }
+
+  /**
+   * generateHashCode
+   */
+  public void generateHashCode() {
+    MessageDigest md;
+    try {
+      md = MessageDigest.getInstance("MD5");
+    } catch (Exception e) {
+      e.printStackTrace();
+      return;
+    }
+    md.update(this.getEmail().getBytes());
+    md.update(Longs.toByteArray(System.currentTimeMillis()));
+    this.setHashCode(new String(Hex.encodeHex(md.digest())));
+  }
+
+  /**
+   * @return the primary
+   */
+  public boolean isPrimary() {
+    return this.primary;
+  }
+
+  /**
+   * @param primary
+   *          the primary to set
+   */
+  public void setPrimary(boolean primary) {
+    this.primary = primary;
+  }
+
+  /**
+   * @return the hashCode
+   */
+  public String getHashCode() {
+    return this.hashCode;
+  }
+
+  /**
+   * @param hashCode
+   *          the hashCode to set
+   */
+  public void setHashCode(String hashCode) {
+    this.hashCode = hashCode;
+  }
+
+  /**
+   * @return the verifiedAt
+   */
+  public Date getVerifiedAt() {
+    return this.verifiedAt;
+  }
+
+  /**
+   * @param verifiedAt
+   *          the verifiedAt to set
+   */
+  public void setVerifiedAt(Date verifiedAt) {
+    this.verifiedAt = verifiedAt;
+  }
+
+  /**
+   * @return the verifiedIp
+   */
+  public String getVerifiedIp() {
+    return this.verifiedIp;
+  }
+
+  /**
+   * @param verifiedIp
+   *          the verifiedIp to set
+   */
+  public void setVerifiedIp(String verifiedIp) {
+    this.verifiedIp = verifiedIp;
   }
 
   /**

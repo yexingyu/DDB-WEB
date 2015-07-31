@@ -167,6 +167,13 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                     }
                 });
                 new profileResource(profile).$update(callback);
+            },
+            sendEmailVerification: function (email, callback) {
+                return $resource('/api/credential/verify_email', {'email': email.email}, {}).get(callback);
+            },
+            verifyEmail: function(hashCode, callback){
+                console.log(hashCode);
+                return $resource('/api/credential/verify_email', {}, {}).save(hashCode, callback);
             }
         };
     }])

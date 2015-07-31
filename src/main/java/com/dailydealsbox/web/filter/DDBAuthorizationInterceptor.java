@@ -42,18 +42,17 @@ public class DDBAuthorizationInterceptor implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException, IOException {
 
     if (handler instanceof ParameterizableViewController) { return true; }
-    //System.out.println(handler);
-
     DDBAuthorization authAnnotation = ((HandlerMethod) handler).getMethod().getDeclaredAnnotation(DDBAuthorization.class);
 
     // anonymous
-    if (authAnnotation == null) {
-      request.setAttribute(BaseAuthorization.TOKEN, null);
-      return true;
-    }
+    request.setAttribute(BaseAuthorization.TOKEN, null);
+    if (authAnnotation == null) { return true; }
 
     // cookies
     Cookie[] cookies = request.getCookies();
+    if (cookies == null) {
+      request.getRequestDispatcher("/no_permission").forward(request, response);
+    }
     AuthorizationToken token = null;
     for (Cookie cookie : cookies) {
       if (StringUtils.equalsIgnoreCase("token", cookie.getName())) {
@@ -63,7 +62,6 @@ public class DDBAuthorizationInterceptor implements HandlerInterceptor {
 
     // authorization checking
     if (token == null) {
-      request.setAttribute(BaseAuthorization.TOKEN, null);
       request.getRequestDispatcher("/need_login").forward(request, response);
       return false;
     }

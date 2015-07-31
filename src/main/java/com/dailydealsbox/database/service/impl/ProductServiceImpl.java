@@ -59,12 +59,12 @@ public class ProductServiceImpl implements ProductService {
   }
 
   /**
-   * fixProduct
+   * fix
    *
    * @param product
    * @return
    */
-  private Product fixProduct(Product product) {
+  private Product fix(Product product) {
     // tag
     this.fixTags(product);
 
@@ -126,7 +126,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Product update(Product product) {
-    this.fixProduct(product);
+    this.fix(product);
     return this.repo.save(product);
   }
 
@@ -136,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Product insert(Product product) {
-    this.fixProduct(product);
+    this.fix(product);
     return this.update(product);
   }
 
@@ -178,8 +178,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public int addReview(ProductReview review) {
-    if (null != this.repoReview.findFirstByProductIdAndIpAndFingerprintAndDeletedFalse(review.getProductId(), review.getIp(),
-        review.getFingerprint())) { return -1; }
+    if (null != this.repoReview.findFirstByProductIdAndIpAndFingerprintAndDeletedFalse(review.getProductId(), review.getIp(), review.getFingerprint())) { return -1; }
     if (this.repoReview.countByProductIdAndIp(review.getProductId(), review.getIp()) > 10) { return -2; }
 
     // insert product like

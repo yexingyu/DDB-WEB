@@ -3,19 +3,28 @@
  */
 package com.dailydealsbox.database.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.dailydealsbox.web.mail.SmtpMailSender;
+import com.dailydealsbox.database.model.MemberEmail;
 
 /**
  * @author x_ye
  */
-@Service
-public class MailService {
+public interface MailService {
 
-  @Autowired
-  private SmtpMailSender sender;
+  /**
+   * verifyEmail
+   * 
+   * @param hashCode
+   * @param ip
+   * @return
+   */
+  public MemberEmail verifyEmail(String hashCode, String ip);
+
+  /**
+   * sendVerifyEmail
+   *
+   * @param email
+   */
+  public void sendVerifyEmail(MemberEmail email);
 
   /**
    * send
@@ -25,8 +34,19 @@ public class MailService {
    * @param body
    * @throws Exception
    */
-  public void send(String to, String subject, String body) throws Exception {
-    this.sender.send(to, subject, body);
-  }
+  public void send(String to, String subject, String body) throws Exception;
 
+  /**
+   * insert
+   *
+   * @param email
+   */
+  public void insert(MemberEmail email);
+
+  /**
+   * update
+   *
+   * @param email
+   */
+  public void update(MemberEmail email);
 }
