@@ -7,6 +7,7 @@
     <title>DDB</title>
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -41,7 +42,23 @@
                                 <li><a href="#">One more separated link</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Language</a></li>
+                        <li>
+                            <h5>
+                            <input class="form-control"
+                                    bs-switch
+                                    ng-model="$root.language.language"
+                                    type="checkbox"
+                                    switch-active="true"
+                                    switch-on-text="EN"
+                                    switch-off-text="FR"
+                                    switch-on-color="info"
+                                    switch-off-color="warning"
+                                    switch-animate="true"
+                                    switch-size="mini"
+                                    ng-true-value="'EN'"
+                                    ng-false-value="'FR'" />
+                            </h5>
+                        </li>
                         <li class="dropdown" ng-if="$root.profile.account.trim()"><a
                                 class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                 aria-expanded="false">Welcome {{$root.profile.firstName +
@@ -80,6 +97,7 @@
 <!-- /.container -->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
 <script src="../bower_components/fingerprint/fingerprint.js"></script>
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../bower_components/angular-route/angular-route.js"></script>
@@ -88,6 +106,7 @@
 <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="../bower_components/angular-md5/angular-md5.js"></script>
 <script src="../bower_components/angular-easyfb/angular-easyfb.js"></script>
+<script src="../bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
 <script src="js/ddb-app.js"></script>
 <script src="js/ddb-controllers.js"></script>
 <script src="js/ddb-services.js"></script>
