@@ -3,46 +3,46 @@
         <div class="col-xs-8">
             <div class="row">
             <div class="col-xs-12">
-	            <div class="panel panel-primary">
-	            <div class="panel-heading">Shipping Address
+	            <div class="panel panel-primary" ng-repeat="address in order.addresses">
+	            <div class="panel-heading">{{$root.constant.MEMBER_ADDRESS_TYPE[address.type]}}
 	            </div>
 	            <div>
 	            	<form class="form-horizontal">
 					  <div class="form-group">
 					    <label for="firstName" class="col-xs-2 control-label">First Name</label>
 					    <div class="col-xs-4">
-					      <input type="text" class="form-control" id="firstName" placeholder="">
+					      <input type="text" class="form-control" id="firstName" placeholder="" value="{{profile.firstName}}">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="lastName" class="col-xs-2 control-label">Last Name</label>
 					    <div class="col-xs-4">
-					      <input type="text" class="form-control" id="lastName" placeholder="">
+					      <input type="text" class="form-control" id="lastName" placeholder="" value="{{profile.lastName}}">
 					    </div>
 					  </div>					  
 					  <div class="form-group">
 					    <label for="addressLine1" class="col-xs-2 control-label">Apt./Suite # (optional)</label>
 					    <div class="col-xs-8">
-					      <input type="text" class="form-control" id="addressLine1" placeholder="">
+					      <input type="text" class="form-control" id="addressLine1" placeholder="" ng-model="address.address1">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="addressLine2" class="col-xs-2 control-label">Address</label>
 					    <div class="col-xs-8">
-					      <input type="text" class="form-control" id="addressLine2" placeholder="">
+					      <input type="text" class="form-control" id="addressLine2" placeholder="" ng-model="address.address2">
                           <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#addressTips">Address Tips</button>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="city" class="col-xs-2 control-label">City</label>
 					    <div class="col-xs-4">
-					      <input type="text" class="form-control" id="city" placeholder="">
+					      <input type="text" class="form-control" id="city" placeholder=""  ng-model="address.city">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="province" class="col-xs-2 control-label">Province</label>
 					    <div class="col-xs-4">
-							<select class="form-control">
+							<select class="form-control" ng-model="address.region">
 								<option value="0">-- Select --</option>
 								<option value="AB">Alberta</option>
 								<option value="BC">British Columbia</option>
@@ -63,15 +63,15 @@
 					  <div class="form-group">
 					    <label for="postal code" class="col-xs-2 control-label">Postal Code</label>
 					    <div class="col-xs-4">
-					      <input type="text" class="form-control" id="postal code" placeholder="A1A 1A1">
+					      <input type="text" class="form-control" id="postal code" placeholder="" ng-model="address.postCode">
 					    </div>
 					  </div>					  
 					  <div class="form-group">
 					    <label for="country" class="col-xs-2 control-label">Country</label>
 					    <div class="col-xs-4">
-							<select class="form-control">
-								<option selected="selected" value="CA">Canada</option>
-							</select>
+					        <select ng-model="address.country" class="form-control">
+					          <option value="{{key}}" ng-selected="key === address.country" ng-repeat="(key, value) in $root.constant.COUNTRY">{{value}}</option>
+					        </select>
 					      
 					    </div>
 					  </div>
