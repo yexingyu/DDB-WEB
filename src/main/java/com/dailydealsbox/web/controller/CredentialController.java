@@ -80,6 +80,7 @@ public class CredentialController {
       if (member == null) {
         member = new Member();
         member.setAccount(me.getEmail());
+        member.setPassword("");
         member.setFirstName(me.getFirstName());
         member.setLastName(me.getLastName());
         member.setRole(MEMBER_ROLE.MEMBER);
