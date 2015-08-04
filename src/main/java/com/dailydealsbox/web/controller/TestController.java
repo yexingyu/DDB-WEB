@@ -6,6 +6,10 @@ package com.dailydealsbox.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.User;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,10 +40,8 @@ public class TestController {
   @Autowired
   private ProductReviewRepository reviewRepo;
 
-  @RequestMapping(method = RequestMethod.GET)
-  //@DDBAuthorization
-  //@DDBAuthorization({ BaseEnum.MEMBER_ROLE.SUPER, BaseEnum.MEMBER_ROLE.MEMBER })
-  public GenericResponseData test(HttpServletRequest request) throws Exception {
+  @RequestMapping(method = RequestMethod.POST)
+  public GenericResponseData test(@RequestBody String accessToken, HttpServletRequest request) throws Exception {
     //this.productService.delete(75);
     //List<Product> products = (List<Product>) this.productRepo.findAll();
     //Page<Product> products = this.productRepo.findByStatus(BaseEntityModel.STATUS.AVAILABLE, null);
@@ -53,8 +55,24 @@ public class TestController {
     //System.out.println(request.getAttribute(BaseAuthorization.TOKEN));
     //throw new Exception("tttt");
 
-    this.mailService.send("yexingyu@gmail.com", "no-reply email from ddb-web", "body: from ddb-web");
-    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "test");
+    //this.mailService.send("yexingyu@gmail.com", "no-reply email from ddb-web", "body: from ddb-web");
+
+    //System.out.println("fbCookie=" + fbCookie);
+    //    try {
+    //      System.out.println("Application Namespace=" + this.facebook.getApplicationNamespace());
+    //    } catch (Exception e) {
+    //      e.printStackTrace();
+    //    }
+
+    Facebook facebook = new FacebookTemplate(accessToken);
+
+    boolean isAuth = facebook.isAuthorized();
+    System.out.println("isAuth=" + isAuth);
+
+    User me = facebook.userOperations().getUserProfile();
+    System.out.println(me);
+
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me);
   }
 
 }

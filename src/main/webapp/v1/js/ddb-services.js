@@ -50,6 +50,9 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 var LoginResource = $resource('/api/credential/register', {}, {});
                 new LoginResource(member).$save(callback);
             },
+            facebookLogin: function(accessToken, callback){
+                return $resource('/api/credential/facebook', {}, {}).save(accessToken, callback);
+            },
             showLoginBox: function (success, dismiss) {
                 return $modal.open({
                     animation: true,

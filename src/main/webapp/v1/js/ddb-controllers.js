@@ -36,10 +36,29 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             CookieService.setLanguage($scope.$root.language.language);
         };
     }])
+
     /*
      * LoginCtrl definition
      */
-    .controller('LoginCtrl', ['$scope', '$location', 'LoginService', 'md5', '$modalInstance', function ($scope, $location, LoginService, md5, $modalInstance) {
+    .controller('LoginCtrl', ['$scope', '$location', 'LoginService', 'md5', '$modalInstance', 'ezfb', '$resource', function ($scope, $location, LoginService, md5, $modalInstance, ezfb, $resource) {
+
+        // facebook login
+        $scope.fb_login = function () {
+            ezfb.login(null, {scope: 'public_profile,email'}).then(function (res) {
+                return ezfb.getLoginStatus();
+            }).then(function (res) {
+                LoginService.facebookLogin(res.authResponse.accessToken, function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $scope.$root.profile = response.data;
+                        console.log($scope.$root.profile);
+                        $modalInstance.close(response.data);
+                    } else {
+                        $modalInstance.dismiss('Facebook login fail.');
+                    }
+                });
+            });
+        };
+
         // member login
         $scope.loginAccount = {};
         $scope.isLoginFail = false;
@@ -48,7 +67,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             $scope.loginAccount.password = md5.createHash($scope.loginAccount.passwd || '');
             delete $scope.loginAccount.passwd;
             LoginService.login($scope.loginAccount, function (response) {
-                if (response.status == "SUCCESS") {
+                if (response.status === 'SUCCESS') {
                     $scope.$root.profile = response.data;
                     $modalInstance.close(response.data);
                     $scope.isLoginFail = false;
@@ -68,7 +87,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             delete $scope.registerInfo.rePassword;
             $scope.registerInfo.emails = [{email: $scope.registerInfo.account}];
             LoginService.register($scope.registerInfo, function (response) {
-                if (response.status === "SUCCESS") {
+                if (response.status === 'SUCCESS') {
                     // register success
                     console.log('register success');
                     $scope.isRegisterFail = false;

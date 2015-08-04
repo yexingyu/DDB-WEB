@@ -1,6 +1,11 @@
-angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap'])
+angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap', 'ezfb'])
 
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', 'ezfbProvider', function ($routeProvider, ezfbProvider) {
+        ezfbProvider.setInitParams({
+            appId: '1170711572955238',
+            version: 'v2.3'
+        });
+
         $routeProvider.when('/home', {
             templateUrl: 'tpl-home.html',
             controller: 'HomeCtrl'
@@ -69,15 +74,4 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         $rootScope.popoverTemplate = {
             reviewTemplateUrl: 'tpl-product-review.html'
         };
-
-        // Load the SDK asynchronously
-        /*
-         * (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if
-         * (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
-         * js.src = "//connect.facebook.net/en_US/sdk.js";
-         * fjs.parentNode.insertBefore(js, fjs); }(document, 'script',
-         * 'facebook-jssdk')); // Initial fb SDK $window.fbAsyncInit = function() {
-         * FB.init({ appId : '1170711572955238', cookie : true, xfbml : true,
-         * version : 'v2.3' }); };
-         */
     }]);

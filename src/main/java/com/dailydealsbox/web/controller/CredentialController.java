@@ -3,12 +3,18 @@
  */
 package com.dailydealsbox.web.controller;
 
+import java.util.Calendar;
+import java.util.Collections;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.User;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,6 +65,54 @@ public class CredentialController {
   public GenericResponseData checkCookie(HttpServletRequest request) throws Exception {
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, token);
+  }
+
+  @RequestMapping(value = "facebook", method = RequestMethod.POST)
+  @ApiOperation(value = "facebook credential", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Facebook credential.")
+  public GenericResponseData facebook(@ApiParam(value = "accessToken", required = true) @RequestBody String accessToken, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Facebook facebook = new FacebookTemplate(accessToken);
+    if (facebook.isAuthorized()) {
+      // retrieve user profile from facebook
+      User me = facebook.userOperations().getUserProfile();
+
+      // save member
+      Member member = this.memberService.getByAccount(me.getEmail());
+      if (member == null) {
+        member = new Member();
+        member.setAccount(me.getEmail());
+        member.setPassword("");
+        member.setFirstName(me.getFirstName());
+        member.setLastName(me.getLastName());
+        member.setRole(MEMBER_ROLE.MEMBER);
+        member.setLoginType(MEMBER_LOGIN_TYPE.FACEBOOK);
+        MemberEmail email = new MemberEmail();
+        email.setEmail(me.getEmail());
+        email.setPrimary(true);
+        email.setVerified(true);
+        email.setVerifiedAt(Calendar.getInstance().getTime());
+        email.setVerifiedIp(request.getRemoteAddr());
+        email.generateHashCode();
+        member.setEmails(Collections.singleton(email));
+        this.memberService.insert(member);
+      }
+
+      // set cookie
+      int expiry = -1;
+      boolean rememberMe = true;
+      if (rememberMe) {
+        expiry = (int) (BaseAuthorization.EXPIRY / 1000);
+      }
+      Cookie cookie = this.authorizationService
+          .buildCookie(AuthorizationToken.newInstance(member.getId(), member.getAccount(), member.getPassword(), this.authorizationService.buildExpiredStamp(), member.getRole()), expiry);
+      if (cookie == null) {
+        return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "002");
+      } else {
+        response.addCookie(cookie);
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, member);
+      }
+    } else {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.NEED_LOGIN, "001");
+    }
   }
 
   /**
