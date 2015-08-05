@@ -15,7 +15,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-12" align="center">
-              <a href="#/product/{{item.id}}/details"><img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}"></a>
+              <a href="#/product/{{item.id}}"><img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}"></a>
             </div>
             <div class="col-xs-12 col-sm-12">
               <h4 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name | limitTo:52}}</h4>
