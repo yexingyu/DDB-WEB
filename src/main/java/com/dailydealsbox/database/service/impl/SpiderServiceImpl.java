@@ -48,20 +48,20 @@ public class SpiderServiceImpl implements SpiderService {
   @Override
   public Product getProductFromBestbuy(String url) {
     Product product = new Product();
-    this.getProductFromBestbuyAndLanguage(url, product, LANGUAGE.EN);
-    this.getProductFromBestbuyAndLanguage(url, product, LANGUAGE.FR);
+    this.getProductFromBestbuy(url, product, LANGUAGE.EN);
+    this.getProductFromBestbuy(url, product, LANGUAGE.FR);
     return product;
   }
 
   /**
-   * getProductFromBestbuyAndLanguage
+   * getProductFromBestbuy
    *
    * @param url
    * @param product
    * @param language
    * @return
    */
-  private Product getProductFromBestbuyAndLanguage(String url, Product product, LANGUAGE language) {
+  private Product getProductFromBestbuy(String url, Product product, LANGUAGE language) {
     // init some properties by emptySet
     if (product.getTexts() == null) {
       product.setTexts(new HashSet<ProductText>());
