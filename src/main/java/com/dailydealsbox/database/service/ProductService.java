@@ -3,6 +3,8 @@
  */
 package com.dailydealsbox.database.service;
 
+import java.util.Set;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -73,6 +75,17 @@ public interface ProductService {
    * @return
    */
   public Page<Product> list(int storeId, boolean deleted, boolean disabled, Pageable pageable);
+
+  /**
+   * list
+   * 
+   * @param tags
+   * @param deleted
+   * @param disabled
+   * @param pageable
+   * @return
+   */
+  public Page<Product> list(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
    * addLike

@@ -48,8 +48,8 @@ public class ProductController {
   AuthorizationService authorizationService;
 
   /**
-   * like
-   *
+   * addLike
+   * 
    * @param productId
    * @param fingerprint
    * @param request

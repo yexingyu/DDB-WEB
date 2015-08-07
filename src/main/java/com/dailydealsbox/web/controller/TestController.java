@@ -3,17 +3,18 @@
  */
 package com.dailydealsbox.web.controller;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.User;
-import org.springframework.social.facebook.api.impl.FacebookTemplate;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
@@ -40,8 +41,8 @@ public class TestController {
   @Autowired
   private ProductReviewRepository reviewRepo;
 
-  @RequestMapping(method = RequestMethod.POST)
-  public GenericResponseData test(@RequestBody String accessToken, HttpServletRequest request) throws Exception {
+  @RequestMapping(method = RequestMethod.GET)
+  public GenericResponseData test(Pageable pageable, HttpServletRequest request) throws Exception {
     //this.productService.delete(75);
     //List<Product> products = (List<Product>) this.productRepo.findAll();
     //Page<Product> products = this.productRepo.findByStatus(BaseEntityModel.STATUS.AVAILABLE, null);
@@ -64,15 +65,17 @@ public class TestController {
     //      e.printStackTrace();
     //    }
 
-    Facebook facebook = new FacebookTemplate(accessToken);
+    //    Facebook facebook = new FacebookTemplate(accessToken);
+    //
+    //    boolean isAuth = facebook.isAuthorized();
+    //    System.out.println("isAuth=" + isAuth);
+    //
+    //    User me = facebook.userOperations().getUserProfile();
+    //    System.out.println(me);
 
-    boolean isAuth = facebook.isAuthorized();
-    System.out.println("isAuth=" + isAuth);
+    Page<Product> products = productRepo.findByTagAndDeletedAndDisabled(Collections.<String> singleton("watch"), false, false, pageable);
 
-    User me = facebook.userOperations().getUserProfile();
-    System.out.println(me);
-
-    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me);
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
   }
 
 }

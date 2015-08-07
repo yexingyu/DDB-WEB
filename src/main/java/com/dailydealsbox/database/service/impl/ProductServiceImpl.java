@@ -235,4 +235,9 @@ public class ProductServiceImpl implements ProductService {
     return this.repoLike.findByProductId(productId, pageable);
   }
 
+  @Override
+  public Page<Product> list(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable) {
+    return this.repo.findByTagAndDeletedAndDisabled(tags, deleted, disabled, pageable);
+  }
+
 }

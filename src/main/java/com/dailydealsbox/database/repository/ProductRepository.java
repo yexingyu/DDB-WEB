@@ -3,6 +3,8 @@
  */
 package com.dailydealsbox.database.repository;
 
+import java.util.Set;
+
 import javax.persistence.QueryHint;
 
 import org.springframework.data.domain.Page;
@@ -23,6 +25,19 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   //    countProjection = ":offset",
   //    countQuery = ":cnt")
   //  List<Product> findByStoreId(@Param("storeId") int storeId, @Param("offset") int offset, @Param("cnt") int cnt);
+
+  /**
+   * findByTagAndDeletedAndDisabled
+   * 
+   * @param tags
+   * @param deleted
+   * @param disabled
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select p from Product p join p.tags t where t.value in ?1 and p.deleted = ?2 and p.disabled = ?3")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Product> findByTagAndDeletedAndDisabled(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
    * findByStoreIdAndDisabledAndDeleted

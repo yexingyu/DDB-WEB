@@ -67,6 +67,15 @@ public class CredentialController {
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, token);
   }
 
+  /**
+   * facebook
+   * 
+   * @param accessToken
+   * @param request
+   * @param response
+   * @return
+   * @throws Exception
+   */
   @RequestMapping(value = "facebook", method = RequestMethod.POST)
   @ApiOperation(value = "facebook credential", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Facebook credential.")
   public GenericResponseData facebook(@ApiParam(value = "accessToken", required = true) @RequestBody String accessToken, HttpServletRequest request, HttpServletResponse response) throws Exception {
