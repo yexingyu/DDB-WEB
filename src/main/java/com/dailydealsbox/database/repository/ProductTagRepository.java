@@ -16,12 +16,12 @@ import com.dailydealsbox.database.model.ProductTag;
 public interface ProductTagRepository extends CrudRepository<ProductTag, Integer> {
 
   /**
-   * findFirstByLanguageAndValue
+   * findFirstByValue
    *
    * @param language
    * @param value
    * @return
    */
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public ProductTag findFirstByLanguageAndValue(String language, String value);
+  public ProductTag findFirstByValue(String value);
 }

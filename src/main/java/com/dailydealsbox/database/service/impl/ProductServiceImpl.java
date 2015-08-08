@@ -110,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
     Set<ProductTag> tags = product.getTags();
     product.setTags(new HashSet<ProductTag>());
     for (ProductTag tag : tags) {
-      ProductTag tagDB = this.repoTag.findFirstByLanguageAndValue(tag.getLanguage(), tag.getValue());
+      ProductTag tagDB = this.repoTag.findFirstByValue(tag.getValue());
       if (tagDB != null) {
         product.getTags().add(tagDB);
       } else {

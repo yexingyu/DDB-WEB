@@ -30,10 +30,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ProductTag extends BaseModel {
 
   @NotNull
-  @Column(name = "language", nullable = false, length = 256)
-  private String language;
-
-  @NotNull
   @Column(name = "value", nullable = false)
   private String value;
 
@@ -47,7 +43,7 @@ public class ProductTag extends BaseModel {
    * @return
    */
   public boolean validate() {
-    if (StringUtils.isBlank(this.getLanguage())) { return false; }
+    if (StringUtils.isBlank(this.getValue())) { return false; }
     return true;
   }
 
@@ -64,21 +60,6 @@ public class ProductTag extends BaseModel {
    */
   public void setProducts(Set<Product> products) {
     this.products = products;
-  }
-
-  /**
-   * @return the language
-   */
-  public String getLanguage() {
-    return this.language;
-  }
-
-  /**
-   * @param language
-   *          the language to set
-   */
-  public void setLanguage(String language) {
-    this.language = language;
   }
 
   /**
