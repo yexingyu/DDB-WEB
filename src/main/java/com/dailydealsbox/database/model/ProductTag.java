@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author x_ye
  */
 @Entity
-@Table(name = "product_tag", uniqueConstraints = { @UniqueConstraint(columnNames = { "language", "value" }) })
+@Table(name = "product_tag")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ProductTag extends BaseModel {
 
