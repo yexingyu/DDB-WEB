@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.CrudRepository;
 
 import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.Store;
 
 /**
  * @author x_ye
@@ -27,8 +28,21 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   //  List<Product> findByStoreId(@Param("storeId") int storeId, @Param("offset") int offset, @Param("cnt") int cnt);
 
   /**
-   * findByTagAndDeletedAndDisabled
+   * findByStoreAndDeletedAndDisabled
    * 
+   * @param stores
+   * @param deleted
+   * @param disabled
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select p from Product p where p.store in ?1 and p.deleted = ?2 and p.disabled = ?3")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Product> findByStoreAndDeletedAndDisabled(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable);
+
+  /**
+   * findByTagAndDeletedAndDisabled
+   *
    * @param tags
    * @param deleted
    * @param disabled
@@ -41,7 +55,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
   /**
    * findByStoreIdAndDisabledAndDeleted
-   * 
+   *
    * @param storeId
    * @param deleted
    * @param disabled

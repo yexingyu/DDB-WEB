@@ -16,14 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductLike;
 import com.dailydealsbox.database.model.ProductReview;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.database.service.AuthorizationService;
+import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.database.service.ProductService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
+import com.dailydealsbox.web.base.AuthorizationToken;
+import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import io.swagger.annotations.Api;
@@ -42,14 +45,14 @@ import springfox.documentation.annotations.ApiIgnore;
 public class ProductController {
 
   @Autowired
-  ProductService productService;
+  private MemberService memberService;
 
   @Autowired
-  AuthorizationService authorizationService;
+  private ProductService productService;
 
   /**
    * addLike
-   * 
+   *
    * @param productId
    * @param fingerprint
    * @param request
@@ -167,6 +170,36 @@ public class ProductController {
       @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
       @ApiIgnore Pageable pageable) throws Exception {
     Page<Product> products = this.productService.list(deleted, disabled, pageable);
+    if (products == null || products.getNumberOfElements() == 0) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+    } else {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
+    }
+  }
+
+  /**
+   * listFollowed
+   *
+   * @param deleted
+   * @param disabled
+   * @param pageable
+   * @param request
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "followed", method = RequestMethod.GET)
+  @ApiOperation(value = "list followed product", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "List pageable followed products.")
+  @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
+  @DDBAuthorization
+  public GenericResponseData listFollowed(
+      @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
+      @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
+      @ApiIgnore Pageable pageable, HttpServletRequest request) throws Exception {
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    Member member = this.memberService.get(token.getMemberId());
+    Page<Product> products = this.productService.listByStores(member.getStores(), deleted, disabled, pageable);
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {

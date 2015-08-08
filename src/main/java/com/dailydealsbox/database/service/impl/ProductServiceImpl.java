@@ -24,6 +24,7 @@ import com.dailydealsbox.database.model.ProductReview;
 import com.dailydealsbox.database.model.ProductTag;
 import com.dailydealsbox.database.model.ProductTax;
 import com.dailydealsbox.database.model.ProductText;
+import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.repository.ProductLikeRepository;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
@@ -236,8 +237,17 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Page<Product> list(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable) {
+  public Page<Product> listByTags(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable) {
     return this.repo.findByTagAndDeletedAndDisabled(tags, deleted, disabled, pageable);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#listByStores(java.util.Set, boolean, boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Product> listByStores(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable) {
+    return repo.findByStoreAndDeletedAndDisabled(stores, deleted, disabled, pageable);
   }
 
 }

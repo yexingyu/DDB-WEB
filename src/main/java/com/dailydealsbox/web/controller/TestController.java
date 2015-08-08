@@ -3,8 +3,6 @@
  */
 package com.dailydealsbox.web.controller;
 
-import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
 import com.dailydealsbox.database.service.MailService;
+import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.database.service.ProductService;
+import com.dailydealsbox.database.service.StoreService;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -32,6 +33,10 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class TestController {
 
+  @Autowired
+  private MemberService           memberService;
+  @Autowired
+  private StoreService            storeService;
   @Autowired
   private MailService             mailService;
   @Autowired
@@ -73,9 +78,20 @@ public class TestController {
     //    User me = facebook.userOperations().getUserProfile();
     //    System.out.println(me);
 
-    Page<Product> products = productRepo.findByTagAndDeletedAndDisabled(Collections.<String> singleton("watch"), false, false, pageable);
+    //Page<Product> products = productRepo.findByTagAndDeletedAndDisabled(Collections.<String> singleton("watch"), false, false, pageable);
 
-    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
+    Member me = memberService.getByAccount("yexingyu@gmail.com");
+    //    Store walmart = storeService.get(1);
+    //    Store ebay = storeService.get(2);
+    //    if (me.getStores() == null) {
+    //      me.setStores(new HashSet<Store>());
+    //    }
+    //    me.getStores().add(ebay);
+    //    memberService.update(me);
+
+    Page<Product> result = productRepo.findByStoreAndDeletedAndDisabled(me.getStores(), false, false, pageable);
+
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, result);
   }
 
 }

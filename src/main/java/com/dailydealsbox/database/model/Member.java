@@ -12,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -78,6 +81,11 @@ public class Member extends BaseEntityModel {
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberAddress> addresses;
 
+  @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+  @JoinTable(name = "relation_member_store", joinColumns = { @JoinColumn(name = "member_id") }, inverseJoinColumns = { @JoinColumn(name = "store_id") })
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Set<Store> stores;
+
   /**
    * validate
    *
@@ -119,6 +127,21 @@ public class Member extends BaseEntityModel {
     }
 
     return true;
+  }
+
+  /**
+   * @return the stores
+   */
+  public Set<Store> getStores() {
+    return this.stores;
+  }
+
+  /**
+   * @param stores
+   *          the stores to set
+   */
+  public void setStores(Set<Store> stores) {
+    this.stores = stores;
   }
 
   /**

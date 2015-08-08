@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductLike;
 import com.dailydealsbox.database.model.ProductReview;
+import com.dailydealsbox.database.model.Store;
 
 /**
  * @author x_ye
@@ -77,15 +78,26 @@ public interface ProductService {
   public Page<Product> list(int storeId, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
-   * list
-   * 
+   * listByTags
+   *
    * @param tags
    * @param deleted
    * @param disabled
    * @param pageable
    * @return
    */
-  public Page<Product> list(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
+  public Page<Product> listByTags(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
+
+  /**
+   * listByStores
+   *
+   * @param stores
+   * @param deleted
+   * @param disabled
+   * @param pageable
+   * @return
+   */
+  public Page<Product> listByStores(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
    * addLike

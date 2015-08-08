@@ -32,9 +32,9 @@
             </div>
             <div class="col-xs-12 col-sm-12">
               <span class="old-price">{{item.prices[0].currency}}${{item.prices[0].compareValue | number:2}}</span> <span> {{item.prices[0].currency}}${{item.prices[0].value | number:2}}</span> <span
-                ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"></img> ${{fee.value | number:2}}
+                ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"> ${{fee.value | number:2}}
               </span> <br> <span>SubTotal: CAD${{item.total}}</span>
-              <hr></hr>
+              <hr>
             </div>
             <div class="col-xs-12 col-sm-12">
               <div class="row">
@@ -46,7 +46,7 @@
                   <a href="#/product/{{item.id}}/order"><img alt="Order this product, pay monthly" src="./images/pay-monthly-logo-mono.png" width=60px></a>
                 </div>
               </div>
-              <hr></hr>
+              <hr>
             </div>
             <div class="col-xs-12 col-sm-12" align="left">
               <div class="row">
