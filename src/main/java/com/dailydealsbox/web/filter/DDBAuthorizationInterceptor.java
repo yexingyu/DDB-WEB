@@ -49,28 +49,36 @@ public class DDBAuthorizationInterceptor implements HandlerInterceptor {
     if (authAnnotation == null) { return true; }
 
     // cookies
-    Cookie[] cookies = request.getCookies();
-    if (cookies == null) {
-      request.getRequestDispatcher("/no_permission").forward(request, response);
-    }
     AuthorizationToken token = null;
-    for (Cookie cookie : cookies) {
-      if (StringUtils.equalsIgnoreCase("token", cookie.getName())) {
-        token = this.authService.verify(cookie.getValue());
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+      for (Cookie cookie : cookies) {
+        if (StringUtils.equalsIgnoreCase("token", cookie.getName())) {
+          token = this.authService.verify(cookie.getValue());
+        }
       }
     }
 
-    // authorization checking
-    if (token == null) {
-      request.getRequestDispatcher("/need_login").forward(request, response);
-      return false;
-    }
+    if (authAnnotation.requireAuthorization()) {
+      // authorization checking
+      if (token == null) {
+        request.getRequestDispatcher("/need_login").forward(request, response);
+        return false;
+      }
 
-    // roles checking
-    request.setAttribute(BaseAuthorization.TOKEN, token);
-    if (!ArrayUtils.isEmpty(authAnnotation.value()) && !ArrayUtils.contains(authAnnotation.value(), token.getRole())) {
-      request.getRequestDispatcher("/no_permission").forward(request, response);
-      return false;
+      // roles checking
+      request.setAttribute(BaseAuthorization.TOKEN, token);
+      if (!ArrayUtils.isEmpty(authAnnotation.value()) && !ArrayUtils.contains(authAnnotation.value(), token.getRole())) {
+        request.getRequestDispatcher("/no_permission").forward(request, response);
+        return false;
+      }
+    } else {
+      // authorization checking
+      if (token == null) {
+        return true;
+      } else {
+        request.setAttribute(BaseAuthorization.TOKEN, token);
+      }
     }
 
     return true;

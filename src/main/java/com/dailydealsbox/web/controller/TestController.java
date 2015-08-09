@@ -6,14 +6,11 @@ package com.dailydealsbox.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dailydealsbox.database.model.Member;
-import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
@@ -21,6 +18,9 @@ import com.dailydealsbox.database.service.MailService;
 import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.database.service.ProductService;
 import com.dailydealsbox.database.service.StoreService;
+import com.dailydealsbox.web.annotation.DDBAuthorization;
+import com.dailydealsbox.web.base.AuthorizationToken;
+import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -47,6 +47,7 @@ public class TestController {
   private ProductReviewRepository reviewRepo;
 
   @RequestMapping(method = RequestMethod.GET)
+  @DDBAuthorization(requireAuthorization = false)
   public GenericResponseData test(Pageable pageable, HttpServletRequest request) throws Exception {
     //this.productService.delete(75);
     //List<Product> products = (List<Product>) this.productRepo.findAll();
@@ -80,7 +81,7 @@ public class TestController {
 
     //Page<Product> products = productRepo.findByTagAndDeletedAndDisabled(Collections.<String> singleton("watch"), false, false, pageable);
 
-    Member me = memberService.getByAccount("yexingyu@gmail.com");
+    //Member me = memberService.getByAccount("yexingyu@gmail.com");
     //    Store walmart = storeService.get(1);
     //    Store ebay = storeService.get(2);
     //    if (me.getStores() == null) {
@@ -89,9 +90,12 @@ public class TestController {
     //    me.getStores().add(ebay);
     //    memberService.update(me);
 
-    Page<Product> result = productRepo.findByStoreAndDeletedAndDisabled(me.getStores(), false, false, pageable);
+    //Page<Product> result = productRepo.findByStoreAndDeletedAndDisabled(me.getStores(), false, false, pageable);
 
-    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, result);
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    //Member member = this.memberService.get(token.getMemberId());
+
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, token);
   }
 
 }
