@@ -24,4 +24,6 @@ import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 @Mapping
 public @interface DDBAuthorization {
   MEMBER_ROLE[]value() default {};
+
+  boolean requireAuthorization() default true;
 }

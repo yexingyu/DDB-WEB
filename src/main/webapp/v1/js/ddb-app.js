@@ -55,7 +55,7 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         });
     }])
 
-    .run(['$rootScope', '$window', 'CookieService', 'ConstantService', function ($rootScope, $window, CookieService, ConstantService) {
+    .run(['$rootScope', '$window', '$location', 'CookieService', 'ConstantService', function ($rootScope, $window, $location, CookieService, ConstantService) {
         ConstantService.init();
 
         // set language
@@ -74,4 +74,14 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         $rootScope.popoverTemplate = {
             reviewTemplateUrl: 'tpl-product-review.html'
         };
+
+        $rootScope.$on('$routeChangeSuccess', function (event) {
+            if (!$window.ga) {
+                return;
+            }
+            console.log($location.path());
+            $window.ga('send', 'pageview', {
+                page: $location.path()
+            });
+        });
     }]);
