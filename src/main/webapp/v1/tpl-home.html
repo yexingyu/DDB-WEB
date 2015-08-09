@@ -30,7 +30,7 @@
               <a href="#/product/{{item.id}}"><img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}" style="height:180px"></a>
             </div>
             <div class="col-xs-12 col-sm-12">
-              <h4 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name | limitTo:52}}</h4>
+              <h5 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name | limitTo:52}}</h5>
             </div>
             <span ng-repeat="link in item.links "> 
             <div class="col-xs-12 col-sm-12">        
@@ -46,10 +46,15 @@
             <div class="col-xs-12 col-sm-12">
               <span><a href="{{link.url}}">by {{link.name}}</a> </span>
             </div>
-              </span>                       
+              </span> 
+            <div class="col-xs-12 col-sm-12">
+              <hr>
+            </div>                                    
+            <!--  
             <div class="col-xs-12 col-sm-12">
               <span ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description | limitTo:92}}</span>
             </div>
+            -->
             <div class="col-xs-12 col-sm-12">
               <span class="old-price">{{item.prices[0].currency}}${{item.prices[0].compareValue | number:2}}</span> <span> {{item.prices[0].currency}}${{item.prices[0].value | number:2}}</span> <span
                 ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"> ${{fee.value | number:2}}
