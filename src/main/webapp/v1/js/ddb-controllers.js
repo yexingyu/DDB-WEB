@@ -506,7 +506,19 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         };
 
         // unfollow store
-        
+        $scope.unfollow = function (store) {
+            StoreService.unfollow(store.id, function (response) {
+                if (response.status === 'SUCCESS') {
+                    store.followed = false;
+                } else if (response.status === 'NEED_LOGIN') {
+                    LoginService.showLoginBox(function (profile) {
+                        StoreService.unfollow(store.id, function (response) {
+                            $route.reload();
+                        });
+                    });
+                }
+            });
+        };
 
     }])
 
