@@ -6,15 +6,14 @@ package com.dailydealsbox.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
+import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.model.Member;
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
-import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
@@ -51,7 +50,7 @@ public class MembersController {
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData list(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
+  public GenericResponseData list(
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiIgnore Pageable pageable) {
     Page<Member> members = this.service.list(deleted, pageable);

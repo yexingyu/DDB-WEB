@@ -25,9 +25,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_LOGIN_TYPE;
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_LOGIN_TYPE;
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 
 /**
  * @author x_ye

@@ -25,6 +25,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
+import com.dailydealsbox.configuration.BaseEnum;
+import com.dailydealsbox.configuration.GenericConfiguration;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 
 /**
@@ -103,6 +105,91 @@ public class Product extends BaseEntityModel {
   @JoinTable(name = "relation_product_tag", joinColumns = { @JoinColumn(name = "product_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTag> tags;
+
+  /**
+   * getPayments
+   * 
+   * @return
+   */
+  public int getPayments() {
+    return GenericConfiguration.PAYMENTS;
+  }
+
+  /**
+   * keepPrecision
+   *
+   * @param d
+   * @return
+   */
+  private double keepPrecision(double d) {
+    return ((double) Math.round(d * 100)) / 100;
+  }
+
+  /**
+   * getMonthlyPayment
+   *
+   * @return
+   */
+  public double getMonthlyPayment() {
+    double mpr = GenericConfiguration.ARP / GenericConfiguration.PAYMENTS;
+    double mp = mpr * this.getPrincipal() / (1 - Math.pow((1 + mpr), -GenericConfiguration.PAYMENTS));
+    return this.keepPrecision(mp);
+  }
+
+  /**
+   * getPrincipal
+   *
+   * @return
+   */
+  public double getPrincipal() {
+    return this.keepPrecision(this.getTotal() * (1 - GenericConfiguration.DOWNPAYMENT_RATE));
+  }
+
+  /**
+   * getDownpayment
+   *
+   * @return
+   */
+  public double getDownpayment() {
+    return this.keepPrecision(this.getTotal() * GenericConfiguration.DOWNPAYMENT_RATE);
+  }
+
+  /**
+   * getTotal
+   *
+   * @return
+   */
+  public double getTotal() {
+    // get price
+    ProductPrice price = null;
+    if (this.getPrices() == null || this.getPrices().isEmpty()) {
+      return 0;
+    } else {
+      for (ProductPrice p : this.getPrices()) {
+        price = p;
+        break;
+      }
+    }
+    if (price == null) { return 0; }
+
+    double total = price.getValue();
+
+    // total fee
+    for (ProductFee fee : this.getFees()) {
+      if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.AMOUNT) {
+        total += fee.getValue();
+      } else if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.PERCENTAGE) {
+        total += price.getValue() * (fee.getValue() / 100);
+      }
+    }
+
+    // exchange to CAD
+    if (price.getCurrency() == BaseEnum.CURRENCY.USD) {
+      total *= GenericConfiguration.EXCHANGE_RATE_USD;
+    }
+
+    return this.keepPrecision(total);
+  }
 
   /**
    * isActive

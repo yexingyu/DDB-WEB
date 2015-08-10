@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.configuration.BaseEnum;
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
+import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.model.Order;
-import com.dailydealsbox.database.model.base.BaseEnum;
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
-import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.database.service.OrderService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
@@ -73,7 +73,7 @@ public class OrderController {
 
   /**
    * list
-   * 
+   *
    * @param deleted
    * @param pageable
    * @param request
@@ -129,7 +129,6 @@ public class OrderController {
   /**
    * insert
    *
-   * @param tokenString
    * @param order
    * @return
    */

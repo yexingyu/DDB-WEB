@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
+import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Store;
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
-import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.database.service.StoreService;
@@ -103,7 +102,7 @@ public class StoreController {
   @RequestMapping(method = { RequestMethod.POST })
   @ApiOperation(value = "insert store", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Insert a new store.")
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData insert(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString, @ApiParam(value = "store object", required = true) @RequestBody Store store) {
+  public GenericResponseData insert(@ApiParam(value = "store object", required = true) @RequestBody Store store) {
     if (store.validate()) {
       Store storeFromDb = this.storeService.insert(store);
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, storeFromDb);
@@ -123,8 +122,7 @@ public class StoreController {
   @RequestMapping(value = "id/{storeId}", method = { RequestMethod.PUT })
   @ApiOperation(value = "update store", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Update store details.")
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData update(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId, @ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
-      @ApiParam(value = "store object", required = true) @RequestBody Store store) {
+  public GenericResponseData update(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId, @ApiParam(value = "store object", required = true) @RequestBody Store store) {
     if (store.validate()) {
       Store storeFromDb = this.storeService.get(storeId);
       if (storeFromDb != null) {
@@ -156,18 +154,18 @@ public class StoreController {
       me.setStores(new HashSet<Store>());
     }
 
-    Store store = storeService.get(storeId);
+    Store store = this.storeService.get(storeId);
     if (store == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
 
     me.getStores().add(store);
-    me = memberService.update(me);
+    me = this.memberService.update(me);
 
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getStores());
   }
 
   /**
    * unfollow
-   * 
+   *
    * @param storeId
    * @param request
    * @return
@@ -178,7 +176,7 @@ public class StoreController {
   public GenericResponseData unfollow(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId, HttpServletRequest request) {
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
     Member me = this.memberService.get(token.getMemberId());
-    if (me.getStores() == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
+    if (me.getStores() == null || me.getStores().isEmpty()) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
 
     Iterator<Store> it = me.getStores().iterator();
     while (it.hasNext()) {
@@ -188,7 +186,7 @@ public class StoreController {
       }
     }
 
-    me = memberService.update(me);
+    me = this.memberService.update(me);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getStores());
   }
 }

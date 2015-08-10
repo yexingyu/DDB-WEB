@@ -19,8 +19,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
+import com.dailydealsbox.configuration.BaseEnum.ORDER_STATUS;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
-import com.dailydealsbox.database.model.base.BaseEnum.ORDER_STATUS;
 
 /**
  * @author x_ye

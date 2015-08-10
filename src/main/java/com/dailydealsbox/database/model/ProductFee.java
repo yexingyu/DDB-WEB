@@ -16,8 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.dailydealsbox.database.model.base.BaseEnum.PRODUCT_FEE_TITLE;
-import com.dailydealsbox.database.model.base.BaseEnum.PRODUCT_FEE_TYPE;
+import com.dailydealsbox.configuration.BaseEnum.PRODUCT_FEE_TITLE;
+import com.dailydealsbox.configuration.BaseEnum.PRODUCT_FEE_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

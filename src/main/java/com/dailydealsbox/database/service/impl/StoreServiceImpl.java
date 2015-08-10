@@ -3,6 +3,8 @@
  */
 package com.dailydealsbox.database.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
@@ -67,6 +69,15 @@ public class StoreServiceImpl implements StoreService {
   @Override
   public void delete(int id) {
     this.repo.delete(id);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#listDefaultFollowed()
+   */
+  @Override
+  public List<Store> listDefaultFollowed() {
+    return this.repo.findByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc();
   }
 
 }

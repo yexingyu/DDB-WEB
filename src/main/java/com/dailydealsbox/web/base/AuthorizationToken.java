@@ -3,7 +3,7 @@
  */
 package com.dailydealsbox.web.base;
 
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 
 /**
  * @author x_ye

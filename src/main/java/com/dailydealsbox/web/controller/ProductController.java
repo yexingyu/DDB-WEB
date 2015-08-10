@@ -3,6 +3,8 @@
  */
 package com.dailydealsbox.web.controller;
 
+import java.util.HashSet;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
+import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductLike;
 import com.dailydealsbox.database.model.ProductReview;
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
-import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
+import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.database.service.ProductService;
+import com.dailydealsbox.database.service.StoreService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseAuthorization;
@@ -45,10 +49,11 @@ import springfox.documentation.annotations.ApiIgnore;
 public class ProductController {
 
   @Autowired
-  private MemberService memberService;
-
+  private MemberService  memberService;
   @Autowired
   private ProductService productService;
+  @Autowired
+  private StoreService   storeService;
 
   /**
    * addLike
@@ -197,8 +202,17 @@ public class ProductController {
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
       @ApiIgnore Pageable pageable, HttpServletRequest request) throws Exception {
+    // retrieve token from cookie
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+
+    // retrieve/fix member
     Member member = this.memberService.get(token.getMemberId());
+    if (member.getStores() == null || member.getStores().size() == 0) {
+      member.setStores(new HashSet<Store>(this.storeService.listDefaultFollowed()));
+      this.memberService.update(member);
+    }
+
+    // list product by stores
     Page<Product> products = this.productService.listByStores(member.getStores(), deleted, disabled, pageable);
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
@@ -228,7 +242,7 @@ public class ProductController {
   /**
    * update
    *
-   * @param tokenString
+   * @param productId
    * @param product
    * @return
    */
@@ -236,7 +250,7 @@ public class ProductController {
   @ApiOperation(value = "update product", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Update product information.")
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
   public GenericResponseData update(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
-      @ApiIgnore @CookieValue(value = "token", required = false) String tokenString, @ApiParam(value = "product object", required = true) @RequestBody Product product) {
+      @ApiParam(value = "product object", required = true) @RequestBody Product product) {
 
     if (product.validate()) {
       Product productFromDb = this.productService.get(productId);
@@ -255,14 +269,13 @@ public class ProductController {
   /**
    * insert
    *
-   * @param tokenString
    * @param product
    * @return
    */
   @RequestMapping(method = { RequestMethod.POST })
   @ApiOperation(value = "insert product", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Insert a new product.")
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData insert(@ApiIgnore @CookieValue(value = "token", required = false) String tokenString, @ApiParam(value = "product object", required = true) @RequestBody Product product) {
+  public GenericResponseData insert(@ApiParam(value = "product object", required = true) @RequestBody Product product) {
     if (product.validate()) {
       Product productFromDb = this.productService.insert(product);
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);

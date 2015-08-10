@@ -20,8 +20,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
+import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
+import com.dailydealsbox.configuration.BaseEnum.STORE_TYPE;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
-import com.dailydealsbox.database.model.base.BaseEnum.STORE_TYPE;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -47,8 +48,9 @@ public class Store extends BaseEntityModel {
   private String dealPage;
 
   @NotNull
-  @Column(name = "country", nullable = false, length = 512)
-  private String country;
+  @Column(name = "country", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private COUNTRY country;
 
   @NotNull
   @Column(name = "province", nullable = false, length = 512)
@@ -66,6 +68,10 @@ public class Store extends BaseEntityModel {
   @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
   private STORE_TYPE type;
+
+  @NotNull
+  @Column(name = "default_followed", nullable = false)
+  private boolean defaultFollowed;
 
   @JsonIgnore
   @ManyToMany(mappedBy = "stores", fetch = FetchType.LAZY)
@@ -90,6 +96,21 @@ public class Store extends BaseEntityModel {
     }
 
     return true;
+  }
+
+  /**
+   * @return the defaultFollowed
+   */
+  public boolean isDefaultFollowed() {
+    return this.defaultFollowed;
+  }
+
+  /**
+   * @param defaultFollowed
+   *          the defaultFollowed to set
+   */
+  public void setDefaultFollowed(boolean defaultFollowed) {
+    this.defaultFollowed = defaultFollowed;
   }
 
   /**
@@ -185,7 +206,7 @@ public class Store extends BaseEntityModel {
   /**
    * @return the country
    */
-  public String getCountry() {
+  public COUNTRY getCountry() {
     return this.country;
   }
 
@@ -193,8 +214,23 @@ public class Store extends BaseEntityModel {
    * @param country
    *          the country to set
    */
-  public void setCountry(String country) {
+  public void setCountry(COUNTRY country) {
     this.country = country;
+  }
+
+  /**
+   * @return the members
+   */
+  public Set<Member> getMembers() {
+    return this.members;
+  }
+
+  /**
+   * @param members
+   *          the members to set
+   */
+  public void setMembers(Set<Member> members) {
+    this.members = members;
   }
 
   /**

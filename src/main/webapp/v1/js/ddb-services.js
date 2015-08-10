@@ -46,6 +46,9 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 }, {});
                 new LoginResource(member).$save(callback);
             },
+            check: function (callback) {
+                return $resource('/api/credential', {}, {}).get(callback);
+            },
             register: function (member, callback) {
                 var LoginResource = $resource('/api/credential/register', {}, {});
                 new LoginResource(member).$save(callback);
@@ -207,36 +210,6 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
     }])
 
     /*
-     * ActionService
-     */
-    .factory('ActionService', ['$rootScope', '$resource', 'ProductService', function ($rootScope, $resource, ProductService) {
-        return {
-            like: function (product) {
-                ProductService.like(product.id, function (response) {
-                    if (response.status === 'SUCCESS' && response.data === 'Success') {
-                        product.countLikes++;
-                    }
-                });
-            },
-            reviewHoveringOver: function (value, item) {
-                item.review.overStar = value;
-            },
-            review: function (product) {
-                ProductService.review(product.review, function (response) {
-                    if (response.status === 'SUCCESS' && response.data === 'Success') {
-                        product.countReviews++;
-                        product.review.showMsg = 'message';
-                        product.review.msg = 'Review success';
-                    } else {
-                        product.review.showMsg = 'error';
-                        product.review.msg = response.data;
-                    }
-                });
-            }
-        };
-    }])
-
-    /*
      * ProductService
      */
     .factory('ProductService', ['$rootScope', '$resource', function ($rootScope, $resource) {
@@ -246,6 +219,16 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 size = typeof size !== 'undefined' ? size : 20;
                 sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
                 return $resource('/api/product', {
+                    'page': page,
+                    'size': size,
+                    'sort': sort
+                }, {}).get(callback);
+            },
+            listFollowed: function (callback, page, size, sort) {
+                page = typeof page !== 'undefined' ? page : 0;
+                size = typeof size !== 'undefined' ? size : 20;
+                sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
+                return $resource('/api/product/followed', {
                     'page': page,
                     'size': size,
                     'sort': sort

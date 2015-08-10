@@ -17,11 +17,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
+import com.dailydealsbox.configuration.BaseEnum.LANGUAGE;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductImage;
 import com.dailydealsbox.database.model.ProductPrice;
 import com.dailydealsbox.database.model.ProductText;
-import com.dailydealsbox.database.model.base.BaseEnum.LANGUAGE;
 import com.dailydealsbox.database.service.SpiderService;
 
 /**

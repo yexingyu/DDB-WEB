@@ -8,9 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.dailydealsbox.configuration.BaseEnum.ORDER_STATUS;
 import com.dailydealsbox.database.model.Order;
 import com.dailydealsbox.database.model.OrderAddress;
-import com.dailydealsbox.database.model.base.BaseEnum.ORDER_STATUS;
 import com.dailydealsbox.database.repository.OrderRepository;
 import com.dailydealsbox.database.service.OrderService;
 

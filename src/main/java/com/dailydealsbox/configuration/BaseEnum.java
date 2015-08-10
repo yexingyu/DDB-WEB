@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.database.model.base;
+package com.dailydealsbox.configuration;
 
 import java.util.HashMap;
 import java.util.Map;

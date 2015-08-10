@@ -3,7 +3,7 @@
  */
 package com.dailydealsbox.web.base;
 
-import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
+import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 
 /**
  * @author x_ye

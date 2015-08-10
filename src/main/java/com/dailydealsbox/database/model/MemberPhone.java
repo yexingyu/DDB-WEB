@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_PHONE_TYPE;
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_PHONE_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

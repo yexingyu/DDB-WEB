@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_LOGIN_TYPE;
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
+import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.MemberEmail;
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_LOGIN_TYPE;
-import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
-import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.database.service.MailService;
 import com.dailydealsbox.database.service.MemberService;

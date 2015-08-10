@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.dailydealsbox.configuration.BaseEnum;
 import com.dailydealsbox.database.model.Order;
-import com.dailydealsbox.database.model.base.BaseEnum;
 
 /**
  * @author x_ye
