@@ -368,7 +368,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     /*
      * HomeCtrl definition
      */
-    .controller('HomeCtrl', ['$scope', '$location', 'ProductService', 'LoginService', 'ProductModel', function ($scope, $location, ProductService, LoginService, ProductModel) {
+    .controller('HomeCtrl', ['$scope', '$location', 'ProductService', 'LoginService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, LoginService, ProfileService, ProductModel, StoreModel) {
         $scope.items = [];
         $scope.actions = {
             'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
@@ -379,6 +379,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             if (response.status == 'SUCCESS') {
                 angular.forEach(response.data.content, function (item) {
                     ProductModel.fixLikeAndReviewOnProduct(item);
+                    StoreModel.fixFollowed(item.store, $scope.me.stores);
                     $scope.items.push(item);
                 });
             } else if (response.status == 'EMPTY_RESULT') {
@@ -388,10 +389,12 @@ angular.module('ddbApp.controllers', ['angular-md5'])
 
         // loading products
         var loading = function () {
-            LoginService.check(function (response) {
+            ProfileService.profile(function (response) {
                 if (response.status === 'SUCCESS') {
+                    $scope.me = response.data;
                     ProductService.listFollowed(callback, $scope.page, $scope.size);
                 } else {
+                    $scope.me = {};
                     ProductService.list(callback, $scope.page, $scope.size);
                 }
             });
@@ -405,13 +408,17 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             $scope.page++;
             loading();
         };
+
+        // follow/unfollow
+        $scope.follow = StoreModel.follow;
+        $scope.unfollow = StoreModel.unfollow;
     }])
 
     /*
      * StoreCtrl definition
      */
     .
-    controller('StoreCtrl', ['$scope', '$location', '$route', 'StoreService', 'ProfileService', 'LoginService', function ($scope, $location, $route, StoreService, ProfileService, LoginService) {
+    controller('StoreCtrl', ['$scope', '$location', '$route', 'StoreService', 'ProfileService', 'LoginService', 'StoreModel', function ($scope, $location, $route, StoreService, ProfileService, LoginService, StoreModel) {
         $scope.stores = {};
         $scope.me = {};
         ProfileService.profile(function (response) {
@@ -422,50 +429,16 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 StoreService.list(function (response) {
                     if (response.status === 'SUCCESS') {
                         $scope.stores = response.data.content;
-                        if ($scope.me.stores.length > 0) {
-                            angular.forEach($scope.stores, function (store) {
-                                store['followed'] = false;
-                                angular.forEach($scope.me.stores, function (storeMe) {
-                                    if (store.id === storeMe.id) {
-                                        store['followed'] = true;
-                                        return;
-                                    }
-                                })
-                            });
-                        }
+                        angular.forEach($scope.stores, function (store) {
+                            StoreModel.fixFollowed(store, $scope.me.stores);
+                        });
                     }
                 });
             });
 
-        // follow store
-        $scope.follow = function (store) {
-            StoreService.follow(store.id, function (response) {
-                if (response.status === 'SUCCESS') {
-                    store.followed = true;
-                } else if (response.status === 'NEED_LOGIN') {
-                    LoginService.showLoginBox(function (profile) {
-                        StoreService.follow(store.id, function (response) {
-                            $route.reload();
-                        });
-                    });
-                }
-            });
-        };
-
-        // unfollow store
-        $scope.unfollow = function (store) {
-            StoreService.unfollow(store.id, function (response) {
-                if (response.status === 'SUCCESS') {
-                    store.followed = false;
-                } else if (response.status === 'NEED_LOGIN') {
-                    LoginService.showLoginBox(function (profile) {
-                        StoreService.unfollow(store.id, function (response) {
-                            $route.reload();
-                        });
-                    });
-                }
-            });
-        };
+        // follow/unfollow
+        $scope.follow = StoreModel.follow;
+        $scope.unfollow = StoreModel.unfollow;
 
     }])
 

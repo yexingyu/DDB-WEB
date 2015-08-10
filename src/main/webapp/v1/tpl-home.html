@@ -9,7 +9,8 @@
                                 <div class="col-xs-8">
                                     <img ng-src="./images/favicon/{{item.store.favicon}}">
                                     <span><a> {{item.store.website}}</a></span>
-                                    <button type="button" class="btn  btn-xs">+ follow</button>
+                                    <button type="button" class="btn  btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
+                                    <button type="button" class="btn  btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
                                 </div>
                                 <div class="col-xs-4" align="right">
                                     <img ng-src="./images/valid.png" height="16px">

@@ -44,6 +44,53 @@ angular.module('ddbApp.models', [])
     }])
 
     /*
+     * StoreModel
+     */
+    .factory('StoreModel', ['$rootScope', '$route', 'ProductService', 'StoreService', 'LoginService', function ($rootScope, $route, ProductService, StoreService, LoginService) {
+        return {
+            fixFollowed: function (store, followedStores) {
+                store.followed = false;
+                if (followedStores !== undefined && followedStores.length > 0) {
+                    angular.forEach(followedStores, function (followedStore) {
+                        if (store.id === followedStore.id) {
+                            store['followed'] = true;
+                            return;
+                        }
+                    });
+                }
+            },
+            follow: function (store) {
+                StoreService.follow(store.id, function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $route.reload();
+                    } else if (response.status === 'NEED_LOGIN') {
+                        LoginService.showLoginBox(function (profile) {
+                            StoreService.follow(store.id, function (response) {
+                                $route.reload();
+                            });
+                        });
+                    }
+                });
+            },
+            unfollow: function (store) {
+                StoreService.unfollow(store.id, function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $route.reload();
+                    } else if (response.status === 'NEED_LOGIN') {
+                        LoginService.showLoginBox(function (profile) {
+                            StoreService.unfollow(store.id, function (response) {
+                                $route.reload();
+                            });
+                        });
+                    }
+                });
+            }
+        };
+
+    }])
+
+
+    /*
      * HomeModel
      */
     .factory('HomeModel', ['$rootScope', function ($rootScope) {
