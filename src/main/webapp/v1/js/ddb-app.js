@@ -1,4 +1,4 @@
-angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ui.bootstrap', 'ezfb', 'frapontillo.bootstrap-switch'])
+angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', 'ddbApp.services', 'ddbApp.models', 'ui.bootstrap', 'ezfb', 'frapontillo.bootstrap-switch'])
 
     .config(['$routeProvider', 'ezfbProvider', function ($routeProvider, ezfbProvider) {
         ezfbProvider.setInitParams({

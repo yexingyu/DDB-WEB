@@ -525,8 +525,12 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     /*
      * ContactCtrl definition
      */
-    .controller('ContactCtrl', ['$scope', '$location', function ($scope, $location) {
-
+    .controller('ContactCtrl', ['$scope', '$location', 'ProductService', function ($scope, $location, ProductService) {
+        ProductService.spiderBestbuyCA('http://www.bestbuy.ca/en-CA/product/-/b0005896.aspx', function (response) {
+            if (response.status === 'SUCCESS') {
+                console.log(response.data);
+            }
+        });
     }])
 
     /*
