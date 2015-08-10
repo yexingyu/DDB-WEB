@@ -50,6 +50,10 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
             templateUrl: 'tpl-profile-verify-email.html',
             controller: 'ProfileVerifyEmailCtrl'
 
+        }).when('/store', {
+            templateUrl: 'tpl-store.html',
+            controller: 'StoreCtrl'
+
         }).otherwise({
             redirectTo: '/home'
         });

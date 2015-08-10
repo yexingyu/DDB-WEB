@@ -462,6 +462,55 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     }])
 
     /*
+     * StoreCtrl definition
+     */
+    .controller('StoreCtrl', ['$scope', '$location', '$route', 'StoreService', 'ProfileService', 'LoginService', function ($scope, $location, $route, StoreService, ProfileService, LoginService) {
+        $scope.stores = {};
+        $scope.me = {};
+        ProfileService.profile(function (response) {
+            if (response.status === 'SUCCESS') {
+                $scope.me = response.data;
+            }
+        }).$promise.then(function (response) {
+                StoreService.list(function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $scope.stores = response.data.content;
+                        if ($scope.me.stores.length > 0) {
+                            angular.forEach($scope.stores, function (store) {
+                                store['followed'] = false;
+                                angular.forEach($scope.me.stores, function (storeMe) {
+                                    if (store.id === storeMe.id) {
+                                        store['followed'] = true;
+                                        return;
+                                    }
+                                })
+                            });
+                        }
+                    }
+                });
+            });
+
+        // follow store
+        $scope.follow = function (store) {
+            StoreService.follow(store.id, function (response) {
+                if (response.status === 'SUCCESS') {
+                    store.followed = true;
+                } else if (response.status === 'NEED_LOGIN') {
+                    LoginService.showLoginBox(function (profile) {
+                        StoreService.follow(store.id, function (response) {
+                            $route.reload();
+                        });
+                    });
+                }
+            });
+        };
+
+        // unfollow store
+        
+
+    }])
+
+    /*
      * ContactCtrl definition
      */
     .controller('ContactCtrl', ['$scope', '$location', function ($scope, $location) {

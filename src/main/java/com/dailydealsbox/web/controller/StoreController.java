@@ -3,6 +3,11 @@
  */
 package com.dailydealsbox.web.controller;
 
+import java.util.HashSet;
+import java.util.Iterator;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.model.base.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.service.AuthorizationService;
+import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.database.service.StoreService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
+import com.dailydealsbox.web.base.AuthorizationToken;
+import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import io.swagger.annotations.Api;
@@ -38,8 +47,9 @@ import springfox.documentation.annotations.ApiIgnore;
 public class StoreController {
 
   @Autowired
-  StoreService storeService;
-
+  StoreService         storeService;
+  @Autowired
+  MemberService        memberService;
   @Autowired
   AuthorizationService authorizationService;
 
@@ -72,9 +82,9 @@ public class StoreController {
    * @param id
    * @return
    */
-  @RequestMapping(value = "id/{id}", method = RequestMethod.GET)
+  @RequestMapping(value = "id/{storeId}", method = RequestMethod.GET)
   @ApiOperation(value = "retrieve store details", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Retrieve store details.")
-  public GenericResponseData retrieve(@ApiParam(value = "store id", required = true) @PathVariable("id") int id) {
+  public GenericResponseData retrieve(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int id) {
     Store store = this.storeService.get(id);
     if (store == null) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
@@ -110,10 +120,10 @@ public class StoreController {
    * @param store
    * @return
    */
-  @RequestMapping(value = "id/:id", method = { RequestMethod.PUT })
+  @RequestMapping(value = "id/{storeId}", method = { RequestMethod.PUT })
   @ApiOperation(value = "update store", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Update store details.")
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData update(@ApiParam(value = "store id", required = true) @PathVariable("id") int storeId, @ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
+  public GenericResponseData update(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId, @ApiIgnore @CookieValue(value = "token", required = false) String tokenString,
       @ApiParam(value = "store object", required = true) @RequestBody Store store) {
     if (store.validate()) {
       Store storeFromDb = this.storeService.get(storeId);
@@ -129,4 +139,56 @@ public class StoreController {
     }
   }
 
+  /**
+   * follow
+   *
+   * @param storeId
+   * @param request
+   * @return
+   */
+  @RequestMapping(value = "id/{storeId}/follow", method = { RequestMethod.POST })
+  @ApiOperation(value = "follow store", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Follow store details.")
+  @DDBAuthorization
+  public GenericResponseData follow(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId, HttpServletRequest request) {
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    Member me = this.memberService.get(token.getMemberId());
+    if (me.getStores() == null) {
+      me.setStores(new HashSet<Store>());
+    }
+
+    Store store = storeService.get(storeId);
+    if (store == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
+
+    me.getStores().add(store);
+    me = memberService.update(me);
+
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getStores());
+  }
+
+  /**
+   * unfollow
+   * 
+   * @param storeId
+   * @param request
+   * @return
+   */
+  @RequestMapping(value = "id/{storeId}/follow", method = { RequestMethod.DELETE })
+  @ApiOperation(value = "unfollow store", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Unfollow store details.")
+  @DDBAuthorization
+  public GenericResponseData unfollow(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId, HttpServletRequest request) {
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    Member me = this.memberService.get(token.getMemberId());
+    if (me.getStores() == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
+
+    Iterator<Store> it = me.getStores().iterator();
+    while (it.hasNext()) {
+      Store store = it.next();
+      if (store.getId() == storeId) {
+        it.remove();
+      }
+    }
+
+    me = memberService.update(me);
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getStores());
+  }
 }

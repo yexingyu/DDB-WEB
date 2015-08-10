@@ -50,7 +50,7 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 var LoginResource = $resource('/api/credential/register', {}, {});
                 new LoginResource(member).$save(callback);
             },
-            facebookLogin: function(accessToken, callback){
+            facebookLogin: function (accessToken, callback) {
                 return $resource('/api/credential/facebook', {}, {}).save(accessToken, callback);
             },
             showLoginBox: function (success, dismiss) {
@@ -174,7 +174,7 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
             sendEmailVerification: function (email, callback) {
                 return $resource('/api/credential/verify_email', {'email': email.email}, {}).get(callback);
             },
-            verifyEmail: function(hashCode, callback){
+            verifyEmail: function (hashCode, callback) {
                 console.log(hashCode);
                 return $resource('/api/credential/verify_email', {}, {}).save(hashCode, callback);
             }
@@ -195,8 +195,13 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 }, {}).get(callback);
             },
             add: function (store, callback) {
-                var storeResource = $resource('/api/store', {}, {});
-                new storeResource(store).$save(callback);
+                return $resource('/api/store', {}, {}).save(store, callback);
+            },
+            follow: function (storeId, callback) {
+                return $resource('/api/store/id/:storeId/follow', {'storeId': storeId}, {}).save(callback);
+            },
+            unfollow: function (storeId, callback) {
+                return $resource('/api/store/id/:storeId/follow', {'storeId': storeId}, {}).delete(callback);
             }
         };
     }])
