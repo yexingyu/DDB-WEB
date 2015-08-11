@@ -6,14 +6,10 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
     .factory('CookieService', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
         return {
             logout: function () {
-                $cookies.remove('token', {
-                    path: '/'
-                });
+                $cookies.remove('token', {path: '/'});
             },
             setLanguage: function (lang) {
-                $cookies.put('lang', lang.toUpperCase(), {
-                    path: '/'
-                });
+                $cookies.put('lang', lang.toUpperCase(), {path: '/'});
             },
             getLanguage: function () {
                 var lang = $cookies.get('lang');
@@ -22,15 +18,11 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 } else {
                     lang = 'EN';
                 }
-                $cookies.put('lang', lang.toUpperCase(), {
-                    path: '/'
-                });
+                $cookies.put('lang', lang.toUpperCase(), {path: '/'});
                 return lang;
             },
             setFingerprint: function (fingerprint) {
-                $cookies.put('fingerprint', fingerprint, {
-                    path: '/'
-                });
+                $cookies.put('fingerprint', fingerprint, {path: '/'});
             }
         };
     }])
@@ -41,28 +33,19 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
     .factory('LoginService', ['$rootScope', '$resource', '$modal', '$location', '$window', function ($rootScope, $resource, $modal, $location, $window) {
         return {
             login: function (member, callback) {
-                var LoginResource = $resource('/api/credential', {
-                    'rememberMe': member.rememberMe
-                }, {});
-                new LoginResource(member).$save(callback);
+                return $resource('/api/credential', {'rememberMe': member.rememberMe}, {}).save(member, callback);
             },
             check: function (callback) {
                 return $resource('/api/credential', {}, {}).get(callback);
             },
             register: function (member, callback) {
-                var LoginResource = $resource('/api/credential/register', {}, {});
-                new LoginResource(member).$save(callback);
+                return $resource('/api/credential/register', {}, {}).save(member, callback);
             },
             facebookLogin: function (accessToken, callback) {
                 return $resource('/api/credential/facebook', {}, {}).save(accessToken, callback);
             },
             showLoginBox: function (success, dismiss) {
-                return $modal.open({
-                    animation: true,
-                    templateUrl: 'tpl-login.html',
-                    controller: 'LoginCtrl',
-                    size: 'md'
-                }).result.then(success, dismiss);
+                return $modal.open({animation: true, templateUrl: 'tpl-login.html', controller: 'LoginCtrl', size: 'md'}).result.then(success, dismiss);
             }
         };
     }])
@@ -73,33 +56,22 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
     .factory('OrderService', ['$rootScope', '$resource', function ($rootScope, $resource) {
         return {
             get: function (orderId, callback) {
-                return $resource('/api/order/id/:id', {
-                    'id': orderId
-                }, {}).get(callback);
+                return $resource('/api/order/id/:id', {'id': orderId}, {}).get(callback);
             },
             list: function (callback, page, size, sort) {
                 page = typeof page !== 'undefined' ? page : 0;
                 size = typeof size !== 'undefined' ? size : 20;
                 sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
-                return $resource('/api/order/me', {
-                    'page': page,
-                    'size': size,
-                    'sort': sort
-                }, {}).get(callback);
+                return $resource('/api/order/me', {'page': page, 'size': size, 'sort': sort}, {}).get(callback);
             },
             listAll: function (callback, page, size, sort) {
                 page = typeof page !== 'undefined' ? page : 0;
                 size = typeof size !== 'undefined' ? size : 20;
                 sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
-                return $resource('/api/order', {
-                    'page': page,
-                    'size': size,
-                    'sort': sort
-                }, {}).get(callback);
+                return $resource('/api/order', {'page': page, 'size': size, 'sort': sort}, {}).get(callback);
             },
             add: function (order, callback) {
-                var OrderResource = $resource('/api/order', {}, {});
-                new OrderResource(order).$save(callback);
+                return $resource('/api/order', {}, {}).save(order, callback);
             },
             fix: function (order, profile) {
                 order.memberId = profile.id;
@@ -167,18 +139,12 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 return $resource('/api/profile', {}, {}).get(callback);
             },
             edit: function (profile, callback) {
-                var profileResource = $resource('/api/profile', {}, {
-                    'update': {
-                        method: 'PUT'
-                    }
-                });
-                new profileResource(profile).$update(callback);
+                return $resource('/api/profile', {}, {'update': {method: 'PUT'}}).update(prfile, callback);
             },
             sendEmailVerification: function (email, callback) {
                 return $resource('/api/credential/verify_email', {'email': email.email}, {}).get(callback);
             },
             verifyEmail: function (hashCode, callback) {
-                console.log(hashCode);
                 return $resource('/api/credential/verify_email', {}, {}).save(hashCode, callback);
             }
         };
@@ -193,9 +159,7 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 return $resource('/api/store', {}, {}).get(callback);
             },
             get: function (storeId, callback) {
-                return $resource('/api/store/id/:storeId', {
-                    'storeId': storeId
-                }, {}).get(callback);
+                return $resource('/api/store/id/:storeId', {'storeId': storeId}, {}).get(callback);
             },
             add: function (store, callback) {
                 return $resource('/api/store', {}, {}).save(store, callback);
@@ -218,58 +182,31 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 page = typeof page !== 'undefined' ? page : 0;
                 size = typeof size !== 'undefined' ? size : 20;
                 sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
-                return $resource('/api/product', {
-                    'page': page,
-                    'size': size,
-                    'sort': sort
-                }, {}).get(callback);
+                return $resource('/api/product', {'page': page, 'size': size, 'sort': sort}, {}).get(callback);
             },
             listFollowed: function (callback, page, size, sort) {
                 page = typeof page !== 'undefined' ? page : 0;
                 size = typeof size !== 'undefined' ? size : 20;
                 sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
-                return $resource('/api/product/followed', {
-                    'page': page,
-                    'size': size,
-                    'sort': sort
-                }, {}).get(callback);
+                return $resource('/api/product/followed', {'page': page, 'size': size, 'sort': sort}, {}).get(callback);
             },
             get: function (id, callback) {
-                return $resource('/api/product/id/:id', {
-                    'id': id
-                }, {}).get(callback);
+                return $resource('/api/product/id/:id', {'id': id}, {}).get(callback);
             },
             edit: function (product, callback) {
-                var productResource = $resource('/api/product/id/:id', {
-                    'id': product.id
-                }, {
-                    'update': {
-                        method: 'PUT'
-                    }
-                });
-                new productResource(product).$update(callback);
+                return $resource('/api/product/id/:id', {'id': product.id}, {'update': {method: 'PUT'}}).update(product, callback);
             },
             add: function (product, callback) {
-                var productResource = $resource('/api/product', {}, {});
-                new productResource(product).$save(callback);
+                return $resource('/api/product', {}, {}).save(product, callback);
             },
             like: function (productId, callback) {
-                return $resource('/api/product/id/:id/like', {
-                    'id': productId
-                }, {}).save(callback);
+                return $resource('/api/product/id/:id/like', {'id': productId}, {}).save(callback);
             },
             review: function (review, callback) {
-                var reviewObj = $resource('/api/product/id/:id/review', {
-                    'id': review.productId
-                }, {});
-                new reviewObj(review).$save(callback);
+                return $resource('/api/product/id/:id/review', {'id': review.productId}, {}).save(review, callback);
             },
             reviews: function (productId, page, size, callback) {
-                return $resource('/api/product/id/:id/review', {
-                    'id': productId,
-                    'page': page,
-                    'size': size
-                }, {}).get(callback);
+                return $resource('/api/product/id/:id/review', {'id': productId, 'page': page, 'size': size}, {}).get(callback);
             },
             fix: function (product) {
                 // fix texts

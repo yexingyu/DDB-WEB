@@ -457,5 +457,4 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      * AboutCtrl definition
      */
     .controller('AboutCtrl', ['$scope', '$location', function ($scope, $location) {
-
     }]);
