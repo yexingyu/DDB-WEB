@@ -32,7 +32,7 @@ public class SpiderController {
 
   /**
    * bestbuy
-   * 
+   *
    * @param url
    * @return
    */

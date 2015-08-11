@@ -108,7 +108,7 @@ public class Product extends BaseEntityModel {
 
   /**
    * getPayments
-   * 
+   *
    * @return
    */
   public int getPayments() {
@@ -121,7 +121,7 @@ public class Product extends BaseEntityModel {
    * @param d
    * @return
    */
-  private double keepPrecision(double d) {
+  private double precision(double d) {
     return ((double) Math.round(d * 100)) / 100;
   }
 
@@ -133,7 +133,7 @@ public class Product extends BaseEntityModel {
   public double getMonthlyPayment() {
     double mpr = GenericConfiguration.ARP / GenericConfiguration.PAYMENTS;
     double mp = mpr * this.getPrincipal() / (1 - Math.pow((1 + mpr), -GenericConfiguration.PAYMENTS));
-    return this.keepPrecision(mp);
+    return this.precision(mp);
   }
 
   /**
@@ -142,7 +142,7 @@ public class Product extends BaseEntityModel {
    * @return
    */
   public double getPrincipal() {
-    return this.keepPrecision(this.getTotal() * (1 - GenericConfiguration.DOWNPAYMENT_RATE));
+    return this.precision(this.getTotal() * (1 - GenericConfiguration.DOWNPAYMENT_RATE));
   }
 
   /**
@@ -151,7 +151,7 @@ public class Product extends BaseEntityModel {
    * @return
    */
   public double getDownpayment() {
-    return this.keepPrecision(this.getTotal() * GenericConfiguration.DOWNPAYMENT_RATE);
+    return this.precision(this.getTotal() * GenericConfiguration.DOWNPAYMENT_RATE);
   }
 
   /**
@@ -175,11 +175,13 @@ public class Product extends BaseEntityModel {
     double total = price.getValue();
 
     // total fee
-    for (ProductFee fee : this.getFees()) {
-      if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.AMOUNT) {
-        total += fee.getValue();
-      } else if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.PERCENTAGE) {
-        total += price.getValue() * (fee.getValue() / 100);
+    if (this.getFees() != null) {
+      for (ProductFee fee : this.getFees()) {
+        if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.AMOUNT) {
+          total += fee.getValue();
+        } else if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.PERCENTAGE) {
+          total += price.getValue() * (fee.getValue() / 100);
+        }
       }
     }
 
@@ -188,7 +190,7 @@ public class Product extends BaseEntityModel {
       total *= GenericConfiguration.EXCHANGE_RATE_USD;
     }
 
-    return this.keepPrecision(total);
+    return this.precision(total);
   }
 
   /**
