@@ -308,37 +308,17 @@ angular
                                     if (response.status === 'SUCCESS') {
                                         $scope.product = response.data;
                                         
-                                        $scope.product.taxes = [ {
-                                            title : 'CAFEDERAL',
-                                            type : 'PERCENTAGE',
-                                            value : ''
-                                        }, {
-                                            title : 'CAPROVINCE',
-                                            type : 'PERCENTAGE',
-                                            value : ''
-                                        } ];
+
 
                                         $scope.product.fees = [ {
                                             title : 'SHIPPING',
                                             type : 'AMOUNT',
                                             value : ''
-                                        }, {
-                                            title : 'IMPORT',
-                                            type : 'AMOUNT',
-                                            value : ''
-                                        } ];
+                                        }];
                                         
                                         $scope.product.tags = [ {
-                                            language : 'EN',
                                             value : ""
                                         }, {
-                                            language : 'EN',
-                                            value : ""
-                                        }, {
-                                            language : 'FR',
-                                            value : ""
-                                        }, {
-                                            language : 'FR',
                                             value : ""
                                         } ];
 
