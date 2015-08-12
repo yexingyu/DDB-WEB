@@ -92,7 +92,7 @@ public class SpiderServiceImpl implements SpiderService {
     //set product status
     product.setDisabled(false);
     //set product key
-    product.setKey(getProductKey(url));
+    product.setKey(this.getProductKey(url));
 
     //set product store
     Store store = new Store();
@@ -131,6 +131,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     // language switch
+    url = StringUtils.lowerCase(url);
     NumberFormat numberFormat;
     switch (language) {
       case EN:
@@ -166,18 +167,20 @@ public class SpiderServiceImpl implements SpiderService {
       return null;
     }
 
-    String productPrice = doc.select(this.HTML_PATCH_BESTBUY.get("price")).first().text();
-    Number number;
-    try {
-      number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
-      double p = number.doubleValue();
-      ProductPrice price = new ProductPrice();
-      price.setValue(p);
-      product.getPrices().add(price);
-      product.setCurrentPrice(p);
-      product.setCurrency(CURRENCY.CAD);
-    } catch (Exception e) {
-      e.printStackTrace();
+    if (product.getPrices().isEmpty()) {
+      String productPrice = doc.select(this.HTML_PATCH_BESTBUY.get("price")).first().text();
+      Number number;
+      try {
+        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
+        double p = number.doubleValue();
+        ProductPrice price = new ProductPrice();
+        price.setValue(p);
+        product.getPrices().add(price);
+        product.setCurrentPrice(p);
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
 
     ProductText text = new ProductText();
@@ -186,10 +189,11 @@ public class SpiderServiceImpl implements SpiderService {
     text.setDescription(doc.select(this.HTML_PATCH_BESTBUY.get("description")).first().ownText());
     product.getTexts().add(text);
 
-    ProductImage image = new ProductImage();
-    image.setUrl(String.format("%s://%s%s", aURL.getProtocol(), aURL.getHost(),
-        doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
-    product.getImages().add(image);
+    if (product.getImages().isEmpty()) {
+      ProductImage image = new ProductImage();
+      image.setUrl(String.format("%s://%s%s", aURL.getProtocol(), aURL.getHost(), doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
+      product.getImages().add(image);
+    }
 
     return product;
   }
