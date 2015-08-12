@@ -103,18 +103,92 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     /*
      * ProductCtrl definition
      */
-    .controller('ProductCtrl', ['$scope', '$location', 'ProductService', 'ProductModel', function ($scope, $location, ProductService, ProductModel) {
+    .controller('ProductCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
+        $scope.items = [];
         $scope.actions = {
             'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
         };
+        $scope.pagination = {'page': 1, 'size': 3, 'sort': 'createdAt,desc'};
+        $scope.pagination.change = function () {
+            console.log("changed")
+            $scope.loading();
+        };
 
-        $scope.page = 0;
-        $scope.size = 9;
-        ProductService.list(function (response) {
-            if (response.status == 'SUCCESS') {
-                $scope.items = response.data.content;
+        // sort
+        $scope.select = function (sort) {
+            $scope.pagination.sort = sort;
+            $scope.loading();
+        };
+
+        // tags selecting
+        $scope.tags = {'result': [], 'all': [], 'checklist': {}};
+        $scope.loadTags = function () {
+            if ($scope.tags.all.length === 0) {
+                ProductService.listAllTags(function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $scope.tags.all = response.data;
+                    }
+                });
             }
-        }, $scope.page, $scope.size);
+        };
+        $scope.$watchCollection('tags.checklist', function () {
+            $scope.tags.result = [];
+            angular.forEach($scope.tags.checklist, function (value, key) {
+                if (value) {
+                    $scope.tags.result.push(key);
+                }
+            });
+            console.log($scope.tags.result);
+        });
+
+        // stores selecting
+        $scope.stores = {'result': [], 'all': [], 'checklist': {}};
+        $scope.loadStores = function () {
+            if ($scope.stores.all.length === 0) {
+                StoreService.listAll(function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $scope.stores.all = response.data;
+                    }
+                });
+            }
+        };
+        $scope.$watchCollection('stores.checklist', function () {
+            $scope.stores.result = [];
+            angular.forEach($scope.stores.checklist, function (value, key) {
+                if (value) {
+                    $scope.stores.result.push(key);
+                }
+            });
+            console.log($scope.stores.result);
+        });
+
+        // callback function for ProductService
+        var callback = function (response) {
+            if (response.status == 'SUCCESS') {
+                angular.forEach(response.data.content, function (item) {
+                    ProductModel.fixLikeAndReviewOnProduct(item);
+                    StoreModel.fixFollowed(item.store, $scope.me.stores);
+                });
+                $scope.items = response.data.content;
+                $scope.pagination.total = response.data.totalElements;
+            }
+        };
+
+        // loading products
+        $scope.loading = function () {
+            ProfileService.profile(function (response) {
+                if (response.status === 'SUCCESS') {
+                    $scope.me = response.data;
+                } else {
+                    $scope.me = {};
+                }
+                ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'storeIds': $scope.stores.result});
+            });
+        };
+
+        // follow/unfollow
+        $scope.follow = StoreModel.follow;
+        $scope.unfollow = StoreModel.unfollow;
     }])
 
     /*

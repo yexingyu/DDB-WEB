@@ -28,8 +28,21 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   //  List<Product> findByStoreId(@Param("storeId") int storeId, @Param("offset") int offset, @Param("cnt") int cnt);
 
   /**
+   * findByStoreAndTagAndDeletedAndDisabled
+   *
+   * @param tags
+   * @param deleted
+   * @param disabled
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select p from Product p join p.tags t where p.store in ?1 and t.value in ?2 and p.deleted = ?3 and p.disabled = ?4")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Product> findByStoreAndTagAndDeletedAndDisabled(Set<Store> stores, Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
+
+  /**
    * findByStoreAndDeletedAndDisabled
-   * 
+   *
    * @param stores
    * @param deleted
    * @param disabled

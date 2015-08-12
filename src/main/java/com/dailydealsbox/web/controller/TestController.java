@@ -3,24 +3,28 @@
  */
 package com.dailydealsbox.web.controller;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
+import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.repository.ProductRepository;
-import com.dailydealsbox.database.repository.ProductReviewRepository;
+import com.dailydealsbox.database.repository.ProductTagRepository;
+import com.dailydealsbox.database.repository.StoreRepository;
 import com.dailydealsbox.database.service.MailService;
 import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.database.service.ProductService;
 import com.dailydealsbox.database.service.StoreService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
-import com.dailydealsbox.web.base.AuthorizationToken;
-import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -34,50 +38,23 @@ import springfox.documentation.annotations.ApiIgnore;
 public class TestController {
 
   @Autowired
-  private MemberService           memberService;
+  private MemberService        memberService;
   @Autowired
-  private StoreService            storeService;
+  private StoreService         storeService;
   @Autowired
-  private MailService             mailService;
+  private MailService          mailService;
   @Autowired
-  private ProductRepository       productRepo;
+  private ProductRepository    productRepo;
   @Autowired
-  private ProductService          productService;
+  private ProductService       productService;
   @Autowired
-  private ProductReviewRepository reviewRepo;
+  private ProductTagRepository repo;
+  @Autowired
+  private StoreRepository      repoStore;
 
   @RequestMapping(method = RequestMethod.GET)
   @DDBAuthorization(requireAuthorization = false)
-  public GenericResponseData test(Pageable pageable, HttpServletRequest request) throws Exception {
-    //this.productService.delete(75);
-    //List<Product> products = (List<Product>) this.productRepo.findAll();
-    //Page<Product> products = this.productRepo.findByStatus(BaseEntityModel.STATUS.AVAILABLE, null);
-    //Page<Product> products = this.productRepo.findByStatusAndEnableOrderByCreatedAtDesc(BaseEntityModel.STATUS.AVAILABLE, true, null);
-    //Page<Product> products = this.productService.listAllOnFrontEnd(null);
-    //Page<Product> products = null;
-
-    //this.reviewRepo.delete(1);
-
-    //System.out.println(BaseAuthorization.TOKEN);
-    //System.out.println(request.getAttribute(BaseAuthorization.TOKEN));
-    //throw new Exception("tttt");
-
-    //this.mailService.send("yexingyu@gmail.com", "no-reply email from ddb-web", "body: from ddb-web");
-
-    //System.out.println("fbCookie=" + fbCookie);
-    //    try {
-    //      System.out.println("Application Namespace=" + this.facebook.getApplicationNamespace());
-    //    } catch (Exception e) {
-    //      e.printStackTrace();
-    //    }
-
-    //    Facebook facebook = new FacebookTemplate(accessToken);
-    //
-    //    boolean isAuth = facebook.isAuthorized();
-    //    System.out.println("isAuth=" + isAuth);
-    //
-    //    User me = facebook.userOperations().getUserProfile();
-    //    System.out.println(me);
+  public GenericResponseData test(@RequestParam(value = "tags", required = false) Set<String> tags, Pageable pageable, HttpServletRequest request) throws Exception {
 
     //Page<Product> products = productRepo.findByTagAndDeletedAndDisabled(Collections.<String> singleton("watch"), false, false, pageable);
 
@@ -92,10 +69,12 @@ public class TestController {
 
     //Page<Product> result = productRepo.findByStoreAndDeletedAndDisabled(me.getStores(), false, false, pageable);
 
-    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    //AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
     //Member member = this.memberService.get(token.getMemberId());
 
-    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, token);
+    //Set<Store> rst = this.repoStore.findByIds(ids);
+    Page<Product> rst = this.productRepo.findByTagAndDeletedAndDisabled(tags, false, false, pageable);
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, rst);
   }
 
 }

@@ -158,6 +158,9 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
             list: function (callback) {
                 return $resource('/api/store', {}, {}).get(callback);
             },
+            listAll: function (callback) {
+                return $resource('/api/store/all', {}, {}).get(callback);
+            },
             get: function (storeId, callback) {
                 return $resource('/api/store/id/:storeId', {'storeId': storeId}, {}).get(callback);
             },
@@ -178,11 +181,12 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
      */
     .factory('ProductService', ['$rootScope', '$resource', function ($rootScope, $resource) {
         return {
-            list: function (callback, page, size, sort) {
+            list: function (callback, page, size, sort, filter) {
                 page = typeof page !== 'undefined' ? page : 0;
                 size = typeof size !== 'undefined' ? size : 20;
                 sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
-                return $resource('/api/product', {'page': page, 'size': size, 'sort': sort}, {}).get(callback);
+                filter = typeof filter !== 'undefined' ? filter : {};
+                return $resource('/api/product', angular.extend({'page': page, 'size': size, 'sort': sort}, filter), {}).get(callback);
             },
             listFollowed: function (callback, page, size, sort) {
                 page = typeof page !== 'undefined' ? page : 0;
@@ -207,6 +211,10 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
             },
             reviews: function (productId, page, size, callback) {
                 return $resource('/api/product/id/:id/review', {'id': productId, 'page': page, 'size': size}, {}).get(callback);
+            },
+            listAllTags: function (callback) {
+                return $resource('/api/product/tags', {}, {}).get(callback);
+                ;
             },
             fix: function (product) {
                 // fix texts

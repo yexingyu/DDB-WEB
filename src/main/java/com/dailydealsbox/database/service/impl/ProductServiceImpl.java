@@ -247,7 +247,25 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> listByStores(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable) {
-    return repo.findByStoreAndDeletedAndDisabled(stores, deleted, disabled, pageable);
+    return this.repo.findByStoreAndDeletedAndDisabled(stores, deleted, disabled, pageable);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#listAllTag()
+   */
+  @Override
+  public Set<ProductTag> listAllTag() {
+    return this.repoTag.findAll();
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#list(java.util.Set, java.util.Set, boolean, boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Product> list(Set<Store> stores, Set<String> tags, boolean deleted, boolean disabled, Pageable pageable) {
+    return this.repo.findByStoreAndDeletedAndDisabled(stores, deleted, disabled, pageable);
   }
 
 }

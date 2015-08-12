@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-sm-6 col-md-4" ng-repeat="item in items" style="height: 700px">
+        <div class="thumbnail">
+            <div class="row" style="padding: 15px">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <img ng-src="./images/favicon/{{item.store.favicon}}">
+                                <span><a> {{item.store.website}}</a></span>
+                                <button type="button" class="btn  btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
+                                <button type="button" class="btn  btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
+                            </div>
+                            <div class="col-xs-4" align="right">
+                                <img ng-src="./images/valid.png" height="16px">
+                                <span class="product_time">08-24-15</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12" align="center">
+                        <a href="#/product/{{item.id}}"><img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}" style="height:180px"></a>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <h5 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name | limitTo:52}}</h5>
+                    </div>
+                        <span ng-repeat="link in item.links ">
+                            <div class="col-xs-12 col-sm-12">
+                              <span class="rating">
+                                  <span class="glyphicon glyphicon-star"></span>
+                                  <span class="glyphicon glyphicon-star"></span>
+                                  <span class="glyphicon glyphicon-star"></span>
+                                  <span class="glyphicon glyphicon-star"></span>
+                                  <span class="glyphicon glyphicon-star"></span>
+                              {{link.rating}} of {{link.reviewNumber}} reviews
+                              </span>
+                            </div>
+                            <div class="col-xs-12 col-sm-12">
+                                <span><a href="{{link.url}}">by {{link.name}}</a> </span>
+                            </div>
+                        </span>
+
+                    <div class="col-xs-12 col-sm-12">
+                        <hr>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="old-price">{{item.currency}}${{item.prices[0].compareValue | number:2}}</span>
+                        <span> {{item.currency}}${{item.currentPrice | number:2}}</span>
+                        <span ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"> ${{fee.value | number:2}}</span><br>
+                        <span>SubTotal: CAD${{item.total}}</span>
+                        <hr>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-xs-8" align="left">
+                                <div class="row">
+                                    <div class="col-xs-12"><span style="color: RoyalBlue; font-weight: bold;">Down: CAD${{item.downpayment | number:2}}</span></div>
+                                    <div class="col-xs-12"><span style="color: RoyalBlue; font-weight: bold">Monthly: CAD${{item.monthlyPayment | number:2}} * {{item.payments}}M</span></div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4" align="right">
+                                <a href="#/product/{{item.id}}/order"><img alt="Order this product, pay monthly" src="./images/pay-monthly-logo-mono.png" width=60px></a>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="col-xs-12 col-sm-12" align="left">
+                        <div class="row">
+                            <div class="col-xs-7" align="left">
+                                <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"><a>{{tag.value}}</a></span>
+                            </div>
+                            <div class="col-xs-5" align="right">
+                                <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
+                                <a popover-placement="top" popover-template="$root.popoverTemplate.reviewTemplateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span
+                                    class="badge">{{item.countReviews}}</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

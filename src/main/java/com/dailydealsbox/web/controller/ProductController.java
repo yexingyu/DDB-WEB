@@ -4,6 +4,7 @@
 package com.dailydealsbox.web.controller;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +25,7 @@ import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductLike;
 import com.dailydealsbox.database.model.ProductReview;
+import com.dailydealsbox.database.model.ProductTag;
 import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.database.service.ProductService;
@@ -160,7 +162,11 @@ public class ProductController {
 
   /**
    * list
-   *
+   * 
+   * @param storeIds
+   * @param tags
+   * @param deleted
+   * @param disabled
    * @param pageable
    * @return
    * @throws Exception
@@ -170,11 +176,33 @@ public class ProductController {
   @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
-  public GenericResponseData list(
+  public GenericResponseData list(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
+      @ApiParam(value = "filter: tags", required = false) @RequestParam(value = "tags", required = false) Set<String> tags,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
       @ApiIgnore Pageable pageable) throws Exception {
-    Page<Product> products = this.productService.list(deleted, disabled, pageable);
+
+    // retrieve store set
+    Set<Store> stores = null;
+    if (storeIds != null) {
+      stores = this.storeService.listByIds(storeIds);
+      if (stores == null || stores.isEmpty()) {
+        stores = null;
+      }
+    }
+
+    // retrieve products
+    Page<Product> products = null;
+    if (stores == null && tags == null) {
+      products = this.productService.list(deleted, disabled, pageable);
+    } else if (stores != null) {
+      products = this.productService.listByStores(stores, deleted, disabled, pageable);
+    } else if (tags != null) {
+      products = this.productService.listByTags(tags, deleted, disabled, pageable);
+    } else {
+      products = this.productService.list(stores, tags, deleted, disabled, pageable);
+    }
+
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
@@ -281,6 +309,22 @@ public class ProductController {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
     } else {
       return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001");
+    }
+  }
+
+  /**
+   * listAllTags
+   *
+   * @return
+   */
+  @RequestMapping(value = "tags", method = { RequestMethod.GET })
+  @ApiOperation(value = "retrieve all tags", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Retrieve all tags.")
+  public GenericResponseData listAllTags() {
+    Set<ProductTag> tags = this.productService.listAllTag();
+    if (tags == null || tags.isEmpty()) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+    } else {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, tags);
     }
   }
 }
