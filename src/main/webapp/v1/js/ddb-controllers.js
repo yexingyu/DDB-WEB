@@ -108,14 +108,14 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         $scope.actions = {
             'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
         };
-        $scope.pagination = {'page': 1, 'size': 9, 'sort': 'createdAt,desc'};
+        $scope.pagination = {'page': 1, 'size': 3, 'sort': 'createdAt,desc'};
         $scope.pagination.change = function () {
-            console.log("changed")
             $scope.loading();
         };
 
         // sort
         $scope.select = function (sort) {
+            $scope.pagination.page = 1;
             $scope.pagination.sort = sort;
             $scope.loading();
         };
@@ -182,7 +182,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 } else {
                     $scope.me = {};
                 }
-                ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'storeIds': $scope.stores.result});
+                ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});
             });
         };
 

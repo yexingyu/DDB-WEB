@@ -162,7 +162,7 @@ public class ProductController {
 
   /**
    * list
-   * 
+   *
    * @param storeIds
    * @param tags
    * @param deleted
