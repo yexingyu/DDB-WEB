@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -23,6 +25,7 @@ import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductImage;
 import com.dailydealsbox.database.model.ProductPrice;
 import com.dailydealsbox.database.model.ProductText;
+import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.service.SpiderService;
 
 /**
@@ -55,15 +58,21 @@ public class SpiderServiceImpl implements SpiderService {
   }
 
   //parse url to get product key (id)
-  private Map<String, String> getQueryMap(String query) {
-    String[] params = query.split("&");
-    Map<String, String> map = new HashMap<String, String>();
-    for (String param : params) {
-      String name = param.split("=")[0];
-      String value = param.split("=")[1];
-      map.put(name, value);
+  private String getProductKey(String url) {
+    // String to be scanned to find the pattern.
+    String pattern = "\\/(\\d+).aspx";
+
+    // Create a Pattern object
+    Pattern r = Pattern.compile(pattern);
+
+    // Now create matcher object.
+    Matcher m = r.matcher(url);
+    if (m.find()) {
+      return m.group(1);
+
+    } else {
+      return null;
     }
-    return map;
   }
 
   /**
@@ -75,9 +84,19 @@ public class SpiderServiceImpl implements SpiderService {
    * @return
    */
   private Product getProductFromBestbuy(String url, Product product, LANGUAGE language) {
+    //set product url
     product.setUrl(url);
+    //set product status
     product.setDisabled(false);
-    product.setKey("10360528");
+    //set product key
+    product.setKey(getProductKey(url));
+
+    //set product store
+    Store store = new Store();
+    store.setId(11);
+    product.setStore(store);
+
+    //set product 
 
     // init some properties by emptySet
     if (product.getTexts() == null) {
@@ -147,7 +166,8 @@ public class SpiderServiceImpl implements SpiderService {
     product.getTexts().add(text);
 
     ProductImage image = new ProductImage();
-    image.setUrl(String.format("%s://%s%s", aURL.getProtocol(), aURL.getHost(), doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
+    image.setUrl(String.format("%s://%s%s", aURL.getProtocol(), aURL.getHost(),
+        doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
     product.getImages().add(image);
 
     return product;

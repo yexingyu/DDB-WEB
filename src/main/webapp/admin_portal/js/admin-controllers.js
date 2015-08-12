@@ -91,9 +91,13 @@ angular
                             var id = $routeParams.id;
 
                             $scope.status = [ {
-                                id : 1,
-                                name : "AVAILABLE"
-                            } ];
+                                id : true,
+                                name : "true"
+                            },  {
+                                id : false,
+                                name : "false"
+                            } 
+                            ];
 
                             // retrieve store list
                             $scope.stores = [];
@@ -110,25 +114,6 @@ angular
                                 value : ''
                             } ];
 
-                            $scope.product.taxes = [ {
-                                title : 'CAFEDERAL',
-                                type : 'PERCENTAGE',
-                                value : ''
-                            }, {
-                                title : 'CAPROVINCE',
-                                type : 'PERCENTAGE',
-                                value : ''
-                            } ];
-
-                            $scope.product.fees = [ {
-                                title : 'SHIPPING',
-                                type : 'AMOUNT',
-                                value : ''
-                            }, {
-                                title : 'IMPORT',
-                                type : 'AMOUNT',
-                                value : ''
-                            } ];
 
                             $scope.product.images = [ {
                                 url : '',
@@ -159,37 +144,6 @@ angular
                                 meta_description : ""
                             } ];
 
-                            $scope.product.tags = [ {
-                                language : 'EN',
-                                value : ""
-                            }, {
-                                language : 'EN',
-                                value : ""
-                            }, {
-                                language : 'FR',
-                                value : ""
-                            }, {
-                                language : 'FR',
-                                value : ""
-                            } ];
-
-                            $scope.product.links = [ {
-                                url : '',
-                                name : "",
-                                rating : "",
-                                review_number : ""
-                            } ];
-
-                            $scope.product.options = [ {
-                                type : "COLOR",
-                                value : ""
-                            }, {
-                                type : "COLOR",
-                                value : ""
-                            } ];
-
-                            $scope.product.reviews = [];
-                            $scope.product.likes = [];
 
                             // sample data
                             $scope.product.url = "";
@@ -350,9 +304,62 @@ angular
                             }
                             
                             $scope.parse= function() {
-                                ProductService.spiderBestbuyCA('http://www.bestbuy.ca/en-CA/product/nikon-d5500-wi-fi-24-2mp-dslr-camera-with-af-s-dx-nikkor-18-55mm-vr-ii-lens-memory-card-tripod/b0005905.aspx', function (response) {
+                                ProductService.spiderBestbuyCA($scope.product.url, function (response) {
                                     if (response.status === 'SUCCESS') {
                                         $scope.product = response.data;
+                                        
+                                        $scope.product.taxes = [ {
+                                            title : 'CAFEDERAL',
+                                            type : 'PERCENTAGE',
+                                            value : ''
+                                        }, {
+                                            title : 'CAPROVINCE',
+                                            type : 'PERCENTAGE',
+                                            value : ''
+                                        } ];
+
+                                        $scope.product.fees = [ {
+                                            title : 'SHIPPING',
+                                            type : 'AMOUNT',
+                                            value : ''
+                                        }, {
+                                            title : 'IMPORT',
+                                            type : 'AMOUNT',
+                                            value : ''
+                                        } ];
+                                        
+                                        $scope.product.tags = [ {
+                                            language : 'EN',
+                                            value : ""
+                                        }, {
+                                            language : 'EN',
+                                            value : ""
+                                        }, {
+                                            language : 'FR',
+                                            value : ""
+                                        }, {
+                                            language : 'FR',
+                                            value : ""
+                                        } ];
+
+                                        $scope.product.links = [ {
+                                            url : '',
+                                            name : "",
+                                            rating : "",
+                                            review_number : ""
+                                        } ];
+
+                                        $scope.product.options = [ {
+                                            type : "COLOR",
+                                            value : ""
+                                        }, {
+                                            type : "COLOR",
+                                            value : ""
+                                        } ];
+
+                                        $scope.product.reviews = [];
+                                        $scope.product.likes = [];
+                                        
                                     	console.log(response.data);
                                     }
                                 })

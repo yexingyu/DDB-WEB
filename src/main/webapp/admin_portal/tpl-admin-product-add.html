@@ -8,7 +8,7 @@
           <div class="form-group">
             <label>Product URL *:</label> <input class="form-control" ng-model="product.url" placeholder = "Enter the product URL">
             <p class="help-block">
-              <a href="{{product.url}}" taget="_blank">Merchant product page</a>
+              <a href="{{product.url}}" target="_blank">Merchant product page</a>
             </p>
           </div>
           <button type="button" class="btn btn-default" ng-click="parse()">Parse</button>
@@ -26,7 +26,7 @@
             <label>Product Key:</label> <input class="form-control" ng-model="product.key" placeholder = "Enter the product key (id) in the URL">
           </div>
           <div class="form-group">
-            <label>Product Status:</label> <select class="form-control" ng-model="product.status" ng-options="s.name as s.name for s in status">
+            <label>Product is Active:</label> <select class="form-control" ng-model="product.disabled" ng-options="o.v as o.n for o in [{ n: 'Yes', v: false }, { n: 'No', v: true }]">
             </select>
           </div>
           <div class="form-group">
@@ -46,11 +46,8 @@
           <div class="form-group">
             <label>Product Price & Compare Price:</label>
             <p>
-              <span ng-repeat="price in product.prices"> <select ng-model="price.currency" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
-                ng-model="price.value" placeholder ="Enter the product price"/>
-                <input type="text"
-                ng-model="price.compareValue" placeholder ="Enter the product compare price"/> [<a ng-click="product.prices.splice($index, 1)">X</a>] <br />
-              </span> <span> [<a ng-click="product.prices.push({productId:product.id})">Add</a>]
+               <select ng-model="product.currency" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
+                ng-model="product.currentPrice" placeholder ="Enter the product price"/>
               </span>
             </p>
           </div>
