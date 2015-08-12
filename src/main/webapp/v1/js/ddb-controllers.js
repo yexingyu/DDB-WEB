@@ -138,7 +138,6 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                     $scope.tags.result.push(key);
                 }
             });
-            console.log($scope.tags.result);
         });
 
         // stores selecting
@@ -159,10 +158,9 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                     $scope.stores.result.push(key);
                 }
             });
-            console.log($scope.stores.result);
         });
 
-        // callback function for ProductService
+        // loading products
         var callback = function (response) {
             if (response.status == 'SUCCESS') {
                 angular.forEach(response.data.content, function (item) {
@@ -173,20 +171,23 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 $scope.pagination.total = response.data.totalElements;
             }
         };
-
-        // loading products
+        $scope.me = {'loaded': false};
         $scope.loading = function () {
-            ProfileService.profile(function (response) {
-                if (response.status === 'SUCCESS') {
-                    $scope.me = response.data;
-                } else {
-                    $scope.me = {};
-                }
+            if ($scope.me.loaded) {
                 ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});
-            });
+            } else {
+                ProfileService.profile(function (response) {
+                    if (response.status === 'SUCCESS') {
+                        angular.extend($scope.me, response.data);
+
+                    }
+                    $scope.me.loaded = true;
+                    ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});
+                });
+            }
         };
 
-        // follow/unfollow
+        // follow and unfollow
         $scope.follow = StoreModel.follow;
         $scope.unfollow = StoreModel.unfollow;
     }])
@@ -209,18 +210,8 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         });
 
         // retrieve product reviews
-        $scope.item.review = {
-            productId: id,
-            content: '',
-            rating: 3,
-            overStar: 3,
-            showMsg: 'None',
-            msg: ''
-        };
-        $scope.item.reviews = {
-            page: 0,
-            size: 20
-        };
+        ProductModel.fixLikeAndReviewOnProduct($scope.item);
+        $scope.item.reviews = {page: 0, size: 20};
         ProductService.reviews(id, $scope.item.reviews.page, $scope.item.reviews.size, function (response) {
             if (response.status == 'SUCCESS') {
                 $scope.item.reviews = response.data;
@@ -264,9 +255,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                     });
                 } else {
                     $location.path('/home');
-                    return;
                 }
-
             });
 
             // next button
@@ -416,7 +405,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     /*
      * ProfileEditCtrl definition
      */
-    .controller('ProfileEditCtrl', ['$scope', '$location', 'ProfileService', 'LoginService', function ($scope, $location, ProfileService) {
+    .controller('ProfileEditCtrl', ['$scope', '$location', 'ProfileService', 'LoginService', function ($scope, $location, ProfileService, LoginService) {
         // retrieve profile information
         ProfileService.profile(function (response) {
             if (response.status == 'SUCCESS') {
@@ -457,30 +446,29 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                     $scope.items.push(item);
                 });
             } else if (response.status == 'EMPTY_RESULT') {
-                $scope.page--;
+                $scope.pagination.page--;
             }
         };
 
         // loading products
-        var loading = function () {
+        $scope.loading = function () {
             ProfileService.profile(function (response) {
                 if (response.status === 'SUCCESS') {
                     $scope.me = response.data;
-                    ProductService.listFollowed(callback, $scope.page, $scope.size);
+                    ProductService.listFollowed(callback, $scope.pagination.page, $scope.pagination.size, $scope.pagination.sort);
                 } else {
                     $scope.me = {};
-                    ProductService.list(callback, $scope.page, $scope.size);
+                    ProductService.list(callback, $scope.pagination.page, $scope.pagination.size, $scope.pagination.sort);
                 }
             });
         };
-        $scope.page = 0;
-        $scope.size = 9;
-        loading();
+        $scope.pagination = {'page': 1, 'size': 3, 'sort': 'createdAt,desc'};
+        $scope.loading();
 
         // load more product
         $scope.loadMore = function () {
-            $scope.page++;
-            loading();
+            $scope.pagination.page++;
+            $scope.loading();
         };
 
         // follow/unfollow
@@ -520,11 +508,6 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      * ContactCtrl definition
      */
     .controller('ContactCtrl', ['$scope', '$location', 'ProductService', function ($scope, $location, ProductService) {
-        ProductService.spiderBestbuyCA('http://www.bestbuy.ca/en-CA/product/-/b0005896.aspx', function (response) {
-            if (response.status === 'SUCCESS') {
-                console.log(response.data);
-            }
-        });
     }])
 
     /*

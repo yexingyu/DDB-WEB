@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DDB</title>
+    <link href="../bower_components/angular/angular-csp.css" rel="stylesheet">
+    <link href="../bower_components/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet">
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
@@ -43,12 +45,13 @@
                             </ul>
                         </li>
                         <li>
-                            <a ng-click="switchLanguage()"><span ng-if="$root.language.language === 'EN'">Français</span><span ng-if="$root.language.language === 'FR'">English</span></a>
+                            <a ng-click="switchLanguage()">
+                                <span ng-show="$root.language.language === 'EN'">Français</span>
+                                <span class="ng-hide" ng-show="$root.language.language === 'FR'">English</span>
+                            </a>
                         </li>
-                        <li class="dropdown" ng-if="$root.profile.account.trim()"><a
-                            class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">Welcome {{$root.profile.firstName +
-                            $root.profile.lastName}}</a>
+                        <li class="dropdown ng-hide" ng-show="$root.profile.account.trim()">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome {{$root.profile.firstName + $root.profile.lastName}}</a>
                             <ul class="dropdown-menu">
                                 <li><a href="#/order/me">My Orders</a></li>
                                 <li role="separator" class="divider"></li>
@@ -57,7 +60,7 @@
                                 <li><a ng-click="logout()">Sign Out</a></li>
                             </ul>
                         </li>
-                        <li ng-if="!$root.profile.account.trim()"><a ng-click="login()">Sign In</a></li>
+                        <li ng-show="!$root.profile.account.trim()"><a ng-click="login()">Sign In</a></li>
                     </ul>
                 </div>
             </div>
