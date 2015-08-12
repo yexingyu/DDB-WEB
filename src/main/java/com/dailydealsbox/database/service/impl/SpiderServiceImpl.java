@@ -52,7 +52,20 @@ public class SpiderServiceImpl implements SpiderService {
     this.getProductFromBestbuy(url, product, LANGUAGE.FR);
     return product;
   }
-
+  
+  //parse url to get product key (id)
+  private Map<String, String> getQueryMap(String query)  
+  {  
+      String[] params = query.split("&");  
+      Map<String, String> map = new HashMap<String, String>();  
+      for (String param : params)  
+      {  
+          String name = param.split("=")[0];  
+          String value = param.split("=")[1];  
+          map.put(name, value);  
+      }  
+      return map;  
+  }
   /**
    * getProductFromBestbuy
    *
@@ -62,7 +75,13 @@ public class SpiderServiceImpl implements SpiderService {
    * @return
    */
   private Product getProductFromBestbuy(String url, Product product, LANGUAGE language) {
-    // init some properties by emptySet
+    product.setUrl(url);
+    product.setDisabled(false);
+    product.setKey("10360528");
+
+	  
+	  
+	// init some properties by emptySet
     if (product.getTexts() == null) {
       product.setTexts(new HashSet<ProductText>());
     }

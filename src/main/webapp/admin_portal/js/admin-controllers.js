@@ -279,7 +279,15 @@ angular
                                 type : "COLOR",
                                 value : ""
                             } ];
+                            
+                            
 
+                            $scope.product.fees = [ {
+                                title : 'SHIPPING',
+                                type : 'AMOUNT',
+                                value : ''
+                            }];
+                            
                             // payment term calculation
                             $scope.Math = window.Math;
 
@@ -340,7 +348,17 @@ angular
                                 MonthlyPayment = Math.round(MonthlyPayment * 100) / 100;
                                 return MonthlyPayment;
                             }
-
+                            
+                            $scope.parse= function() {
+                                ProductService.spiderBestbuyCA('http://www.bestbuy.ca/en-CA/product/nikon-d5500-wi-fi-24-2mp-dslr-camera-with-af-s-dx-nikkor-18-55mm-vr-ii-lens-memory-card-tripod/b0005905.aspx', function (response) {
+                                    if (response.status === 'SUCCESS') {
+                                        $scope.product = response.data;
+                                    	console.log(response.data);
+                                    }
+                                })
+                            }
+                            
+                            
                             $scope.add = function() {
                                 console.log($scope.product);
                                 ProductService.add($scope.product, function(response) {

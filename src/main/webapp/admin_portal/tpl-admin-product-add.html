@@ -1,21 +1,32 @@
 <div ng-form="myForm">
   <div class="row">
-    <div class="col-lg-6">
+	  <div class="col-lg-12">
       <!-- product URL panel-->
       <div class="panel panel-primary">
-        <div class="panel-heading">Test Info</div>
+        <div class="panel-heading">Product URL</div>
         <div class="panel-body">
           <div class="form-group">
-            <label>TEST URL *:</label> <input class="form-control" ng-model="product.url" placeholder = "Enter the product URL">
+            <label>Product URL *:</label> <input class="form-control" ng-model="product.url" placeholder = "Enter the product URL">
             <p class="help-block">
               <a href="{{product.url}}" taget="_blank">Merchant product page</a>
             </p>
           </div>
+          <button type="button" class="btn btn-default" ng-click="parse()">Parse</button>
+          </div>	  
+	  </div>
+	  </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- product URL panel-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">Product Info</div>
+        <div class="panel-body">
           <div class="form-group">
-            <label>TEST Key:</label> <input class="form-control" ng-model="product.key" placeholder = "Enter the product key (id) in the URL">
+            <label>Product Key:</label> <input class="form-control" ng-model="product.key" placeholder = "Enter the product key (id) in the URL">
           </div>
           <div class="form-group">
-            <label>TEST Status:</label> <select class="form-control" ng-model="product.status" ng-options="s.name as s.name for s in status">
+            <label>Product Status:</label> <select class="form-control" ng-model="product.status" ng-options="s.name as s.name for s in status">
             </select>
           </div>
           <div class="form-group">
@@ -30,10 +41,10 @@
     <div class="col-lg-6">
       <!-- product price, tax fee panel-->
       <div class="panel panel-primary">
-        <div class="panel-heading">Test Price, Tax and Fee</div>
+        <div class="panel-heading">Product Price, Tax and Fee</div>
         <div class="panel-body">
           <div class="form-group">
-            <label>Test Price & Compare Price:</label>
+            <label>Product Price & Compare Price:</label>
             <p>
               <span ng-repeat="price in product.prices"> <select ng-model="price.currency" ng-options="c as c for c in $root.constant.CURRENCY"></select> : <input type="text"
                 ng-model="price.value" placeholder ="Enter the product price"/>
@@ -69,7 +80,7 @@
   </div>
   <!-- product image panel-->
   <div class="panel panel-primary">
-    <div class="panel-heading">TEST Image</div>
+    <div class="panel-heading">Product Image</div>
     <div class="panel-body">
       <div class="form-group">
         <label>Image:</label>
@@ -85,7 +96,7 @@
   </div>
   <!-- product text info panel-->
   <div class="panel panel-primary">
-    <div class="panel-heading">TEST Name, Description, Warranty, Return Policy, Meta</div>
+    <div class="panel-heading">Product Name, Description, Warranty, Return Policy, Meta</div>
     <div class="panel-body">
 		<form class="form-horizontal">
 		<div class="row">
@@ -170,7 +181,7 @@
     <div class="col-lg-6">
       <!-- product options-->
       <div class="panel panel-primary">
-        <div class="panel-heading">Test Tags:</div>
+        <div class="panel-heading">Product Tags:</div>
         <div class="panel-body">
           <div class="form-group">
             <label>Tags:</label>
@@ -188,7 +199,7 @@
     <div class="col-lg-6">
       <!-- product options-->
       <div class="panel panel-primary">
-        <div class="panel-heading">Test Options:</div>
+        <div class="panel-heading">Product Options:</div>
         <div class="panel-body">
           <div class="form-group">
             <label>Options:</label>
@@ -207,7 +218,7 @@
   
   <!-- product reference link panel-->
   <div class="panel panel-primary">
-    <div class="panel-heading">TEST Reference Link</div>
+    <div class="panel-heading">Product Reference Link</div>
     <div class="panel-body">
       <div class="form-group">
         <label>Reference Link:</label>
@@ -233,7 +244,7 @@
   
   <!-- product index preview-->
   <div class="panel panel-primary">
-    <div class="panel-heading">Test Index Preview</div>
+    <div class="panel-heading">Product Index Preview</div>
     <div class="panel-body">
         <div class="row">
           <div class="col-lg-12">
@@ -290,7 +301,7 @@
     <!-- product detail preview       
         <div class="panel panel-green">
             <div class="panel-heading">
-                Test Index Detail Preview
+                Product Index Detail Preview
             </div>
             <div class="panel-body">
             
