@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
+import com.dailydealsbox.configuration.BaseEnum.CURRENCY;
 import com.dailydealsbox.configuration.BaseEnum.LANGUAGE;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductImage;
@@ -52,20 +53,19 @@ public class SpiderServiceImpl implements SpiderService {
     this.getProductFromBestbuy(url, product, LANGUAGE.FR);
     return product;
   }
-  
+
   //parse url to get product key (id)
-  private Map<String, String> getQueryMap(String query)  
-  {  
-      String[] params = query.split("&");  
-      Map<String, String> map = new HashMap<String, String>();  
-      for (String param : params)  
-      {  
-          String name = param.split("=")[0];  
-          String value = param.split("=")[1];  
-          map.put(name, value);  
-      }  
-      return map;  
+  private Map<String, String> getQueryMap(String query) {
+    String[] params = query.split("&");
+    Map<String, String> map = new HashMap<String, String>();
+    for (String param : params) {
+      String name = param.split("=")[0];
+      String value = param.split("=")[1];
+      map.put(name, value);
+    }
+    return map;
   }
+
   /**
    * getProductFromBestbuy
    *
@@ -79,9 +79,7 @@ public class SpiderServiceImpl implements SpiderService {
     product.setDisabled(false);
     product.setKey("10360528");
 
-	  
-	  
-	// init some properties by emptySet
+    // init some properties by emptySet
     if (product.getTexts() == null) {
       product.setTexts(new HashSet<ProductText>());
     }
@@ -128,18 +126,18 @@ public class SpiderServiceImpl implements SpiderService {
       return null;
     }
 
-    if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATCH_BESTBUY.get("price")).first().text();
-      Number number;
-      try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
-        double p = number.doubleValue();
-        ProductPrice price = new ProductPrice();
-        price.setValue(p);
-        product.getPrices().add(price);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+    String productPrice = doc.select(this.HTML_PATCH_BESTBUY.get("price")).first().text();
+    Number number;
+    try {
+      number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
+      double p = number.doubleValue();
+      ProductPrice price = new ProductPrice();
+      price.setValue(p);
+      product.getPrices().add(price);
+      product.setCurrentPrice(p);
+      product.setCurrency(CURRENCY.CAD);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     ProductText text = new ProductText();
@@ -148,11 +146,9 @@ public class SpiderServiceImpl implements SpiderService {
     text.setDescription(doc.select(this.HTML_PATCH_BESTBUY.get("description")).first().ownText());
     product.getTexts().add(text);
 
-    if (product.getImages().isEmpty()) {
-      ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s%s", aURL.getProtocol(), aURL.getHost(), doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
-      product.getImages().add(image);
-    }
+    ProductImage image = new ProductImage();
+    image.setUrl(String.format("%s://%s%s", aURL.getProtocol(), aURL.getHost(), doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
+    product.getImages().add(image);
 
     return product;
   }

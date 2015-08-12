@@ -1,12 +1,10 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +15,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.configuration.BaseEnum.CURRENCY;
-import com.dailydealsbox.database.model.base.BaseModel;
+import com.dailydealsbox.database.model.base.BaseEntityModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -26,48 +24,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "product_price")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class ProductPrice extends BaseModel {
+public class ProductPrice extends BaseEntityModel {
 
   @NotNull
   @Column(name = "value", nullable = false)
-  private double   value;
+  private double value;
 
   @Column(name = "compare_value")
-  private double   compare_value;
-
-  @NotNull
-  @Column(name = "currency", nullable = false)
-  @Enumerated(EnumType.STRING)
-  private CURRENCY currency;
+  private double compare_value;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id")
-  private Product  product;
+  private Product product;
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {
     if (this.getValue() <= 0) { return false; }
     return true;
-  }
-
-  /**
-   * @return the currency
-   */
-  public CURRENCY getCurrency() {
-    return this.currency;
-  }
-
-  /**
-   * @param currency
-   *          the currency to set
-   */
-  public void setCurrency(CURRENCY currency) {
-    this.currency = currency;
   }
 
   /**
@@ -108,7 +86,8 @@ public class ProductPrice extends BaseModel {
   }
 
   /**
-   * @param compare value
+   * @param compare
+   *          value
    *          the value to set
    */
   public void setCompareValue(double compare_value) {

@@ -10,6 +10,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,6 +28,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
 import com.dailydealsbox.configuration.BaseEnum;
+import com.dailydealsbox.configuration.BaseEnum.CURRENCY;
 import com.dailydealsbox.configuration.GenericConfiguration;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 
@@ -46,6 +49,15 @@ public class Product extends BaseEntityModel {
   @NotNull
   @Column(name = "`key`", nullable = false, length = 64)
   private String key;
+
+  @NotNull
+  @Column(name = "current_price", nullable = false)
+  private double currentPrice;
+
+  @NotNull
+  @Column(name = "currency", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private CURRENCY currency;
 
   @NotNull
   @Column(name = "disabled", nullable = false)
@@ -160,19 +172,8 @@ public class Product extends BaseEntityModel {
    * @return
    */
   public double getTotal() {
-    // get price
-    ProductPrice price = null;
-    if (this.getPrices() == null || this.getPrices().isEmpty()) {
-      return 0;
-    } else {
-      for (ProductPrice p : this.getPrices()) {
-        price = p;
-        break;
-      }
-    }
-    if (price == null) { return 0; }
-
-    double total = price.getValue();
+    if (this.getCurrentPrice() == 0) { return 0; }
+    double total = this.getCurrentPrice();
 
     // total fee
     if (this.getFees() != null) {
@@ -180,17 +181,47 @@ public class Product extends BaseEntityModel {
         if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.AMOUNT) {
           total += fee.getValue();
         } else if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.PERCENTAGE) {
-          total += price.getValue() * (fee.getValue() / 100);
+          total += this.getCurrentPrice() * (fee.getValue() / 100);
         }
       }
     }
 
     // exchange to CAD
-    if (price.getCurrency() == BaseEnum.CURRENCY.USD) {
+    if (this.getCurrency() == BaseEnum.CURRENCY.USD) {
       total *= GenericConfiguration.EXCHANGE_RATE_USD;
     }
 
     return this.precision(total);
+  }
+
+  /**
+   * @return the currentPrice
+   */
+  public double getCurrentPrice() {
+    return this.currentPrice;
+  }
+
+  /**
+   * @param currentPrice
+   *          the currentPrice to set
+   */
+  public void setCurrentPrice(double currentPrice) {
+    this.currentPrice = currentPrice;
+  }
+
+  /**
+   * @return the currency
+   */
+  public CURRENCY getCurrency() {
+    return this.currency;
+  }
+
+  /**
+   * @param currency
+   *          the currency to set
+   */
+  public void setCurrency(CURRENCY currency) {
+    this.currency = currency;
   }
 
   /**
