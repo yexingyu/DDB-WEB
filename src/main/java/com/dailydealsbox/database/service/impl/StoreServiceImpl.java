@@ -3,7 +3,7 @@
  */
 package com.dailydealsbox.database.service.impl;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -76,8 +76,26 @@ public class StoreServiceImpl implements StoreService {
    * @see com.dailydealsbox.database.service.StoreService#listDefaultFollowed()
    */
   @Override
-  public List<Store> listDefaultFollowed() {
+  public Set<Store> listDefaultFollowed() {
     return this.repo.findByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc();
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#listByIds(java.util.Set)
+   */
+  @Override
+  public Set<Store> listByIds(Set<Integer> ids) {
+    return this.repo.findByIds(ids);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#listAll(boolean)
+   */
+  @Override
+  public Set<Store> listAll(boolean deleted) {
+    return this.repo.findByDeleted(deleted);
   }
 
 }

@@ -5,6 +5,7 @@ package com.dailydealsbox.web.controller;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,6 +70,24 @@ public class StoreController {
       @ApiIgnore Pageable pageable) {
     Page<Store> stores = this.storeService.list(deleted, pageable);
     if (stores == null || stores.getNumberOfElements() == 0) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+    } else {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, stores);
+    }
+  }
+
+  /**
+   * listAll
+   * 
+   * @param deleted
+   * @return
+   */
+  @RequestMapping(value = "all", method = RequestMethod.GET)
+  @ApiOperation(value = "list all stores", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "List all stores.")
+  public GenericResponseData listAll(
+      @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted) {
+    Set<Store> stores = this.storeService.listAll(deleted);
+    if (stores == null || stores.isEmpty()) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, stores);
