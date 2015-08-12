@@ -21,9 +21,12 @@ import org.springframework.stereotype.Service;
 
 import com.dailydealsbox.configuration.BaseEnum.CURRENCY;
 import com.dailydealsbox.configuration.BaseEnum.LANGUAGE;
+import com.dailydealsbox.configuration.BaseEnum.PRODUCT_TAX_TITLE;
+import com.dailydealsbox.configuration.BaseEnum.PRODUCT_TAX_TYPE;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductImage;
 import com.dailydealsbox.database.model.ProductPrice;
+import com.dailydealsbox.database.model.ProductTax;
 import com.dailydealsbox.database.model.ProductText;
 import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.service.SpiderService;
@@ -93,10 +96,28 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product store
     Store store = new Store();
-    store.setId(11);
+    int storeID = 11;
+    store.setId(storeID);
     product.setStore(store);
 
-    //set product 
+    //set product tax
+    product.setTaxes(new HashSet<ProductTax>());
+    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
+    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
+    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
+
+    ProductTax tax1 = new ProductTax();
+
+    tax1.setTitle(federal);
+    tax1.setType(percentage);
+
+    ProductTax tax2 = new ProductTax();
+
+    tax2.setTitle(provincial);
+    tax2.setType(percentage);
+
+    product.getTaxes().add(tax1);
+    product.getTaxes().add(tax2);
 
     // init some properties by emptySet
     if (product.getTexts() == null) {
@@ -172,5 +193,4 @@ public class SpiderServiceImpl implements SpiderService {
 
     return product;
   }
-
 }
