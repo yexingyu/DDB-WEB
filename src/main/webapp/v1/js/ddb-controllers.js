@@ -455,10 +455,10 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             ProfileService.profile(function (response) {
                 if (response.status === 'SUCCESS') {
                     $scope.me = response.data;
-                    ProductService.listFollowed(callback, $scope.pagination.page, $scope.pagination.size, $scope.pagination.sort);
+                    ProductService.listFollowed(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort);
                 } else {
                     $scope.me = {};
-                    ProductService.list(callback, $scope.pagination.page, $scope.pagination.size, $scope.pagination.sort);
+                    ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort);
                 }
             });
         };
