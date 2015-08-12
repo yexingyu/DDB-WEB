@@ -108,7 +108,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         $scope.actions = {
             'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
         };
-        $scope.pagination = {'page': 1, 'size': 3, 'sort': 'createdAt,desc'};
+        $scope.pagination = {'page': 1, 'size': 9, 'sort': 'createdAt,desc'};
         $scope.pagination.change = function () {
             console.log("changed")
             $scope.loading();
