@@ -43,8 +43,8 @@
                             <hr>
                         </div>
                         <div class="col-xs-12 col-sm-12">
-                            <span class="old-price">{{item.prices[0].currency}}${{item.prices[0].compareValue | number:2}}</span>
-                            <span> {{item.prices[0].currency}}${{item.prices[0].value | number:2}}</span>
+                            <span class="old-price">{{item.currency}}${{item.prices[0].compareValue | number:2}}</span>
+                            <span> {{item.currency}}${{item.currentPrice | number:2}}</span>
                             <span ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"> ${{fee.value | number:2}}</span><br>
                             <span>SubTotal: CAD${{item.total}}</span>
                             <hr>
