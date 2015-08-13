@@ -119,6 +119,15 @@ public class Product extends BaseEntityModel {
   private Set<ProductTag> tags;
 
   /**
+   * getDealPrice
+   *
+   * @return
+   */
+  public double getDealPrice() {
+    return this.getCurrentPrice();
+  }
+
+  /**
    * getPayments
    *
    * @return
@@ -172,8 +181,8 @@ public class Product extends BaseEntityModel {
    * @return
    */
   public double getTotal() {
-    if (this.getCurrentPrice() == 0) { return 0; }
-    double total = this.getCurrentPrice();
+    if (this.getDealPrice() == 0) { return 0; }
+    double total = this.getDealPrice();
 
     // total fee
     if (this.getFees() != null) {
@@ -181,7 +190,7 @@ public class Product extends BaseEntityModel {
         if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.AMOUNT) {
           total += fee.getValue();
         } else if (fee.getType() == BaseEnum.PRODUCT_FEE_TYPE.PERCENTAGE) {
-          total += this.getCurrentPrice() * (fee.getValue() / 100);
+          total += this.getDealPrice() * (fee.getValue() / 100);
         }
       }
     }

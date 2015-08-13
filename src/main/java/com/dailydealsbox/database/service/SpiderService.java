@@ -11,10 +11,10 @@ import com.dailydealsbox.database.model.Product;
 public interface SpiderService {
 
   /**
-   * getProductFromBestbuy
-   * 
+   * getProduct
+   *
    * @param url
    * @return
    */
-  public Product getProductFromBestbuy(String url);
+  public Product getProduct(String url);
 }

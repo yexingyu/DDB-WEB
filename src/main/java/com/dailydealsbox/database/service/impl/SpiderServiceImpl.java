@@ -42,6 +42,7 @@ public class SpiderServiceImpl implements SpiderService {
    * Constructor
    */
   public SpiderServiceImpl() {
+    // HTML_PATCH_BESTBUY
     this.HTML_PATCH_BESTBUY.put("name", "SPAN#ctl00_CP_ctl00_PD_lblProductTitle");
     this.HTML_PATCH_BESTBUY.put("description", "DIV.tab-overview-item");
     this.HTML_PATCH_BESTBUY.put("image", "IMG#ctl00_CP_ctl00_PD_PI_IP");
@@ -53,73 +54,18 @@ public class SpiderServiceImpl implements SpiderService {
    * @see com.dailydealsbox.database.service.SpiderService#getProductFromBestbuy(java.lang.String)
    */
   @Override
-  public Product getProductFromBestbuy(String url) {
-    Product product = new Product();
-    this.getProductFromBestbuy(url, product, LANGUAGE.EN);
-    this.getProductFromBestbuy(url, product, LANGUAGE.FR);
-    return product;
-  }
-
-  //parse url to get product key (id)
-  private String getProductKey(String url) {
-    // String to be scanned to find the pattern.
-    String pattern = "\\/(\\d+).aspx";
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile(pattern);
-
-    // Now create matcher object.
-    Matcher m = r.matcher(url);
-    if (m.find()) {
-      return m.group(1);
-
-    } else {
+  public Product getProduct(String url) {
+    // parse url
+    URL oUrl;
+    try {
+      oUrl = new URL(StringUtils.lowerCase(url));
+    } catch (MalformedURLException e1) {
+      e1.printStackTrace();
       return null;
     }
-  }
-
-  /**
-   * getProductFromBestbuy
-   *
-   * @param url
-   * @param product
-   * @param language
-   * @return
-   */
-  private Product getProductFromBestbuy(String url, Product product, LANGUAGE language) {
-    //set product url
-    product.setUrl(url);
-    //set product status
-    product.setDisabled(false);
-    //set product key
-    product.setKey(this.getProductKey(url));
-
-    //set product store
-    Store store = new Store();
-    int storeID = 11;
-    store.setId(storeID);
-    product.setStore(store);
-
-    //set product tax
-    product.setTaxes(new HashSet<ProductTax>());
-    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
-    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
-    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-
-    ProductTax tax1 = new ProductTax();
-
-    tax1.setTitle(federal);
-    tax1.setType(percentage);
-
-    ProductTax tax2 = new ProductTax();
-
-    tax2.setTitle(provincial);
-    tax2.setType(percentage);
-
-    product.getTaxes().add(tax1);
-    product.getTaxes().add(tax2);
 
     // init some properties by emptySet
+    Product product = new Product();
     if (product.getTexts() == null) {
       product.setTexts(new HashSet<ProductText>());
     }
@@ -129,20 +75,171 @@ public class SpiderServiceImpl implements SpiderService {
     if (product.getImages() == null) {
       product.setImages(new HashSet<ProductImage>());
     }
+    if (product.getTaxes() == null) {
+      product.setTaxes(new HashSet<ProductTax>());
+    }
+
+    // spider page based on host.
+    // if no match, return an empty product.
+    String host = oUrl.getHost();
+    switch (host) {
+      case "www.ebay.ca":
+        this.getProductFromEbayCA(oUrl, product, LANGUAGE.EN);
+        this.getProductFromEbayCA(oUrl, product, LANGUAGE.FR);
+        break;
+      case "www.ebay.com":
+        this.getProductFromEbayUS(oUrl, product, LANGUAGE.EN);
+        break;
+      case "www.bestbuy.ca":
+        this.getProductFromBestbuyCA(oUrl, product, LANGUAGE.EN);
+        this.getProductFromBestbuyCA(oUrl, product, LANGUAGE.FR);
+        break;
+      case "www.bestbuy.com":
+        this.getProductFromBestbuyUS(oUrl, product, LANGUAGE.EN);
+        break;
+      case "www.amazon.ca":
+        this.getProductFromAmazonCA(oUrl, product, LANGUAGE.EN);
+        this.getProductFromAmazonCA(oUrl, product, LANGUAGE.FR);
+        break;
+      case "www.amazon.com":
+        this.getProductFromAmazonUS(oUrl, product, LANGUAGE.EN);
+        break;
+      default:
+        break;
+    }
+
+    return product;
+  }
+
+  /**
+   * getProductFromEbayUS
+   *
+   * @param url
+   * @param product
+   * @param language
+   */
+  private void getProductFromEbayUS(URL url, Product product, LANGUAGE language) {
+
+  }
+
+  /**
+   * getProductFromEbayCA
+   *
+   * @param url
+   * @param product
+   * @param language
+   */
+  private void getProductFromEbayCA(URL url, Product product, LANGUAGE language) {
+
+  }
+
+  /**
+   * getProductFromAmazonUS
+   *
+   * @param url
+   * @param product
+   * @param language
+   */
+  private void getProductFromAmazonUS(URL url, Product product, LANGUAGE language) {
+
+  }
+
+  /**
+   * getProductFromAmazonCA
+   *
+   * @param url
+   * @param product
+   * @param language
+   */
+  private void getProductFromAmazonCA(URL url, Product product, LANGUAGE language) {
+
+  }
+
+  /**
+   * getProductFromBestbuyUS
+   *
+   * @param url
+   * @param product
+   * @param language
+   */
+  private void getProductFromBestbuyUS(URL url, Product product, LANGUAGE language) {
+
+  }
+
+  /**
+   * getProductKeyFromBestbuyCA
+   *
+   * @param url
+   * @return
+   */
+  private String getProductKeyFromBestbuyCA(URL url) {
+    // String to be scanned to find the pattern.
+    String pattern = "\\/(\\d+).aspx";
+
+    // Create a Pattern object
+    Pattern r = Pattern.compile(pattern);
+
+    // Now create matcher object.
+    Matcher m = r.matcher(url.toString());
+    if (m.find()) {
+      return m.group(1);
+
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * getProductFromBestbuyCA
+   *
+   * @param url
+   * @param product
+   * @param language
+   * @return
+   */
+  private Product getProductFromBestbuyCA(URL url, Product product, LANGUAGE language) {
+    //set product url
+    product.setUrl(url.toString());
+    //set product status
+    product.setDisabled(false);
+    //set product key
+    product.setKey(this.getProductKeyFromBestbuyCA(url));
+
+    //set product store
+    Store store = new Store();
+    int storeID = 11;
+    store.setId(storeID);
+    product.setStore(store);
+
+    //set product tax
+    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
+    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
+    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
+
+    ProductTax tax1 = new ProductTax();
+    tax1.setTitle(federal);
+    tax1.setType(percentage);
+
+    ProductTax tax2 = new ProductTax();
+    tax2.setTitle(provincial);
+    tax2.setType(percentage);
+
+    product.getTaxes().add(tax1);
+    product.getTaxes().add(tax2);
 
     // language switch
-    url = StringUtils.lowerCase(url);
+    String urlStr = url.toString();
     NumberFormat numberFormat;
     switch (language) {
       case EN:
-        if (StringUtils.containsIgnoreCase(url, "/fr-ca/")) {
-          url = StringUtils.replaceOnce(url, "/fr-ca/", "/en-ca/");
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr-ca/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr-ca/", "/en-ca/");
         }
         numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
         break;
       case FR:
-        if (StringUtils.containsIgnoreCase(url, "/en-ca/")) {
-          url = StringUtils.replaceOnce(url, "/en-ca/", "/fr-ca/");
+        if (StringUtils.containsIgnoreCase(urlStr, "/en-ca/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/en-ca/", "/fr-ca/");
         }
         numberFormat = NumberFormat.getInstance(Locale.FRANCE);
         break;
@@ -151,17 +248,9 @@ public class SpiderServiceImpl implements SpiderService {
         break;
     }
 
-    URL aURL;
-    try {
-      aURL = new URL(url);
-    } catch (MalformedURLException e1) {
-      e1.printStackTrace();
-      return null;
-    }
-
     Document doc;
     try {
-      doc = Jsoup.connect(url).get();
+      doc = Jsoup.connect(urlStr).get();
     } catch (IOException e) {
       e.printStackTrace();
       return null;
@@ -191,7 +280,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s%s", aURL.getProtocol(), aURL.getHost(), doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
+      image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(), doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
       product.getImages().add(image);
     }
 
