@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.CrudRepository;
 
+import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.database.model.Store;
 
 /**
@@ -39,14 +40,27 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
   public Set<Store> findByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc();
 
   /**
-   * findByIds
+   * findAllByIdsAndDeleted
    *
    * @param ids
+   * @param deleted
    * @return
    */
-  @Query(value = "select s from Store s where s.id in ?1")
+  @Query(value = "select s from Store s where s.id in ?1 and deleted = ?2")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Set<Store> findByIds(Set<Integer> ids);
+  public Set<Store> findAllByIdsAndDeleted(Set<Integer> ids, boolean deleted);
+
+  /**
+   * findAllByIdsAndCountriesAndDeleted
+   *
+   * @param ids
+   * @param countries
+   * @param deleted
+   * @return
+   */
+  @Query(value = "select s from Store s where s.id in ?1 and s.country in ?2 and deleted = ?3")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Set<Store> findAllByIdsAndCountriesAndDeleted(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted);
 
   /**
    * findByDeleted
@@ -55,4 +69,25 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
    */
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Set<Store> findByDeleted(boolean deleted);
+
+  /**
+   * findAllByCountryAndDeleted
+   *
+   * @param country
+   * @param deleted
+   * @return
+   */
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Set<Store> findAllByCountryAndDeleted(COUNTRY country, boolean deleted);
+
+  /**
+   * findAllByCountryAndDeleted
+   *
+   * @param countries
+   * @param deleted
+   * @return
+   */
+  @Query(value = "select s from Store s where s.country in ?1 and deleted = ?2")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Set<Store> findAllByCountryAndDeleted(Set<COUNTRY> countries, boolean deleted);
 }

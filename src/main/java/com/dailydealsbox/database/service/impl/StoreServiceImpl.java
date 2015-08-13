@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.repository.StoreRepository;
 import com.dailydealsbox.database.service.StoreService;
@@ -82,11 +83,11 @@ public class StoreServiceImpl implements StoreService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#listByIds(java.util.Set)
+   * @see com.dailydealsbox.database.service.StoreService#listAll(java.util.Set, boolean)
    */
   @Override
-  public Set<Store> listByIds(Set<Integer> ids) {
-    return this.repo.findByIds(ids);
+  public Set<Store> listAll(Set<Integer> ids, boolean deleted) {
+    return this.repo.findAllByIdsAndDeleted(ids, deleted);
   }
 
   /*
@@ -96,6 +97,24 @@ public class StoreServiceImpl implements StoreService {
   @Override
   public Set<Store> listAll(boolean deleted) {
     return this.repo.findByDeleted(deleted);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#listAll(boolean, java.util.Set)
+   */
+  @Override
+  public Set<Store> listAll(boolean deleted, Set<COUNTRY> countries) {
+    return this.repo.findAllByCountryAndDeleted(countries, deleted);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#listAll(java.util.Set, java.util.Set, boolean)
+   */
+  @Override
+  public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted) {
+    return this.repo.findAllByIdsAndCountriesAndDeleted(ids, countries, deleted);
   }
 
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.database.model.Store;
 
 /**
@@ -33,11 +34,39 @@ public interface StoreService {
 
   /**
    * listAll
-   * 
+   *
    * @param deleted
    * @return
    */
   public Set<Store> listAll(boolean deleted);
+
+  /**
+   * listAll
+   *
+   * @param ids
+   * @param deleted
+   * @return
+   */
+  public Set<Store> listAll(Set<Integer> ids, boolean deleted);
+
+  /**
+   * listAll
+   *
+   * @param deleted
+   * @param countries
+   * @return
+   */
+  public Set<Store> listAll(boolean deleted, Set<COUNTRY> countries);
+
+  /**
+   * listAll
+   * 
+   * @param ids
+   * @param countries
+   * @param deleted
+   * @return
+   */
+  public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted);
 
   /**
    * listDefaultFollowed
@@ -45,14 +74,6 @@ public interface StoreService {
    * @return
    */
   public Set<Store> listDefaultFollowed();
-
-  /**
-   * listByIds
-   *
-   * @param ids
-   * @return
-   */
-  public Set<Store> listByIds(Set<Integer> ids);
 
   /**
    * update

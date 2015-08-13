@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.model.Member;
@@ -178,17 +179,22 @@ public class ProductController {
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
   public GenericResponseData list(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
       @ApiParam(value = "filter: tags", required = false) @RequestParam(value = "tags", required = false) Set<String> tags,
+      @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
       @ApiIgnore Pageable pageable) throws Exception {
 
     // retrieve store set
     Set<Store> stores = null;
-    if (storeIds != null) {
-      stores = this.storeService.listByIds(storeIds);
-      if (stores == null || stores.isEmpty()) {
-        stores = null;
-      }
+    if (storeIds != null && countries != null) {
+      stores = this.storeService.listAll(storeIds, countries, false);
+    } else if (storeIds != null) {
+      stores = this.storeService.listAll(storeIds, false);
+    } else if (countries != null) {
+      stores = this.storeService.listAll(false, countries);
+    }
+    if (stores == null || stores.isEmpty()) {
+      stores = null;
     }
 
     // retrieve products
