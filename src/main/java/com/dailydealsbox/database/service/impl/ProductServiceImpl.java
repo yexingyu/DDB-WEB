@@ -238,7 +238,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public Page<Product> listByTags(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable) {
-    return this.repo.findByTagAndDeletedAndDisabled(tags, deleted, disabled, pageable);
+    return this.repo.findByTagsAndDeletedAndDisabled(tags, deleted, disabled, pageable);
   }
 
   /*
@@ -247,7 +247,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> listByStores(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable) {
-    return this.repo.findByStoreAndDeletedAndDisabled(stores, deleted, disabled, pageable);
+    return this.repo.findByStoresAndDeletedAndDisabled(stores, deleted, disabled, pageable);
   }
 
   /*
@@ -265,7 +265,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> list(Set<Store> stores, Set<String> tags, boolean deleted, boolean disabled, Pageable pageable) {
-    return this.repo.findByStoreAndDeletedAndDisabled(stores, deleted, disabled, pageable);
+    return this.repo.findByStoresAndTagsAndDeletedAndDisabled(stores, tags, deleted, disabled, pageable);
   }
 
 }

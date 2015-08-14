@@ -88,4 +88,18 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
                 page: $location.path()
             });
         });
-    }]);
+    }])
+
+    .filter('RowSwitchFilter', function () {
+        return function (arrayLength) {
+            if (arrayLength) {
+                arrayLength = Math.ceil(arrayLength);
+                var arr = new Array(arrayLength), i = 0;
+                for (; i < arrayLength; i++) {
+                    arr[i] = i;
+                }
+                return arr;
+            }
+        };
+    });
+

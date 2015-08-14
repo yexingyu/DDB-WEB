@@ -28,7 +28,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   //  List<Product> findByStoreId(@Param("storeId") int storeId, @Param("offset") int offset, @Param("cnt") int cnt);
 
   /**
-   * findByStoreAndTagAndDeletedAndDisabled
+   * findByStoresAndTagsAndDeletedAndDisabled
    *
    * @param tags
    * @param deleted
@@ -38,10 +38,10 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    */
   @Query(value = "select p from Product p join p.tags t where p.store in ?1 and t.value in ?2 and p.deleted = ?3 and p.disabled = ?4")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Page<Product> findByStoreAndTagAndDeletedAndDisabled(Set<Store> stores, Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
+  public Page<Product> findByStoresAndTagsAndDeletedAndDisabled(Set<Store> stores, Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
-   * findByStoreAndDeletedAndDisabled
+   * findByStoresAndDeletedAndDisabled
    *
    * @param stores
    * @param deleted
@@ -51,10 +51,10 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    */
   @Query(value = "select p from Product p where p.store in ?1 and p.deleted = ?2 and p.disabled = ?3")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Page<Product> findByStoreAndDeletedAndDisabled(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable);
+  public Page<Product> findByStoresAndDeletedAndDisabled(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
-   * findByTagAndDeletedAndDisabled
+   * findByTagsAndDeletedAndDisabled
    *
    * @param tags
    * @param deleted
@@ -64,7 +64,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    */
   @Query(value = "select p from Product p join p.tags t where t.value in ?1 and p.deleted = ?2 and p.disabled = ?3")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Page<Product> findByTagAndDeletedAndDisabled(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
+  public Page<Product> findByTagsAndDeletedAndDisabled(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
    * findByStoreIdAndDisabledAndDeleted

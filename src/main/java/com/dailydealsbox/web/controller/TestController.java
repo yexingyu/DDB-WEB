@@ -73,7 +73,7 @@ public class TestController {
     //Member member = this.memberService.get(token.getMemberId());
 
     //Set<Store> rst = this.repoStore.findByIds(ids);
-    Page<Product> rst = this.productRepo.findByTagAndDeletedAndDisabled(tags, false, false, pageable);
+    Page<Product> rst = this.productRepo.findByTagsAndDeletedAndDisabled(tags, false, false, pageable);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, rst);
   }
 

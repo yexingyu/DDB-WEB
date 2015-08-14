@@ -199,14 +199,14 @@ public class ProductController {
 
     // retrieve products
     Page<Product> products = null;
-    if (stores == null && tags == null) {
-      products = this.productService.list(deleted, disabled, pageable);
+    if (stores != null && tags != null) {
+      products = this.productService.list(stores, tags, deleted, disabled, pageable);
     } else if (stores != null) {
       products = this.productService.listByStores(stores, deleted, disabled, pageable);
     } else if (tags != null) {
       products = this.productService.listByTags(tags, deleted, disabled, pageable);
     } else {
-      products = this.productService.list(stores, tags, deleted, disabled, pageable);
+      products = this.productService.list(deleted, disabled, pageable);
     }
 
     if (products == null || products.getNumberOfElements() == 0) {
