@@ -1,66 +1,59 @@
 <div class="container">
     <div>
-    <h2>All Deals - Canada Wide</h2>
+        <h2>All Deals - Canada Wide</h2>
     </div>
     <div class="row">
-            <div class="col-xs-12">
-				<tabset justified="true">
-				            <tab heading="Newest" select="select('createdAt,desc')"></tab>
-				            <tab heading="Best Reputation" select="select('reputation,desc')"></tab>               
-				            <tab heading="$ Low to High" select="select('currentPrice,asc')"></tab>
-				            <tab heading="$ High to Low" select="select('currentPrice,desc')"></tab>
-				         
-				            <tab heading="Most Likes" select="select('countLikes,desc')"></tab>
-				            <tab heading="Most Reviews" select="select('countReviews,desc')"></tab>
-				            <tab heading="Filter by Tags" select="loadTags()">
-								<div class="panel panel-default">
-								  <div class="panel-heading">Filter By Tags</div>
-								  <div class="panel-body">                 
-				                  <div class="col-xs-6 col-lg-4" ng-repeat="tag in tags.all">
-				                        <input type="checkbox" ng-model="tags.checklist[tag.value]">{{tag.value}}
-				                    </div>
-					                <div class="row pull-right">
-					                    <a class="btn btn-default" ng-click="loading()">Match All Tags</a><a class="btn btn-default" ng-click="loading()">Match Any Tags</a> 
-					                </div>                      
-				                    </div>
-				                    </div>
-				             
-				            </tab>
-				            <tab heading="Filter by Stores" select="loadStores()">
-								<div class="panel panel-default">
-								  <div class="panel-heading">Filter By Stores</div>
-								  <div class="panel-body">             
-				                <div class="row">
-				                    <div class="col-xs-6 col-lg-4" ng-repeat="store in stores.all">
-				                        <input type="checkbox" ng-model="stores.checklist[store.id]">{{store.name}} ({{store.website}})
-				                    </div>
-				                </div>
-				                <div class="row pull-right">
-				                    <a class="btn btn-default" ng-click="loading()">Search</a>
-				                </div>
-				                </div>
-				                </div>
-				            </tab>
-				        </tabset>            
-            </div>
         <div class="col-xs-12">
+            <tabset justified="true">
+                <tab heading="Newest" select="select('createdAt,desc')"></tab>
+                <tab heading="Best Reputation" select="select('reputation,desc')"></tab>
+                <tab heading="$ Low to High" select="select('currentPrice,asc')"></tab>
+                <tab heading="$ High to Low" select="select('currentPrice,desc')"></tab>
 
-	        <pagination total-items="pagination.total" ng-model="pagination.page" items-per-page="pagination.size" class="pagination-sm pull-right" boundary-links="true" rotate="true"
-	                    ng-change="pagination.change()"></pagination>
+                <tab heading="Most Likes" select="select('countLikes,desc')"></tab>
+                <tab heading="Most Reviews" select="select('countReviews,desc')"></tab>
+                <tab heading="Filter by Tags" select="loadTags()">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Filter By Tags</div>
+                        <div class="panel-body">
+                            <div class="col-xs-6 col-lg-4" ng-repeat="tag in tags.all">
+                                <input type="checkbox" ng-model="tags.checklist[tag.value]">{{tag.value}}
+                            </div>
+                            <div class="row pull-right">
+                                <a class="btn btn-default" ng-click="loading()">Match All Tags</a><a class="btn btn-default" ng-click="loading()">Match Any Tags</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </tab>
+                <tab heading="Filter by Stores" select="loadStores()">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Filter By Stores</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-6 col-lg-4" ng-repeat="store in stores.all">
+                                    <input type="checkbox" ng-model="stores.checklist[store.id]">{{store.name}} ({{store.website}})
+                                </div>
+                            </div>
+                            <div class="row pull-right">
+                                <a class="btn btn-default" ng-click="loading()">Search</a>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+        <div class="col-xs-12">
+            <pagination total-items="pagination.total" ng-model="pagination.page" items-per-page="pagination.size" class="pagination-sm pull-right" boundary-links="true" rotate="true"
+                        ng-change="pagination.change()"></pagination>
         </div>
         <div class="col-xs-12">
             <div class="row" ng-include="'tpl-product-list-default.html'"></div>
         </div>
-        
+        <div class="col-xs-12">
+            <pagination total-items="pagination.total" ng-model="pagination.page" items-per-page="pagination.size" class="pagination-sm pull-right" boundary-links="true" rotate="true"
+                        ng-change="pagination.change()"></pagination>
 
-
-
-       
-
-
-    <div class="col-xs-12">
-        <pagination total-items="pagination.total" ng-model="pagination.page" items-per-page="pagination.size" class="pagination-sm pull-right" boundary-links="true" rotate="true"
-                    ng-change="pagination.change()"></pagination>
-        
+        </div>
     </div>
 </div>
