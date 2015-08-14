@@ -234,7 +234,7 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 return product;
             },
             spiderBestbuyCA: function (url, callback) {
-                return $resource('/api/spider/bestbuy', {'url': url}, {}).get(callback);
+                return $resource('/api/spider', {'url': url}, {}).get(callback);
             }
         };
     }]);
