@@ -12,21 +12,32 @@
             <tab heading="Most Likes" select="select('countLikes,desc')"></tab>
             <tab heading="Most Reviews" select="select('countReviews,desc')"></tab>
             <tab heading="Filter by Tags" select="loadTags()">
-                 <div class="col-xs-6 col-lg-4" ng-repeat="tag in tags.all">
+				<div class="panel panel-default">
+				  <div class="panel-heading">Filter By Tags</div>
+				  <div class="panel-body">                 
+                  <div class="col-xs-6 col-lg-4" ng-repeat="tag in tags.all">
                         <input type="checkbox" ng-model="tags.checklist[tag.value]">{{tag.value}}
                     </div>
-                <div class="row pull-left">
-                    <a class="btn btn-default" ng-click="loading()">Done</a>
-                </div>
+	                <div class="row pull-right">
+	                    <a class="btn btn-default" ng-click="loading()">Match All Tags</a><a class="btn btn-default" ng-click="loading()">Match Any Tags</a> 
+	                </div>                      
+                    </div>
+                    </div>
+             
             </tab>
             <tab heading="Filter by Stores" select="loadStores()">
+				<div class="panel panel-default">
+				  <div class="panel-heading">Filter By Stores</div>
+				  <div class="panel-body">             
                 <div class="row">
                     <div class="col-xs-6 col-lg-4" ng-repeat="store in stores.all">
                         <input type="checkbox" ng-model="stores.checklist[store.id]">{{store.name}} ({{store.website}})
                     </div>
                 </div>
-                <div class="row pull-left">
-                    <a class="btn btn-default" ng-click="loading()">Done</a>
+                <div class="row pull-right">
+                    <a class="btn btn-default" ng-click="loading()">Search</a>
+                </div>
+                </div>
                 </div>
             </tab>
         </tabset>
