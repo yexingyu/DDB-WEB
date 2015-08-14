@@ -204,6 +204,22 @@ public class Product extends BaseEntityModel {
   }
 
   /**
+   * getReputation
+   * 
+   * @return
+   */
+  public double getReputation() {
+    double reputation = 0;
+    if (this.getLinks() != null) {
+      for (ProductLink link : this.getLinks()) {
+        double r = link.getRating() * link.getReviewNumber();
+        reputation = r > reputation ? r : reputation;
+      }
+    }
+    return reputation;
+  }
+
+  /**
    * @return the currentPrice
    */
   public double getCurrentPrice() {
