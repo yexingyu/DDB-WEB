@@ -313,7 +313,7 @@ angular
                                         $scope.product.fees = [ {
                                             title : 'SHIPPING',
                                             type : 'AMOUNT',
-                                            value : ''
+                                            value : '0.00'
                                         }];
                                         
                                         $scope.product.tags = [ {
