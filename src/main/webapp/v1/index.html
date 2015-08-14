@@ -23,33 +23,27 @@
                         <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
                         class="icon-bar"></span> <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Daily Deals Box</a>
+				    <a class="navbar-brand" href="#">Daily Deals Box</a>
                 </div>
 
                 <div id="navbar" class="navbar-collapse collapse">
+			        <div class="col-sm-3 col-md-3 pull-left">
+			        <form class="navbar-form" role="search">
+			        <div class="input-group">
+			            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+			            <div class="input-group-btn">
+			                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+			            </div>
+			        </div>
+			        </form>
+			        </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#/home">Home</a></li>
-                        <li><a href="#/about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"
-                                                role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span
-                            class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#/product">Pay Monthly Products</a></li>
-                                <li><a href="#/store">Stores</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a ng-click="switchLanguage()">
-                                <span ng-show="$root.language.language === 'EN'">Français</span>
-                                <span class="ng-hide" ng-show="$root.language.language === 'FR'">English</span>
-                            </a>
-                        </li>
+                        <li class="active"><a href="#/home">All Deals</a></li>
+                        <li><a href="#/local">Local Deals</a></li>
+                        <li><a href="#/store">Stores</a></li>                        
+                        <li><a href="#/following">My Following</a></li>
+
+
                         <li class="dropdown ng-hide" ng-show="$root.profile.account.trim()">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome {{$root.profile.firstName + $root.profile.lastName}}</a>
                             <ul class="dropdown-menu">
@@ -60,7 +54,13 @@
                                 <li><a ng-click="logout()">Sign Out</a></li>
                             </ul>
                         </li>
-                        <li ng-show="!$root.profile.account.trim()"><a ng-click="login()">Sign In</a></li>
+                        <li ng-show="!$root.profile.account.trim()"><a ng-click="login()">Log In</a></li>
+                        <li>
+                            <a ng-click="switchLanguage()">
+                                <span ng-show="$root.language.language === 'EN'">FR</span>
+                                <span class="ng-hide" ng-show="$root.language.language === 'FR'">EN</span>
+                            </a>
+                        </li>                        
                     </ul>
                 </div>
             </div>
