@@ -22,11 +22,6 @@ import com.dailydealsbox.database.model.Store;
  */
 public interface ProductRepository extends CrudRepository<Product, Integer> {
 
-  //  @Query(value = "select p from Product p where store_id = :storeId and status = 0 order by id desc",
-  //    countProjection = ":offset",
-  //    countQuery = ":cnt")
-  //  List<Product> findByStoreId(@Param("storeId") int storeId, @Param("offset") int offset, @Param("cnt") int cnt);
-
   /**
    * findByStoresAndTagsAndDeletedAndDisabled
    *
@@ -36,7 +31,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    * @param pageable
    * @return
    */
-  @Query(value = "select p from Product p join p.tags t where p.store in ?1 and t.value in ?2 and p.deleted = ?3 and p.disabled = ?4")
+  @Query(value = "select distinct p from Product p join p.tags t where p.store in ?1 and t.value in ?2 and p.deleted = ?3 and p.disabled = ?4")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Page<Product> findByStoresAndTagsAndDeletedAndDisabled(Set<Store> stores, Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
 
@@ -49,7 +44,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    * @param pageable
    * @return
    */
-  @Query(value = "select p from Product p where p.store in ?1 and p.deleted = ?2 and p.disabled = ?3")
+  @Query(value = "select distinct p from Product p where p.store in ?1 and p.deleted = ?2 and p.disabled = ?3")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Page<Product> findByStoresAndDeletedAndDisabled(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable);
 
@@ -62,7 +57,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
    * @param pageable
    * @return
    */
-  @Query(value = "select p from Product p join p.tags t where t.value in ?1 and p.deleted = ?2 and p.disabled = ?3")
+  @Query(value = "select distinct p from Product p join p.tags t where t.value in ?1 and p.deleted = ?2 and p.disabled = ?3")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Page<Product> findByTagsAndDeletedAndDisabled(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
 

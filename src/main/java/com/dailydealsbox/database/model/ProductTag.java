@@ -73,7 +73,7 @@ public class ProductTag extends BaseModel {
    *          the value to set
    */
   public void setValue(String value) {
-    this.value = value;
+    this.value = StringUtils.lowerCase(value);
   }
 
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -183,6 +184,15 @@ public class ProductController {
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
       @ApiIgnore Pageable pageable) throws Exception {
+
+    // lowercase tags
+    if (tags != null) {
+      Set<String> fixedTags = new HashSet<>();
+      for (String tag : tags) {
+        fixedTags.add(StringUtils.lowerCase(tag));
+      }
+      tags = fixedTags;
+    }
 
     // retrieve store set
     Set<Store> stores = null;
