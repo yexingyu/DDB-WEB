@@ -6,9 +6,9 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
             version: 'v2.3'
         });
 
-        $routeProvider.when('/home', {
-            templateUrl: 'tpl-home.html',
-            controller: 'HomeCtrl'
+        $routeProvider.when('/following', {
+            templateUrl: 'tpl-following.html',
+            controller: 'FollowingCtrl'
 
         }).when('/contact', {
             templateUrl: 'tpl-contact.html',
@@ -18,9 +18,9 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
             templateUrl: 'tpl-about.html',
             controller: 'AboutCtrl'
 
-        }).when('/product', {
-            templateUrl: 'tpl-product.html',
-            controller: 'ProductCtrl'
+        }).when('/all', {
+            templateUrl: 'tpl-all.html',
+            controller: 'AllCtrl'
 
         }).when('/product/:id', {
             templateUrl: 'tpl-product-details.html',
@@ -55,7 +55,7 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
             controller: 'StoreCtrl'
 
         }).otherwise({
-            redirectTo: '/home'
+            redirectTo: '/all'
         });
     }])
 

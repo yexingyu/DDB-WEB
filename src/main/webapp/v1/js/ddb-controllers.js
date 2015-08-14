@@ -101,9 +101,9 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     }])
 
     /*
-     * ProductCtrl definition
+     * AllCtrl definition
      */
-    .controller('ProductCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
+    .controller('AllCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
         $scope.items = [];
         $scope.actions = {
             'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
@@ -429,9 +429,9 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     }])
 
     /*
-     * HomeCtrl definition
+     * FollowingCtrl definition
      */
-    .controller('HomeCtrl', ['$scope', '$location', 'ProductService', 'LoginService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, LoginService, ProfileService, ProductModel, StoreModel) {
+    .controller('FollowingCtrl', ['$scope', '$location', 'ProductService', 'LoginService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, LoginService, ProfileService, ProductModel, StoreModel) {
         $scope.items = [];
         $scope.actions = {
             'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
