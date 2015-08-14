@@ -1,33 +1,74 @@
-<div class="row transitionfx">
-  <div class="col-lg-6 col-md-6 col-sm-6">
-    <div class="main-image sp-wrap col-lg-12 no-padding" style="display: inline-block;">
-      <div class="sp-large">
-        <img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img">
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-6 col-md-6 col-sm-5">
-    <h1 class="product-title">{{item.texts[0].name}}</h1>
-    <div class="rating">
-      <p>
-        <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span><i
-          class="fa fa-star-o "></i></span> <span class="ratingInfo"> <span> / </span> <a data-target="#modal-review" data-toggle="modal"> Write a review</a>
-        </span>
-      </p>
-    </div>
-    <div class="product-price">
-      <h2>${{item.currentPrice}}</h2>
-    </div>
-    <div class="details-description">
-      <p>{{item.texts[0].description}}</p>
-    </div>
-    <hr>
-    <div class="col-sm-5" align="right">
-      <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
-        popover-template="$root.popoverTemplate.reviewTemplateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
-    </div>
-    <hr>
-    <h3>Review:</h3>
-    <div ng-repeat="review in item.reviews.content">Rating: {{review.rating}} - {{review.content}}</div>
-  </div>
+<div class="container">
+	<div class="row">
+        <div class="col-xs-12">
+        	<span>Tag:</span>
+        	<span ng-repeat="tag in item.tags"> <a>{{tag.value}}  </a></span>
+        </div>
+	</div>
+	<div class="row">
+        <div class="col-xs-9">
+			<h2 class="product-title">{{item.texts[0].name}}</h2>
+        </div>
+        <div class="col-xs-3">
+                                <img ng-src="./images/favicon/{{item.store.favicon}}">
+                                <span><a> {{item.store.website}}</a></span>
+                                <button type="button" class="btn btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
+                                <button type="button" class="btn btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
+                                <a href=“{{item.store.dealPage}}”>Deal Page</a>
+        </div>        
+        
+
+	</div>
+	
+    <div class="row">
+        <div class="col-xs-6">
+		    <div class="main-image sp-wrap col-lg-12 no-padding" style="display: inline-block;">
+		      <div class="sp-large">
+		        <img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img">
+		      </div>
+		    </div>        
+        </div>
+        <div class="col-xs-6">
+          <div class="row">
+	          <div class="col-xs-12">
+	          <h2>${{item.currentPrice}}</h2><a href="item.url">Merchant Product Page</a>
+	          </div>         
+          </div>
+          <div class="row">
+ 	          <div class="col-xs-12">
+	          <p>{{item.texts[0].description}}</p>
+	          </div>         
+          </div>        
+        </div>
+    </div>	
+		
+	<div class="row">
+	  <div class="col-lg-6 col-md-6 col-sm-6">
+
+	  </div>
+	  <div class="col-lg-6 col-md-6 col-sm-5">
+	    <div class="product-price">
+
+	    </div>	    
+	    <div class="rating">
+	      <p>
+	        <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span><i
+	          class="fa fa-star-o "></i></span> <span class="ratingInfo"> <span> / </span> <a data-target="#modal-review" data-toggle="modal"> Write a review</a>
+	        </span>
+	      </p>
+	    </div>
+
+	    <div class="details-description">
+	      
+	    </div>
+	    <hr>
+	    <div class="col-sm-5" align="right">
+	      <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
+	        popover-template="$root.popoverTemplate.reviewTemplateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
+	    </div>
+	    <hr>
+	    <h3>Review:</h3>
+	    <div ng-repeat="review in item.reviews.content">Rating: {{review.rating}} - {{review.content}}</div>
+	  </div>
+	</div>
 </div>
