@@ -58,7 +58,7 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
    * @param deleted
    * @return
    */
-  @Query(value = "select s from Store s where s.id in ?1 and s.country in ?2 and deleted = ?3")
+  @Query(value = "select distinct s from Store s where s.id in ?1 and s.country in ?2 and deleted = ?3")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Set<Store> findAllByIdsAndCountriesAndDeleted(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted);
 
@@ -87,7 +87,7 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
    * @param deleted
    * @return
    */
-  @Query(value = "select s from Store s where s.country in ?1 and deleted = ?2")
+  @Query(value = "select distinct s from Store s where s.country in ?1 and deleted = ?2")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Set<Store> findAllByCountryAndDeleted(Set<COUNTRY> countries, boolean deleted);
 }
