@@ -509,6 +509,12 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      */
     .controller('ContactCtrl', ['$scope', '$location', 'ProductService', function ($scope, $location, ProductService) {
     }])
+    
+        /*
+     * LocalCtrl definition
+     */
+    .controller('LocalCtrl', ['$scope', '$location', 'ProductService', function ($scope, $location, ProductService) {
+    }])
 
     /*
      * AboutCtrl definition

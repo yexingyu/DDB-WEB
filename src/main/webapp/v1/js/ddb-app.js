@@ -9,7 +9,11 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         $routeProvider.when('/following', {
             templateUrl: 'tpl-following.html',
             controller: 'FollowingCtrl'
-
+        
+        }).when('/local', {
+            templateUrl: 'tpl-local.html',
+            controller: 'LocalCtrl'
+            	
         }).when('/contact', {
             templateUrl: 'tpl-contact.html',
             controller: 'ContactCtrl'

@@ -1,3 +1,6 @@
+    <div>
+    <h2>Stores - Follow Stores</h2>
+    </div>
 <div class="row" ng-repeat="store in stores">
     <div>{{store.name}} - {{store.website}} <a class="btn btn-default" ng-if="!store.followed" ng-click="follow(store)">+Follow</a><a class="btn btn-default" ng-if="store.followed" ng-click="unfollow(store)">-Follow</a></div>
 </div>

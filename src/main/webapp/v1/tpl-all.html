@@ -1,4 +1,7 @@
 <div class="container">
+    <div>
+    <h2>All Deals - Canada Wide</h2>
+    </div>
     <div class="row">
         <tabset justified="true">
             <tab heading="Newest" select="select('createdAt,desc')"></tab>
@@ -8,7 +11,7 @@
          
             <tab heading="Most Likes" select="select('countLikes,desc')"></tab>
             <tab heading="Most Reviews" select="select('countReviews,desc')"></tab>
-            <tab heading="Tags" select="loadTags()">
+            <tab heading="Filter by Tags" select="loadTags()">
                  <div class="col-xs-6 col-lg-4" ng-repeat="tag in tags.all">
                         <input type="checkbox" ng-model="tags.checklist[tag.value]">{{tag.value}}
                     </div>
@@ -16,7 +19,7 @@
                     <a class="btn btn-default" ng-click="loading()">Done</a>
                 </div>
             </tab>
-            <tab heading="Stores" select="loadStores()">
+            <tab heading="Filter by Stores" select="loadStores()">
                 <div class="row">
                     <div class="col-xs-6 col-lg-4" ng-repeat="store in stores.all">
                         <input type="checkbox" ng-model="stores.checklist[store.id]">{{store.name}} ({{store.website}})
