@@ -49,13 +49,14 @@
 			        </div>
                     <ul class="nav navbar-nav">
                         <li><a href="#/all">All Deals</a></li>
-                        <li><a href="#/local">Local Deals</a></li>
+                        <li><a href="#/local">Grocery & Local</a></li>
                         <li><a href="#/store">Stores</a></li>                        
-                        <li><a href="#/following">My Following</a></li>
+                        <li><a href="#/following">Following</a></li>
+                        <li><a href="#/following">Sharing</a></li>
 
 
                         <li class="dropdown ng-hide" ng-show="$root.profile.account.trim()">
-                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome {{$root.profile.firstName + $root.profile.lastName}}</a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{$root.profile.firstName + $root.profile.lastName}}</a>
                             <ul class="dropdown-menu">
                                 <li><a href="#/order/me">My Orders</a></li>
                                 <li role="separator" class="divider"></li>
