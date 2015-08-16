@@ -57,13 +57,13 @@
                         <li ng-show="!$root.profile.account.trim()"><a ng-click="login()">Log In</a></li>
                         <li>
                             <a ng-click="switchLanguage()">
-                                <span ng-show="$root.language.language === 'EN'">FR</span>
-                                <span class="ng-hide" ng-show="$root.language.language === 'FR'">EN</span>
+                                <span ng-show="$root.language.language === 'EN'"><img src="./images/canada.png">FR</span>
+                                <span class="ng-hide" ng-show="$root.language.language === 'FR'"><img src="./images/canada.png">EN</span>
                             </a>
                         </li>
                         <li>
 							<!-- Go to www.addthis.com/dashboard to customize your tools -->
-							<div class="addthis_sharing_toolbox"></div>
+							<div class="addthis_sharing_toolbox pull-right"></div>
                         </li>                                                    
                     </ul>
                 </div>
