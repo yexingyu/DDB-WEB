@@ -254,7 +254,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     // combine stores from member following
-    if (stores != null) {
+    if (stores != null && member != null && member.getStores() != null && !member.getStores().isEmpty()) {
       Iterator<Store> it = stores.iterator();
       while (it.hasNext()) {
         Store s = it.next();

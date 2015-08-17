@@ -184,7 +184,13 @@ public class ProductController {
       @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
       @ApiIgnore Pageable pageable) throws Exception {
 
-    Page<Product> products = this.productService.list(storeIds, tags, countries, null, deleted, disabled, pageable);
+    Page<Product> products = null;
+    try {
+      products = this.productService.list(storeIds, tags, countries, null, deleted, disabled, pageable);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
