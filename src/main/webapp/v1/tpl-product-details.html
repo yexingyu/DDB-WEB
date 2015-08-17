@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
         <div class="col-sm-12">
-        	<span><b>Tag:</b></span>
+        	<span><b>Tags:</b></span>
         	<span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"> <a><b>{{tag.value}}</b></a></span>
         </div>       
 	</div>
@@ -33,7 +33,7 @@
         <div class="col-sm-6">
           <div class="row">
 	          <div class="col-sm-12">
-	          <h3>${{item.currentPrice}}</h3>
+	          <h3 class="price_RoyalBlue">${{item.currentPrice}}</h3>
 	          </div>         
           </div>
           <div class="row">
@@ -102,7 +102,7 @@
 		                        </div>
 		                        <div class="row">
 		                            <div class="col-sm-12">
-		                                <h4>${{item.downpayment}} by Interac email money transfer</h4>
+		                                <h4 class="price_RoyalBlue">${{item.downpayment}} by Interac email money transfer</h4>
 		                            </div>
 		                        </div>
 		
@@ -123,7 +123,7 @@
 		                        </div>
 		                        <div class="row">
 		                            <div class="col-sm-12">
-		                                <h4>${{item.monthlyPayment}} * 12M by Post Date Cheque</h4>
+		                                <h4 class="price_RoyalBlue">${{item.monthlyPayment}} * 12M by Post Date Cheque</h4>
 		                            </div>
 		                        </div>
 		

@@ -82,3 +82,9 @@ h4 a {
   text-decoration: line-through;
 }
 
+.price_RoyalBlue {
+	color: RoyalBlue; 
+	font-weight: bold;
+}
+	
+}

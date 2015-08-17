@@ -75,17 +75,17 @@
                     </div>
                     <div class="col-xs-12">
                         <span class="old-price" ng-if="item.compareValue>0.">{{item.currency}}${{item.compareValue | number:2}}</span>
-                        <h4> {{item.currency}}${{item.currentPrice | number:2}}</h4>
+                        <h4 class="price_RoyalBlue"> {{item.currency}}${{item.currentPrice | number:2}}</h4>
                         <span ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"> ${{fee.value | number:2}}</span><br>
-                        <span>SubTotal: CAD${{item.total}}</span>
+                        <span >SubTotal: CAD${{item.total}}</span>
                         <hr>
                     </div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-7 pull-left">
                                 <div class="row">
-                                    <div class="col-xs-12"><span style="color: RoyalBlue; font-weight: bold;">Down: CAD${{item.downpayment | number:2}}</span></div>
-                                    <div class="col-xs-12"><span style="color: RoyalBlue; font-weight: bold">Monthly: CAD${{item.monthlyPayment | number:2}} * {{item.payments}}M</span></div>
+                                    <div class="col-xs-12"><span class="price_RoyalBlue">Down: CAD${{item.downpayment | number:2}}</span></div>
+                                    <div class="col-xs-12"><span class="price_RoyalBlue">Monthly: CAD${{item.monthlyPayment | number:2}} * {{item.payments}}M</span></div>
                                 </div>
                             </div>
                             <div class="col-xs-3">
