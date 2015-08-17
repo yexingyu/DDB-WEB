@@ -56,15 +56,6 @@ public class StoreServiceImpl implements StoreService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#list(boolean, org.springframework.data.domain.Pageable)
-   */
-  @Override
-  public Page<Store> list(boolean deleted, Pageable pageable) {
-    return this.repo.findByDeleted(deleted, pageable);
-  }
-
-  /*
-   * (non-Javadoc)
    * @see com.dailydealsbox.database.service.StoreService#delete(int)
    */
   @Override
@@ -78,34 +69,7 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Set<Store> listDefaultFollowed() {
-    return this.repo.findByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc();
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#listAll(java.util.Set, boolean)
-   */
-  @Override
-  public Set<Store> listAll(Set<Integer> ids, boolean deleted) {
-    return this.repo.findAllByIdsAndDeleted(ids, deleted);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#listAll(boolean)
-   */
-  @Override
-  public Set<Store> listAll(boolean deleted) {
-    return this.repo.findByDeleted(deleted);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#listAll(boolean, java.util.Set)
-   */
-  @Override
-  public Set<Store> listAll(boolean deleted, Set<COUNTRY> countries) {
-    return this.repo.findAllByCountryAndDeleted(countries, deleted);
+    return this.repo.findAllByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc();
   }
 
   /*
@@ -114,7 +78,36 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted) {
-    return this.repo.findAllByIdsAndCountriesAndDeleted(ids, countries, deleted);
+    Set<Store> stores = null;
+    if (ids != null && countries != null) {
+      stores = this.repo.findAllByIdsAndCountriesAndDeleted(ids, countries, deleted);
+    } else if (ids != null) {
+      stores = this.repo.findAllByIdsAndDeleted(ids, deleted);
+    } else if (countries != null) {
+      stores = this.repo.findAllByCountriesAndDeleted(countries, deleted);
+    } else {
+      stores = this.repo.findAllByDeleted(deleted);
+    }
+    return stores;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#list(java.util.Set, java.util.Set, boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted, Pageable pageable) {
+    Page<Store> stores = null;
+    if (ids != null && countries != null) {
+      stores = this.repo.findByIdsAndCountriesAndDeleted(ids, countries, deleted, pageable);
+    } else if (ids != null) {
+      stores = this.repo.findByIdsAndDeleted(ids, deleted, pageable);
+    } else if (countries != null) {
+      stores = this.repo.findByCountriesAndDeleted(countries, deleted, pageable);
+    } else {
+      stores = this.repo.findByDeleted(deleted, pageable);
+    }
+    return stores;
   }
 
 }

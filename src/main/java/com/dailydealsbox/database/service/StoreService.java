@@ -26,41 +26,17 @@ public interface StoreService {
   /**
    * list
    *
+   * @param ids
+   * @param countries
    * @param deleted
    * @param pageable
    * @return
    */
-  public Page<Store> list(boolean deleted, Pageable pageable);
+  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted, Pageable pageable);
 
   /**
    * listAll
    *
-   * @param deleted
-   * @return
-   */
-  public Set<Store> listAll(boolean deleted);
-
-  /**
-   * listAll
-   *
-   * @param ids
-   * @param deleted
-   * @return
-   */
-  public Set<Store> listAll(Set<Integer> ids, boolean deleted);
-
-  /**
-   * listAll
-   *
-   * @param deleted
-   * @param countries
-   * @return
-   */
-  public Set<Store> listAll(boolean deleted, Set<COUNTRY> countries);
-
-  /**
-   * listAll
-   * 
    * @param ids
    * @param countries
    * @param deleted

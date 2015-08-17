@@ -4,15 +4,19 @@
 package com.dailydealsbox.database.service.impl;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
+import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductFee;
 import com.dailydealsbox.database.model.ProductImage;
@@ -30,6 +34,7 @@ import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductReviewRepository;
 import com.dailydealsbox.database.repository.ProductTagRepository;
 import com.dailydealsbox.database.service.ProductService;
+import com.dailydealsbox.database.service.StoreService;
 
 /**
  * @author x_ye
@@ -39,16 +44,15 @@ import com.dailydealsbox.database.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
   @Resource
-  private ProductRepository repo;
-
+  private ProductRepository       repo;
   @Resource
-  private ProductLikeRepository repoLike;
-
+  private ProductLikeRepository   repoLike;
   @Resource
   private ProductReviewRepository repoReview;
-
   @Resource
-  private ProductTagRepository repoTag;
+  private ProductTagRepository    repoTag;
+  @Resource
+  private StoreService            storeService;
 
   /*
    * (non-Javadoc)
@@ -211,43 +215,11 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.ProductService#list(boolean, boolean, org.springframework.data.domain.Pageable)
-   */
-  @Override
-  public Page<Product> list(boolean deleted, boolean disabled, Pageable pageable) {
-    return this.repo.findByDisabledAndDeleted(deleted, disabled, pageable);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.ProductService#list(int, boolean, boolean, org.springframework.data.domain.Pageable)
-   */
-  @Override
-  public Page<Product> list(int storeId, boolean deleted, boolean disabled, Pageable pageable) {
-    return this.repo.findByStoreIdAndDisabledAndDeleted(storeId, deleted, disabled, pageable);
-  }
-
-  /*
-   * (non-Javadoc)
    * @see com.dailydealsbox.database.service.ProductService#listLike(int, org.springframework.data.domain.Pageable)
    */
   @Override
   public Page<ProductLike> listLike(int productId, Pageable pageable) {
     return this.repoLike.findByProductId(productId, pageable);
-  }
-
-  @Override
-  public Page<Product> listByTags(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable) {
-    return this.repo.findByTagsAndDeletedAndDisabled(tags, deleted, disabled, pageable);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.ProductService#listByStores(java.util.Set, boolean, boolean, org.springframework.data.domain.Pageable)
-   */
-  @Override
-  public Page<Product> listByStores(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable) {
-    return this.repo.findByStoresAndDeletedAndDisabled(stores, deleted, disabled, pageable);
   }
 
   /*
@@ -261,11 +233,51 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.ProductService#list(java.util.Set, java.util.Set, boolean, boolean, org.springframework.data.domain.Pageable)
+   * @see com.dailydealsbox.database.service.ProductService#list(java.util.Set, java.util.Set, java.util.Set, com.dailydealsbox.database.model.Member, boolean,
+   * boolean, org.springframework.data.domain.Pageable)
    */
   @Override
-  public Page<Product> list(Set<Store> stores, Set<String> tags, boolean deleted, boolean disabled, Pageable pageable) {
-    return this.repo.findByStoresAndTagsAndDeletedAndDisabled(stores, tags, deleted, disabled, pageable);
+  public Page<Product> list(Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled, Pageable pageable) {
+    // lowercase tags
+    if (tags != null) {
+      Set<String> fixedTags = new HashSet<>();
+      for (String tag : tags) {
+        fixedTags.add(StringUtils.lowerCase(tag));
+      }
+      tags = fixedTags;
+    }
+
+    // retrieve store set
+    Set<Store> stores = this.storeService.listAll(storeIds, countries, deleted);
+    if (stores == null || stores.isEmpty()) {
+      stores = null;
+    }
+
+    // combine stores from member following
+    if (stores != null) {
+      Iterator<Store> it = stores.iterator();
+      while (it.hasNext()) {
+        Store s = it.next();
+        if (!member.getStores().contains(s)) {
+          it.remove();
+        }
+      }
+    }
+    if (stores == null || stores.isEmpty()) {
+      stores = null;
+    }
+
+    Page<Product> products = null;
+    if (stores != null && tags != null) {
+      products = this.repo.findByStoresAndTagsAndDeletedAndDisabled(stores, tags, deleted, disabled, pageable);
+    } else if (stores != null) {
+      products = this.repo.findByStoresAndDeletedAndDisabled(stores, deleted, disabled, pageable);
+    } else if (tags != null) {
+      products = this.repo.findByTagsAndDeletedAndDisabled(tags, deleted, disabled, pageable);
+    } else {
+      products = this.repo.findByDisabledAndDeleted(deleted, disabled, pageable);
+    }
+    return products;
   }
 
 }

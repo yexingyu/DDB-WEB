@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.database.model.Member;
@@ -55,7 +56,9 @@ public class StoreController {
 
   /**
    * list
-   *
+   * 
+   * @param storeIds
+   * @param countries
    * @param deleted
    * @param pageable
    * @return
@@ -65,10 +68,11 @@ public class StoreController {
   @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
-  public GenericResponseData list(
+  public GenericResponseData list(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
+      @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiIgnore Pageable pageable) {
-    Page<Store> stores = this.storeService.list(deleted, pageable);
+    Page<Store> stores = this.storeService.list(storeIds, countries, deleted, pageable);
     if (stores == null || stores.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
@@ -78,15 +82,18 @@ public class StoreController {
 
   /**
    * listAll
-   * 
+   *
+   * @param storeIds
+   * @param countries
    * @param deleted
    * @return
    */
   @RequestMapping(value = "all", method = RequestMethod.GET)
   @ApiOperation(value = "list all stores", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "List all stores.")
-  public GenericResponseData listAll(
+  public GenericResponseData listAll(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
+      @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted) {
-    Set<Store> stores = this.storeService.listAll(deleted);
+    Set<Store> stores = this.storeService.listAll(storeIds, countries, deleted);
     if (stores == null || stores.isEmpty()) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {

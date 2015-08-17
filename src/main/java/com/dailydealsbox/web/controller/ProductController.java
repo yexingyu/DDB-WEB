@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -185,40 +184,7 @@ public class ProductController {
       @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
       @ApiIgnore Pageable pageable) throws Exception {
 
-    // lowercase tags
-    if (tags != null) {
-      Set<String> fixedTags = new HashSet<>();
-      for (String tag : tags) {
-        fixedTags.add(StringUtils.lowerCase(tag));
-      }
-      tags = fixedTags;
-    }
-
-    // retrieve store set
-    Set<Store> stores = null;
-    if (storeIds != null && countries != null) {
-      stores = this.storeService.listAll(storeIds, countries, false);
-    } else if (storeIds != null) {
-      stores = this.storeService.listAll(storeIds, false);
-    } else if (countries != null) {
-      stores = this.storeService.listAll(false, countries);
-    }
-    if (stores == null || stores.isEmpty()) {
-      stores = null;
-    }
-
-    // retrieve products
-    Page<Product> products = null;
-    if (stores != null && tags != null) {
-      products = this.productService.list(stores, tags, deleted, disabled, pageable);
-    } else if (stores != null) {
-      products = this.productService.listByStores(stores, deleted, disabled, pageable);
-    } else if (tags != null) {
-      products = this.productService.listByTags(tags, deleted, disabled, pageable);
-    } else {
-      products = this.productService.list(deleted, disabled, pageable);
-    }
-
+    Page<Product> products = this.productService.list(storeIds, tags, countries, null, deleted, disabled, pageable);
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
@@ -229,6 +195,9 @@ public class ProductController {
   /**
    * listFollowed
    *
+   * @param storeIds
+   * @param tags
+   * @param countries
    * @param deleted
    * @param disabled
    * @param pageable
@@ -242,7 +211,9 @@ public class ProductController {
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
   @DDBAuthorization
-  public GenericResponseData listFollowed(
+  public GenericResponseData listFollowed(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
+      @ApiParam(value = "filter: tags", required = false) @RequestParam(value = "tags", required = false) Set<String> tags,
+      @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
       @ApiIgnore Pageable pageable, HttpServletRequest request) throws Exception {
@@ -257,7 +228,7 @@ public class ProductController {
     }
 
     // list product by stores
-    Page<Product> products = this.productService.listByStores(member.getStores(), deleted, disabled, pageable);
+    Page<Product> products = this.productService.list(storeIds, tags, countries, member, deleted, disabled, pageable);
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {

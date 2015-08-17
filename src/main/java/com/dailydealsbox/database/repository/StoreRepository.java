@@ -32,12 +32,49 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
   public Page<Store> findByDeleted(boolean deleted, Pageable pageable);
 
   /**
-   * findByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc
+   * findByIdsAndDeleted
+   *
+   * @param ids
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select s from Store s where s.id in ?1 and deleted = ?2")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByIdsAndDeleted(Set<Integer> ids, boolean deleted, Pageable pageable);
+
+  /**
+   * findByCountriesAndDeleted
+   *
+   * @param countries
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where s.country in ?1 and deleted = ?2")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByCountriesAndDeleted(Set<COUNTRY> countries, boolean deleted, Pageable pageable);
+
+  /**
+   * findByIdsAndCountriesAndDeleted
+   *
+   * @param ids
+   * @param countries
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where s.id in ?1 and s.country in ?2 and deleted = ?3")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByIdsAndCountriesAndDeleted(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted, Pageable pageable);
+
+  /**
+   * findAllByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc
    *
    * @return
    */
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Set<Store> findByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc();
+  public Set<Store> findAllByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc();
 
   /**
    * findAllByIdsAndDeleted
@@ -63,14 +100,6 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
   public Set<Store> findAllByIdsAndCountriesAndDeleted(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted);
 
   /**
-   * findByDeleted
-   *
-   * @return
-   */
-  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Set<Store> findByDeleted(boolean deleted);
-
-  /**
    * findAllByCountryAndDeleted
    *
    * @param country
@@ -81,7 +110,7 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
   public Set<Store> findAllByCountryAndDeleted(COUNTRY country, boolean deleted);
 
   /**
-   * findAllByCountryAndDeleted
+   * findAllByCountriesAndDeleted
    *
    * @param countries
    * @param deleted
@@ -89,5 +118,14 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
    */
   @Query(value = "select distinct s from Store s where s.country in ?1 and deleted = ?2")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-  public Set<Store> findAllByCountryAndDeleted(Set<COUNTRY> countries, boolean deleted);
+  public Set<Store> findAllByCountriesAndDeleted(Set<COUNTRY> countries, boolean deleted);
+
+  /**
+   * findAllByDeleted
+   *
+   * @param deleted
+   * @return
+   */
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Set<Store> findAllByDeleted(boolean deleted);
 }

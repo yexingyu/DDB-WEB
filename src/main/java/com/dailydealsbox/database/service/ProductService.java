@@ -8,11 +8,12 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
+import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.model.ProductLike;
 import com.dailydealsbox.database.model.ProductReview;
 import com.dailydealsbox.database.model.ProductTag;
-import com.dailydealsbox.database.model.Store;
 
 /**
  * @author x_ye
@@ -60,57 +61,16 @@ public interface ProductService {
   /**
    * list
    *
-   * @param deleted
-   * @param disabled
-   * @param pageable
-   * @return
-   */
-  public Page<Product> list(boolean deleted, boolean disabled, Pageable pageable);
-
-  /**
-   * list
-   *
-   * @param storeId
-   * @param deleted
-   * @param disabled
-   * @param pageable
-   * @return
-   */
-  public Page<Product> list(int storeId, boolean deleted, boolean disabled, Pageable pageable);
-
-  /**
-   * list
-   * 
-   * @param stores
+   * @param storeIds
    * @param tags
+   * @param countries
+   * @param member
    * @param deleted
    * @param disabled
    * @param pageable
    * @return
    */
-  public Page<Product> list(Set<Store> stores, Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
-
-  /**
-   * listByTags
-   *
-   * @param tags
-   * @param deleted
-   * @param disabled
-   * @param pageable
-   * @return
-   */
-  public Page<Product> listByTags(Set<String> tags, boolean deleted, boolean disabled, Pageable pageable);
-
-  /**
-   * listByStores
-   *
-   * @param stores
-   * @param deleted
-   * @param disabled
-   * @param pageable
-   * @return
-   */
-  public Page<Product> listByStores(Set<Store> stores, boolean deleted, boolean disabled, Pageable pageable);
+  public Page<Product> list(Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled, Pageable pageable);
 
   /**
    * addLike
