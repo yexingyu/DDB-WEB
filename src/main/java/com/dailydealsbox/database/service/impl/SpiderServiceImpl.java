@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -210,22 +212,40 @@ public class SpiderServiceImpl implements SpiderService {
     int storeID = 11;
     store.setId(storeID);
     product.setStore(store);
+    
+    //set product expired date
+    Calendar now = Calendar.getInstance();
+    int weekday = now.get(Calendar.DAY_OF_WEEK);
+    if (weekday != Calendar.THURSDAY)
+    {
+        // calculate how much to add
+        // the 5 is the difference between Saturday and Thursday
+        int days = (Calendar.SATURDAY - weekday + 5);
+        now.add(Calendar.DAY_OF_YEAR, days);
+    }
+    // now is the date you want
+    Date expiredDate = now.getTime();
+
+
+    product.setExpiredAt(expiredDate);
 
     //set product tax
     PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
     PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
     PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-
-    ProductTax tax1 = new ProductTax();
-    tax1.setTitle(federal);
-    tax1.setType(percentage);
-
-    ProductTax tax2 = new ProductTax();
-    tax2.setTitle(provincial);
-    tax2.setType(percentage);
-
-    product.getTaxes().add(tax1);
-    product.getTaxes().add(tax2);
+    
+    if (product.getTaxes().isEmpty()) {
+	    ProductTax tax1 = new ProductTax();
+	    tax1.setTitle(federal);
+	    tax1.setType(percentage);
+	
+	    ProductTax tax2 = new ProductTax();
+	    tax2.setTitle(provincial);
+	    tax2.setType(percentage);
+	
+	    product.getTaxes().add(tax1);
+	    product.getTaxes().add(tax2);
+    }
 
     // language switch
     String urlStr = url.toString();

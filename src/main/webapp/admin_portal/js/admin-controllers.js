@@ -206,32 +206,16 @@ angular
                                     } ];
 
                             $scope.product.tags = [ {
-                                language : 'EN',
                                 value : ""
                             }, {
-                                language : 'EN',
                                 value : ""
-                            }, {
-                                language : 'FR',
-                                value : ""
-                            }, {
-                                language : 'FR',
-                                value : ""
-                            } ];
+                            }];
 
                             $scope.product.links = [ {
                                 url : '',
                                 name : "",
                                 rating : "",
                                 review_number : ""
-                            } ];
-
-                            $scope.product.options = [ {
-                                type : "COLOR",
-                                value : ""
-                            }, {
-                                type : "COLOR",
-                                value : ""
                             } ];
                             
                             
@@ -323,19 +307,13 @@ angular
                                         } ];
 
                                         $scope.product.links = [ {
-                                            url : '',
+                                            url : "",
                                             name : "",
                                             rating : "",
-                                            review_number : ""
+                                            review_number : 0
                                         } ];
 
-                                        $scope.product.options = [ {
-                                            type : "COLOR",
-                                            value : ""
-                                        }, {
-                                            type : "COLOR",
-                                            value : ""
-                                        } ];
+                                        $scope.product.options = [];
 
                                         $scope.product.reviews = [];
                                         $scope.product.likes = [];

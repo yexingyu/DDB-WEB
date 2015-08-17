@@ -27,6 +27,11 @@
             <label>Product Key:</label> <input class="form-control" ng-model="product.key" placeholder = "Enter the product key (id) in the URL">
           </div>
           <div class="form-group">
+           <label>Deal Expired at:</label> <input class="form-control" ng-model="product.expiredAt"  value="{{1288323623006 | date:"MM/dd/yyyy 'at' h:mma"}}" placeholder = "Enter the expired date">
+           <span>{{product.expiredAt | date:"MM/dd/yy 'at' h:mma"}}</span>
+            </select>
+          </div>          
+          <div class="form-group">
             <label>Product is Active:</label> <select class="form-control" ng-model="product.disabled" ng-options="o.v as o.n for o in [{ n: 'Yes', v: false }, { n: 'No', v: true }]">
             </select>
           </div>
