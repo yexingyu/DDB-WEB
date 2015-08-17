@@ -27,7 +27,7 @@
             <label>Product Key:</label> <input class="form-control" ng-model="product.key" placeholder = "Enter the product key (id) in the URL">
           </div>
           <div class="form-group">
-           <label>Deal Expired at:</label> <input class="form-control" ng-model="product.expiredAt"  value="{{1288323623006 | date:"MM/dd/yyyy 'at' h:mma"}}" placeholder = "Enter the expired date">
+           <label>Deal Expired at:</label> <input class="form-control" ng-model="product.expiredAt" placeholder = "Enter the expired date">
            <span>{{product.expiredAt | date:"MM/dd/yy 'at' h:mma"}}</span>
             </select>
           </div>          
@@ -213,7 +213,14 @@
         <div class="panel-heading">Product Tags:</div>
         <div class="panel-body">
           <div class="form-group">
-            <label>Tags:</label>
+            <label>Hot Tags:</label>
+            <p>
+	          <span ng-repeat="tag in tag_hot"> <select class="form-control" ng-model="tag.value" ng-options="o.value as o.value for o in tag_hot_options">
+            </select>  [<a ng-click="tag_hot.splice($index, 1)">X</a>] <br />
+	          </span> <span> [<a ng-click="tag_hot.push({productId:product.id})">Add</a>]
+	          </span>
+            </p>
+            <label>Regular Tags:</label>
             <p>
 	          <span ng-repeat="tag in product.tags">  <input
 	              class="form-control"  ng-model="tag.value" placeholder ="Enter tag word"> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />

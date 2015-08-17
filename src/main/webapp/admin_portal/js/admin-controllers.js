@@ -99,6 +99,37 @@ angular
                             } 
                             ];
 
+                            $scope.tag_hot_options = [ {
+                                value : "phone"
+                            },{
+                                value : "laptop"
+                            },{
+                                value : "tablet"
+                            },{
+                                value : "electronic"
+                            },{
+                                value : "appliance"
+                            },{
+                                value : "furniture"
+                            },{
+                                value : "sport"
+                            },{
+                                value : "outdoor"
+                            },{
+                                value : "clothing"
+                            },{
+                                value : "shoes"
+                            },{
+                                value : "handbag"
+                            },{
+                                value : "cosmetics"
+                            },{
+                                value : "other"
+                            }];
+                            
+                            
+
+                            
                             // retrieve store list
                             $scope.stores = [];
                             StoreService.list(function(response) {
@@ -210,7 +241,10 @@ angular
                             }, {
                                 value : ""
                             }];
-
+                            
+                            $scope.tag_hot = [{
+                                value : ""
+                            }];
                             $scope.product.links = [ {
                                 url : '',
                                 name : "",
@@ -300,6 +334,12 @@ angular
                                             value : '0.00'
                                         }];
                                         
+                                        $scope.tag_hot = [{
+                                            value : ""
+                                        }];
+                                        
+                                        
+                                        
                                         $scope.product.tags = [ {
                                             value : ""
                                         }, {
@@ -325,6 +365,8 @@ angular
                             
                             
                             $scope.add = function() {
+                                $scope.product.tags.concat($scope.tag_hot);
+                                console.log($scope.tag_hot);
                                 console.log($scope.product);
                                 ProductService.add($scope.product, function(response) {
                                     console.log(response);
