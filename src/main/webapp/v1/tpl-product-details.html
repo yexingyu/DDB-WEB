@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="row">
-        <div class="col-xs-12">
+        <div class="col-sm-12">
         	<span>Tag:</span>
         	<span ng-repeat="tag in item.tags"> <a>{{tag.value}}  </a></span><a>Advanced Tag Filter</a>
         </div>
@@ -8,50 +8,50 @@
  	
 	
 	<div class="row">
-        <div class="col-xs-9">
+        <div class="col-sm-9">
 			<h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name | limitTo:52}}</h3>
         </div>
-        <div class="col-xs-3">
+        <div class="col-sm-3">
                                 <img ng-src="./images/favicon/{{item.store.favicon}}">
                                 <span><a> {{item.store.website}}</a></span>
                                 <button type="button" class="btn btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
                                 <button type="button" class="btn btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
-                                <a href=“{{item.store.dealPage}}”>Deal Page</a>
+                                <a href=“{{item.store.dealPage}}?>Deal Page</a>
         </div>        
         
 
 	</div>
 	
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-sm-6">
 		    <div class="main-image sp-wrap col-lg-12 no-padding" style="display: inline-block;">
 		      <div class="sp-large">
 		        <img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img">
 		      </div>
 		    </div>        
         </div>
-        <div class="col-xs-6">
+        <div class="col-sm-6">
           <div class="row">
-	          <div class="col-xs-12">
+	          <div class="col-sm-12">
 	          <h2>${{item.currentPrice}}</h2><a href="item.url">Merchant Product Page</a>
 	          </div>         
           </div>
           <div class="row">
- 	          <div class="col-xs-12">
+ 	          <div class="col-sm-12">
 	          <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description}}</p>
 	          </div>         
           </div>        
          
           <div class="row">
-	          <div class="col-xs-12">
+	          <div class="col-sm-12">
 		            <div class="row">
 		
-		                <div class="col-xs-12">
+		                <div class="col-sm-12">
 		                    <div class="panel panel-primary">
 		                        <div class="panel-heading">Down Payment
 		                        </div>
 		                        <div class="row">
-		                            <div class="col-xs-12">
+		                            <div class="col-sm-12">
 		                                <h3>${{item.downpayment}} by Interac email money transfer</h3>
 		                            </div>
 		                        </div>
@@ -64,15 +64,15 @@
           </div>
           
           <div class="row">
-	          <div class="col-xs-12">
+	          <div class="col-sm-12">
 		            <div class="row">
 		
-		                <div class="col-xs-12">
+		                <div class="col-sm-12">
 		                    <div class="panel panel-primary">
 		                        <div class="panel-heading">12 Monthly Payments
 		                        </div>
 		                        <div class="row">
-		                            <div class="col-xs-12">
+		                            <div class="col-sm-12">
 		                                <h3>${{item.monthlyPayment}} by Post Date Cheque</h3>
 		                            </div>
 		                        </div>
@@ -85,7 +85,7 @@
           </div>                     
 
           <div class="row">
- 	          <div class="col-xs-12" >
+ 	          <div class="col-sm-12" >
 	 	          <div class="pull-right">
 					<a href="#/product/{{item.id}}/order"><img alt="Order this product, pay monthly" src="./images/pay-monthly-logo-mono.png" width=100px></a>
 		          </div>
@@ -96,19 +96,19 @@
         </div>
     </div>
     <div class="row">
-    	          <div class="col-xs-12" >
+    	          <div class="col-sm-12" >
 	 	          <div class="pull-left">
 				      <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
 				        popover-template="$root.popoverTemplate.reviewTemplateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
 
 		          </div>
 	          </div>   
- 	          <div class="col-xs-12" >
+ 	          <div class="col-sm-12" >
               	<hr>
  	          </div>    
     </div>    
     <div class="row">
- 	          <div class="col-xs-12" >
+ 	          <div class="col-sm-12" >
 				<div class="panel panel-info">
 				      <div class="panel-heading">
 				        <h3 class="panel-title">Comments:</h3>
@@ -121,7 +121,7 @@
     </div>	
     
     <div class="row">
- 	          <div class="col-xs-12" >
+ 	          <div class="col-sm-12" >
 				<div class="panel panel-info">
 				      <div class="panel-heading">
 				        <h3 class="panel-title">More To Explore</h3>
