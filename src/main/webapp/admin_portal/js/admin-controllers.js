@@ -139,7 +139,9 @@ angular
                             });
                             // add input field
                             $scope.product = {};
-
+                            $scope.product.currency = "CAD";
+                            $scope.product.currentPrice = "0.00";
+                            
                             $scope.product.prices = [ {
                                 currency : 'CAD',
                                 value : ''
@@ -264,10 +266,10 @@ angular
                             $scope.Math = window.Math;
 
                             $scope.getExchangeRate = function() {
-                                if ($scope.product.prices[0].currency == "CAD") {
+                                if ($scope.product.currency == "CAD") {
                                     exchange_rate = 1;
                                 }
-                                if ($scope.product.prices[0].currency == "USD") {
+                                if ($scope.product.currency == "USD") {
                                     exchange_rate = 1.25;
                                 }
                                 return exchange_rate
@@ -275,7 +277,7 @@ angular
                             }
 
                             $scope.getTotal = function() {
-                                $scope.product.total = parseFloat($scope.product.prices[0].value);
+                                $scope.product.total = parseFloat($scope.product.currentPrice);
                                 // add fees
                                 total_fee = 0;
                                 for (var i = 0; i < $scope.product.fees.length; i++) {
@@ -284,7 +286,7 @@ angular
                                                 + parseFloat($scope.product.fees[i].value);
                                     }
                                     if ($scope.product.fees[i].type == "PERCENTAGE") {
-                                        total_fee = total_fee + $scope.product.prices[0].value
+                                        total_fee = total_fee + $scope.product.currentPrice
                                                 * parseFloat($scope.product.fees[i].value / 100);
                                     }
                                 }
@@ -299,7 +301,7 @@ angular
                                     / $scope.number_of_payments;
 
                             $scope.getMonthlyPayment = function() {
-                                $scope.product.total = parseFloat($scope.product.prices[0].value);
+                                $scope.product.total = parseFloat($scope.product.currentPrice);
                                 // add fees
                                 total_fee = 0;
                                 for (var i = 0; i < $scope.product.fees.length; i++) {
@@ -308,7 +310,7 @@ angular
                                                 + parseFloat($scope.product.fees[i].value);
                                     }
                                     if ($scope.product.fees[i].type == "PERCENTAGE") {
-                                        total_fee = total_fee + $scope.product.prices[0].value
+                                        total_fee = total_fee + $scope.product.currentPrice
                                                 * parseFloat($scope.product.fees[i].value / 100);
                                     }
                                 }
@@ -365,9 +367,14 @@ angular
                             
                             
                             $scope.add = function() {
-                                $scope.product.tags.concat($scope.tag_hot);
-                                console.log($scope.tag_hot);
-                                console.log($scope.product);
+                                //add currentPrice to prices 
+                            	$scope.product.prices = [ {
+                                    currency : $scope.product.currency,
+                                    value : $scope.product.currentPrice
+                                } ]; 
+                                //$scope.product.tags.concat($scope.tag_hot);                                
+
+                                console.log(JSON.stringify($scope.product));
                                 ProductService.add($scope.product, function(response) {
                                     console.log(response);
                                 });
