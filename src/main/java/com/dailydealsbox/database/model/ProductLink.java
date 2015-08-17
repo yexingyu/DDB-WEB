@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -28,19 +28,19 @@ public class ProductLink extends BaseModel {
 
   @NotNull
   @Column(name = "name", nullable = false, length = 256)
-  private String  name;
+  private String name;
 
   @NotNull
   @Column(name = "url", nullable = false)
-  private String  url;
+  private String url;
 
   @NotNull
   @Column(name = "rating", nullable = true)
-  private double  rating;
+  private double rating;
 
   @NotNull
   @Column(name = "review_number", nullable = false)
-  private int     review_number;
+  private int reviewNumber;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
@@ -49,7 +49,7 @@ public class ProductLink extends BaseModel {
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {
@@ -118,18 +118,18 @@ public class ProductLink extends BaseModel {
   }
 
   /**
-   * @return the review_number
+   * @return the reviewNumber
    */
   public int getReviewNumber() {
-    return this.review_number;
+    return this.reviewNumber;
   }
 
   /**
-   * @param review_number
+   * @param reviewNumber
    *          the review_number to set
    */
-  public void setReviewNumber(int review_number) {
-    this.review_number = review_number;
+  public void setReviewNumber(int reviewNumber) {
+    this.reviewNumber = reviewNumber;
   }
 
 }
