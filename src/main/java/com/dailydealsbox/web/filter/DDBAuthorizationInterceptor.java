@@ -42,7 +42,7 @@ public class DDBAuthorizationInterceptor implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException, IOException {
 
     if (handler instanceof ParameterizableViewController) { return true; }
-    DDBAuthorization authAnnotation = ((HandlerMethod) handler).getMethod().getDeclaredAnnotation(DDBAuthorization.class);
+    DDBAuthorization authAnnotation = ((HandlerMethod) handler).getMethod().getAnnotation(DDBAuthorization.class);
 
     // anonymous
     request.setAttribute(BaseAuthorization.TOKEN, null);

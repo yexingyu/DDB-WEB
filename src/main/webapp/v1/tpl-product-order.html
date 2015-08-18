@@ -123,10 +123,8 @@
                                                 <option>5</option>
                                             </select>
                                         </div>
-                                        <div class="col-xs-12">Color:
-                                            <select class="form-control">
-                                                <option>Sliver</option>
-                                                <option>Space Gray</option>
+                                        <div class="col-xs-12">Options:
+                                            <select class="form-control" ng-model="order.option" ng-options="option.value as option.value group by option.type for option in product.options">
                                             </select>
                                         </div>
                                     </form>
@@ -255,24 +253,24 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6" align="left"><h4>Product Total</h4>
+                            <div class="col-sm-6" align="left"><h4>Product Price:</h4>
                             </div>
                             <div class="col-sm-6" align="right">
-                                <h4>$469.99</h4>
+                                <h4>{{product.currentPrice}}</h4>
+                            </div>
+                        </div>
+                        <div class="row" ng-repeat="fee in product.fees">
+                            <div class="col-sm-6" align="left"><h4>{{fee.title}}</h4>
+                            </div>
+                            <div class="col-sm-6" align="right">
+                                <h4>{{fee.value}}</h4>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6" align="left"><h4>Shipping</h4>
+                            <div class="col-sm-6" align="left"><h4>Subtotal:</h4>
                             </div>
                             <div class="col-sm-6" align="right">
-                                <h4>NO CHARGE</h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6" align="left"><h4>Subtotal</h4>
-                            </div>
-                            <div class="col-sm-6" align="right">
-                                <h4>$469.99</h4>
+                                <h4>{{product.total}}</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -280,26 +278,23 @@
                                 <hr>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6" align="left"><h4>Eco Fee</h4>
-                            </div>
-                            <div class="col-sm-6" align="right">
-                                <h4>$1.00</h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6" align="left"><h4>PST</h4>
-                            </div>
-                            <div class="col-sm-6" align="right">
-                                <h4>$32.97</h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6" align="left"><h4>GST</h4>
-                            </div>
-                            <div class="col-sm-6" align="right">
-                                <h4>$23.55</h4>
-                            </div>
+                        <div ng-if="product.store.province =='' && order.addresses[0].region =='AB'">
+	                        <div class="row">
+	                            <div class="col-sm-6" align="left"><h4>GST+QST</h4>
+	                            </div>
+	                            <div class="col-sm-6" align="right">
+	                                <h4>{{product.total}}</h4>
+	                            </div>
+	                        </div>
+                        </div>                        
+                        <div ng-if="product.store.province =='' && order.addresses[0].region =='QC'">
+	                        <div class="row">
+	                            <div class="col-sm-6" align="left"><h4>GST+QST</h4>
+	                            </div>
+	                            <div class="col-sm-6" align="right">
+	                                <h4>{{product.total * 0.1495 | currency}}</h4>
+	                            </div>
+	                        </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -310,7 +305,7 @@
                             <div class="col-sm-6" align="left"><h4>Order Total</h4>
                             </div>
                             <div class="col-sm-6" align="right">
-                                <h4>$527.51</h4>
+                                <h4>{{product.total * 1.1495 | currency}}</h4>
                             </div>
                         </div>
                     </div>
@@ -327,7 +322,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <h3>$174.56 by Interac email money transfer</h3>
+                                <h3>{{product.downpayment * 1.1495 | currency}} by Interac email money transfer</h3>
                             </div>
                         </div>
 
@@ -349,7 +344,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -357,7 +352,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -365,7 +360,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -373,7 +368,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -381,7 +376,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -389,7 +384,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -397,7 +392,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -405,7 +400,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -413,7 +408,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -421,7 +416,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -429,7 +424,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -437,7 +432,7 @@
                             </div>
                             <div class="col-xs-4" align="right">Sept. 1st, 2015
                             </div>
-                            <div class="col-xs-4" align="right">$27.73
+                            <div class="col-xs-4" align="right">{{product.monthlyPayment * 1.1495 | currency}}
                             </div>
                         </div>
                     </div>
@@ -693,3 +688,10 @@
 
 </div>
 </div>
+
+<!--  
+<pre>{{product | json}}</pre>
+
+<pre>{{order.addresses}}</pre>
+
+-->
