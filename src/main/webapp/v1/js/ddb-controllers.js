@@ -227,6 +227,99 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     ['$scope', '$location', '$window', '$modal', '$routeParams', 'ProductService', 'ProfileService', 'OrderService', 'LoginService', 'ProductModel', 'OrderModel',
         function ($scope, $location, $window, $modal, $routeParams, ProductService, ProfileService, OrderService, LoginService, ProductModel, OrderModel) {
             var id = $routeParams.id;
+            $scope.tax_rate = {
+                    AB: {
+                  	   province : "AB",
+                  	   tax_type: "GST",
+                  	   provincial_rate: 0.00,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.05
+                  	   },
+              	  BC: {
+                  	   province : "BC",
+                  	   tax_type: "GST+PST",
+                  	   provincial_rate: 0.07,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.12
+                  	   },
+                    MB: {
+                  	   province : "MB",
+                  	   tax_type: "GST+PST",
+                  	   provincial_rate: 0.08,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.13
+                  	   },
+                   NB: {
+                  	   province : "NB",
+                  	   tax_type: "HST",
+                  	   provincial_rate: 0.08,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.13
+                  	   }, 
+                   NL:  {
+                  	   province : "NL",
+                  	   tax_type: "GST",
+                  	   provincial_rate: 0.08,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.13
+                  	   },  
+                  NT: {
+                  	   province : "NT",
+                  	   tax_type: "GST",
+                  	   provincial_rate: 0.00,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.05
+                  	   },
+                  NS:   {
+                  	   province : "NS",
+                  	   tax_type: "GST",
+                  	   provincial_rate: 0.00,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.05
+                  	   },
+                  NU:   {
+                  	   province : "NU",
+                  	   tax_type: "GST",
+                  	   provincial_rate: 0.00,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.05
+                  	   },
+          	   ON:   {
+                  	   province : "ON",
+                  	   tax_type: "HST",
+                  	   provincial_rate: 0.08,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.13
+                  	   }, 
+          	   PE:	 {
+                  	   province : "PE",
+                  	   tax_type: "HST",
+                  	   provincial_rate: 0.09,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.14
+                  	   },
+          	   QC:   {
+                  	   province : "QC",
+                  	   tax_type: "GST",
+                  	   provincial_rate: 0.9975,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.14975
+                  	   },
+          	   SK:   {
+                  	   province : "SK",
+                  	   tax_type: "GST",
+                  	   provincial_rate: 0.05,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.10
+                  	   },
+              	YK:   {
+                  	   province : "YK",
+                  	   tax_type: "GST",
+                  	   provincial_rate: 0.00,
+                  	   canada_rate: 0.05,
+                  	   total_rate: 0.05
+                  	   }                           	   
+  };
             $scope.order = {};
 
             // retrieve product details

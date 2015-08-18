@@ -9,6 +9,14 @@
                         <div>
                             <form class="form-horizontal">
                                 <div class="form-group">
+                                    <label for="firstName" class="col-xs-2 control-label">Email:</label>
+
+									<div class="col-xs-4">
+                                        {{profile.account}}
+                                    </div>
+
+                                </div>                            
+                                <div class="form-group">
                                     <label for="firstName" class="col-xs-2 control-label">First Name</label>
 
                                     <div class="col-xs-4">
@@ -26,14 +34,14 @@
                                     <label for="addressLine1" class="col-xs-2 control-label">Apt./Suite # (optional)</label>
 
                                     <div class="col-xs-8">
-                                        <input type="text" class="form-control" id="addressLine1" placeholder="" ng-model="address.address1">
+                                        <input type="text" class="form-control" id="addressLine1" placeholder="" ng-model="address.address2">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="addressLine2" class="col-xs-2 control-label">Address</label>
 
                                     <div class="col-xs-8">
-                                        <input type="text" class="form-control" id="addressLine2" placeholder="" ng-model="address.address2">
+                                        <input type="text" class="form-control" id="addressLine2" placeholder="" ng-model="address.address1">
                                         <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#addressTips">Address Tips</button>
                                     </div>
                                 </div>
