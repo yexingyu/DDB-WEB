@@ -224,15 +224,15 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      */
     .controller(
     'ProductOrderCtrl',
-    ['$scope', '$location', '$window', '$modal', '$routeParams', 'ProductService', 'ProfileService', 'OrderService', 'LoginService',
-        function ($scope, $location, $window, $modal, $routeParams, ProductService, ProfileService, OrderService, LoginService) {
+    ['$scope', '$location', '$window', '$modal', '$routeParams', 'ProductService', 'ProfileService', 'OrderService', 'LoginService', 'ProductModel', 'OrderModel',
+        function ($scope, $location, $window, $modal, $routeParams, ProductService, ProfileService, OrderService, LoginService, ProductModel, OrderModel) {
             var id = $routeParams.id;
             $scope.order = {};
 
             // retrieve product details
             ProductService.get(id, function (response) {
                 if (response.status === 'SUCCESS') {
-                    $scope.product = ProductService.fix(response.data);
+                    $scope.product = ProductModel.fix(response.data);
                     $scope.order.productId = $scope.product.id;
                 } else {
                     $location.path('/home');
@@ -244,12 +244,12 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 if (response.status === 'SUCCESS') {
                     $scope.$root.profile = response.data;
                     $scope.profile = response.data;
-                    OrderService.fix($scope.order, $scope.profile);
+                    OrderModel.fix($scope.order, $scope.profile);
                 } else if (response.status === 'NEED_LOGIN') {
                     LoginService.showLoginBox(function (profile) {
                         $scope.$root.profile = profile;
                         $scope.profile = profile;
-                        OrderService.fix($scope.order, $scope.profile);
+                        OrderModel.fix($scope.order, $scope.profile);
                     }, function (reason) {
                         $window.history.back();
                     });
@@ -509,8 +509,8 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      */
     .controller('ContactCtrl', ['$scope', '$location', 'ProductService', function ($scope, $location, ProductService) {
     }])
-    
-        /*
+
+    /*
      * LocalCtrl definition
      */
     .controller('LocalCtrl', ['$scope', '$location', 'ProductService', function ($scope, $location, ProductService) {

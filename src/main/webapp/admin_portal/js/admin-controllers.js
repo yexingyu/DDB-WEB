@@ -324,7 +324,7 @@ angular
                             }
                             
                             $scope.parse= function() {
-                                ProductService.spiderBestbuyCA($scope.product.url, function (response) {
+                                ProductService.spider($scope.product.url, function (response) {
                                     if (response.status === 'SUCCESS') {
                                         $scope.product = response.data;
                                         

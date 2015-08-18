@@ -39,6 +39,85 @@ angular.module('ddbApp.models', [])
                     'showMsg': 'None',
                     'msg': ''
                 };
+            },
+            fix: function (product) {
+                // fix texts
+                var texts = product.texts;
+                product.texts = {};
+                if (angular.isArray(texts) && texts.length > 0) {
+                    texts.forEach(function (item) {
+                        product.texts[item.language] = item;
+                    });
+                    angular.forEach($rootScope.constant.LANGUAGE, function (key, value) {
+                        if (!product.texts[value]) {
+                            product.texts[value] = texts[0];
+                        }
+                    });
+                }
+                texts = [];
+                return product;
+            }
+        };
+    }])
+
+    /*
+     * OrderModel
+     */
+    .factory('OrderModel', ['$rootScope', '$route', 'ProductService', 'StoreService', 'LoginService', function ($rootScope, $route, ProductService, StoreService, LoginService) {
+        return {
+            fix: function (order, profile) {
+                order.memberId = profile.id;
+
+                // set addresses for order
+                order.addresses = [];
+                var haveBillingAddress = false;
+                var haveShippingAddress = false;
+                if (angular.isArray(profile.addresses) && profile.addresses.length > 0) {
+                    // set shipping address
+                    for (var i = 0; i < profile.addresses.length; i++) {
+                        if (profile.addresses[i].type === 'SHIPPING') {
+                            var obj = {};
+                            angular.copy(profile.addresses[i], obj);
+                            obj.id = 0;
+                            order.addresses.push(obj);
+                            haveShippingAddress = true;
+                            break;
+                        }
+                    }
+                    if (haveShippingAddress === false) {
+                        var obj = {};
+                        angular.copy(profile.addresses[0], obj);
+                        obj.id = 0;
+                        obj.type = 'SHIPPING';
+                        order.addresses.push(obj);
+                    }
+
+                    // set billing address
+                    for (var i = 0; i < profile.addresses.length; i++) {
+                        if (profile.addresses[i].type === 'BILLING') {
+                            var obj = {};
+                            angular.copy(profile.addresses[i], obj);
+                            obj.id = 0;
+                            order.addresses.push(obj);
+                            haveBillingAddress = true;
+                            break;
+                        }
+                    }
+                    if (haveBillingAddress === false) {
+                        var obj = {};
+                        angular.copy(profile.addresses[0], obj);
+                        obj.id = 0;
+                        obj.type = 'BILLING';
+                        order.addresses.push(obj);
+                    }
+                } else {
+                    order.addresses.push({
+                        type: 'SHIPPING'
+                    });
+                    order.addresses.push({
+                        type: 'BILLING'
+                    });
+                }
             }
         };
     }])
