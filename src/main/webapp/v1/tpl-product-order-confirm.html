@@ -1,10 +1,30 @@
 <div class="well">
-    <div class="row">Policy</div>
-    <hr>
-    <input type="checkbox" ng-model="agree"> I Agree
+    <div class="row">
+        <h3>Email Communication:</h3>
+    </div>
+    <div class="row">
+    <p>By entering your email address above, you agree that DDB Canada Inc. will send you communications via electronic means, which will include information we think may be of interest to you about DDB's products and services. If at any time you wish to stop getting communications visit http://dailydealsbox.com/http://localhost:8080/v1/index.html#/subscription</p>
+   </div>
+    <div class="row">
+        <h3>Terms of Use:</h3>
+    </div>
+	<div class="row">
+		<p>By clicking "SUBMIT" you certify the information you have provided is true and correct. You also agree that DDB CANADA Inc. may obtain credit and employment information about you by any means, including obtaining information from consumer reporting agencies and/or other sources. You also agree that we may obtain credit reports for any reason on you from time to time in the future when updating, renewing, or extending your credit account. We may do so at the time you apply for your account, at any time while your account is open, or after your account is closed if you owe us any amount related to your account. Upon your request, we will tell you whether we obtained a credit report and the name and address of any consumer reporting agency that provided such report.<p> 
+
+		<p>No Cash Value - DDB Credit can only be used for product purchases with DDB.</p>
+
+ 
+		<p>Please check the box if you have read, agree and consent to Terms of Use above.   </p> 
+    </div>    
+   
+
+    <input type="checkbox" ng-model="agree"> <h4>Please check the box if you have read, agree and consent to Terms of Use above.</h4>
     <hr>
     <a class="btn btn-primary" ng-disabled="!agree" ng-click="submit()">SUBMIT</a>
     <a class="btn btn-default" ng-click="cancel()">Cancel</a>
 </div>
+
+<!--
 <pre>{{item | json}}</pre>
 <pre>{{order | json}}</pre>
+-->
