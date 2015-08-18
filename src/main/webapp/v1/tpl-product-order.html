@@ -278,21 +278,13 @@
                                 <hr>
                             </div>
                         </div>
-                        <div ng-if="product.store.province =='' && order.addresses[0].region =='AB'">
+                     
+                        <div ng-if="product.store.province ==''">
 	                        <div class="row">
-	                            <div class="col-sm-6" align="left"><h4>GST+QST</h4>
+	                            <div class="col-sm-6" align="left"><h4>{{tax_rate.AB["tax_type"]}}</h4>
 	                            </div>
 	                            <div class="col-sm-6" align="right">
-	                                <h4>{{product.total}}</h4>
-	                            </div>
-	                        </div>
-                        </div>                        
-                        <div ng-if="product.store.province =='' && order.addresses[0].region =='QC'">
-	                        <div class="row">
-	                            <div class="col-sm-6" align="left"><h4>GST+QST</h4>
-	                            </div>
-	                            <div class="col-sm-6" align="right">
-	                                <h4>{{product.total * 0.1495 | currency}}</h4>
+	                                <h4>{{product.total * tax_rate.AB.total_rate | currency}}</h4>
 	                            </div>
 	                        </div>
                         </div>
@@ -305,7 +297,7 @@
                             <div class="col-sm-6" align="left"><h4>Order Total</h4>
                             </div>
                             <div class="col-sm-6" align="right">
-                                <h4>{{product.total * 1.1495 | currency}}</h4>
+                                <h4>{{product.total * (1+tax_rate.AB.total_rate) | currency}}</h4>
                             </div>
                         </div>
                     </div>
