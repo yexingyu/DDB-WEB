@@ -4,12 +4,9 @@
 	   <div class="col-sm-12">
 	   	<h3>Following</h3>
 	   </div>
-   </div>
-   <div class="row">
-   	<hr>
-   </div>   
+   </div>  
    <!-- following store list-->
-   <div class="row">
+  <div class="row">     
        <div class="col-sm-3" ng-repeat="store in stores" ng-if="store.followed" >
 	            <div class="panel panel-default">
 			  <!-- Default panel contents -->
@@ -22,7 +19,8 @@
 	            </div>
 	            <div class="row">
 	                <hr>
-	            </div>	                       
+	            </div>
+	            	                       
 	            <div class="row">            
 	                <div class="col-xs-3">
 	                     <i class="fa fa-heart">{{store.countLikes}}</i>
@@ -31,14 +29,19 @@
 	                     <i class="fa fa-user">{{store.countFollowings}}</i>
 	                </div>	                	                
 	                <div class="col-xs-5">
-	                    <a type="button" class="btn btn-xs btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
-	                    <a type="button" class="btn btn-xs btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
+	                    <a type="button" class="btn btn-sm btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
+	                    <a type="button" class="btn btn-sm btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
 	                     
 	                </div>	                
-	            </div>
+	            </div>	            
 	            <div class="row">
 	                <hr>
-	            </div>	            
+	            </div>
+	            <div class="row">
+	                <div class="col-xs-12">
+	                    <p class="highlight_RoyalBlue">{{$root.constant.STORE_CATEGORY[store.category]}} </p>
+	                </div>
+	            </div>            	            
 	            <div class="row">
 	                <div class="col-xs-12">
 	                    <p>{{store.description}}</p>
@@ -46,15 +49,15 @@
 	            </div>
             </div>
             </div>            
-       </div>
-  </div>
-    <!-- following store title-->
+       </div>      
+   </div>
+    <!--to follow store title-->
    <div class="row">
 	   <div class="col-sm-12">
 	   		<h3>Explore More</h3>
 	   </div>
    </div>
- <!-- folloing store title-->     
+ <!--to follow store list-->     
   <div class="row">     
        <div class="col-sm-3" ng-repeat="store in stores" ng-if="!store.followed" >
 	            <div class="panel panel-default">
@@ -69,14 +72,7 @@
 	            <div class="row">
 	                <hr>
 	            </div>
-	            <div class="row">
-	                <div class="col-xs-12">
-	                    <p>{{$root.constant.STORE_CATEGORY[store.category]}} </p>
-	                </div>
-	            </div>
-	            <div class="row">
-	                <hr>
-	            </div>	            	                       
+	            	                       
 	            <div class="row">            
 	                <div class="col-xs-3">
 	                     <i class="fa fa-heart">{{store.countLikes}}</i>
@@ -89,13 +85,18 @@
 	                    <a type="button" class="btn btn-sm btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
 	                     
 	                </div>	                
-	            </div>
-	            <div class="row">
-	                <hr>
 	            </div>	            
 	            <div class="row">
+	                <hr>
+	            </div>
+	            <div class="row">
 	                <div class="col-xs-12">
-	                    <p>Amazon.ca: Online shopping in Canada - books, electronics, Kindle, home & garden, DVDs, tools, music, health & beauty, watches, baby, sporting goods & more ...</p>
+	                    <p class="highlight_RoyalBlue">{{$root.constant.STORE_CATEGORY[store.category]}} </p>
+	                </div>
+	            </div>            	            
+	            <div class="row">
+	                <div class="col-xs-12">
+	                    <p>{{store.description}}</p>
 	                </div>
 	            </div>
             </div>
