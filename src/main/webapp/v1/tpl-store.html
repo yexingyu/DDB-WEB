@@ -1,6 +1,27 @@
-    <div>
-    <h3>Stores - Follow Stores</h3>
-    </div>
-<div class="row" ng-repeat="store in stores">
-    <div>{{store.name}} - {{store.website}} <a class="btn btn-default" ng-if="!store.followed" ng-click="follow(store)">+Follow</a><a class="btn btn-default" ng-if="store.followed" ng-click="unfollow(store)">-Follow</a></div>
+<div class="container">
+   <div class="row">
+       <div class="col-sm-12">
+           <h3>Stores - Follow Stores</h3>
+       </div>    
+   </div>
+   <div class="row">
+       <div class="col-sm-4" ng-repeat="store in stores">
+            <div class="row">
+                <div class="col-xs-12">
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    {{store.name}} 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <a type="button" class="btn btn-xs btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
+                    <a type="button" class="btn btn-xs btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
+                </div>
+            </div>
+       </div>
+   </div>
 </div>
