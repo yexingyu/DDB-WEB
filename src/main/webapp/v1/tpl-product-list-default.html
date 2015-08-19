@@ -7,7 +7,7 @@
                         <div class="row">
                             <div class="col-xs-7 pull-left">
                                 <img ng-src="./images/favicon/{{item.store.favicon}}">
-                                <span><a class="price_RoyalBlue"> {{item.store.website}}</a></span>
+                                <span><a class="highlight_RoyalBlue"> {{item.store.website}}</a></span>
                                 <button type="button" class="btn btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
                                 <button type="button" class="btn btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
                             </div>
@@ -26,45 +26,45 @@
                         <span ng-repeat="link in item.links ">
                             <div class="col-xs-12">
                               <span class="rating" ng-if="link.rating>4.75 && link.rating<=5">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
                               </span>
                               <span class="rating" ng-if="link.rating>4.25 && link.rating<=4.75">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star-half-o fa-3"></i>                           
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star-half-o fa-3 highlight_RoyalBlue"></i>                           
                               </span>
                               <span class="rating" ng-if="link.rating>3.75 && link.rating<=4.25">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star-o fa-3"></i>                           
+                                  <i class="fa fa-star  fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star  fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star  fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star-o  fa-3 highlight_RoyalBlue"></i>                           
                               </span>
                               <span class="rating" ng-if="link.rating>3.25 && link.rating<=3.75">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star-half-o fa-3"></i>
-                                  <i class="fa fa-star-o fa-3"></i>                           
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star-half-o fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star-o fa-3 highlight_RoyalBlue"></i>                           
                               </span>
                               <span class="rating" ng-if="link.rating>2.75 && link.rating<=3.25">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star-o fa-3"></i> 
-                                  <i class="fa fa-star-o fa-3"></i>                           
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star-o fa-3 highlight_RoyalBlue"></i> 
+                                  <i class="fa fa-star-o fa-3 highlight_RoyalBlue"></i>                           
                               </span>                                                                                           
                               <b>{{link.rating}}</b> of <b>{{link.reviewNumber}}</b> reviews                                                            
                             </div>
                         
                             <div class="col-xs-12">
-                                <span><a class="price_RoyalBlue" href="{{link.url}}">by {{link.name}}</a> </span>
+                                <span><a class="highlight_RoyalBlue" href="{{link.url}}">by {{link.name}}</a> </span>
                             </div>
                         </span>
                     <div class="col-xs-12">
@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-xs-12">
                         <span class="old-price" ng-if="item.compareValue>0.">{{item.currency}}${{item.compareValue | number:2}}</span>
-                        <h4 class="price_RoyalBlue"> {{item.currency}}${{item.currentPrice | number:2}}</h4>
+                        <h4 class="highlight_RoyalBlue"> {{item.currency}}${{item.currentPrice | number:2}}</h4>
                         <span ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"> ${{fee.value | number:2}}</span><br>
                         <span >SubTotal: CAD${{item.total}}</span>
                         <hr>
@@ -84,8 +84,8 @@
                         <div class="row">
                             <div class="col-xs-7 pull-left">
                                 <div class="row">
-                                    <div class="col-xs-12"><span class="price_RoyalBlue">Down: CAD${{item.downpayment | number:2}}</span></div>
-                                    <div class="col-xs-12"><span class="price_RoyalBlue">Monthly: CAD${{item.monthlyPayment | number:2}} * {{item.payments}}M</span></div>
+                                    <div class="col-xs-12"><span class="highlight_RoyalBlue">Down: CAD${{item.downpayment | number:2}}</span></div>
+                                    <div class="col-xs-12"><span class="highlight_RoyalBlue">Monthly: CAD${{item.monthlyPayment | number:2}} * {{item.payments}}M</span></div>
                                 </div>
                             </div>
                             <div class="col-xs-3">
@@ -96,16 +96,29 @@
                     </div>
                     <div class="col-xs-12 pull-left">
                         <div class="row">
-                            <div class="col-xs-7 pull-left">
-                                <a class="price_RoyalBlue" ng-repeat="tag in item.tags"><span class="glyphicon glyphicon-tag price_RoyalBlue" ></span> {{tag.value}} </a>
-                            </div>
-                            <div class="col-xs-5 pull-right">
-                                <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
-                                <a popover-placement="top" popover-template="$root.popoverTemplate.reviewTemplateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span
-                                    class="badge">{{item.countReviews}}</span></a>
+                            <div class="col-xs-12 pull-left">
+                                <a ng-repeat="tag in item.tags" class="highlight_RoyalBlue"><span class="glyphicon glyphicon-tag highlight_RoyalBlue" ></span> {{tag.value}} </a>
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12">
+                    	<hr>
+                    </div>                    
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>                          
+                            <div class="col-xs-3 pull_right">
+                                <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart highlight_RoyalBlue social_button" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a>
+                            </div>
+                            <div class="col-xs-3">
+                            </div>                                                    
+                            <div class="col-xs-3 pull_right">
+                                <a popover-placement="top" popover-template="$root.popoverTemplate.reviewTemplateUrl"><span class="glyphicon glyphicon-comment highlight_RoyalBlue social_button" aria-hidden="true"></span><span
+                                    class="badge">{{item.countReviews}}</span></a>
+                            </div>
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>
