@@ -51,6 +51,14 @@ public class Store extends BaseEntityModel {
   private String         description;
 
   @NotNull
+  @Column(name = "count_followings", nullable = false, insertable = false, updatable = false)
+  private int            countFollowings;
+
+  @NotNull
+  @Column(name = "count_likes", nullable = false, insertable = false, updatable = false)
+  private int            countLikes;
+
+  @NotNull
   @Column(name = "website", nullable = false, length = 255)
   private String         website;
 
@@ -183,6 +191,36 @@ public class Store extends BaseEntityModel {
    */
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  /**
+   * @return the countFollowings
+   */
+  public int getCountFollowings() {
+    return this.countFollowings;
+  }
+
+  /**
+   * @param countFollowings
+   *          the countFollowings to set
+   */
+  public void setCountFollowings(int countFollowings) {
+    this.countFollowings = countFollowings;
+  }
+
+  /**
+   * @return the countLikes
+   */
+  public int getCountLikes() {
+    return this.countLikes;
+  }
+
+  /**
+   * @param countLikes
+   *          the countLikes to set
+   */
+  public void setCountLikes(int countLikes) {
+    this.countLikes = countLikes;
   }
 
   /**

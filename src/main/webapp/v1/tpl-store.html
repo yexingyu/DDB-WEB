@@ -2,7 +2,7 @@
     <!-- following store tile-->
    <div class="row">
 	   <div class="col-sm-12">
-	   	<h3>Following Stores</h3>
+	   	<h3>Following</h3>
 	   </div>
    </div>
    <div class="row">
@@ -25,10 +25,10 @@
 	            </div>	                       
 	            <div class="row">            
 	                <div class="col-xs-3">
-	                     <i class="fa fa-heart">12</i>
+	                     <i class="fa fa-heart">{{store.countLikes}}</i>
 	                </div>
 	                <div class="col-xs-4">
-	                     <i class="fa fa-user">5</i>
+	                     <i class="fa fa-user">{{store.countFollowings}}</i>
 	                </div>	                	                
 	                <div class="col-xs-5">
 	                    <a type="button" class="btn btn-xs btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
@@ -51,7 +51,7 @@
     <!-- following store title-->
    <div class="row">
 	   <div class="col-sm-12">
-	   		<h3>Explore More Stores</h3>
+	   		<h3>Explore More</h3>
 	   </div>
    </div>
  <!-- folloing store title-->     
@@ -68,13 +68,21 @@
 	            </div>
 	            <div class="row">
 	                <hr>
-	            </div>	                       
+	            </div>
+	            <div class="row">
+	                <div class="col-xs-12">
+	                    <p>{{$root.constant.STORE_CATEGORY[store.category]}} </p>
+	                </div>
+	            </div>
+	            <div class="row">
+	                <hr>
+	            </div>	            	                       
 	            <div class="row">            
 	                <div class="col-xs-3">
-	                     <i class="fa fa-heart">12</i>
+	                     <i class="fa fa-heart">{{store.countLikes}}</i>
 	                </div>
 	                <div class="col-xs-4">
-	                     <i class="fa fa-user">5</i>
+	                     <i class="fa fa-user">{{store.countFollowings}}</i>
 	                </div>	                	                
 	                <div class="col-xs-5">
 	                    <a type="button" class="btn btn-sm btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>

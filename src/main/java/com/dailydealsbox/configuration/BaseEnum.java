@@ -112,7 +112,7 @@ public class BaseEnum {
         "Electronics"), SC_FBT("Food, Beverages & Tobacco"), SC_FN("Furniture"), SC_HW("Hardware"), SC_HB(
         "Health & Beauty"), SC_HG("Home & Garden"), SC_MT("Mature"), SC_MD("Media"), SC_SW(
         "Software"), SC_SG("Sporting Goods"), SC_TG("Toys & Games"), SC_VP("Vehicles & Parts"), SC_ALL(
-        "All");
+        "Retailor in Store, Online"), SC_OR("Retailor Online");
     ;
     private final String name;
 
