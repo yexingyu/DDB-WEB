@@ -47,6 +47,10 @@ public class Store extends BaseEntityModel {
   private STORE_CATEGORY category;
 
   @NotNull
+  @Column(name = "description", nullable = false, length = 160)
+  private String         description;
+
+  @NotNull
   @Column(name = "website", nullable = false, length = 255)
   private String         website;
 
@@ -146,23 +150,39 @@ public class Store extends BaseEntityModel {
    * @param name
    *          the name to set
    */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
+   * @param store
+   *          category
+   *          the store category to set
+   */
   public void setCategory(STORE_CATEGORY category) {
     this.category = category;
   }
 
   /**
-   * @return the name
+   * @return the store category
    */
   public STORE_CATEGORY getCategory() {
     return this.category;
   }
 
   /**
-   * @param name
-   *          the name to set
+   * @return the description
    */
-  public void setName(String name) {
-    this.name = name;
+  public String getDescription() {
+    return this.description;
+  }
+
+  /**
+   * @param description
+   *          the description to set
+   */
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   /**
