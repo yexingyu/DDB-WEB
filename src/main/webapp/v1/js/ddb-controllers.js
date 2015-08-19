@@ -321,7 +321,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                   	   },
           	   QC:   {
                   	   province : "QC",
-                  	   tax_type: "GST",
+                  	   tax_type: "GST+QST",
                   	   provincial_rate: 0.9975,
                   	   canada_rate: 0.05,
                   	   total_rate: 0.14975
