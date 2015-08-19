@@ -227,6 +227,27 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     ['$scope', '$location', '$window', '$modal', '$routeParams', 'ProductService', 'ProfileService', 'OrderService', 'LoginService', 'ProductModel', 'OrderModel',
         function ($scope, $location, $window, $modal, $routeParams, ProductService, ProfileService, OrderService, LoginService, ProductModel, OrderModel) {
             var id = $routeParams.id;
+            var date = new Date();
+            var day = date.getUTCDate();
+            if (day > 9 && day <23 ) {
+            	$scope.payDay =16;
+            } else {
+            	$scope.payDay =1;
+            };
+            $scope.month_1 = date.setMonth(date.getMonth() + 1);
+            $scope.month_2 = date.setMonth(date.getMonth() + 1);
+            $scope.month_3 = date.setMonth(date.getMonth() + 1);
+            $scope.month_4 = date.setMonth(date.getMonth() + 1);
+            $scope.month_5 = date.setMonth(date.getMonth() + 1);
+            $scope.month_6 = date.setMonth(date.getMonth() + 1);
+            $scope.month_7 = date.setMonth(date.getMonth() + 1);
+            $scope.month_8 = date.setMonth(date.getMonth() + 1);
+            $scope.month_9 = date.setMonth(date.getMonth() + 1);
+            $scope.month_10 = date.setMonth(date.getMonth() + 1);
+            $scope.month_11 = date.setMonth(date.getMonth() + 1);
+            $scope.month_12 = date.setMonth(date.getMonth() + 1);
+       
+            
             $scope.tax_rate = {
                     AB: {
                   	   province : "AB",
