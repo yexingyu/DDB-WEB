@@ -21,6 +21,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
 import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
+import com.dailydealsbox.configuration.BaseEnum.STORE_CATEGORY;
 import com.dailydealsbox.configuration.BaseEnum.STORE_TYPE;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,45 +38,51 @@ public class Store extends BaseEntityModel {
   @NotNull
   @Size(min = 4, max = 100)
   @Column(name = "name", nullable = false, length = 45)
-  private String name;
+  private String         name;
+
+  @NotNull
+  @Size(min = 4, max = 100)
+  @Column(name = "category", nullable = false, length = 45)
+  @Enumerated(EnumType.STRING)
+  private STORE_CATEGORY category;
 
   @NotNull
   @Column(name = "website", nullable = false, length = 255)
-  private String website;
+  private String         website;
 
   @NotNull
   @Column(name = "deal_page", nullable = false, length = 512)
-  private String dealPage;
+  private String         dealPage;
 
   @NotNull
   @Column(name = "country", nullable = false)
   @Enumerated(EnumType.STRING)
-  private COUNTRY country;
+  private COUNTRY        country;
 
   @NotNull
   @Column(name = "province", nullable = false, length = 512)
-  private String province;
+  private String         province;
 
   @NotNull
   @Column(name = "logo", nullable = false, length = 255)
-  private String logo;
+  private String         logo;
 
   @NotNull
   @Column(name = "favicon", nullable = false, length = 255)
-  private String favicon;
+  private String         favicon;
 
   @NotNull
   @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private STORE_TYPE type;
+  private STORE_TYPE     type;
 
   @NotNull
   @Column(name = "default_followed", nullable = false)
-  private boolean defaultFollowed;
+  private boolean        defaultFollowed;
 
   @JsonIgnore
   @ManyToMany(mappedBy = "stores", fetch = FetchType.LAZY)
-  private Set<Member> members;
+  private Set<Member>    members;
 
   //  @JsonIgnore
   //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
@@ -133,6 +140,21 @@ public class Store extends BaseEntityModel {
    */
   public String getName() {
     return this.name;
+  }
+
+  /**
+   * @param name
+   *          the name to set
+   */
+  public void setCategory(STORE_CATEGORY category) {
+    this.category = category;
+  }
+
+  /**
+   * @return the name
+   */
+  public STORE_CATEGORY getCategory() {
+    return this.category;
   }
 
   /**

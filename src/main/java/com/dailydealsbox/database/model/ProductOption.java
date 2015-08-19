@@ -34,6 +34,10 @@ public class ProductOption extends BaseModel {
   @Column(name = "value", nullable = false)
   private String  value;
 
+  @NotNull
+  @Column(name = "image", nullable = false)
+  private String  image;
+
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id")
@@ -92,6 +96,21 @@ public class ProductOption extends BaseModel {
    */
   public void setValue(String value) {
     this.value = value;
+  }
+
+  /**
+   * @return the image
+   */
+  public String getImage() {
+    return this.image;
+  }
+
+  /**
+   * @param value
+   *          the value to set
+   */
+  public void setImage(String image) {
+    this.image = image;
   }
 
 }
