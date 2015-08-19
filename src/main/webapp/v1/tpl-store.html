@@ -1,27 +1,97 @@
 <div class="container">
+    <!-- following store tile-->
    <div class="row">
-       <div class="col-sm-12">
-           <h3>Stores - Follow Stores</h3>
-       </div>    
+	   <div class="col-sm-12">
+	   	<h3>Following Stores</h3>
+	   </div>
    </div>
    <div class="row">
-       <div class="col-sm-4" ng-repeat="store in stores">
-            <div class="row">
-                <div class="col-xs-12">
-                    
-                </div>
+   	<hr>
+   </div>   
+   <!-- following store list-->
+   <div class="row">
+       <div class="col-sm-3" ng-repeat="store in stores" ng-if="store.followed" >
+	            <div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">{{store.name}}</div>
+			  <div class="panel-body">
+	            <div class="row">
+	                <div class="col-xs-12" align="center">
+	                    <img class="store_log"src="./images/store_logo/{{store.logo}}">
+	                </div>
+	            </div>
+	            <div class="row">
+	                <hr>
+	            </div>	                       
+	            <div class="row">            
+	                <div class="col-xs-3">
+	                     <i class="fa fa-heart">12</i>
+	                </div>
+	                <div class="col-xs-4">
+	                     <i class="fa fa-user">5</i>
+	                </div>	                	                
+	                <div class="col-xs-5">
+	                    <a type="button" class="btn btn-xs btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
+	                    <a type="button" class="btn btn-xs btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
+	                     
+	                </div>	                
+	            </div>
+	            <div class="row">
+	                <hr>
+	            </div>	            
+	            <div class="row">
+	                <div class="col-xs-12">
+	                    <p>Amazon.ca: Online shopping in Canada - books, electronics, Kindle, home & garden, DVDs, tools, music, health & beauty, watches, baby, sporting goods & more ...</p>
+	                </div>
+	            </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    {{store.name}} 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <a type="button" class="btn btn-xs btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
-                    <a type="button" class="btn btn-xs btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
-                </div>
-            </div>
+            </div>            
        </div>
+  </div>
+    <!-- following store title-->
+   <div class="row">
+	   <div class="col-sm-12">
+	   		<h3>Explore More Stores</h3>
+	   </div>
+   </div>
+ <!-- folloing store title-->     
+  <div class="row">     
+       <div class="col-sm-3" ng-repeat="store in stores" ng-if="!store.followed" >
+	            <div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">{{store.name}}</div>
+			  <div class="panel-body">
+	            <div class="row">
+	                <div class="col-xs-12" align="center">
+	                    <img class="store_log"src="./images/store_logo/{{store.logo}}">
+	                </div>
+	            </div>
+	            <div class="row">
+	                <hr>
+	            </div>	                       
+	            <div class="row">            
+	                <div class="col-xs-3">
+	                     <i class="fa fa-heart">12</i>
+	                </div>
+	                <div class="col-xs-4">
+	                     <i class="fa fa-user">5</i>
+	                </div>	                	                
+	                <div class="col-xs-5">
+	                    <a type="button" class="btn btn-xs btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
+	                    <a type="button" class="btn btn-xs btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
+	                     
+	                </div>	                
+	            </div>
+	            <div class="row">
+	                <hr>
+	            </div>	            
+	            <div class="row">
+	                <div class="col-xs-12">
+	                    <p>Amazon.ca: Online shopping in Canada - books, electronics, Kindle, home & garden, DVDs, tools, music, health & beauty, watches, baby, sporting goods & more ...</p>
+	                </div>
+	            </div>
+            </div>
+            </div>            
+       </div>      
    </div>
 </div>

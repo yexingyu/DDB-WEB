@@ -86,5 +86,9 @@ h4 a {
 	color: RoyalBlue; 
 	font-weight: bold;
 }
+
+.store_log {
+	height: 40px;
+}
 	
 }
