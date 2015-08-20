@@ -203,9 +203,6 @@ public class ProductServiceImpl implements ProductService {
     // update product.count_reviews
     this.repo.increaseCountReviews(review.getProductId());
 
-    // update store.count_reviews
-    this.storeService.increaseCountReviews(product.getStore().getId());
-
     return 0;
   }
 

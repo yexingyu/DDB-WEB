@@ -121,10 +121,19 @@ public class StoreServiceImpl implements StoreService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#increaseCountReviews(int)
+   * @see com.dailydealsbox.database.service.StoreService#increaseCountFollowings(int)
    */
   @Override
-  public void increaseCountReviews(int storeId) {
-    this.repo.increaseCountReviews(storeId);
+  public void increaseCountFollowings(int storeId) {
+    this.repo.increaseCountFollowings(storeId);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#decreaseCountFollowings(int)
+   */
+  @Override
+  public void decreaseCountFollowings(int storeId) {
+    this.repo.decreaseCountFollowings(storeId);
   }
 }

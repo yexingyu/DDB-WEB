@@ -5,12 +5,14 @@ package com.dailydealsbox.database.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,7 +40,7 @@ public class Store extends BaseEntityModel {
   @NotNull
   @Size(min = 4, max = 100)
   @Column(name = "name", nullable = false, length = 45)
-  private String         name;
+  private String name;
 
   @NotNull
   @Size(min = 4, max = 100)
@@ -48,53 +50,57 @@ public class Store extends BaseEntityModel {
 
   @NotNull
   @Column(name = "description", nullable = false, length = 160)
-  private String         description;
+  private String description;
 
   @NotNull
   @Column(name = "count_followings", nullable = false, insertable = false, updatable = false)
-  private int            countFollowings;
+  private int countFollowings;
 
   @NotNull
   @Column(name = "count_likes", nullable = false, insertable = false, updatable = false)
-  private int            countLikes;
+  private int countLikes;
 
   @NotNull
   @Column(name = "website", nullable = false, length = 255)
-  private String         website;
+  private String website;
 
   @NotNull
   @Column(name = "deal_page", nullable = false, length = 512)
-  private String         dealPage;
+  private String dealPage;
 
   @NotNull
   @Column(name = "country", nullable = false)
   @Enumerated(EnumType.STRING)
-  private COUNTRY        country;
+  private COUNTRY country;
 
   @NotNull
   @Column(name = "province", nullable = false, length = 512)
-  private String         province;
+  private String province;
 
   @NotNull
   @Column(name = "logo", nullable = false, length = 255)
-  private String         logo;
+  private String logo;
 
   @NotNull
   @Column(name = "favicon", nullable = false, length = 255)
-  private String         favicon;
+  private String favicon;
 
   @NotNull
   @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private STORE_TYPE     type;
+  private STORE_TYPE type;
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "store", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Set<StoreLocation> locations;
 
   @NotNull
   @Column(name = "default_followed", nullable = false)
-  private boolean        defaultFollowed;
+  private boolean defaultFollowed;
 
   @JsonIgnore
   @ManyToMany(mappedBy = "stores", fetch = FetchType.LAZY)
-  private Set<Member>    members;
+  private Set<Member> members;
 
   //  @JsonIgnore
   //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
