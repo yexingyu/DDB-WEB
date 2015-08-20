@@ -39,54 +39,53 @@ public class Store extends BaseEntityModel {
 
   @NotNull
   @Size(min = 4, max = 100)
-  @Column(name = "name", nullable = false, length = 45)
+  @Column(name = "name")
   private String name;
 
   @NotNull
-  @Size(min = 4, max = 100)
-  @Column(name = "category", nullable = false, length = 45)
+  @Column(name = "category")
   @Enumerated(EnumType.STRING)
   private STORE_CATEGORY category;
 
   @NotNull
-  @Column(name = "description", nullable = false, length = 160)
+  @Column(name = "description")
   private String description;
 
   @NotNull
-  @Column(name = "count_followings", nullable = false, insertable = false, updatable = false)
+  @Column(name = "count_followings")
   private int countFollowings;
 
   @NotNull
-  @Column(name = "count_likes", nullable = false, insertable = false, updatable = false)
+  @Column(name = "count_likes")
   private int countLikes;
 
   @NotNull
-  @Column(name = "website", nullable = false, length = 255)
+  @Column(name = "website")
   private String website;
 
   @NotNull
-  @Column(name = "deal_page", nullable = false, length = 512)
+  @Column(name = "deal_page")
   private String dealPage;
 
   @NotNull
-  @Column(name = "country", nullable = false)
+  @Column(name = "country")
   @Enumerated(EnumType.STRING)
   private COUNTRY country;
 
   @NotNull
-  @Column(name = "province", nullable = false, length = 512)
+  @Column(name = "province")
   private String province;
 
   @NotNull
-  @Column(name = "logo", nullable = false, length = 255)
+  @Column(name = "logo")
   private String logo;
 
   @NotNull
-  @Column(name = "favicon", nullable = false, length = 255)
+  @Column(name = "favicon")
   private String favicon;
 
   @NotNull
-  @Column(name = "type", nullable = false)
+  @Column(name = "type")
   @Enumerated(EnumType.STRING)
   private STORE_TYPE type;
 
@@ -95,7 +94,7 @@ public class Store extends BaseEntityModel {
   private Set<StoreLocation> locations;
 
   @NotNull
-  @Column(name = "default_followed", nullable = false)
+  @Column(name = "default_followed")
   private boolean defaultFollowed;
 
   @JsonIgnore
