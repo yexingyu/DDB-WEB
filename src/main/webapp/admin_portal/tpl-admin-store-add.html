@@ -3,37 +3,43 @@
 
       <!-- product URL panel-->
       <div class="panel panel-primary">
-        <div class="panel-heading">Test Info</div>
+        <div class="panel-heading">Store Info</div>
         <div class="panel-body">
           <div class="form-group">
-            <label>Test name:</label> <input class="form-control" ng-model="store.name">
+            <label>Store name:</label> <input class="form-control" ng-model="store.name">
           </div>
           <div class="form-group">
-            <label>Test Domain Name:</label> <input class="form-control" ng-model="store.website">
+            <label>Store Category:</label> <select ng-model="store.category" class="form-control">
+                           <option value="{{key}}" ng-selected="key === store.category" ng-repeat="(key, value) in $root.constant.STORE_CATEGORY">{{value}}</option>
+                       </select>            
+          </div>          
+          
+          <div class="form-group">
+            <label>Store Domain Name:</label> <input class="form-control" ng-model="store.website">
             <p class="help-block">
               <a href="http://www.{{store.website}}" taget="_blank">Preview</a>
             </p>
           </div>
           <div class="form-group">
-            <label>Test Deal Page:</label> <input class="form-control" ng-model="store.dealPage">
+            <label>Store Deal Page:</label> <input class="form-control" ng-model="store.dealPage">
           </div>
           <div class="form-group">
-            <label>Test Logo:</label> <input class="form-control" ng-model="store.logo">
+            <label>Store Logo:</label> <input class="form-control" ng-model="store.logo">
           </div>
           <div class="form-group">
-            <label>Test Favicon:</label> <input class="form-control" ng-model="store.favicon">
+            <label>Store Favicon:</label> <input class="form-control" ng-model="store.favicon">
           </div>                                        
           <div class="form-group">
-            <label>TEST Country:</label> <input class="form-control" ng-model="store.country">
+            <label>Store Country:</label> <input class="form-control" ng-model="store.country">
           </div>
           <div class="form-group">
-            <label>TEST Province:</label> <input class="form-control" ng-model="store.province">
+            <label>Store Province:</label> <input class="form-control" ng-model="store.province">
           </div>
           <div class="form-group">
-            <label>TEST Type:</label> <input class="form-control" ng-model="store.type">
+            <label>Store Type:</label> <input class="form-control" ng-model="store.type">
           </div>                      
           <div class="form-group">
-            <label>TEST Status:</label> <input class="form-control" ng-model="store.status">
+            <label>Store Status:</label> <input class="form-control" ng-model="store.status">
           </div>
     <button type="submit" class="btn btn-default" ng-click="add()">Add Button</button>            
         </div>
