@@ -391,20 +391,26 @@ angular
                             // add input field
                             $scope.store = {};
 
-                            $scope.store.name = "NordStorm";
-                            $scope.store.website = "nordstorm.com";
-                            $scope.store.dealPage = "nordstorm.com";
-                            $scope.store.logo = "nordstore.jpg";
+                            $scope.store.name = "";
+                            $scope.store.category = "";
+                            $scope.store.description= "";
+                            $scope.store.count_followings  = 0;
+                            $scope.store.count_likes  = 0;
+                            $scope.store.website = "";
+                            $scope.store.dealPage = "";
+                            $scope.store.logo = "";
                             $scope.store.favicon = "";
-                            $scope.store.country = "US";
+                            $scope.store.country = "CA";
                             $scope.store.province = "";
                             $scope.store.type = "ONLINE";
                             $scope.store.status = "AVAILABLE";
+                            $scope.verified = false;
 
                             $scope.add = function() {
                                 console.log($scope.store);
                                 StoreService.add($scope.store, function(response) {
                                     console.log(response);
+                                    $location.path('/home');
                                 });
                             };
 
