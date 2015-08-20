@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author x_ye
  */
 @Entity
-@Table(name = "grocery_store_location")
+@Table(name = "store_location")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class StoreLocation extends BaseModel {
 

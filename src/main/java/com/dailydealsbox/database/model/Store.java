@@ -80,7 +80,6 @@ public class Store extends BaseEntityModel {
   @Column(name = "logo")
   private String logo;
 
-  @NotNull
   @Column(name = "favicon")
   private String favicon;
 
