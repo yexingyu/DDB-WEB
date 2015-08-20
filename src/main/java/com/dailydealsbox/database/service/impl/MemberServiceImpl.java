@@ -110,6 +110,7 @@ public class MemberServiceImpl implements MemberService {
         o.setMember(member);
       }
     }
+
     return member;
   }
 

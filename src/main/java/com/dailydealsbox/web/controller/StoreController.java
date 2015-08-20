@@ -56,7 +56,7 @@ public class StoreController {
 
   /**
    * list
-   * 
+   *
    * @param storeIds
    * @param countries
    * @param deleted
@@ -180,11 +180,27 @@ public class StoreController {
       me.setStores(new HashSet<Store>());
     }
 
-    Store store = this.storeService.get(storeId);
-    if (store == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
+    // store is following
+    boolean following = false;
+    for (Store s : me.getStores()) {
+      if (s.getId() == storeId) {
+        following = true;
+        break;
+      }
+    }
 
-    me.getStores().add(store);
-    me = this.memberService.update(me);
+    // if not following
+    if (!following) {
+      Store store = this.storeService.get(storeId);
+      if (store == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
+
+      // update following
+      me.getStores().add(store);
+      me = this.memberService.update(me);
+
+      // increase count_followings
+      this.storeService.increaseCountFollowings(storeId);
+    }
 
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getStores());
   }
@@ -204,15 +220,25 @@ public class StoreController {
     Member me = this.memberService.get(token.getMemberId());
     if (me.getStores() == null || me.getStores().isEmpty()) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
 
+    boolean following = false;
     Iterator<Store> it = me.getStores().iterator();
     while (it.hasNext()) {
       Store store = it.next();
       if (store.getId() == storeId) {
         it.remove();
+        following = true;
       }
     }
 
-    me = this.memberService.update(me);
+    // if following
+    if (following) {
+      // update following
+      me = this.memberService.update(me);
+
+      // decrease count_followings
+      this.storeService.decreaseCountFollowings(storeId);
+    }
+
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getStores());
   }
 }
