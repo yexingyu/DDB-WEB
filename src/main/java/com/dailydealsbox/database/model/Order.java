@@ -47,14 +47,20 @@ public class Order extends BaseEntityModel {
   private String            lastName;
 
   @NotNull
-  @Size(min = 4, max = 100)
+  @Size(min = 4, max = 45)
   @Column(name = "email", nullable = false, length = 45)
   private String            email;
+
+  @NotNull
+  @Size(min = 4, max = 45)
+  @Column(name = "company_email", nullable = false, length = 45)
+  private String            companyEmail;
 
   @NotNull
   @Size(min = 4, max = 100)
   @Column(name = "phone", nullable = false, length = 45)
   private String            phone;
+
   //product info
   @NotNull
   @Column(name = "product_id", nullable = false)
@@ -71,6 +77,10 @@ public class Order extends BaseEntityModel {
   private String            proudctImage;
 
   @NotNull
+  @Column(name = "product_price", nullable = false)
+  private double            productPrice;
+
+  @NotNull
   @Size(min = 4, max = 512)
   @Column(name = "product_name", nullable = false, length = 512)
   private String            productName;
@@ -81,17 +91,12 @@ public class Order extends BaseEntityModel {
   private String            productDescription;
 
   @NotNull
-  @Size(min = 4, max = 2048)
-  @Column(name = "product_option_value", nullable = false, length = 2048)
+  @Size(min = 2, max = 128)
+  @Column(name = "product_option_value", nullable = false, length = 128)
   private String            productOptionValue;
 
   @NotNull
-  @Column(name = "product_price", nullable = false)
-  private double            productPrice;
-
-  @NotNull
-  @Size(min = 4, max = 2048)
-  @Column(name = "product_quantity", nullable = false, length = 2048)
+  @Column(name = "product_quantity", nullable = false)
   private int               productQuantity;
 
   //order info
@@ -99,15 +104,29 @@ public class Order extends BaseEntityModel {
   @Column(name = "sub_total", nullable = false)
   private double            subTotal;
 
-  //tax info
+  @NotNull
+  @Size(min = 2, max = 64)
+  @Column(name = "tax_type", nullable = false, length = 64)
+  private String            taxType;
+
+  //order tax info
+  @NotNull
+  @Column(name = "tax_rate", nullable = false)
+  private double            taxRate;
+
   @NotNull
   @Column(name = "tax_amount", nullable = false)
   private double            taxAmount;
 
-  //fee info    
+  //order fee info
   @NotNull
   @Column(name = "shipping", nullable = false)
   private double            shipping;
+
+  @NotNull
+  @Size(min = 2, max = 64)
+  @Column(name = "fee_type", nullable = false, length = 64)
+  private String            feeType;
 
   @NotNull
   @Column(name = "fee_amout", nullable = false)
@@ -131,6 +150,10 @@ public class Order extends BaseEntityModel {
   private double            apr;
 
   @NotNull
+  @Column(name = "number_of_payment", nullable = false)
+  private int               numberOfPayment;
+
+  @NotNull
   @Column(name = "monthly_payment", nullable = false)
   private double            monthlyPayment;
 
@@ -138,18 +161,22 @@ public class Order extends BaseEntityModel {
   @Column(name = "interest", nullable = false)
   private double            interest;
 
+  @NotNull
+  @Column(name = "paid_sequence_number", nullable = false)
+  private int               paiedSequenceNumber;
+
   //payment info
   @NotNull
   @Column(name = "paid_amount", nullable = false)
   private double            paidAmount;
 
   @NotNull
-  @Column(name = "paymentRecievable", nullable = false)
-  private double            paymentRecievable;
-
-  @NotNull
   @Column(name = "erned_interest", nullable = false)
   private double            ernedInterest;
+
+  @NotNull
+  @Column(name = "paymentRecievable", nullable = false)
+  private double            paymentRecievable;
 
   @NotNull
   @Column(name = "remaining_balance", nullable = false)
@@ -176,22 +203,98 @@ public class Order extends BaseEntityModel {
     return true;
   }
 
+  //member info
   /**
-   * @return the status
+   * @return the memberId
    */
-  public ORDER_STATUS getStatus() {
-    return this.status;
+  public int getMemberId() {
+    return this.memberId;
   }
 
   /**
-   * @param status
-   *          the status to set
+   * @param memberId
+   *          the memberId to set
    */
-  public void setStatus(ORDER_STATUS status) {
-    this.status = status;
+  public void setMemberId(int memberId) {
+    this.memberId = memberId;
   }
 
-  // product info getter, setter
+  /**
+   * @return the firstName
+   */
+  public String getFirstName() {
+    return this.firstName;
+  }
+
+  /**
+   * @param firstName
+   *          the firstName to set
+   */
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  /**
+   * @return the lastName
+   */
+  public String getLastName() {
+    return this.lastName;
+  }
+
+  /**
+   * @param lastName
+   *          the lastName to set
+   */
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  /**
+   * @return the email
+   */
+  public String getEmail() {
+    return this.email;
+  }
+
+  /**
+   * @param email
+   *          the email to set
+   */
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  /**
+   * @return the companyEmail
+   */
+  public String getCompanyEmail() {
+    return this.companyEmail;
+  }
+
+  /**
+   * @param companyEmail
+   *          the companyEmail to set
+   */
+  public void setCompanyEmail(String companyEmail) {
+    this.companyEmail = companyEmail;
+  }
+
+  /**
+   * @return the phone
+   */
+  public String getPhone() {
+    return this.phone;
+  }
+
+  /**
+   * @param phone
+   *          the phone to set
+   */
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  // product info
   /**
    * @return the productId
    */
@@ -235,6 +338,21 @@ public class Order extends BaseEntityModel {
    */
   public void setProudctImage(String proudctImage) {
     this.proudctImage = proudctImage;
+  }
+
+  /**
+   * @return the productPrice
+   */
+  public double getProductPrice() {
+    return this.productPrice;
+  }
+
+  /**
+   * @param productPrice
+   *          the productPrice to set
+   */
+  public void setProductPrice(double productPrice) {
+    this.productPrice = productPrice;
   }
 
   /**
@@ -283,22 +401,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @return the productPrice
-   */
-  public double getProductPrice() {
-    return this.productPrice;
-  }
-
-  /**
-   * @param productPrice
-   *          the productPrice to set
-   */
-  public void setProductPrice(double productPrice) {
-    this.productPrice = productPrice;
-  }
-
-  /**
-   * @return the type
+   * @return the productQuantity
    */
   public int getProductQuantity() {
     return this.productQuantity;
@@ -312,125 +415,63 @@ public class Order extends BaseEntityModel {
     this.productQuantity = productQuantity;
   }
 
-  //member info getter, setter
-  /**
-   * @return the memberId
-   */
-  public int getMemberId() {
-    return this.memberId;
-  }
-
-  /**
-   * @param memberId
-   *          the memberId to set
-   */
-  public void setMemberId(int memberId) {
-    this.memberId = memberId;
-  }
-
-  /**
-   * @return the firstName
-   */
-  public String getFirstName() {
-    return this.firstName;
-  }
-
-  /**
-   * @param firstName
-   *          the firstName to set
-   */
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  /**
-   * @return the lastName
-   */
-  public String getLastName() {
-    return this.lastName;
-  }
-
-  /**
-   * @param lastName
-   *          the lastName to set
-   */
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  /**
-   * @return the phone
-   */
-  public String getPhone() {
-    return this.phone;
-  }
-
-  /**
-   * @param phone
-   *          the phone to set
-   */
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  /**
-   * @return the email
-   */
-  public String getEmail() {
-    return this.email;
-  }
-
-  /**
-   * @param email
-   *          the email to set
-   */
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  // address
-  /**
-   * @return the addresses
-   */
-  public Set<OrderAddress> getAddresses() {
-    return this.addresses;
-  }
-
-  /**
-   * @param addresses
-   *          the addresses to set
-   */
-  public void setAddresses(Set<OrderAddress> addresses) {
-    this.addresses = addresses;
-  }
-
   //order info
 
   /**
-   * @return the subtotal
+   * @return the subTotal
    */
   public double getSubTotal() {
     return this.subTotal;
   }
 
   /**
-   * @param subtotal
-   *          the subtotal to set
+   * @param subTotal
+   *          the subTotal to set
    */
   public void setSubTotal(double subTotal) {
     this.subTotal = subTotal;
   }
 
   /**
-   * @return the tax_amount
+   * @return the taxType
+   */
+  public String getTaxType() {
+    return this.taxType;
+  }
+
+  /**
+   * @param taxType
+   *          the taxType to set
+   */
+  public void setTaxType(String taxType) {
+    this.taxType = taxType;
+  }
+
+  /**
+   * @return the taxRate
+   */
+  public double getTaxRate() {
+    return this.taxRate;
+  }
+
+  /**
+   * @param taxRate
+   *          the taxRate to set
+   */
+  public void setTaxRate(double taxRate) {
+    this.taxRate = taxRate;
+  }
+
+  /**
+   * @return the taxAmount
    */
   public double getTaxAmount() {
     return this.taxAmount;
   }
 
   /**
-   * @param tax_amount
-   *          the tax_amount to set
+   * @param taxAmount
+   *          the taxAmount to set
    */
   public void setTaxAmount(double taxAmount) {
     this.taxAmount = taxAmount;
@@ -452,7 +493,22 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @return the fee_amout
+   * @return the feeType
+   */
+  public String getFeeType() {
+    return this.feeType;
+  }
+
+  /**
+   * @param feeType
+   *          the feeType to set
+   */
+  public void setFeeType(String feeType) {
+    this.feeType = feeType;
+  }
+
+  /**
+   * @return the feeAmout
    */
   public double getFeeAmout() {
     return this.feeAmout;
@@ -460,7 +516,7 @@ public class Order extends BaseEntityModel {
 
   /**
    * @param fee_amout
-   *          the fee_amout to set
+   *          the feeAmout to set
    */
   public void setFeeAmout(double feeAmout) {
     this.feeAmout = feeAmout;
@@ -483,15 +539,15 @@ public class Order extends BaseEntityModel {
 
   //financial info
   /**
-   * @return the down_payment
+   * @return the downPayment
    */
   public double getDownPayment() {
     return this.downPayment;
   }
 
   /**
-   * @param down_payment
-   *          the down_payment to set
+   * @param downPayment
+   *          the downPaymentto set
    */
   public void setDownPayment(double downayment) {
     this.downPayment = downayment;
@@ -508,7 +564,7 @@ public class Order extends BaseEntityModel {
    * @param principal
    *          the principal to set
    */
-  public void setprincipal(double principal) {
+  public void setPrincipal(double principal) {
     this.principal = principal;
   }
 
@@ -528,18 +584,33 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @return the monthly_payment
+   * @return the monthlyPayment
    */
   public double getMonthlyPayment() {
     return this.monthlyPayment;
   }
 
   /**
-   * @param monthly_payment
-   *          the monthly_payment to set
+   * @param monthlyPayment
+   *          the monthlyPayment to set
    */
   public void setMonthlyPayment(double monthly_payment) {
     this.monthlyPayment = monthly_payment;
+  }
+
+  /**
+   * @return the numberOfPayment
+   */
+  public int getNumberOfPayment() {
+    return this.numberOfPayment;
+  }
+
+  /**
+   * @param numberOfPayment
+   *          the numberOfPayment to set
+   */
+  public void setNumberOfPayment(int numberOfPayment) {
+    this.numberOfPayment = numberOfPayment;
   }
 
   /**
@@ -558,48 +629,109 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @return the paid_amount
+   * @return the paiedSequenceNumber
+   */
+  public int getPaiedSequenceNumbert() {
+    return this.paiedSequenceNumber;
+  }
+
+  /**
+   * @param paiedSequenceNumber
+   *          the paiedSequenceNumber to set
+   */
+  public void setPaiedSequenceNumber(int paiedSequenceNumber) {
+    this.paiedSequenceNumber = paiedSequenceNumber;
+  }
+
+  /**
+   * @return the paidAmount
    */
   public double getPaidAmount() {
     return this.paidAmount;
   }
 
   /**
-   * @param paid_amount
-   *          the paid_amount to set
+   * @param paidAmount
+   *          the paidAmount to set
    */
   public void setPaidAmount(double paidAmount) {
     this.paidAmount = paidAmount;
   }
 
   /**
-   * @return the erned_interest
+   * @return the ernedInterest
    */
   public double getErnedInterest() {
     return this.ernedInterest;
   }
 
   /**
-   * @param erned_interest
-   *          the erned_interest to set
+   * @param ernedInterest
+   *          the ernedInterest to set
    */
-  public void seternedInterest(double ernedInterest) {
+  public void setErnedInterest(double ernedInterest) {
     this.ernedInterest = ernedInterest;
   }
 
   /**
-   * @return the remaining_balance
+   * @return the paymentRecievable
+   */
+  public double getPaymentRecievable() {
+    return this.paymentRecievable;
+  }
+
+  /**
+   * @param paymentRecievable
+   *          the paymentRecievable to set
+   */
+  public void setPaymentRecievable(double paymentRecievable) {
+    this.paymentRecievable = paymentRecievable;
+  }
+
+  /**
+   * @return the remainingBalance
    */
   public double getRemainingBalance() {
     return this.remainingBalance;
   }
 
   /**
-   * @param remaining_balance
-   *          the remaining_balance to set
+   * @param remainingBalance
+   *          the remainingBalance to set
    */
   public void setRemainingBalance(double remainingBalance) {
     this.remainingBalance = remainingBalance;
   }
 
+  // address
+  /**
+   * @return the addresses
+   */
+  public Set<OrderAddress> getAddresses() {
+    return this.addresses;
+  }
+
+  /**
+   * @param addresses
+   *          the addresses to set
+   */
+  public void setAddresses(Set<OrderAddress> addresses) {
+    this.addresses = addresses;
+  }
+
+  //status
+  /**
+   * @return the status
+   */
+  public ORDER_STATUS getStatus() {
+    return this.status;
+  }
+
+  /**
+   * @param status
+   *          the status to set
+   */
+  public void setStatus(ORDER_STATUS status) {
+    this.status = status;
+  }
 }
