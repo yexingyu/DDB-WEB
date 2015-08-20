@@ -52,6 +52,13 @@ public interface StoreService {
   public Set<Store> listDefaultFollowed();
 
   /**
+   * increaseCountLikes
+   * 
+   * @param storeId
+   */
+  public void increaseCountLikes(int storeId);
+
+  /**
    * update
    *
    * @param store

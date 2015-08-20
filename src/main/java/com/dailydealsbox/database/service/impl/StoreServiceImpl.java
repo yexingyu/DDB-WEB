@@ -110,4 +110,13 @@ public class StoreServiceImpl implements StoreService {
     return stores;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#increaseCountLikes(int)
+   */
+  @Override
+  public void increaseCountLikes(int storeId) {
+    this.repo.increaseCountLikes(storeId);
+  }
+
 }

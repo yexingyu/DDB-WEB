@@ -163,6 +163,10 @@ public class ProductServiceImpl implements ProductService {
     if (null != this.repoLike.findFirstByProductIdAndIpAndFingerprint(productId, ip, fingerprint)) { return -1; }
     if (this.repoLike.countByProductIdAndIp(productId, ip) > 10) { return -2; }
 
+    // retrieve product
+    Product product = this.repo.findOne(productId);
+    if (product == null) { return -3; }
+
     // insert product_like
     ProductLike like = new ProductLike();
     like.setIp(ip);
@@ -172,6 +176,9 @@ public class ProductServiceImpl implements ProductService {
 
     // update product.count_likes
     this.repo.increaseCountLikes(productId);
+
+    // update store.count_likes
+    this.storeService.increaseCountLikes(product.getStore().getId());
 
     return 0;
 

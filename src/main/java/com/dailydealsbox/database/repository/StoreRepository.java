@@ -9,6 +9,7 @@ import javax.persistence.QueryHint;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.CrudRepository;
@@ -128,4 +129,13 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
    */
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Set<Store> findAllByDeleted(boolean deleted);
+
+  /**
+   * increaseCountLikes
+   * 
+   * @param storeId
+   */
+  @Modifying
+  @Query("update Store s set s.countLikes = s.countLikes + 1 where s.id = ?1")
+  public void increaseCountLikes(int storeId);
 }

@@ -78,6 +78,8 @@ public class ProductController {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Already liked");
     } else if (rst == -2) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Too many likes from the same ip");
+    } else if (rst == -3) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "No this item");
     } else {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "");
     }
