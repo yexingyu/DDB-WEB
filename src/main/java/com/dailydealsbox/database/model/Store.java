@@ -101,6 +101,13 @@ public class Store extends BaseEntityModel {
   @ManyToMany(mappedBy = "stores", fetch = FetchType.LAZY)
   private Set<Member> members;
 
+  @NotNull
+  @Column(name = "verified")
+  private boolean verified;
+
+  @Column(name = "add_by")
+  private int addBy;
+
   //  @JsonIgnore
   //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
   //  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -120,6 +127,51 @@ public class Store extends BaseEntityModel {
     }
 
     return true;
+  }
+
+  /**
+   * @return the addBy
+   */
+  public int getAddBy() {
+    return this.addBy;
+  }
+
+  /**
+   * @param addBy
+   *          the addBy to set
+   */
+  public void setAddBy(int addBy) {
+    this.addBy = addBy;
+  }
+
+  /**
+   * @return the locations
+   */
+  public Set<StoreLocation> getLocations() {
+    return this.locations;
+  }
+
+  /**
+   * @param locations
+   *          the locations to set
+   */
+  public void setLocations(Set<StoreLocation> locations) {
+    this.locations = locations;
+  }
+
+  /**
+   * @return the verified
+   */
+  public boolean isVerified() {
+    return this.verified;
+  }
+
+  /**
+   * @param verified
+   *          the verified to set
+   */
+  public void setVerified(boolean verified) {
+    this.verified = verified;
   }
 
   /**

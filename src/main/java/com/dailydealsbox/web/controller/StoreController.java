@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
+import com.dailydealsbox.configuration.BaseEnum.STORE_TYPE;
 import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.service.AuthorizationService;
@@ -127,14 +128,31 @@ public class StoreController {
    */
   @RequestMapping(method = { RequestMethod.POST })
   @ApiOperation(value = "insert store", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Insert a new store.")
-  @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData insert(@ApiParam(value = "store object", required = true) @RequestBody Store store) {
+  @DDBAuthorization({ MEMBER_ROLE.ADMIN, MEMBER_ROLE.MEMBER })
+  public GenericResponseData insert(@ApiParam(value = "store object", required = true) @RequestBody Store store, HttpServletRequest request) {
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    Member me = this.memberService.get(token.getMemberId());
     if (store.validate()) {
+      if (store.getType() == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "002"); }
+      if (store.getType() == STORE_TYPE.ONLINE && me.getRole() != MEMBER_ROLE.ADMIN) { return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "003"); }
+
+      // set verified column
+      if (store.getType() == STORE_TYPE.ONLINE || me.getRole() == MEMBER_ROLE.ADMIN) {
+        store.setVerified(true);
+      } else {
+        store.setVerified(false);
+      }
+
+      // set add by memberId
+      store.setAddBy(me.getId());
+
+      // inserting
       Store storeFromDb = this.storeService.insert(store);
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, storeFromDb);
     } else {
       return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001");
     }
+
   }
 
   /**
@@ -147,12 +165,31 @@ public class StoreController {
    */
   @RequestMapping(value = "id/{storeId}", method = { RequestMethod.PUT })
   @ApiOperation(value = "update store", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Update store details.")
-  @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData update(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId, @ApiParam(value = "store object", required = true) @RequestBody Store store) {
+  @DDBAuthorization({ MEMBER_ROLE.ADMIN, MEMBER_ROLE.MEMBER })
+  public GenericResponseData update(@ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId, @ApiParam(value = "store object", required = true) @RequestBody Store store,
+      HttpServletRequest request) {
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    Member me = this.memberService.get(token.getMemberId());
     if (store.validate()) {
       Store storeFromDb = this.storeService.get(storeId);
       if (storeFromDb != null) {
         store.setId(storeId);
+        store.setAddBy(storeFromDb.getAddBy());
+
+        // permission
+        if (store.getType() == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "003"); }
+        if (store.getType() == STORE_TYPE.ONLINE && me.getRole() != MEMBER_ROLE.ADMIN) { return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "004"); }
+        if (store.getType() == STORE_TYPE.LOCAL && me.getRole() != MEMBER_ROLE.ADMIN
+            && me.getId() != store.getAddBy()) { return GenericResponseData.newInstance(RESPONSE_STATUS.NO_PERMISSION, "005"); }
+
+        // set verified=true, if store_type == online
+        if (store.getType() == STORE_TYPE.ONLINE) {
+          store.setVerified(true);
+        } else if (store.getType() == STORE_TYPE.LOCAL && me.getRole() != MEMBER_ROLE.ADMIN) {
+          store.setVerified(false);
+        }
+
+        // saving
         storeFromDb = this.storeService.update(store);
         return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, storeFromDb);
       } else {
