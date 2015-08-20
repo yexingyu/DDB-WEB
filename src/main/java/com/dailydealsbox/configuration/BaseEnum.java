@@ -110,7 +110,7 @@ public class BaseEnum {
     SC_APS("Animals & Pet Supplies"), SC_AA("Apparel & Accessories"), SC_AE("Arts & Entertainment"), SC_BT("Baby & Toddler"), SC_BI("Business & Industrial"), SC_CO("Cameras & Optics"), SC_EL(
         "Electronics"), SC_FBT("Food, Beverages & Tobacco"), SC_FN("Furniture"), SC_HW("Hardware"), SC_HB("Health & Beauty"), SC_HG("Home & Garden"), SC_MT("Mature"), SC_MD("Media"), SC_SW(
             "Software"), SC_SG("Sporting Goods"), SC_TG("Toys & Games"), SC_VP("Vehicles & Parts"), SC_ALL("Retailor in Store, Online"), SC_OR("Retailor Online");
-    ;
+
     private final String name;
 
     private STORE_CATEGORY(String name) {
