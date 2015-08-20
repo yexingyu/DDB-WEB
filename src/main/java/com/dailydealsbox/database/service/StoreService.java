@@ -53,10 +53,17 @@ public interface StoreService {
 
   /**
    * increaseCountLikes
-   * 
+   *
    * @param storeId
    */
   public void increaseCountLikes(int storeId);
+
+  /**
+   * increaseCountReviews
+   * 
+   * @param storeId
+   */
+  public void increaseCountReviews(int storeId);
 
   /**
    * update

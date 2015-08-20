@@ -132,10 +132,19 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
 
   /**
    * increaseCountLikes
-   * 
+   *
    * @param storeId
    */
   @Modifying
   @Query("update Store s set s.countLikes = s.countLikes + 1 where s.id = ?1")
   public void increaseCountLikes(int storeId);
+
+  /**
+   * increaseCountReviews
+   * 
+   * @param storeId
+   */
+  @Modifying
+  @Query("update Store s set s.countReviews = s.countReviews + 1 where s.id = ?1")
+  public void increaseCountReviews(int storeId);
 }
