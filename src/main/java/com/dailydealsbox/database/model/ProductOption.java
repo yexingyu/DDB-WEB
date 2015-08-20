@@ -34,7 +34,6 @@ public class ProductOption extends BaseModel {
   @Column(name = "value", nullable = false)
   private String  value;
 
-  @NotNull
   @Column(name = "image", nullable = false)
   private String  image;
 
