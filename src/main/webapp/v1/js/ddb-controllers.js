@@ -101,6 +101,58 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     }])
 
     /*
+    * SearchCtrl defination
+    */
+    .controller('SearchCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
+        $scope.requestSearch = $location.search();
+        $scope.items = [];
+        $scope.actions = {
+            'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
+        };
+        $scope.pagination = {'page': 1, 'size': 36, 'sort': 'createdAt,desc'};
+        $scope.pagination.change = function () {
+            $scope.loading();
+        };
+
+        // sort
+        $scope.select = function (sort) {
+            $scope.pagination.page = 1;
+            $scope.pagination.sort = sort;
+            $scope.loading();
+        };
+
+        // loading products
+        var callback = function (response) {
+            if (response.status == 'SUCCESS') {
+                angular.forEach(response.data.content, function (item) {
+                    ProductModel.fixLikeAndReviewOnProduct(item);
+                    StoreModel.fixFollowed(item.store, $scope.me.stores);
+                });
+                $scope.items = response.data.content;
+                $scope.pagination.total = response.data.totalElements;
+            }
+        };
+        $scope.me = {'loaded': false};
+        $scope.loading = function () {
+            if ($scope.me.loaded) {
+                ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});
+            } else {
+                ProfileService.profile(function (response) {
+                    if (response.status === 'SUCCESS') {
+                        angular.extend($scope.me, response.data);
+                    }
+                    $scope.me.loaded = true;
+                    ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});
+                });
+            }
+        };
+
+        // follow and unfollow
+        $scope.follow = StoreModel.follow;
+        $scope.unfollow = StoreModel.unfollow;
+    }])
+
+    /*
      * AllCtrl definition
      */
     .controller('AllCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
@@ -231,11 +283,12 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             var id = $routeParams.id;
             var date = new Date();
             var day = date.getUTCDate();
-            if (day > 9 && day <23 ) {
-            	$scope.payDay =16;
+            if (day > 9 && day < 23) {
+                $scope.payDay = 16;
             } else {
-            	$scope.payDay =1;
-            };
+                $scope.payDay = 1;
+            }
+            ;
             $scope.month_1 = date.setMonth(date.getMonth() + 1);
             $scope.month_2 = date.setMonth(date.getMonth() + 1);
             $scope.month_3 = date.setMonth(date.getMonth() + 1);
@@ -248,101 +301,101 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             $scope.month_10 = date.setMonth(date.getMonth() + 1);
             $scope.month_11 = date.setMonth(date.getMonth() + 1);
             $scope.month_12 = date.setMonth(date.getMonth() + 1);
-       
-            
+
+
             $scope.tax_rate = {
-                    AB: {
-                  	   province : "AB",
-                  	   tax_type: "GST",
-                  	   provincial_rate: 0.00,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.05
-                  	   },
-              	  BC: {
-                  	   province : "BC",
-                  	   tax_type: "GST+PST",
-                  	   provincial_rate: 0.07,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.12
-                  	   },
-                    MB: {
-                  	   province : "MB",
-                  	   tax_type: "GST+PST",
-                  	   provincial_rate: 0.08,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.13
-                  	   },
-                   NB: {
-                  	   province : "NB",
-                  	   tax_type: "HST",
-                  	   provincial_rate: 0.08,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.13
-                  	   }, 
-                   NL:  {
-                  	   province : "NL",
-                  	   tax_type: "GST",
-                  	   provincial_rate: 0.08,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.13
-                  	   },  
-                  NT: {
-                  	   province : "NT",
-                  	   tax_type: "GST",
-                  	   provincial_rate: 0.00,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.05
-                  	   },
-                  NS:   {
-                  	   province : "NS",
-                  	   tax_type: "GST",
-                  	   provincial_rate: 0.00,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.05
-                  	   },
-                  NU:   {
-                  	   province : "NU",
-                  	   tax_type: "GST",
-                  	   provincial_rate: 0.00,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.05
-                  	   },
-          	   ON:   {
-                  	   province : "ON",
-                  	   tax_type: "HST",
-                  	   provincial_rate: 0.08,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.13
-                  	   }, 
-          	   PE:	 {
-                  	   province : "PE",
-                  	   tax_type: "HST",
-                  	   provincial_rate: 0.09,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.14
-                  	   },
-          	   QC:   {
-                  	   province : "QC",
-                  	   tax_type: "GST+QST",
-                  	   provincial_rate: 0.9975,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.14975
-                  	   },
-          	   SK:   {
-                  	   province : "SK",
-                  	   tax_type: "GST",
-                  	   provincial_rate: 0.05,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.10
-                  	   },
-              	YK:   {
-                  	   province : "YK",
-                  	   tax_type: "GST",
-                  	   provincial_rate: 0.00,
-                  	   canada_rate: 0.05,
-                  	   total_rate: 0.05
-                  	   }                           	   
-  };
+                AB: {
+                    province: "AB",
+                    tax_type: "GST",
+                    provincial_rate: 0.00,
+                    canada_rate: 0.05,
+                    total_rate: 0.05
+                },
+                BC: {
+                    province: "BC",
+                    tax_type: "GST+PST",
+                    provincial_rate: 0.07,
+                    canada_rate: 0.05,
+                    total_rate: 0.12
+                },
+                MB: {
+                    province: "MB",
+                    tax_type: "GST+PST",
+                    provincial_rate: 0.08,
+                    canada_rate: 0.05,
+                    total_rate: 0.13
+                },
+                NB: {
+                    province: "NB",
+                    tax_type: "HST",
+                    provincial_rate: 0.08,
+                    canada_rate: 0.05,
+                    total_rate: 0.13
+                },
+                NL: {
+                    province: "NL",
+                    tax_type: "GST",
+                    provincial_rate: 0.08,
+                    canada_rate: 0.05,
+                    total_rate: 0.13
+                },
+                NT: {
+                    province: "NT",
+                    tax_type: "GST",
+                    provincial_rate: 0.00,
+                    canada_rate: 0.05,
+                    total_rate: 0.05
+                },
+                NS: {
+                    province: "NS",
+                    tax_type: "GST",
+                    provincial_rate: 0.00,
+                    canada_rate: 0.05,
+                    total_rate: 0.05
+                },
+                NU: {
+                    province: "NU",
+                    tax_type: "GST",
+                    provincial_rate: 0.00,
+                    canada_rate: 0.05,
+                    total_rate: 0.05
+                },
+                ON: {
+                    province: "ON",
+                    tax_type: "HST",
+                    provincial_rate: 0.08,
+                    canada_rate: 0.05,
+                    total_rate: 0.13
+                },
+                PE: {
+                    province: "PE",
+                    tax_type: "HST",
+                    provincial_rate: 0.09,
+                    canada_rate: 0.05,
+                    total_rate: 0.14
+                },
+                QC: {
+                    province: "QC",
+                    tax_type: "GST+QST",
+                    provincial_rate: 0.9975,
+                    canada_rate: 0.05,
+                    total_rate: 0.14975
+                },
+                SK: {
+                    province: "SK",
+                    tax_type: "GST",
+                    provincial_rate: 0.05,
+                    canada_rate: 0.05,
+                    total_rate: 0.10
+                },
+                YK: {
+                    province: "YK",
+                    tax_type: "GST",
+                    provincial_rate: 0.00,
+                    canada_rate: 0.05,
+                    total_rate: 0.05
+                }
+            };
             $scope.order = {};
 
             // retrieve product details

@@ -85,6 +85,17 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   public Page<Product> findByDisabledAndDeleted(boolean deleted, boolean disabled, Pageable pageable);
 
   /**
+   * searchByName
+   *
+   * @param substring
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct p from Product p join p.texts t where t.name like %?1% and p.deleted = false and p.disabled = false")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Product> searchByName(String substring, Pageable pageable);
+
+  /**
    * increaseCountLikes
    *
    * @param productId
