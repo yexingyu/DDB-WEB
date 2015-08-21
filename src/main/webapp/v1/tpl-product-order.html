@@ -179,7 +179,10 @@
                             </div>
                         </div>
                         <div class="row" ng-repeat="fee in product.fees">
-                            <div class="col-sm-6" align="left"><h4>{{fee.title}}</h4>
+                            <div class="col-sm-6" align="left" ng-if="fee.title != 'CREDIT_APPLICATEION'"><h4>{{fee.title}}:</h4>
+                            </div>
+                            <div class="col-sm-6" align="left" ng-if="fee.title == 'CREDIT_APPLICATEION'"><h4>{{fee.title}}: 
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#refundTips">Refundable</button>
                             </div>
                             <div class="col-sm-6" align="right">
                                 <h4>{{fee.value |currency}}</h4>
@@ -368,169 +371,298 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Loan Agreement
                     </div>
-                    <div>
-                        <div style="background:url('//d2qmttkugi0yqz.cloudfront.net/common/images//draft.png') repeat-y center top #fff;">
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Left;"><span
-                                style="font-style:normal;font-weight:bold;">THIS LOAN AGREEMENT (this "Agreement") dated this 2nd day of August, 2015</span><span
-                                style="font-style:normal;font-weight:bold;"><br></span><span style="font-style:normal;font-weight:bold;"><br></span><span
-                                style="font-style:normal;font-weight:bold;">BETWEEN:</span>
-                            </p>
 
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Center;"><br>__________ of __________, __________, ______, __________<br>(the "Lender")
-                            </p>
+<div class=WordSection1>
 
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Right;margin-left:30.0pt;"><span
-                                style="font-style:normal;font-weight:bold;">OF THE FIRST PART</span>
-                            </p>
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'>LOAN AGREEMENT<o:p></o:p></b></p>
 
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Center;"><span style="font-style:normal;font-weight:bold;">AND</span>
-                            </p>
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'>THIS LOAN AGREEMENT (this
+"Agreement") dated this 26th day of May, 2015<o:p></o:p></b></p>
 
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Center;"><br>__________ of __________, __________, ______, __________<br>(the "Borrower")
-                            </p>
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'>BETWEEN:<o:p></o:p></b></p>
 
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Right;margin-left:-50.0pt;"><span
-                                style="font-style:normal;font-weight:bold;">OF THE SECOND PART</span>
-                            </p>
+<p class=MsoNormal align=center style='text-align:center'>Joe Lender of {{}}</p>
 
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Left;"><span
-                                style="font-style:normal;font-weight:bold;">IN CONSIDERATION OF</span> the Lender loaning certain monies (the "Loan") to the Borrower, and the Borrower repaying the Loan to the Lender, both parties agree to keep, perform and fulfill the promises and conditions set out in this Agreement:
-                            </p>
-                            <ol start="1" style="line-height:16.0pt;font-size:12.0pt;font-family:Times;list-style:decimal;">
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span
-                                    style="font-style:normal;font-weight:bold;text-decoration:underline;">Loan Amount &amp; Interest</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;"
-                                    value="1">The Lender promises to loan $____________________ CAD to the Borrower and the Borrower promises to repay this principal amount to the Lender, &nbsp;with interest payable on the unpaid principal at the rate of &nbsp;____% percent per annum, calculated yearly not in advance.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span
-                                    style="font-style:normal;font-weight:bold;text-decoration:underline;">Payment</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;" value="2">This Loan will be repaid in full on August 2nd, 2015.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span
-                                    style="font-style:normal;font-weight:bold;text-decoration:underline;">Default</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;"
-                                    value="3">Notwithstanding anything to the contrary in this Agreement, if the Borrower defaults in the performance of any obligation under this Agreement, then the Lender may declare the principal amount owing and interest due under this Agreement at that time to be immediately due and payable.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span
-                                    style="font-style:normal;font-weight:bold;text-decoration:underline;">Governing Law</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;" value="4">This Agreement will be construed in accordance with and governed by the laws of the Province of.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span style="font-style:normal;font-weight:bold;text-decoration:underline;">Costs</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;"
-                                    value="5">All costs, expenses and expenditures including, without limitation, the complete legal costs incurred by enforcing this Agreement as a result of any default by the Borrower, will be added to the principal then outstanding and will immediately be paid by the Borrower.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span
-                                    style="font-style:normal;font-weight:bold;text-decoration:underline;">Binding Effect</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;"
-                                    value="6">This Agreement will pass to the benefit of and be binding upon the respective heirs, executors, administrators, successors and permitted assigns of the Borrower and Lender. The Borrower waives presentment for payment, notice of non-payment, protest, and notice of protest.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span style="font-style:normal;font-weight:bold;text-decoration:underline;">Amendments</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;"
-                                    value="7">This Agreement may only be amended or modified by a written instrument executed by both the Borrower and the Lender.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span
-                                    style="font-style:normal;font-weight:bold;text-decoration:underline;">Severability</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;"
-                                    value="8">The clauses and paragraphs contained in this Agreement are intended to be read and construed independently of each other. If any term, covenant, condition or provision of this Agreement is held by a court of competent jurisdiction to be invalid, void or unenforceable, it is the parties' intent that such provision be reduced in scope by the court only to the extent deemed necessary by that court to render the provision reasonable and enforceable and the remainder of the provisions of this Agreement will in no way be affected, impaired or invalidated as a result.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span
-                                    style="font-style:normal;font-weight:bold;text-decoration:underline;">General Provisions</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;"
-                                    value="9">Headings are inserted for the convenience of the parties only and are not to be considered when interpreting this Agreement. Words in the singular mean and include the plural and vice versa. Words in the masculine mean and include the feminine and vice versa.<br>
-                                </li>
-                                <li class="lh" style="line-height:18.0pt;text-align:Left;list-style:none;"><span
-                                    style="font-style:normal;font-weight:bold;text-decoration:underline;">Entire Agreement</span><br>
-                                </li>
-                                <li style="line-height:18.0pt;margin-bottom:16.0pt;"
-                                    value="10">This Agreement constitutes the entire agreement between the parties and there are no further items or provisions, either oral or otherwise.<br>
-                                </li>
-                            </ol>
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Left;"><span
-                                style="font-style:normal;font-weight:bold;">IN WITNESS WHEREOF</span>, the parties have duly affixed their signatures under hand and seal on this 2nd day of August, 2015.<br><br>
-                            </p>
-                            <table style="line-height:18.0pt;margin-right:auto;width:100%;" cellpadding="2" cellspacing="0">
-                                <colgroup>
-                                    <col width="50%">
-                                    <col width="1%">
-                                    <col width="1%">
-                                    <col width="48%">
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <td style="text-align:Left;vertical-align:Middle;width:50%;">
-                                        <p style="font-size:12.0pt;font-family:Times;text-align:Left;"><span
-                                            style="font-style:normal;font-weight:bold;">SIGNED, SEALED, AND DELIVERED</span><br>this 2nd day of August, 2015.
-                                        </p>
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:solid none none none;width:1%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:none none none solid;width:1%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;width:48%;">
-                                        <p style="font-size:12.0pt;font-family:Times;text-align:Left;"><br>_____________________________<br>__________
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:Left;vertical-align:Middle;width:50%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:none none solid none;width:1%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:none none none solid;width:1%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:none solid none none;width:48%;">&nbsp;
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <p style="line-height:18.0pt;font-size:12.0pt;font-family:Times;text-align:Left;"><br>
-                            </p>
-                            <table style="line-height:18.0pt;margin-right:auto;width:100%;" cellpadding="2" cellspacing="0">
-                                <colgroup>
-                                    <col width="50%">
-                                    <col width="1%">
-                                    <col width="1%">
-                                    <col width="48%">
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <td style="text-align:Left;vertical-align:Middle;width:50%;">
-                                        <p style="font-size:12.0pt;font-family:Times;text-align:Left;"><span
-                                            style="font-style:normal;font-weight:bold;">SIGNED, SEALED, AND DELIVERED</span><br>this 2nd day of August, 2015.
-                                        </p>
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:solid none none none;width:1%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:none none none solid;width:1%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;width:48%;">
-                                        <p style="font-size:12.0pt;font-family:Times;text-align:Left;"><br>_____________________________<br>__________
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:Left;vertical-align:Middle;width:50%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:none none solid none;width:1%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:none none none solid;width:1%;">&nbsp;
-                                    </td>
-                                    <td style="text-align:Left;vertical-align:Middle;border:solid 1px #000000;border-style:none solid none none;width:48%;">&nbsp;
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+<p class=MsoNormal align=center style='text-align:center'>(<span class=GramE>the</span>
+"Lender")</p>
+
+<p class=MsoNormal align=right style='text-align:right'><b style='mso-bidi-font-weight:
+normal'>OF THE FIRST PART<o:p></o:p></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'>AND<o:p></o:p></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'>Jane Borrower of {{}}</p>
+
+<p class=MsoNormal align=center style='text-align:center'>(<span class=GramE>the</span>
+"Borrower")</p>
+
+<p class=MsoNormal align=right style='text-align:right'><b style='mso-bidi-font-weight:
+normal'>OF THE SECOND PART<o:p></o:p></b></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'>IN CONSIDERATION OF </b>the Lender loaning
+certain monies (the "Loan") to the Borrower to finance the Borrower's purchase
+of <span class=SpellE>xxxx</span> (the "Merchandise") from <span class=SpellE>yyy</span>
+(the "Merchant"), and the Borrower repaying the Loan to the Lender, both
+parties agree to keep, perform and fulfill the promises and conditions set out
+in this Agreement:</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Administrative Agent<o:p></o:p></u></b></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>The
+Lender and the Borrower appoint <span class=SpellE>Dailydealsbox</span> Inc.
+("DDB") as their sole administrative agent (the "Administrative Agent") for
+loan origination, bookkeeping and mediation. All communication between the
+Lender and the Borrower shall be conducted through the Administrative Agent.
+The Administrative Agent charges to the Borrower a one-time $19 fee for loan
+origination, which can be waived if certain conditions are met. The basic fee
+is 1% of the total Loan Amount to the Lender, which shall be paid with the loan
+proceeds disbursement. Please refer to fee schedules on DDB website for charges
+for additional services.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Loan Amount &amp; Interest<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>The Lender promises to loan $600.00 CAD to the
+Borrower and the Borrower promises to repay this principal amount to the
+Lender, with interest payable on the unpaid principal at the rate of 2.00
+percent per month, calculated monthly not in advance.</p>
+
+<p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>The loan proceeds will be disbursed to DDB's
+trust account first and will be applied to the purchase of the Merchandise from
+the third-party Merchant. The borrower will not receive any funds. The
+Merchandise will be shipped directly to the Borrower's shipping address on the
+Borrower's DDB profile. The Borrower confirms the accuracy of the address and
+will be responsible for any losses or damages from the point when the
+Merchandise is handed to the commercial carrier. DDB does not take title to the
+Merchandise.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Payment<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>This Loan will be repaid in consecutive monthly
+instalments of principal and interest on the twenty-fourth day of each month
+commencing the month following execution of this Agreement and continuing until
+May 24<sup>th</sup>, 2016 with the balance then owing under this Agreement
+being paid at that time. The Borrower will provide to the Administrative Agent
+twelve signed checks (payable to Joe Lender), dated on May 24<sup>th</sup> of
+each of the twelve months following the loan date.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-align:justify;text-justify:
+inter-ideograph;text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>At any time while not in default under this
+Agreement, the Borrower may pay the outstanding balance then owing under this
+Agreement to the Lender without further bonus or penalty.</p>
+
+<p class=MsoListParagraphCxSpLast><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Default<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Notwithstanding anything to the contrary in this
+Agreement, if the Borrower defaults in the performance of any obligation under
+this Agreement, then the Lender may declare the principal amount owing and
+interest due under this Agreement at that time to be immediately due and
+payable.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-align:justify;text-justify:
+inter-ideograph;text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Further, if the Lender declares the principle
+amount owing under this Agreement to be immediately due and payable, and the
+Borrower fails to provide full payment, interest in the amount of 2.5 percent
+per month, calculated monthly not in advance, will be charged on the
+outstanding amount, commencing the day the principal amount is declared due and
+payable, until full payment is received by the lender.</p>
+
+<p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>If the Borrower defaults in payment as required
+under this Agreement or after demand for ten (10) days, the Security will be
+immediately provided to the Lender and the Lender is granted all rights of
+repossession as a secured party. The Borrower assumes all costs related to the
+repossession. </p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Security<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>This Loan is secured by following security (the
+"Security"): the Merchandise.</p>
+
+<p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>The Borrower grants to the Lender a security
+interest in the Security until this Loan is paid in full. The Lender will be
+listed as a lender on the title of the Security whether or not the Lender
+elects to perfect the security interest in the Security. The Borrower will do
+everything necessary to assist the Lender in perfecting its security interest.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Governing Law<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]>This Agreement will be construed in accordance
+with and governed by the laws of the Province of Quebec. The parties expressly
+state that the English language is to be the choice of language for this
+Agreement.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Costs<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]>All costs, expenses and expenditures including,
+without limitation, the complete legal costs incurred by enforcing this
+Agreement as a result of any default of the Borrower, will be added to the
+principal then outstanding and will immediately be paid by the Borrower.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Binding Effect<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>12.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]>This Agreement will pass to the benefit of and
+be binding upon the respective heirs, executors, administrators, successors and
+permitted assigns of the Borrower and Lender. The Borrower waives presentment
+for payment, notice of non-payment, protest, and notice of protest.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Amendments<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>13.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]>This Agreement may only be amended or modified
+by a written instrument executed by both the Borrower and the Lender.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Severability<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>14.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]>The clauses and paragraphs contained in this
+Agreement are intended to be read and construed independently of each other. If
+any term, covenant, condition or provision of this Agreement is held by a court
+of competent jurisdiction to be invalid, void or unenforceable, it is the
+parties' intent that such provision be reduced in scope by the court only to
+the extent deemed necessary by that court to render the provision reasonable
+and enforceable and the remainder of the provisions of this Agreement will in
+no way be affected, impaired or in validated as a result.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>General Provisions<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>15.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]>Headings are inserted for the convenience of the
+parties only and are not to be considered when interpreting this Agreement.
+Words in the singular mean and include the plural and vice versa. Words in the
+masculine mean and include the feminine and vice versa.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Entire Agreement<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>16.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]>This Agreement constitutes the entire agreement
+between the parties and there are no further items or provisions, either oral
+or otherwise.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'><u>Miscellaneous<o:p></o:p></u></b></p>
+
+<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
+style='mso-list:Ignore'>17.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]>Electronic signature (service provided by <span
+class=SpellE>Signority</span>) will be used wherever a signature is needed. All
+notices, agreements, disclosures and other communications from the
+Administrative Agent shall be provided electronically on DDB website and with
+email reminders if you so choose. The Administrative Agent will use verified
+email addresses on the DDB website for the reminders of new messages. The
+Administrative Agent recommends you log in to your DDB account once-a-day at a
+minimum, as certain communications may be time sensitive. Failure to read
+messages in DDB website does not absolve either the Lender or the Borrower from
+knowing and complying with the content of those messages.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-justify:
+inter-ideograph'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+style='mso-bidi-font-weight:normal'>IN WITNESS WHEREOF,</b> the parties have
+duly affixed their signatures under hand and seal on this 28<sup>th</sup> day
+of May, 2015.</p>
+
+<p>SIGNED, SEALED, AND DELIVERED</p>                                      
+<p>this 28th day of May, 2015.                                                           Joe Lender</p>
+
+<p>SINGNED, SEALED, AND DELIVERED</p>
+<p>this 28th day of May, 2015                                                     Jane Borrower</p>
+
+</div>
+
                 </div>
             </div>
         </div>
@@ -603,9 +735,35 @@
     </div>
 
 </div>
-</div>
 
-</div>
+<!-- credit application fee refund policy -->
+<div id="refundTips" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Credit Application Fee Refund Policy</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Share our deal on your facebook, and get the refund!</h3>
+
+
+                <div class="content-pmessage">
+                <p>
+                It is simple to get refund for the credit application fee, Just share our page.
+                </p>
+                </div>
+            </div>
+
+
+            <div class="clear"></div>
+        </div>
+
+
+    </div>
+
 </div>
 
 <!-- 
