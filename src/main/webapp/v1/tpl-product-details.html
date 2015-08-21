@@ -30,12 +30,24 @@
 		      </div>
 		    </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6">      
           <div class="row">
 	          <div class="col-sm-12">
 	          <h3 class="price_RoyalBlue">${{item.currentPrice}}</h3>
 	          </div>         
           </div>
+          <div class="row">
+	          <div class="col-sm-12">
+						<form class="form-inline">
+						  <div class="form-group">	          
+	                      <label>Options:</label> 
+	                      <select ng-model="option" class="form-control">
+                           <option value="{{option.value}}"  ng-selected="key === option" ng-repeat="option in item.options">{{option.value}}</option>
+                          </select> 
+                       </div>
+                       </form>    
+	          </div>         
+          </div>            
           <div class="row">
                         <span ng-repeat="link in item.links ">
                             <div class="col-xs-8">
