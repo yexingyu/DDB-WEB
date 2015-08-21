@@ -101,8 +101,8 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     }])
 
     /*
-    * SearchCtrl defination
-    */
+     * SearchCtrl defination
+     */
     .controller('SearchCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
         $scope.requestSearch = $location.search();
         $scope.items = [];
@@ -194,7 +194,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         //});
 
         // stores selecting
-        $scope.stores = {'result': $scope.requestSearch['store_id'], 'all': [], 'checklist': {}};
+        $scope.stores = {'result': $scope.requestSearch['store_id'] ? $scope.requestSearch['store_id'] : '0', 'all': [], 'checklist': {}};
         $scope.loadStores = function () {
             if ($scope.stores.all.length === 0) {
                 StoreService.listAll(function (response) {
