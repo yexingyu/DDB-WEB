@@ -402,7 +402,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     /*
      * ProductOrderConfirmCtrl
      */
-    .controller('ProductOrderConfirmCtrl', ['$scope', '$location', '$modalInstance', 'product', 'order', 'ProductService', 'OrderService', function ($scope, $location, $modalInstance, product, order, ProductService, OrderService) {
+    .controller('ProductOrderConfirmCtrl', ['$scope', '$location',$root, '$modalInstance', 'product', 'order', 'ProductService', 'OrderService', function ($scope, $location, $modalInstance, product, order, ProductService, OrderService) {
         $scope.item = product;
         $scope.order = order;
 
