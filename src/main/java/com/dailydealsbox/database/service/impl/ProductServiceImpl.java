@@ -253,9 +253,15 @@ public class ProductServiceImpl implements ProductService {
     if (tags != null) {
       Set<String> fixedTags = new HashSet<>();
       for (String tag : tags) {
-        fixedTags.add(StringUtils.lowerCase(tag));
+        if (!StringUtils.isBlank(tag)) {
+          fixedTags.add(StringUtils.lowerCase(StringUtils.trim(tag)));
+        }
       }
-      tags = fixedTags;
+      if (!fixedTags.isEmpty()) {
+        tags = fixedTags;
+      } else {
+        tags = null;
+      }
     }
 
     // retrieve store set
@@ -284,6 +290,7 @@ public class ProductServiceImpl implements ProductService {
     } else if (stores != null) {
       products = this.repo.findByStoresAndDeletedAndDisabled(stores, deleted, disabled, pageable);
     } else if (tags != null) {
+      System.out.println(tags);
       products = this.repo.findByTagsAndDeletedAndDisabled(tags, deleted, disabled, pageable);
     } else {
       products = this.repo.findByDisabledAndDeleted(deleted, disabled, pageable);

@@ -3,6 +3,7 @@
  */
 package com.dailydealsbox.database.service.impl;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -79,6 +80,20 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted) {
+    // fixing ids
+    if (ids != null) {
+      Iterator<Integer> it = ids.iterator();
+      while (it.hasNext()) {
+        int id = it.next();
+        if (id <= 0) {
+          it.remove();
+        }
+      }
+      if (ids.isEmpty()) {
+        ids = null;
+      }
+    }
+
     Set<Store> stores = null;
     if (ids != null && countries != null) {
       stores = this.repo.findAllByIdsAndCountriesAndDeleted(ids, countries, deleted);
