@@ -1,77 +1,103 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-xs-7">
-        	<h3>National - Deals Online, in Store</h3>
-        </div>
         <div class="col-xs-5">
-			<form class="form-inline">
-			  <div class="form-group">
-				<select class="form-control">
-				  <option>Tag</option>
-				  <option>Store</option>
-				</select>
-			  </div>
-			  <div class="form-group">
-			    <input type="text" class="form-control">
-			  </div>
-			  <a href="#/product/{{item.id}}/order" class="btn btn-primary"><span class="glyphicon glyphicon-filter"></span> Filter</a>
-			</form>        
+            <h3>National - Deals Online, in Store</h3>
+        </div>
+        <div class="col-xs-7">
+            <form class="form-inline">
+                <div class="form-group">
+                    <select class="form-control" ng-model="stores.result">
+                        <option value="0">All Stores</option>
+                        <option ng-repeat="store in stores.all" value="{{store.id}}" ng-selected="stores.result == store.id">{{store.name}}</option>
+                    </select>
+                    <select class="form-control">
+                        <option ng-selected="tags.result">Tag</option>
+                        <!--<option>Store</option>-->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="tags.result">
+                </div>
+                <a class="btn btn-primary" ng-click="loading()"><span class="glyphicon glyphicon-filter"></span> Filter</a>
+            </form>
 
-        </div>               
+        </div>
     </div>
     <div class="row">
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/phone.png">
-        <span>Phones</span>
-      </div>   
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/laptop.png">
-        <span>Laptops</span>
-      </div>
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/tablet.png">
-        <span>Tablets</span>
-      </div>
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/electronics.png">
-        <span>Electronics</span>
-      </div>
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/appliance.png">
-        <span>Appliance</span>
-      </div>      
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/furniture.png">
-        <span>Furniture</span>
-      </div>           
-
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/sports.png">
-        <span>Sports</span>
-      </div>   
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/outdoors.png">
-        <span>Outdoors</span>
-      </div>       
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/clothing.png"">
-        <span>Clothing</span>
-      </div>
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/shoes.png"">
-        <span>Shoes</span>
-      </div>          
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/women_3.png"">
-        <span>Handbags</span>
-      </div> 
-
-      <div class="col-md-1">
-      	<img class="category_image" src="./images/jumbotron/cosmetics.png"">
-        <span>Cosmetics</span>
-      </div>                
-    </div>      
+        <div class="col-md-1">
+            <a href="#/all?tags=phones">
+                <img class="category_image" src="./images/jumbotron/phone.png">
+                <span>Phones</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=laptops">
+                <img class="category_image" src="./images/jumbotron/laptop.png">
+                <span>Laptops</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=tablets">
+                <img class="category_image" src="./images/jumbotron/tablet.png">
+                <span>Tablets</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=electronics">
+                <img class="category_image" src="./images/jumbotron/electronics.png">
+                <span>Electronics</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=appliance">
+                <img class="category_image" src="./images/jumbotron/appliance.png">
+                <span>Appliance</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=furniture">
+                <img class="category_image" src="./images/jumbotron/furniture.png">
+                <span>Furniture</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=sports">
+                <img class="category_image" src="./images/jumbotron/sports.png">
+                <span>Sports</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=outdoors">
+                <img class="category_image" src="./images/jumbotron/outdoors.png">
+                <span>Outdoors</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=clothing">
+                <img class="category_image" src="./images/jumbotron/clothing.png">
+                <span>Clothing</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=shoes">
+                <img class="category_image" src="./images/jumbotron/shoes.png">
+                <span>Shoes</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=handbags">
+                <img class="category_image" src="./images/jumbotron/women_3.png">
+                <span>Handbags</span>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <a href="#/all?tags=cosmetics">
+                <img class="category_image" src="./images/jumbotron/cosmetics.png">
+                <span>Cosmetics</span>
+            </a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-12">
             <tabset justified="true">

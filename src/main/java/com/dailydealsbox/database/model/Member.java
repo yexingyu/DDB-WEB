@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_LOGIN_TYPE;
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
@@ -35,6 +36,7 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
 @Entity
 @Table(name = "member")
 @SQLDelete(sql = "update member set deleted = true where id = ?")
+@Where(clause = "deleted = 0")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Member extends BaseEntityModel {
 

@@ -104,6 +104,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      * AllCtrl definition
      */
     .controller('AllCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
+        $scope.requestSearch = $location.search();
         $scope.items = [];
         $scope.actions = {
             'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
@@ -121,7 +122,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         };
 
         // tags selecting
-        $scope.tags = {'result': [], 'all': [], 'checklist': {}};
+        $scope.tags = {'result': $scope.requestSearch['tags'], 'all': [], 'checklist': {}};
         $scope.loadTags = function () {
             if ($scope.tags.all.length === 0) {
                 ProductService.listAllTags(function (response) {
@@ -131,17 +132,17 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 });
             }
         };
-        $scope.$watchCollection('tags.checklist', function () {
-            $scope.tags.result = [];
-            angular.forEach($scope.tags.checklist, function (value, key) {
-                if (value) {
-                    $scope.tags.result.push(key);
-                }
-            });
-        });
+        //$scope.$watchCollection('tags.checklist', function () {
+        //    $scope.tags.result = [];
+        //    angular.forEach($scope.tags.checklist, function (value, key) {
+        //        if (value) {
+        //            $scope.tags.result.push(key);
+        //        }
+        //    });
+        //});
 
         // stores selecting
-        $scope.stores = {'result': [], 'all': [], 'checklist': {}};
+        $scope.stores = {'result': $scope.requestSearch['store_id'], 'all': [], 'checklist': {}};
         $scope.loadStores = function () {
             if ($scope.stores.all.length === 0) {
                 StoreService.listAll(function (response) {
@@ -151,14 +152,15 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 });
             }
         };
-        $scope.$watchCollection('stores.checklist', function () {
-            $scope.stores.result = [];
-            angular.forEach($scope.stores.checklist, function (value, key) {
-                if (value) {
-                    $scope.stores.result.push(key);
-                }
-            });
-        });
+        $scope.loadStores();
+        //$scope.$watchCollection('stores.checklist', function () {
+        //    $scope.stores.result = [];
+        //    angular.forEach($scope.stores.checklist, function (value, key) {
+        //       if (value) {
+        //            $scope.stores.result.push(key);
+        //        }
+        //    });
+        //});
 
         // loading products
         var callback = function (response) {
@@ -173,13 +175,13 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         };
         $scope.me = {'loaded': false};
         $scope.loading = function () {
+            console.log($scope.tags);
             if ($scope.me.loaded) {
                 ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});
             } else {
                 ProfileService.profile(function (response) {
                     if (response.status === 'SUCCESS') {
                         angular.extend($scope.me, response.data);
-
                     }
                     $scope.me.loaded = true;
                     ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});

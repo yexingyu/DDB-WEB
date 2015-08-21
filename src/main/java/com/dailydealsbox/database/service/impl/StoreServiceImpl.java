@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
+import com.dailydealsbox.configuration.BaseEnum.STORE_TYPE;
 import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.repository.StoreRepository;
 import com.dailydealsbox.database.service.StoreService;
@@ -93,11 +94,16 @@ public class StoreServiceImpl implements StoreService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#list(java.util.Set, java.util.Set, boolean, org.springframework.data.domain.Pageable)
+   * @see com.dailydealsbox.database.service.StoreService#list(java.util.Set, java.util.Set, com.dailydealsbox.configuration.BaseEnum.STORE_TYPE, boolean,
+   * org.springframework.data.domain.Pageable)
    */
   @Override
-  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted, Pageable pageable) {
+  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted, Pageable pageable) {
     Page<Store> stores = null;
+
+    if (ids != null && countries != null && type != null) {
+
+    }
     if (ids != null && countries != null) {
       stores = this.repo.findByIdsAndCountriesAndDeleted(ids, countries, deleted, pageable);
     } else if (ids != null) {

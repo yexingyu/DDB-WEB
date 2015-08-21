@@ -71,9 +71,11 @@ public class StoreController {
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
   public GenericResponseData list(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
       @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
+      @ApiParam(value = "filter: store type", required = false) @RequestParam(value = "type", required = false) STORE_TYPE type,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
       @ApiIgnore Pageable pageable) {
-    Page<Store> stores = this.storeService.list(storeIds, countries, deleted, pageable);
+
+    Page<Store> stores = this.storeService.list(storeIds, countries, type, deleted, pageable);
     if (stores == null || stores.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {

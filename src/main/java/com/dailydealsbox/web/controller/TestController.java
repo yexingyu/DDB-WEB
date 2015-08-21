@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductTagRepository;
 import com.dailydealsbox.database.repository.StoreRepository;
@@ -73,8 +72,9 @@ public class TestController {
     //Member member = this.memberService.get(token.getMemberId());
 
     //Set<Store> rst = this.repoStore.findByIds(ids);
-    Page<Product> rst = this.productRepo.findByTagsAndDeletedAndDisabled(tags, false, false, pageable);
-    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, rst);
+    //Page<Product> rst = this.productRepo.findByTagsAndDeletedAndDisabled(tags, false, false, pageable);
+    Member me = this.memberService.getByAccount("yexingyu@gmail.com");
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me);
   }
 
 }

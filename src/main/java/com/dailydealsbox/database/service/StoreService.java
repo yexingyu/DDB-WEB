@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
+import com.dailydealsbox.configuration.BaseEnum.STORE_TYPE;
 import com.dailydealsbox.database.model.Store;
 
 /**
@@ -25,14 +26,15 @@ public interface StoreService {
 
   /**
    * list
-   *
+   * 
    * @param ids
    * @param countries
+   * @param type
    * @param deleted
    * @param pageable
    * @return
    */
-  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted, Pageable pageable);
+  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted, Pageable pageable);
 
   /**
    * listAll
@@ -67,7 +69,7 @@ public interface StoreService {
 
   /**
    * decreaseCountFollowings
-   * 
+   *
    * @param storeId
    */
   public void decreaseCountFollowings(int storeId);

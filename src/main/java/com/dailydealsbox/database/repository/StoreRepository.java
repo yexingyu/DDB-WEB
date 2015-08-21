@@ -13,8 +13,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
+import com.dailydealsbox.configuration.BaseEnum.STORE_TYPE;
 import com.dailydealsbox.database.model.Store;
 
 /**
@@ -68,6 +70,21 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
   @Query(value = "select distinct s from Store s where s.id in ?1 and s.country in ?2 and deleted = ?3")
   @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
   public Page<Store> findByIdsAndCountriesAndDeleted(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted, Pageable pageable);
+
+  /**
+   * findByIdsAndCountriesAndTypeAndDeleted
+   * 
+   * @param ids
+   * @param countries
+   * @param type
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where s.id in :ids and s.country in :countries and type = :type and deleted = :deleted")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByIdsAndCountriesAndTypeAndDeleted(@Param("ids") Set<Integer> ids, @Param("countries") Set<COUNTRY> countries, @Param("type") STORE_TYPE type,
+      @Param("deleted") boolean deleted, Pageable pageable);
 
   /**
    * findAllByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc
@@ -150,7 +167,7 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
 
   /**
    * decreaseCountFollowings
-   * 
+   *
    * @param storeId
    */
   @Modifying
