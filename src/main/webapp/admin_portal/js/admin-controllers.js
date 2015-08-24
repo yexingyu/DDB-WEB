@@ -270,7 +270,7 @@ angular
                                     exchange_rate = 1;
                                 }
                                 if ($scope.product.currency == "USD") {
-                                    exchange_rate = 1.25;
+                                    exchange_rate = 1.32;
                                 }
                                 return exchange_rate
 

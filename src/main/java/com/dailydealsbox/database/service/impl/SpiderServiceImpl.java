@@ -38,24 +38,47 @@ import com.dailydealsbox.database.service.SpiderService;
  */
 @Service
 public class SpiderServiceImpl implements SpiderService {
-  private Map<String, String> HTML_PATCH_BESTBUY = new HashMap<>();
+  private Map<String, String> HTML_PATCH_BESTBUY   = new HashMap<>();
   private Map<String, String> HTML_PATCH_WALMARTCA = new HashMap<>();
+  private Map<String, String> HTML_PATCH_EBAYCOM   = new HashMap<>();
 
   /*
    * Constructor
    */
   public SpiderServiceImpl() {
+    String keyNameHtmlPatch;
+    String keyDescriptionHtmlPatch;
+    String keyImageHtmlPatch;
+    String keyPriceHtmlPatch;
+    String keyShippingHtmlPatch;
+    String keyImportHtmlPatch;
+
     // HTML_PATCH_BESTBUY
     this.HTML_PATCH_BESTBUY.put("name", "SPAN#ctl00_CP_ctl00_PD_lblProductTitle");
     this.HTML_PATCH_BESTBUY.put("description", "DIV.tab-overview-item");
     this.HTML_PATCH_BESTBUY.put("image", "IMG#ctl00_CP_ctl00_PD_PI_IP");
     this.HTML_PATCH_BESTBUY.put("price", "SPAN.amount");
-    
+
     //HTML_PATCH_WALMARTCA
     this.HTML_PATCH_WALMARTCA.put("name", "DIV#product-desc");
     this.HTML_PATCH_WALMARTCA.put("description", "P.description");
     this.HTML_PATCH_WALMARTCA.put("image", "DIV.centered-img-wrap");
-    this.HTML_PATCH_WALMARTCA.put("price","div.pricing-shipping");    
+    this.HTML_PATCH_WALMARTCA.put("price", "div.pricing-shipping");
+
+    //HTML_PATCH_EBAYCOM
+    keyNameHtmlPatch = "H1#itemTitle";
+    keyDescriptionHtmlPatch = "DIV.itemAttr";
+    keyImageHtmlPatch = "IMG#icImg";
+    keyPriceHtmlPatch = "SPAN#mm-saleDscPrc";
+    keyShippingHtmlPatch = "SPAN#fshippingCost";
+    keyImportHtmlPatch = "SPAN#impchCost";
+
+    this.HTML_PATCH_EBAYCOM.put("name", keyNameHtmlPatch);
+    this.HTML_PATCH_EBAYCOM.put("description", keyDescriptionHtmlPatch);
+    this.HTML_PATCH_EBAYCOM.put("image", keyImageHtmlPatch);
+    this.HTML_PATCH_EBAYCOM.put("price", keyPriceHtmlPatch);
+    this.HTML_PATCH_EBAYCOM.put("shipping", keyShippingHtmlPatch);
+    this.HTML_PATCH_EBAYCOM.put("import", keyImportHtmlPatch);
   }
 
   /*
@@ -97,16 +120,17 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromEbayCA(oUrl, product, LANGUAGE.FR);
         break;
       case "www.ebay.com":
-        this.getProductFromEbayUS(oUrl, product, LANGUAGE.EN);
+        this.getProductFromEbayCOM(oUrl, product, LANGUAGE.EN);
+        this.getProductFromEbayCOM(oUrl, product, LANGUAGE.FR);
         break;
       case "www.bestbuy.ca":
         this.getProductFromBestbuyCA(oUrl, product, LANGUAGE.EN);
         this.getProductFromBestbuyCA(oUrl, product, LANGUAGE.FR);
         break;
       case "www.walmart.ca":
-          this.getProductFromWalmartCA(oUrl, product, LANGUAGE.EN);
-          this.getProductFromWalmartCA(oUrl, product, LANGUAGE.FR);
-          break;        
+        this.getProductFromWalmartCA(oUrl, product, LANGUAGE.EN);
+        this.getProductFromWalmartCA(oUrl, product, LANGUAGE.FR);
+        break;
       case "www.bestbuy.com":
         this.getProductFromBestbuyUS(oUrl, product, LANGUAGE.EN);
         break;
@@ -122,17 +146,6 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     return product;
-  }
-
-  /**
-   * getProductFromEbayUS
-   *
-   * @param url
-   * @param product
-   * @param language
-   */
-  private void getProductFromEbayUS(URL url, Product product, LANGUAGE language) {
-
   }
 
   /**
@@ -201,24 +214,40 @@ public class SpiderServiceImpl implements SpiderService {
       return null;
     }
   }
-  
-  
+
   private String getProductKeyFromWalmartCA(URL url) {
-	    // String to be scanned to find the pattern.
-	    String pattern = "\\/(\\d+)";
+    // String to be scanned to find the pattern.
+    String pattern = "\\/(\\d+)";
 
-	    // Create a Pattern object
-	    Pattern r = Pattern.compile(pattern);
+    // Create a Pattern object
+    Pattern r = Pattern.compile(pattern);
 
-	    // Now create matcher object.
-	    Matcher m = r.matcher(url.toString());
-	    if (m.find()) {
-	      return m.group(1);
+    // Now create matcher object.
+    Matcher m = r.matcher(url.toString());
+    if (m.find()) {
+      return m.group(1);
 
-	    } else {
-	      return null;
-	    }
-	  }
+    } else {
+      return null;
+    }
+  }
+
+  private String getProductKeyFromEbayCOM(URL url) {
+    // String to be scanned to find the pattern.
+    String pattern = "\\/(\\d+)";
+
+    // Create a Pattern object
+    Pattern r = Pattern.compile(pattern);
+
+    // Now create matcher object.
+    Matcher m = r.matcher(url.toString());
+    if (m.find()) {
+      return m.group(1);
+
+    } else {
+      return null;
+    }
+  }
 
   /**
    * getProductFromBestbuyCA
@@ -234,27 +263,25 @@ public class SpiderServiceImpl implements SpiderService {
     //set product status
     product.setDisabled(false);
     //set product key
-    product.setKey(this.getProductKeyFromBestbuyCA(url));
+    product.setKey(this.getProductKeyFromEbayCOM(url));
 
     //set product store
     Store store = new Store();
     int storeID = 11;
     store.setId(storeID);
     product.setStore(store);
-    
+
     //set product expired date
     Calendar now = Calendar.getInstance();
     int weekday = now.get(Calendar.DAY_OF_WEEK);
-    if (weekday != Calendar.THURSDAY)
-    {
-        // calculate how much to add
-        // the 5 is the difference between Saturday and Thursday
-        int days = (Calendar.SATURDAY - weekday + 5);
-        now.add(Calendar.DAY_OF_YEAR, days);
+    if (weekday != Calendar.THURSDAY) {
+      // calculate how much to add
+      // the 5 is the difference between Saturday and Thursday
+      int days = (Calendar.SATURDAY - weekday + 5);
+      now.add(Calendar.DAY_OF_YEAR, days);
     }
     // now is the date you want
     Date expiredDate = now.getTime();
-
 
     product.setExpiredAt(expiredDate);
 
@@ -262,18 +289,18 @@ public class SpiderServiceImpl implements SpiderService {
     PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
     PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
     PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-    
+
     if (product.getTaxes().isEmpty()) {
-	    ProductTax tax1 = new ProductTax();
-	    tax1.setTitle(federal);
-	    tax1.setType(percentage);
-	
-	    ProductTax tax2 = new ProductTax();
-	    tax2.setTitle(provincial);
-	    tax2.setType(percentage);
-	
-	    product.getTaxes().add(tax1);
-	    product.getTaxes().add(tax2);
+      ProductTax tax1 = new ProductTax();
+      tax1.setTitle(federal);
+      tax1.setType(percentage);
+
+      ProductTax tax2 = new ProductTax();
+      tax2.setTitle(provincial);
+      tax2.setType(percentage);
+
+      product.getTaxes().add(tax1);
+      product.getTaxes().add(tax2);
     }
 
     // language switch
@@ -329,13 +356,14 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(), doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
+      image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(),
+          doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
       product.getImages().add(image);
     }
 
     return product;
   }
-  
+
   /**
    * getProductFromBestbuyUS
    *
@@ -344,111 +372,209 @@ public class SpiderServiceImpl implements SpiderService {
    * @param language
    */
   private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language) {
-	    //set product url
-	    product.setUrl(url.toString());
-	    //set product status
-	    product.setDisabled(false);
-	    //set product key
-	    product.setKey(this.getProductKeyFromWalmartCA(url));
+    //set product url
+    product.setUrl(url.toString());
+    //set product status
+    product.setDisabled(false);
+    //set product key
+    product.setKey(this.getProductKeyFromWalmartCA(url));
 
-	    //set product store
-	    Store store = new Store();
-	    int storeID = 1;
-	    store.setId(storeID);
-	    product.setStore(store);
-	    
-	    //set product expired date
-	    Calendar now = Calendar.getInstance();
-	    int weekday = now.get(Calendar.DAY_OF_WEEK);
-	    if (weekday != Calendar.THURSDAY)
-	    {
-	        // calculate how much to add
-	        // the 5 is the difference between Saturday and Thursday
-	        int days = (Calendar.SATURDAY - weekday + 5);
-	        now.add(Calendar.DAY_OF_YEAR, days);
-	    }
-	    // now is the date you want
-	    Date expiredDate = now.getTime();
+    //set product store
+    Store store = new Store();
+    int storeID = 1;
+    store.setId(storeID);
+    product.setStore(store);
 
+    //set product expired date
+    Calendar now = Calendar.getInstance();
+    int weekday = now.get(Calendar.DAY_OF_WEEK);
+    if (weekday != Calendar.THURSDAY) {
+      // calculate how much to add
+      // the 5 is the difference between Saturday and Thursday
+      int days = (Calendar.SATURDAY - weekday + 5);
+      now.add(Calendar.DAY_OF_YEAR, days);
+    }
+    // now is the date you want
+    Date expiredDate = now.getTime();
 
-	    product.setExpiredAt(expiredDate);
+    product.setExpiredAt(expiredDate);
 
-	    //set product tax
-	    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
-	    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
-	    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-	    
-	    if (product.getTaxes().isEmpty()) {
-		    ProductTax tax1 = new ProductTax();
-		    tax1.setTitle(federal);
-		    tax1.setType(percentage);
-		
-		    ProductTax tax2 = new ProductTax();
-		    tax2.setTitle(provincial);
-		    tax2.setType(percentage);
-		
-		    product.getTaxes().add(tax1);
-		    product.getTaxes().add(tax2);
-	    }
+    //set product tax
+    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
+    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
+    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
 
-	    // language switch
-	    String urlStr = url.toString();
-	    NumberFormat numberFormat;
-	    switch (language) {
-	      case EN:
-	        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-	          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
-	        }
-	        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-	        break;
-	      case FR:
-	        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-	          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
-	        }
-	        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-	        break;
-	      default:
-	        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-	        break;
-	    }
+    if (product.getTaxes().isEmpty()) {
+      ProductTax tax1 = new ProductTax();
+      tax1.setTitle(federal);
+      tax1.setType(percentage);
 
-	    Document doc;
-	    try {
-	      doc = Jsoup.connect(urlStr).get();
-	    } catch (IOException e) {
-	      e.printStackTrace();
-	      return null;
-	    }
+      ProductTax tax2 = new ProductTax();
+      tax2.setTitle(provincial);
+      tax2.setType(percentage);
 
-	    if (product.getPrices().isEmpty()) {
-	      String productPrice = doc.select(this.HTML_PATCH_WALMARTCA.get("price")).first().select("div.microdata-price").first().select("span").first().text();
-	      Number number;
-	      try {
-	        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
-	        double p = number.doubleValue();
-	        ProductPrice price = new ProductPrice();
-	        price.setValue(p);
-	        product.getPrices().add(price);
-	        product.setCurrentPrice(p);
-	        product.setCurrency(CURRENCY.CAD);
-	      } catch (Exception e) {
-	        e.printStackTrace();
-	      }
-	    }
+      product.getTaxes().add(tax1);
+      product.getTaxes().add(tax2);
+    }
 
-	    ProductText text = new ProductText();
-	    text.setLanguage(language);
-	    text.setName(doc.select(this.HTML_PATCH_WALMARTCA.get("name")).first().select("h1").first().text());
-	    text.setDescription(doc.select(HTML_PATCH_WALMARTCA.get("description")).first().text());
-	    product.getTexts().add(text);
+    // language switch
+    String urlStr = url.toString();
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
 
-	    if (product.getImages().isEmpty()) {
-	      ProductImage image = new ProductImage();
-	      image.setUrl(String.format("%s://%s", url.getProtocol(),  doc.select(this.HTML_PATCH_WALMARTCA.get("image")).first().select("img.image").first().attr("src")));
-	      product.getImages().add(image);
-	    }
+    Document doc;
+    try {
+      doc = Jsoup.connect(urlStr).get();
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
 
-	    return product;
-  }  
-  
+    if (product.getPrices().isEmpty()) {
+      String productPrice = doc.select(this.HTML_PATCH_WALMARTCA.get("price")).first()
+          .select("div.microdata-price").first().select("span").first().text();
+      Number number;
+      try {
+        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
+        double p = number.doubleValue();
+        ProductPrice price = new ProductPrice();
+        price.setValue(p);
+        product.getPrices().add(price);
+        product.setCurrentPrice(p);
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(doc.select(this.HTML_PATCH_WALMARTCA.get("name")).first().select("h1").first()
+        .text());
+    text.setDescription(doc.select(HTML_PATCH_WALMARTCA.get("description")).first().text());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      ProductImage image = new ProductImage();
+      image.setUrl(String.format("%s://%s", url.getProtocol(),
+          doc.select(this.HTML_PATCH_WALMARTCA.get("image")).first().select("img.image").first()
+              .attr("src")));
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
+  /**
+   * getProductFromEbayUS
+   *
+   * @param url
+   * @param product
+   * @param language
+   */
+  private Product getProductFromEbayCOM(URL url, Product product, LANGUAGE language) {
+    //set product url
+    product.setUrl(url.toString());
+    //set product status
+    product.setDisabled(false);
+    //set product key
+    product.setKey(this.getProductKeyFromEbayCOM(url));
+
+    //set product store
+    Store store = new Store();
+    int storeID = 9;
+    store.setId(storeID);
+    product.setStore(store);
+
+    //set product expired date
+    Calendar now = Calendar.getInstance();
+    int weekday = now.get(Calendar.DAY_OF_WEEK);
+    if (weekday != Calendar.THURSDAY) {
+      // calculate how much to add
+      // the 5 is the difference between Saturday and Thursday
+      int days = (Calendar.SATURDAY - weekday + 5);
+      now.add(Calendar.DAY_OF_YEAR, days);
+    }
+    // now is the date you want
+    Date expiredDate = now.getTime();
+
+    product.setExpiredAt(expiredDate);
+
+    //set product tax
+    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
+    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
+    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
+
+    if (product.getTaxes().isEmpty()) {
+      ProductTax tax1 = new ProductTax();
+      tax1.setTitle(federal);
+      tax1.setType(percentage);
+
+      ProductTax tax2 = new ProductTax();
+      tax2.setTitle(provincial);
+      tax2.setType(percentage);
+
+      product.getTaxes().add(tax1);
+      product.getTaxes().add(tax2);
+    }
+
+    // language switch
+    String urlStr = url.toString();
+    NumberFormat numberFormat;
+    numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+
+    Document doc;
+    try {
+      doc = Jsoup.connect(urlStr).get();
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
+
+    if (product.getPrices().isEmpty()) {
+      String productPrice = doc.select(this.HTML_PATCH_EBAYCOM.get("price")).first().text();
+      Number number;
+      try {
+        number = numberFormat.parse(StringUtils.remove(productPrice, "US $"));
+        double p = number.doubleValue();
+        ProductPrice price = new ProductPrice();
+        price.setValue(p);
+        product.getPrices().add(price);
+        product.setCurrentPrice(p);
+        product.setCurrency(CURRENCY.USD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(doc.select(this.HTML_PATCH_EBAYCOM.get("name")).first().text());
+    text.setDescription(doc.select(this.HTML_PATCH_EBAYCOM.get("description")).text());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      ProductImage image = new ProductImage();
+      image.setUrl(doc.select(this.HTML_PATCH_EBAYCOM.get("image")).first().attr("src"));
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
 }
