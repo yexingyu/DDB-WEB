@@ -377,6 +377,7 @@ angular
                                 console.log(JSON.stringify($scope.product));
                                 ProductService.add($scope.product, function(response) {
                                     console.log(response);
+                                    $location.path("/home");
                                 });
                             };
                         } ])
