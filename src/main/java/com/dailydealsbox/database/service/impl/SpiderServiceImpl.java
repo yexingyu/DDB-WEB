@@ -23,9 +23,12 @@ import org.springframework.stereotype.Service;
 
 import com.dailydealsbox.configuration.BaseEnum.CURRENCY;
 import com.dailydealsbox.configuration.BaseEnum.LANGUAGE;
+import com.dailydealsbox.configuration.BaseEnum.PRODUCT_FEE_TITLE;
+import com.dailydealsbox.configuration.BaseEnum.PRODUCT_FEE_TYPE;
 import com.dailydealsbox.configuration.BaseEnum.PRODUCT_TAX_TITLE;
 import com.dailydealsbox.configuration.BaseEnum.PRODUCT_TAX_TYPE;
 import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.ProductFee;
 import com.dailydealsbox.database.model.ProductImage;
 import com.dailydealsbox.database.model.ProductPrice;
 import com.dailydealsbox.database.model.ProductTax;
@@ -109,6 +112,9 @@ public class SpiderServiceImpl implements SpiderService {
     }
     if (product.getTaxes() == null) {
       product.setTaxes(new HashSet<ProductTax>());
+    }
+    if (product.getFees() == null) {
+      product.setFees(new HashSet<ProductFee>());
     }
 
     // spider page based on host.
@@ -332,6 +338,19 @@ public class SpiderServiceImpl implements SpiderService {
       return null;
     }
 
+    //set product fees
+    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
+    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
+    if (product.getFees().isEmpty()) {
+      ProductFee fee1 = new ProductFee();
+      fee1.setTitle(feeShipping);
+      fee1.setType(feeType);
+      fee1.setValue(0);
+
+      product.getFees().add(fee1);
+    }
+
+    //set product price
     if (product.getPrices().isEmpty()) {
       String productPrice = doc.select(this.HTML_PATCH_BESTBUY.get("price")).first().text();
       Number number;
@@ -445,7 +464,19 @@ public class SpiderServiceImpl implements SpiderService {
       e.printStackTrace();
       return null;
     }
+    //set product fees
+    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
+    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
+    if (product.getFees().isEmpty()) {
+      ProductFee fee1 = new ProductFee();
+      fee1.setTitle(feeShipping);
+      fee1.setType(feeType);
+      fee1.setValue(0);
 
+      product.getFees().add(fee1);
+    }
+
+    //set product tax
     if (product.getPrices().isEmpty()) {
       String productPrice = doc.select(this.HTML_PATCH_WALMARTCA.get("price")).first()
           .select("div.microdata-price").first().select("span").first().text();
@@ -516,28 +547,8 @@ public class SpiderServiceImpl implements SpiderService {
 
     product.setExpiredAt(expiredDate);
 
-    //set product tax
-    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
-    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
-    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-
-    if (product.getTaxes().isEmpty()) {
-      ProductTax tax1 = new ProductTax();
-      tax1.setTitle(federal);
-      tax1.setType(percentage);
-
-      ProductTax tax2 = new ProductTax();
-      tax2.setTitle(provincial);
-      tax2.setType(percentage);
-
-      product.getTaxes().add(tax1);
-      product.getTaxes().add(tax2);
-    }
-
     // language switch
     String urlStr = url.toString();
-    NumberFormat numberFormat;
-    numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
 
     Document doc;
     try {
@@ -547,9 +558,47 @@ public class SpiderServiceImpl implements SpiderService {
       return null;
     }
 
+    //set product fees
+    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
+    PRODUCT_FEE_TITLE feeImport = PRODUCT_FEE_TITLE.IMPORT;
+    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
+    if (product.getFees().isEmpty()) {
+      ProductFee fee1 = new ProductFee();
+      fee1.setTitle(feeShipping);
+      fee1.setType(feeType);
+      fee1.setValue(0);
+
+      ProductFee fee2 = new ProductFee();
+      fee2.setTitle(feeImport);
+      fee2.setType(feeType);
+      fee2.setValue(0);
+
+      NumberFormat numberFormat;
+      numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+
+      String fee1String = doc.select(this.HTML_PATCH_EBAYCOM.get("shipping")).first().text();
+      String fee2String = doc.select(this.HTML_PATCH_EBAYCOM.get("import")).first().text();
+      try {
+        Number fee1Number = numberFormat.parse(StringUtils.remove(fee1String, "$"));
+        double fee1Double = fee1Number.doubleValue();
+        Number fee2Number = numberFormat.parse(StringUtils.remove(fee2String, "$"));
+        double fee2Double = fee2Number.doubleValue();
+
+        fee1.setValue(fee1Double);
+        fee2.setValue(fee2Double);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
+      product.getFees().add(fee1);
+      product.getFees().add(fee2);
+    }
+
     if (product.getPrices().isEmpty()) {
       String productPrice = doc.select(this.HTML_PATCH_EBAYCOM.get("price")).first().text();
       Number number;
+      NumberFormat numberFormat;
+      numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
       try {
         number = numberFormat.parse(StringUtils.remove(productPrice, "US $"));
         double p = number.doubleValue();

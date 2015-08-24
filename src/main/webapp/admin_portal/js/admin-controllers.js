@@ -256,11 +256,7 @@ angular
                             
                             
 
-                            $scope.product.fees = [ {
-                                title : 'SHIPPING',
-                                type : 'AMOUNT',
-                                value : ''
-                            }];
+
                             
                             // payment term calculation
                             $scope.Math = window.Math;
@@ -270,7 +266,7 @@ angular
                                     exchange_rate = 1;
                                 }
                                 if ($scope.product.currency == "USD") {
-                                    exchange_rate = 1.32;
+                                    exchange_rate = 1.3588;
                                 }
                                 return exchange_rate
 
@@ -330,12 +326,7 @@ angular
                                         
 
 
-                                        $scope.product.fees = [ {
-                                            title : 'SHIPPING',
-                                            type : 'AMOUNT',
-                                            value : '0.00'
-                                        }];
-                                        
+
                                         $scope.tag_hot = [{
                                             value : ""
                                         }];
