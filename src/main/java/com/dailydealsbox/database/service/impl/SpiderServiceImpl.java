@@ -41,47 +41,47 @@ import com.dailydealsbox.database.service.SpiderService;
  */
 @Service
 public class SpiderServiceImpl implements SpiderService {
-  private Map<String, String> HTML_PATCH_BESTBUY   = new HashMap<>();
-  private Map<String, String> HTML_PATCH_WALMARTCA = new HashMap<>();
-  private Map<String, String> HTML_PATCH_EBAYCOM   = new HashMap<>();
+  private Map<String, String> HTML_PATH_BESTBUY   = new HashMap<>();
+  private Map<String, String> HTML_PATH_WALMARTCA = new HashMap<>();
+  private Map<String, String> HTML_PATH_EBAYCOM   = new HashMap<>();
 
   /*
    * Constructor
    */
   public SpiderServiceImpl() {
-    String keyNameHtmlPatch;
-    String keyDescriptionHtmlPatch;
-    String keyImageHtmlPatch;
-    String keyPriceHtmlPatch;
-    String keyShippingHtmlPatch;
-    String keyImportHtmlPatch;
+    String keyNameHtmlPath;
+    String keyDescriptionHtmlPath;
+    String keyImageHtmlPath;
+    String keyPriceHtmlPath;
+    String keyShippingHtmlPath;
+    String keyImportHtmlPath;
 
-    // HTML_PATCH_BESTBUY
-    this.HTML_PATCH_BESTBUY.put("name", "SPAN#ctl00_CP_ctl00_PD_lblProductTitle");
-    this.HTML_PATCH_BESTBUY.put("description", "DIV.tab-overview-item");
-    this.HTML_PATCH_BESTBUY.put("image", "IMG#ctl00_CP_ctl00_PD_PI_IP");
-    this.HTML_PATCH_BESTBUY.put("price", "SPAN.amount");
+    // HTML_PATH_BESTBUY
+    this.HTML_PATH_BESTBUY.put("name", "SPAN#ctl00_CP_ctl00_PD_lblProductTitle");
+    this.HTML_PATH_BESTBUY.put("description", "DIV.tab-overview-item");
+    this.HTML_PATH_BESTBUY.put("image", "IMG#ctl00_CP_ctl00_PD_PI_IP");
+    this.HTML_PATH_BESTBUY.put("price", "SPAN.amount");
 
-    //HTML_PATCH_WALMARTCA
-    this.HTML_PATCH_WALMARTCA.put("name", "DIV#product-desc");
-    this.HTML_PATCH_WALMARTCA.put("description", "P.description");
-    this.HTML_PATCH_WALMARTCA.put("image", "DIV.centered-img-wrap");
-    this.HTML_PATCH_WALMARTCA.put("price", "div.pricing-shipping");
+    //HTML_PATH_WALMARTCA
+    this.HTML_PATH_WALMARTCA.put("name", "DIV#product-desc");
+    this.HTML_PATH_WALMARTCA.put("description", "P.description");
+    this.HTML_PATH_WALMARTCA.put("image", "DIV.centered-img-wrap");
+    this.HTML_PATH_WALMARTCA.put("price", "div.pricing-shipping");
 
-    //HTML_PATCH_EBAYCOM
-    keyNameHtmlPatch = "H1#itemTitle";
-    keyDescriptionHtmlPatch = "DIV.itemAttr";
-    keyImageHtmlPatch = "IMG#icImg";
-    keyPriceHtmlPatch = "SPAN#mm-saleDscPrc";
-    keyShippingHtmlPatch = "SPAN#fshippingCost";
-    keyImportHtmlPatch = "SPAN#impchCost";
+    //HTML_PATH_EBAYCOM
+    keyNameHtmlPath = "H1#itemTitle";
+    keyDescriptionHtmlPath = "DIV.itemAttr";
+    keyImageHtmlPath = "IMG#icImg";
+    keyPriceHtmlPath = "SPAN#mm-saleDscPrc";
+    keyShippingHtmlPath = "SPAN#fshippingCost";
+    keyImportHtmlPath = "SPAN#impchCost";
 
-    this.HTML_PATCH_EBAYCOM.put("name", keyNameHtmlPatch);
-    this.HTML_PATCH_EBAYCOM.put("description", keyDescriptionHtmlPatch);
-    this.HTML_PATCH_EBAYCOM.put("image", keyImageHtmlPatch);
-    this.HTML_PATCH_EBAYCOM.put("price", keyPriceHtmlPatch);
-    this.HTML_PATCH_EBAYCOM.put("shipping", keyShippingHtmlPatch);
-    this.HTML_PATCH_EBAYCOM.put("import", keyImportHtmlPatch);
+    this.HTML_PATH_EBAYCOM.put("name", keyNameHtmlPath);
+    this.HTML_PATH_EBAYCOM.put("description", keyDescriptionHtmlPath);
+    this.HTML_PATH_EBAYCOM.put("image", keyImageHtmlPath);
+    this.HTML_PATH_EBAYCOM.put("price", keyPriceHtmlPath);
+    this.HTML_PATH_EBAYCOM.put("shipping", keyShippingHtmlPath);
+    this.HTML_PATH_EBAYCOM.put("import", keyImportHtmlPath);
   }
 
   /*
@@ -352,7 +352,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product price
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATCH_BESTBUY.get("price")).first().text();
+      String productPrice = doc.select(this.HTML_PATH_BESTBUY.get("price")).first().text();
       Number number;
       try {
         number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
@@ -369,14 +369,14 @@ public class SpiderServiceImpl implements SpiderService {
 
     ProductText text = new ProductText();
     text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATCH_BESTBUY.get("name")).first().text());
-    text.setDescription(doc.select(this.HTML_PATCH_BESTBUY.get("description")).first().ownText());
+    text.setName(doc.select(this.HTML_PATH_BESTBUY.get("name")).first().text());
+    text.setDescription(doc.select(this.HTML_PATH_BESTBUY.get("description")).first().ownText());
     product.getTexts().add(text);
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
       image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(),
-          doc.select(this.HTML_PATCH_BESTBUY.get("image")).first().attr("src")));
+          doc.select(this.HTML_PATH_BESTBUY.get("image")).first().attr("src")));
       product.getImages().add(image);
     }
 
@@ -478,7 +478,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product tax
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATCH_WALMARTCA.get("price")).first()
+      String productPrice = doc.select(this.HTML_PATH_WALMARTCA.get("price")).first()
           .select("div.microdata-price").first().select("span").first().text();
       Number number;
       try {
@@ -496,15 +496,15 @@ public class SpiderServiceImpl implements SpiderService {
 
     ProductText text = new ProductText();
     text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATCH_WALMARTCA.get("name")).first().select("h1").first()
+    text.setName(doc.select(this.HTML_PATH_WALMARTCA.get("name")).first().select("h1").first()
         .text());
-    text.setDescription(doc.select(HTML_PATCH_WALMARTCA.get("description")).first().text());
+    text.setDescription(doc.select(HTML_PATH_WALMARTCA.get("description")).first().text());
     product.getTexts().add(text);
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
       image.setUrl(String.format("%s://%s", url.getProtocol(),
-          doc.select(this.HTML_PATCH_WALMARTCA.get("image")).first().select("img.image").first()
+          doc.select(this.HTML_PATH_WALMARTCA.get("image")).first().select("img.image").first()
               .attr("src")));
       product.getImages().add(image);
     }
@@ -576,8 +576,8 @@ public class SpiderServiceImpl implements SpiderService {
       NumberFormat numberFormat;
       numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
 
-      String fee1String = doc.select(this.HTML_PATCH_EBAYCOM.get("shipping")).first().text();
-      String fee2String = doc.select(this.HTML_PATCH_EBAYCOM.get("import")).first().text();
+      String fee1String = doc.select(this.HTML_PATH_EBAYCOM.get("shipping")).first().text();
+      String fee2String = doc.select(this.HTML_PATH_EBAYCOM.get("import")).first().text();
       try {
         Number fee1Number = numberFormat.parse(StringUtils.remove(fee1String, "$"));
         double fee1Double = fee1Number.doubleValue();
@@ -595,7 +595,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATCH_EBAYCOM.get("price")).first().text();
+      String productPrice = doc.select(this.HTML_PATH_EBAYCOM.get("price")).first().text();
       Number number;
       NumberFormat numberFormat;
       numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
@@ -614,13 +614,13 @@ public class SpiderServiceImpl implements SpiderService {
 
     ProductText text = new ProductText();
     text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATCH_EBAYCOM.get("name")).first().text());
-    text.setDescription(doc.select(this.HTML_PATCH_EBAYCOM.get("description")).text());
+    text.setName(doc.select(this.HTML_PATH_EBAYCOM.get("name")).first().text());
+    text.setDescription(doc.select(this.HTML_PATH_EBAYCOM.get("description")).text());
     product.getTexts().add(text);
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(doc.select(this.HTML_PATCH_EBAYCOM.get("image")).first().attr("src"));
+      image.setUrl(doc.select(this.HTML_PATH_EBAYCOM.get("image")).first().attr("src"));
       product.getImages().add(image);
     }
 
