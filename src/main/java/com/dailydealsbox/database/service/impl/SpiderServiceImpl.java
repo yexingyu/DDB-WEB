@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 
 import com.dailydealsbox.configuration.BaseEnum.CURRENCY;
@@ -53,6 +54,7 @@ public class SpiderServiceImpl implements SpiderService {
     String keyDescriptionHtmlPath;
     String keyImageHtmlPath;
     String keyPriceHtmlPath;
+    String keyPriceHtmlPath2;
     String keyShippingHtmlPath;
     String keyImportHtmlPath;
 
@@ -73,6 +75,7 @@ public class SpiderServiceImpl implements SpiderService {
     keyDescriptionHtmlPath = "DIV.itemAttr";
     keyImageHtmlPath = "IMG#icImg";
     keyPriceHtmlPath = "SPAN#mm-saleDscPrc";
+    keyPriceHtmlPath2 = "SPAN#prcIsum";
     keyShippingHtmlPath = "SPAN#fshippingCost";
     keyImportHtmlPath = "SPAN#impchCost";
 
@@ -80,6 +83,7 @@ public class SpiderServiceImpl implements SpiderService {
     this.HTML_PATH_EBAYCOM.put("description", keyDescriptionHtmlPath);
     this.HTML_PATH_EBAYCOM.put("image", keyImageHtmlPath);
     this.HTML_PATH_EBAYCOM.put("price", keyPriceHtmlPath);
+    this.HTML_PATH_EBAYCOM.put("price2", keyPriceHtmlPath2);
     this.HTML_PATH_EBAYCOM.put("shipping", keyShippingHtmlPath);
     this.HTML_PATH_EBAYCOM.put("import", keyImportHtmlPath);
   }
@@ -269,7 +273,7 @@ public class SpiderServiceImpl implements SpiderService {
     //set product status
     product.setDisabled(false);
     //set product key
-    product.setKey(this.getProductKeyFromEbayCOM(url));
+    product.setKey(this.getProductKeyFromBestbuyCA(url));
 
     //set product store
     Store store = new Store();
@@ -352,16 +356,16 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product price
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_BESTBUY.get("price")).first().text();
+      String productPrice = doc.select(this.HTML_PATH_BESTBUY.get("price2")).first().text();
       Number number;
       try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
+        number = numberFormat.parse(StringUtils.remove(productPrice, "US $"));
         double p = number.doubleValue();
         ProductPrice price = new ProductPrice();
         price.setValue(p);
         product.getPrices().add(price);
         product.setCurrentPrice(p);
-        product.setCurrency(CURRENCY.CAD);
+        product.setCurrency(CURRENCY.USD);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -595,7 +599,16 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_EBAYCOM.get("price")).first().text();
+      String productPrice = "";
+      Element productPriceElement1 = doc.select(this.HTML_PATH_EBAYCOM.get("price")).first();
+      Element productPriceElement2 = doc.select(this.HTML_PATH_EBAYCOM.get("price2")).first();
+      if (productPriceElement1 != null) {
+        productPrice = productPriceElement1.text();
+      }
+      if (productPriceElement2 != null) {
+        productPrice = productPriceElement2.text();
+      }
+
       Number number;
       NumberFormat numberFormat;
       numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
