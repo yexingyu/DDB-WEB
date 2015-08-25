@@ -45,6 +45,7 @@ public class SpiderServiceImpl implements SpiderService {
   private Map<String, String> HTML_PATH_BESTBUY   = new HashMap<>();
   private Map<String, String> HTML_PATH_WALMARTCA = new HashMap<>();
   private Map<String, String> HTML_PATH_EBAYCOM   = new HashMap<>();
+  private Map<String, String> HTML_PATH_AMAZONCA  = new HashMap<>();
 
   /*
    * Constructor
@@ -86,6 +87,17 @@ public class SpiderServiceImpl implements SpiderService {
     this.HTML_PATH_EBAYCOM.put("price2", keyPriceHtmlPath2);
     this.HTML_PATH_EBAYCOM.put("shipping", keyShippingHtmlPath);
     this.HTML_PATH_EBAYCOM.put("import", keyImportHtmlPath);
+
+    //HTML_PATH_EBAYCOM
+    keyNameHtmlPath = "span#productTitle";
+    keyDescriptionHtmlPath = "DIV#feature-bullets";
+    keyImageHtmlPath = "div#imgTagWrapperId";
+    keyPriceHtmlPath = "SPAN#priceblock_ourprice";
+
+    this.HTML_PATH_AMAZONCA.put("name", keyNameHtmlPath);
+    this.HTML_PATH_AMAZONCA.put("description", keyDescriptionHtmlPath);
+    this.HTML_PATH_AMAZONCA.put("image", keyImageHtmlPath);
+    this.HTML_PATH_AMAZONCA.put("price", keyPriceHtmlPath);
   }
 
   /*
@@ -142,14 +154,14 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromWalmartCA(oUrl, product, LANGUAGE.FR);
         break;
       case "www.bestbuy.com":
-        this.getProductFromBestbuyUS(oUrl, product, LANGUAGE.EN);
+        this.getProductFromBestbuyCOM(oUrl, product, LANGUAGE.EN);
         break;
       case "www.amazon.ca":
         this.getProductFromAmazonCA(oUrl, product, LANGUAGE.EN);
         this.getProductFromAmazonCA(oUrl, product, LANGUAGE.FR);
         break;
       case "www.amazon.com":
-        this.getProductFromAmazonUS(oUrl, product, LANGUAGE.EN);
+        this.getProductFromAmazonCOM(oUrl, product, LANGUAGE.EN);
         break;
       default:
         break;
@@ -176,7 +188,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private void getProductFromAmazonUS(URL url, Product product, LANGUAGE language) {
+  private void getProductFromAmazonCOM(URL url, Product product, LANGUAGE language) {
 
   }
 
@@ -187,8 +199,123 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private void getProductFromAmazonCA(URL url, Product product, LANGUAGE language) {
+  private Product getProductFromAmazonCA(URL url, Product product, LANGUAGE language) {
+    //set product url
+    product.setUrl(url.toString());
+    //set product status
+    product.setDisabled(false);
+    //set product key
+    product.setKey(this.getProductKeyFromAmazonCA(url));
 
+    //set product store
+    Store store = new Store();
+    int storeID = 12;
+    store.setId(storeID);
+    product.setStore(store);
+
+    //set product expired date
+    Calendar now = Calendar.getInstance();
+    int weekday = now.get(Calendar.DAY_OF_WEEK);
+    if (weekday != Calendar.THURSDAY) {
+      // calculate how much to add
+      // the 5 is the difference between Saturday and Thursday
+      int days = (Calendar.SATURDAY - weekday + 5);
+      now.add(Calendar.DAY_OF_YEAR, days);
+    }
+    // now is the date you want
+    Date expiredDate = now.getTime();
+
+    product.setExpiredAt(expiredDate);
+
+    //set product tax
+    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
+    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
+    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
+
+    if (product.getTaxes().isEmpty()) {
+      ProductTax tax1 = new ProductTax();
+      tax1.setTitle(federal);
+      tax1.setType(percentage);
+
+      ProductTax tax2 = new ProductTax();
+      tax2.setTitle(provincial);
+      tax2.setType(percentage);
+
+      product.getTaxes().add(tax1);
+      product.getTaxes().add(tax2);
+    }
+
+    // language switch
+    String urlStr = url.toString();
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "fr_ca")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "fr_ca", "en_ca");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "en_ca")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "en_ca", "fr_ca");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    Document doc;
+    try {
+      doc = Jsoup.connect(urlStr).timeout(20000).get();
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
+    //set product fees
+    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
+    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
+    if (product.getFees().isEmpty()) {
+      ProductFee fee1 = new ProductFee();
+      fee1.setTitle(feeShipping);
+      fee1.setType(feeType);
+      fee1.setValue(0);
+
+      product.getFees().add(fee1);
+    }
+
+    //set product tax
+    if (product.getPrices().isEmpty()) {
+      String productPrice = doc.select(this.HTML_PATH_AMAZONCA.get("price")).first().text();
+      Number number;
+      try {
+        number = numberFormat.parse(StringUtils.remove(productPrice, "CDN$ "));
+        double p = number.doubleValue();
+        ProductPrice price = new ProductPrice();
+        price.setValue(p);
+        product.getPrices().add(price);
+        product.setCurrentPrice(p);
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(doc.select(this.HTML_PATH_AMAZONCA.get("name")).first().text());
+    text.setDescription(doc.select(this.HTML_PATH_AMAZONCA.get("description")).text());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      ProductImage image = new ProductImage();
+      image.setUrl(doc.select(this.HTML_PATH_AMAZONCA.get("image")).first().select("img").first()
+          .attr("src"));
+      product.getImages().add(image);
+    }
+
+    return product;
   }
 
   /**
@@ -198,7 +325,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private void getProductFromBestbuyUS(URL url, Product product, LANGUAGE language) {
+  private void getProductFromBestbuyCOM(URL url, Product product, LANGUAGE language) {
 
   }
 
@@ -245,6 +372,23 @@ public class SpiderServiceImpl implements SpiderService {
   private String getProductKeyFromEbayCOM(URL url) {
     // String to be scanned to find the pattern.
     String pattern = "\\/(\\d+)";
+
+    // Create a Pattern object
+    Pattern r = Pattern.compile(pattern);
+
+    // Now create matcher object.
+    Matcher m = r.matcher(url.toString());
+    if (m.find()) {
+      return m.group(1);
+
+    } else {
+      return null;
+    }
+  }
+
+  private String getProductKeyFromAmazonCA(URL url) {
+    // String to be scanned to find the pattern.
+    String pattern = "\\/(product\\d+)";
 
     // Create a Pattern object
     Pattern r = Pattern.compile(pattern);
