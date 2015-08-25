@@ -93,11 +93,13 @@ public class SpiderServiceImpl implements SpiderService {
     keyDescriptionHtmlPath = "DIV#feature-bullets";
     keyImageHtmlPath = "div#imgTagWrapperId";
     keyPriceHtmlPath = "SPAN#priceblock_ourprice";
+    keyPriceHtmlPath2 = "SPAN#priceblock_dealprice";
 
     this.HTML_PATH_AMAZONCA.put("name", keyNameHtmlPath);
     this.HTML_PATH_AMAZONCA.put("description", keyDescriptionHtmlPath);
     this.HTML_PATH_AMAZONCA.put("image", keyImageHtmlPath);
     this.HTML_PATH_AMAZONCA.put("price", keyPriceHtmlPath);
+    this.HTML_PATH_AMAZONCA.put("price2", keyPriceHtmlPath2);
   }
 
   /*
@@ -287,7 +289,16 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product tax
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_AMAZONCA.get("price")).first().text();
+      String productPrice = "";
+      Element productPriceElement1 = doc.select(this.HTML_PATH_AMAZONCA.get("price")).first();
+      Element productPriceElement2 = doc.select(this.HTML_PATH_AMAZONCA.get("price2")).first();
+      if (productPriceElement1 != null) {
+        productPrice = productPriceElement1.text();
+      }
+      if (productPriceElement2 != null) {
+        productPrice = productPriceElement2.text();
+      }
+
       Number number;
       try {
         number = numberFormat.parse(StringUtils.remove(productPrice, "CDN$ "));
