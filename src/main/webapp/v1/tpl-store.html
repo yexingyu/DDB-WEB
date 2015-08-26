@@ -10,7 +10,7 @@
        <div class="col-sm-3" ng-repeat="store in stores" ng-if="store.followed" >
 	            <div class="panel panel-default">
 			  <!-- Default panel contents -->
-			  <div class="panel-heading">{{store.name}}</div>
+			  <div class="panel-heading"><a href="#/all?store_id={{store.id}}">{{store.name}}</a></div>
 			  <div class="panel-body">
 	            <div class="row">
 	                <div class="col-xs-12" align="center">
