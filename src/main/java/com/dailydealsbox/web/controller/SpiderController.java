@@ -32,7 +32,7 @@ public class SpiderController {
 
   /**
    * spider
-   * 
+   *
    * @param url
    * @return
    * @throws Exception
@@ -41,11 +41,16 @@ public class SpiderController {
   @ApiOperation(value = "Retrieve product infomation", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Retrieve product infomation.")
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
   public GenericResponseData spider(@ApiParam(value = "url", required = true) @RequestParam(value = "url", required = true) String url) throws Exception {
-    Product product = this.spiderService.getProduct(url);
-    if (product == null) {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
-    } else {
-      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
+    try {
+      Product product = this.spiderService.getProduct(url);
+      if (product == null) {
+        return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      } else {
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, product);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, e.getMessage());
     }
   }
 }
