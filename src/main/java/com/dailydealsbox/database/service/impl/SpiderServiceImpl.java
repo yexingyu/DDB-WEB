@@ -118,7 +118,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @see com.dailydealsbox.database.service.SpiderService#getProductFromBestbuy(java.lang.String)
    */
   @Override
-  public Product getProduct(String url) {
+  public Product getProduct(String url) throws Exception {
     // parse url
     URL oUrl;
     try {
@@ -170,7 +170,6 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromCostcoCA(oUrl, product, LANGUAGE.EN);
         this.getProductFromCostcoCA(oUrl, product, LANGUAGE.FR);
         break;
-
       case "www.bestbuy.com":
         this.getProductFromBestbuyCOM(oUrl, product, LANGUAGE.EN);
         break;
@@ -195,7 +194,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private void getProductFromEbayCA(URL url, Product product, LANGUAGE language) {
+  private void getProductFromEbayCA(URL url, Product product, LANGUAGE language) throws Exception {
 
   }
 
@@ -206,7 +205,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private void getProductFromAmazonCOM(URL url, Product product, LANGUAGE language) {
+  private void getProductFromAmazonCOM(URL url, Product product, LANGUAGE language) throws Exception {
 
   }
 
@@ -217,7 +216,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private Product getProductFromAmazonCA(URL url, Product product, LANGUAGE language) {
+  private Product getProductFromAmazonCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -337,8 +336,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(doc.select(this.HTML_PATH_AMAZONCA.get("image")).first().select("img").first()
-          .attr("src"));
+      image.setUrl(doc.select(this.HTML_PATH_AMAZONCA.get("image")).first().select("img").first().attr("src"));
       product.getImages().add(image);
     }
 
@@ -352,7 +350,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private void getProductFromBestbuyCOM(URL url, Product product, LANGUAGE language) {
+  private void getProductFromBestbuyCOM(URL url, Product product, LANGUAGE language) throws Exception {
 
   }
 
@@ -362,7 +360,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param url
    * @return
    */
-  private String getProductKeyFromBestbuyCA(URL url) {
+  private String getProductKeyFromBestbuyCA(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/(\\d+).aspx";
 
@@ -379,7 +377,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
   }
 
-  private String getProductKeyFromWalmartCA(URL url) {
+  private String getProductKeyFromWalmartCA(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/(\\d+)";
 
@@ -396,7 +394,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
   }
 
-  private String getProductKeyFromCostcoCA(URL url) {
+  private String getProductKeyFromCostcoCA(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/(\\d+)";
 
@@ -413,7 +411,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
   }
 
-  private String getProductKeyFromEbayCOM(URL url) {
+  private String getProductKeyFromEbayCOM(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/(\\d+)";
 
@@ -430,7 +428,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
   }
 
-  private String getProductKeyFromAmazonCA(URL url) {
+  private String getProductKeyFromAmazonCA(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/(product\\d+)";
 
@@ -455,7 +453,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param language
    * @return
    */
-  private Product getProductFromBestbuyCA(URL url, Product product, LANGUAGE language) {
+  private Product getProductFromBestbuyCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -567,8 +565,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(),
-          doc.select(this.HTML_PATH_BESTBUY.get("image")).first().attr("src")));
+      image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(), doc.select(this.HTML_PATH_BESTBUY.get("image")).first().attr("src")));
       product.getImages().add(image);
     }
 
@@ -582,7 +579,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language) {
+  private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -670,8 +667,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product tax
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_WALMARTCA.get("price")).first()
-          .select("div.microdata-price").first().select("span").first().text();
+      String productPrice = doc.select(this.HTML_PATH_WALMARTCA.get("price")).first().select("div.microdata-price").first().select("span").first().text();
       Number number;
       try {
         number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
@@ -688,23 +684,20 @@ public class SpiderServiceImpl implements SpiderService {
 
     ProductText text = new ProductText();
     text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATH_WALMARTCA.get("name")).first().select("h1").first()
-        .text());
-    text.setDescription(doc.select(HTML_PATH_WALMARTCA.get("description")).first().text());
+    text.setName(doc.select(this.HTML_PATH_WALMARTCA.get("name")).first().select("h1").first().text());
+    text.setDescription(doc.select(this.HTML_PATH_WALMARTCA.get("description")).first().text());
     product.getTexts().add(text);
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s", url.getProtocol(),
-          doc.select(this.HTML_PATH_WALMARTCA.get("image")).first().select("img.image").first()
-              .attr("src")));
+      image.setUrl(String.format("%s://%s", url.getProtocol(), doc.select(this.HTML_PATH_WALMARTCA.get("image")).first().select("img.image").first().attr("src")));
       product.getImages().add(image);
     }
 
     return product;
   }
 
-  private Product getProductFromCostcoCA(URL url, Product product, LANGUAGE language) {
+  private Product getProductFromCostcoCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -792,9 +785,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product tax
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_COSTCOCA.get("price")).first()
-          .select("span.currency").first().text();
-      ;
+      String productPrice = doc.select(this.HTML_PATH_COSTCOCA.get("price")).first().select("span.currency").first().text();
       Number number;
       try {
         number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
@@ -817,8 +808,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(doc.select(this.HTML_PATH_AMAZONCA.get("price")).first().select("span.currency")
-          .first().text());
+      image.setUrl(doc.select(this.HTML_PATH_COSTCOCA.get("price")).first().select("span.currency").first().text());
       product.getImages().add(image);
     }
 
@@ -832,7 +822,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private Product getProductFromEbayCOM(URL url, Product product, LANGUAGE language) {
+  private Product getProductFromEbayCOM(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
