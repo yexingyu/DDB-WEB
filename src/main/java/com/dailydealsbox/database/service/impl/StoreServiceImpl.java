@@ -7,7 +7,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -156,5 +160,16 @@ public class StoreServiceImpl implements StoreService {
   @Override
   public void decreaseCountFollowings(int storeId) {
     this.repo.decreaseCountFollowings(storeId);
+  }
+
+  @Autowired
+  private EntityManager em;
+
+  public void test() {
+
+    CriteriaQuery<Store> criteriaQuery = em.getCriteriaBuilder().createQuery(Store.class);
+
+    TypedQuery<Store> typedQuery = em.createQuery(criteriaQuery);
+    typedQuery.getResultList();
   }
 }
