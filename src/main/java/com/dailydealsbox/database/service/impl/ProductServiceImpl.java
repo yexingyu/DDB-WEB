@@ -346,14 +346,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     // where store.id in (storeIds)
+    Join<Product, Store> storeJoin = null;
     if (storeIds != null) {
-      Join<Product, Store> storeJoin = productRoot.join(productModel.getSingularAttribute("store", Store.class));
+      if (storeJoin == null) {
+        storeJoin = productRoot.join(productModel.getSingularAttribute("store", Store.class));
+      }
       predicates.add(storeJoin.get("id").in(storeIds));
     }
 
     // where country in (countries)
     if (countries != null) {
-      predicates.add(productRoot.get("country").in(countries));
+      if (storeJoin == null) {
+        storeJoin = productRoot.join(productModel.getSingularAttribute("store", Store.class));
+      }
+      predicates.add(storeJoin.get("country").in(countries));
     }
 
     // where tag.value in (tags)
@@ -391,9 +397,11 @@ public class ProductServiceImpl implements ProductService {
 
     // Here you have to count the total size of the result
     int totalRows = query.getResultList().size();
-
     query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
     query.setMaxResults(pageable.getPageSize());
+
+    String[] ss = StringUtils.splitByWholeSeparatorPreserveAllTokens(pageable.getSort().toString(), ":");
+    ///////////////////////////// not finish yet
 
     Page<Product> page = new PageImpl<Product>(query.getResultList(), pageable, totalRows);
     return page;

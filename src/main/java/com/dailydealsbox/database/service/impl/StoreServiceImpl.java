@@ -125,7 +125,6 @@ public class StoreServiceImpl implements StoreService {
 
     // Here you have to count the total size of the result
     int totalRows = query.getResultList().size();
-
     query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
     query.setMaxResults(pageable.getPageSize());
 
