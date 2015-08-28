@@ -60,7 +60,8 @@ public interface ProductService {
 
   /**
    * list
-   *
+   * 
+   * @param ids
    * @param storeIds
    * @param tags
    * @param countries
@@ -69,8 +70,24 @@ public interface ProductService {
    * @param disabled
    * @param pageable
    * @return
+   * @throws Exception
    */
-  public Page<Product> list(Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled, Pageable pageable);
+  public Page<Product> list(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled, Pageable pageable) throws Exception;
+
+  /**
+   * listAll
+   *
+   * @param ids
+   * @param storeIds
+   * @param tags
+   * @param countries
+   * @param member
+   * @param deleted
+   * @param disabled
+   * @return
+   * @throws Exception
+   */
+  public Set<Product> listAll(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled) throws Exception;
 
   /**
    * addLike

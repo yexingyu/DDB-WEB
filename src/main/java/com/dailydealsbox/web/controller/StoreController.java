@@ -85,9 +85,10 @@ public class StoreController {
 
   /**
    * listAll
-   *
+   * 
    * @param storeIds
    * @param countries
+   * @param type
    * @param deleted
    * @return
    */
@@ -95,8 +96,9 @@ public class StoreController {
   @ApiOperation(value = "list all stores", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "List all stores.")
   public GenericResponseData listAll(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
       @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
+      @ApiParam(value = "filter: store type", required = false) @RequestParam(value = "type", required = false) STORE_TYPE type,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted) {
-    Set<Store> stores = this.storeService.listAll(storeIds, countries, deleted);
+    Set<Store> stores = this.storeService.listAll(storeIds, countries, null, deleted);
     if (stores == null || stores.isEmpty()) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {

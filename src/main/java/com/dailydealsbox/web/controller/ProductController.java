@@ -166,8 +166,10 @@ public class ProductController {
   /**
    * list
    *
+   * @param ids
    * @param storeIds
    * @param tags
+   * @param countries
    * @param deleted
    * @param disabled
    * @param pageable
@@ -179,7 +181,8 @@ public class ProductController {
   @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
-  public GenericResponseData list(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
+  public GenericResponseData list(@ApiParam(value = "filter: product ids", required = false) @RequestParam(value = "ids", required = false) Set<Integer> ids,
+      @ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
       @ApiParam(value = "filter: tags", required = false) @RequestParam(value = "tags", required = false) Set<String> tags,
       @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
@@ -188,7 +191,7 @@ public class ProductController {
 
     Page<Product> products = null;
     try {
-      products = this.productService.list(storeIds, tags, countries, null, deleted, disabled, pageable);
+      products = this.productService.list(ids, storeIds, tags, countries, null, deleted, disabled, pageable);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -201,8 +204,47 @@ public class ProductController {
   }
 
   /**
+   * listAll
+   *
+   * @param ids
+   * @param storeIds
+   * @param tags
+   * @param countries
+   * @param deleted
+   * @param disabled
+   * @param pageable
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "all", method = RequestMethod.GET)
+  @ApiOperation(value = "list all product", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "List all products.")
+  public GenericResponseData listAll(@ApiParam(value = "filter: product ids", required = false) @RequestParam(value = "ids", required = false) Set<Integer> ids,
+      @ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
+      @ApiParam(value = "filter: tags", required = false) @RequestParam(value = "tags", required = false) Set<String> tags,
+      @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
+      @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
+      @ApiParam(value = "filter: is disabled", required = false, defaultValue = "false") @RequestParam(value = "disabled", required = false, defaultValue = "false") boolean disabled,
+      @ApiIgnore Pageable pageable) throws Exception {
+
+    try {
+      System.out.println(storeIds);
+      Set<Product> products = this.productService.listAll(ids, storeIds, tags, countries, null, deleted, disabled);
+
+      if (products == null || products.isEmpty()) {
+        return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+      } else {
+        return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
    * listFollowed
    *
+   * @param ids
    * @param storeIds
    * @param tags
    * @param countries
@@ -219,7 +261,8 @@ public class ProductController {
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
   @DDBAuthorization
-  public GenericResponseData listFollowed(@ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
+  public GenericResponseData listFollowed(@ApiParam(value = "filter: product ids", required = false) @RequestParam(value = "ids", required = false) Set<Integer> ids,
+      @ApiParam(value = "filter: store ids", required = false) @RequestParam(value = "store_ids", required = false) Set<Integer> storeIds,
       @ApiParam(value = "filter: tags", required = false) @RequestParam(value = "tags", required = false) Set<String> tags,
       @ApiParam(value = "filter: countries", required = false) @RequestParam(value = "countries", required = false) Set<COUNTRY> countries,
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
@@ -238,7 +281,7 @@ public class ProductController {
     // list product by stores
     Page<Product> products = null;
     try {
-      products = this.productService.list(storeIds, tags, countries, member, deleted, disabled, pageable);
+      products = this.productService.list(ids, storeIds, tags, countries, member, deleted, disabled, pageable);
     } catch (Exception e) {
       e.printStackTrace();
     }

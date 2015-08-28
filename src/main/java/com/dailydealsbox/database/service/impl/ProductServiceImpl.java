@@ -3,14 +3,26 @@
  */
 package com.dailydealsbox.database.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -242,13 +254,70 @@ public class ProductServiceImpl implements ProductService {
     return this.repoTag.findAll();
   }
 
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.ProductService#list(java.util.Set, java.util.Set, java.util.Set, com.dailydealsbox.database.model.Member, boolean,
-   * boolean, org.springframework.data.domain.Pageable)
+  @Autowired
+  private EntityManager em;
+
+  /**
+   * buildQuery
+   *
+   * @param ids
+   * @param storeIds
+   * @param tags
+   * @param countries
+   * @param member
+   * @param deleted
+   * @param disabled
+   * @return
+   * @throws Exception
    */
-  @Override
-  public Page<Product> list(Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled, Pageable pageable) {
+  private TypedQuery<Product> buildQuery(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled) throws Exception {
+    // fixing ids
+    if (ids == null || ids.isEmpty()) {
+      ids = null;
+    } else {
+      Iterator<Integer> itId = ids.iterator();
+      while (itId.hasNext()) {
+        int id = itId.next();
+        if (id <= 0) {
+          itId.remove();
+        }
+      }
+    }
+
+    if (storeIds == null || storeIds.isEmpty()) {
+      storeIds = null;
+    } else {
+      Iterator<Integer> itStoreId = storeIds.iterator();
+      while (itStoreId.hasNext()) {
+        int storeId = itStoreId.next();
+        if (storeId <= 0) {
+          itStoreId.remove();
+        }
+      }
+    }
+
+    // combine stores from member following
+    if (member != null && member.getStores() != null && !member.getStores().isEmpty()) {
+      Set<Integer> storeIdsfollowed = new HashSet<>();
+      for (Store store : member.getStores()) {
+        storeIdsfollowed.add(store.getId());
+      }
+      if (storeIds == null) {
+        storeIds = storeIdsfollowed;
+      } else {
+        Iterator<Integer> it = storeIds.iterator();
+        while (it.hasNext()) {
+          int storeId = it.next();
+          if (!storeIdsfollowed.contains(storeId)) {
+            it.remove();
+          }
+        }
+      }
+    }
+    if (storeIds == null || storeIds.isEmpty()) {
+      storeIds = null;
+    }
+
     // lowercase tags
     if (tags != null) {
       Set<String> fixedTags = new HashSet<>();
@@ -264,38 +333,70 @@ public class ProductServiceImpl implements ProductService {
       }
     }
 
-    // retrieve store set
-    Set<Store> stores = this.storeService.listAll(storeIds, countries, deleted);
-    if (stores == null || stores.isEmpty()) {
-      stores = null;
+    //  build criteriaQuery
+    CriteriaBuilder builder = this.em.getCriteriaBuilder();
+    CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
+    Root<Product> productRoot = criteriaQuery.from(Product.class);
+    EntityType<Product> productModel = productRoot.getModel();
+    List<Predicate> predicates = new ArrayList<Predicate>();
+
+    // where id in (ids)
+    if (ids != null && !ids.isEmpty()) {
+      predicates.add(productRoot.get("id").in(ids));
     }
 
-    // combine stores from member following
-    if (stores != null && member != null && member.getStores() != null && !member.getStores().isEmpty()) {
-      Iterator<Store> it = stores.iterator();
-      while (it.hasNext()) {
-        Store s = it.next();
-        if (!member.getStores().contains(s)) {
-          it.remove();
-        }
-      }
-    }
-    if (stores == null || stores.isEmpty()) {
-      stores = null;
+    // where store.id in (storeIds)
+    if (storeIds != null) {
+      Join<Product, Store> storeJoin = productRoot.join(productModel.getSingularAttribute("store", Store.class));
+      predicates.add(storeJoin.get("id").in(storeIds));
     }
 
-    Page<Product> products = null;
-    if (stores != null && tags != null) {
-      products = this.repo.findByStoresAndTagsAndDeletedAndDisabled(stores, tags, deleted, disabled, pageable);
-    } else if (stores != null) {
-      products = this.repo.findByStoresAndDeletedAndDisabled(stores, deleted, disabled, pageable);
-    } else if (tags != null) {
-      System.out.println(tags);
-      products = this.repo.findByTagsAndDeletedAndDisabled(tags, deleted, disabled, pageable);
-    } else {
-      products = this.repo.findByDisabledAndDeleted(deleted, disabled, pageable);
+    // where country in (countries)
+    if (countries != null) {
+      predicates.add(productRoot.get("country").in(countries));
     }
-    return products;
+
+    // where tag.value in (tags)
+    if (tags != null) {
+      Join<Product, ProductTag> tagJoin = productRoot.join(productModel.getDeclaredSet("tags", ProductTag.class));
+      predicates.add(tagJoin.get("value").in(tags));
+    }
+
+    predicates.add(builder.equal(productRoot.get("disabled"), disabled));
+    predicates.add(builder.equal(productRoot.get("deleted"), deleted));
+    criteriaQuery.where(predicates.toArray(new Predicate[] {}));
+
+    return this.em.createQuery(criteriaQuery);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#listAll(java.util.Set, java.util.Set, java.util.Set, java.util.Set,
+   * com.dailydealsbox.database.model.Member, boolean, boolean)
+   */
+  @Override
+  public Set<Product> listAll(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled) throws Exception {
+    TypedQuery<Product> query = this.buildQuery(ids, storeIds, tags, countries, member, deleted, disabled);
+    return new HashSet<Product>(query.getResultList());
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#list(java.util.Set, java.util.Set, java.util.Set, java.util.Set,
+   * com.dailydealsbox.database.model.Member, boolean, boolean, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Product> list(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled, Pageable pageable) throws Exception {
+    TypedQuery<Product> query = this.buildQuery(ids, storeIds, tags, countries, member, deleted, disabled);
+
+    // Here you have to count the total size of the result
+    int totalRows = query.getResultList().size();
+
+    query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+    query.setMaxResults(pageable.getPageSize());
+
+    Page<Product> page = new PageImpl<Product>(query.getResultList(), pageable, totalRows);
+    return page;
   }
 
 }

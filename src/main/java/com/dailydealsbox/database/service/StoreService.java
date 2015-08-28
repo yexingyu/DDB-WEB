@@ -26,7 +26,7 @@ public interface StoreService {
 
   /**
    * list
-   * 
+   *
    * @param ids
    * @param countries
    * @param type
@@ -38,13 +38,14 @@ public interface StoreService {
 
   /**
    * listAll
-   *
+   * 
    * @param ids
    * @param countries
+   * @param type
    * @param deleted
    * @return
    */
-  public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted);
+  public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted);
 
   /**
    * listDefaultFollowed
@@ -96,4 +97,5 @@ public interface StoreService {
    * @param id
    */
   public void delete(int id);
+
 }

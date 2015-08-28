@@ -3,6 +3,7 @@
  */
 package com.dailydealsbox.web.controller;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.Store;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductTagRepository;
 import com.dailydealsbox.database.repository.StoreRepository;
@@ -73,8 +74,14 @@ public class TestController {
     //Member member = this.memberService.get(token.getMemberId());
 
     //Set<Store> rst = this.repoStore.findByIds(ids);
-    Page<Product> rst = this.productRepo.searchByName("iphone", pageable);
+    //Page<Product> rst = this.productRepo.searchByName("iphone", pageable);
     //Member me = this.memberService.getByAccount("yexingyu@gmail.com");
+    Set<Integer> ids = new HashSet<Integer>();
+    ids.add(1);
+    ids.add(2);
+
+    Page<Store> rst = this.storeService.list(ids, null, null, false, pageable);
+
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, rst);
   }
 

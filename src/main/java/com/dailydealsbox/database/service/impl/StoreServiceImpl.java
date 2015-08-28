@@ -3,16 +3,22 @@
  */
 package com.dailydealsbox.database.service.impl;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,63 +86,6 @@ public class StoreServiceImpl implements StoreService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#listAll(java.util.Set, java.util.Set, boolean)
-   */
-  @Override
-  public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted) {
-    // fixing ids
-    if (ids != null) {
-      Iterator<Integer> it = ids.iterator();
-      while (it.hasNext()) {
-        int id = it.next();
-        if (id <= 0) {
-          it.remove();
-        }
-      }
-      if (ids.isEmpty()) {
-        ids = null;
-      }
-    }
-
-    Set<Store> stores = null;
-    if (ids != null && countries != null) {
-      stores = this.repo.findAllByIdsAndCountriesAndDeleted(ids, countries, deleted);
-    } else if (ids != null) {
-      stores = this.repo.findAllByIdsAndDeleted(ids, deleted);
-    } else if (countries != null) {
-      stores = this.repo.findAllByCountriesAndDeleted(countries, deleted);
-    } else {
-      stores = this.repo.findAllByDeleted(deleted);
-    }
-    return stores;
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#list(java.util.Set, java.util.Set, com.dailydealsbox.configuration.BaseEnum.STORE_TYPE, boolean,
-   * org.springframework.data.domain.Pageable)
-   */
-  @Override
-  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted, Pageable pageable) {
-    Page<Store> stores = null;
-
-    if (ids != null && countries != null && type != null) {
-
-    }
-    if (ids != null && countries != null) {
-      stores = this.repo.findByIdsAndCountriesAndDeleted(ids, countries, deleted, pageable);
-    } else if (ids != null) {
-      stores = this.repo.findByIdsAndDeleted(ids, deleted, pageable);
-    } else if (countries != null) {
-      stores = this.repo.findByCountriesAndDeleted(countries, deleted, pageable);
-    } else {
-      stores = this.repo.findByDeleted(deleted, pageable);
-    }
-    return stores;
-  }
-
-  /*
-   * (non-Javadoc)
    * @see com.dailydealsbox.database.service.StoreService#increaseCountLikes(int)
    */
   @Override
@@ -165,11 +114,75 @@ public class StoreServiceImpl implements StoreService {
   @Autowired
   private EntityManager em;
 
-  public void test() {
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#list(java.util.Set, java.util.Set, com.dailydealsbox.configuration.BaseEnum.STORE_TYPE, boolean,
+   * org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted, Pageable pageable) {
+    TypedQuery<Store> query = this.buildQuery(ids, countries, type, deleted);
 
-    CriteriaQuery<Store> criteriaQuery = em.getCriteriaBuilder().createQuery(Store.class);
+    // Here you have to count the total size of the result
+    int totalRows = query.getResultList().size();
 
-    TypedQuery<Store> typedQuery = em.createQuery(criteriaQuery);
-    typedQuery.getResultList();
+    query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+    query.setMaxResults(pageable.getPageSize());
+
+    Page<Store> page = new PageImpl<Store>(query.getResultList(), pageable, totalRows);
+    return page;
   }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#listAll(java.util.Set, java.util.Set, com.dailydealsbox.configuration.BaseEnum.STORE_TYPE, boolean)
+   */
+  @Override
+  public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted) {
+    TypedQuery<Store> query = this.buildQuery(ids, countries, type, deleted);
+    return new HashSet<Store>(query.getResultList());
+  }
+
+  /**
+   * buildQuery
+   *
+   * @param ids
+   * @param countries
+   * @param type
+   * @param deleted
+   * @return
+   */
+  private TypedQuery<Store> buildQuery(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted) {
+    if (ids != null && ids.isEmpty()) {
+      ids = null;
+    }
+
+    CriteriaBuilder builder = this.em.getCriteriaBuilder();
+    CriteriaQuery<Store> criteriaQuery = builder.createQuery(Store.class);
+    Root<Store> root = criteriaQuery.from(Store.class);
+
+    // init restriction list
+    List<Predicate> predicates = new ArrayList<Predicate>();
+
+    // where id in (ids)
+    if (ids != null && !ids.isEmpty()) {
+      predicates.add(root.get("id").in(ids));
+    }
+
+    // where country in (countries)
+    if (countries != null && !countries.isEmpty()) {
+      predicates.add(root.get("country").in(countries));
+    }
+
+    // where type = type
+    if (type != null) {
+      predicates.add(builder.equal(root.get("type"), type));
+    }
+
+    predicates.add(builder.equal(root.get("deleted"), deleted));
+    criteriaQuery.where(predicates.toArray(new Predicate[] {}));
+
+    return this.em.createQuery(criteriaQuery);
+  }
+
 }
