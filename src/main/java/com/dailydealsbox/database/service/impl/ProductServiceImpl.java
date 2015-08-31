@@ -22,7 +22,6 @@ import javax.persistence.metamodel.EntityType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -258,20 +257,12 @@ public class ProductServiceImpl implements ProductService {
   private EntityManager em;
 
   /**
-   * buildQuery
+   * fixIds
    *
    * @param ids
-   * @param storeIds
-   * @param tags
-   * @param countries
-   * @param member
-   * @param deleted
-   * @param disabled
    * @return
-   * @throws Exception
    */
-  private TypedQuery<Product> buildQuery(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled) throws Exception {
-    // fixing ids
+  private Set<Integer> fixIds(Set<Integer> ids) {
     if (ids == null || ids.isEmpty()) {
       ids = null;
     } else {
@@ -283,20 +274,17 @@ public class ProductServiceImpl implements ProductService {
         }
       }
     }
+    return ids;
+  }
 
-    if (storeIds == null || storeIds.isEmpty()) {
-      storeIds = null;
-    } else {
-      Iterator<Integer> itStoreId = storeIds.iterator();
-      while (itStoreId.hasNext()) {
-        int storeId = itStoreId.next();
-        if (storeId <= 0) {
-          itStoreId.remove();
-        }
-      }
-    }
-
-    // combine stores from member following
+  /**
+   * combineStoreIdsAndMemberFollowedStores
+   *
+   * @param storeIds
+   * @param member
+   * @return
+   */
+  private Set<Integer> combineStoreIdsAndMemberFollowedStores(Set<Integer> storeIds, Member member) {
     if (member != null && member.getStores() != null && !member.getStores().isEmpty()) {
       Set<Integer> storeIdsfollowed = new HashSet<>();
       for (Store store : member.getStores()) {
@@ -317,8 +305,16 @@ public class ProductServiceImpl implements ProductService {
     if (storeIds == null || storeIds.isEmpty()) {
       storeIds = null;
     }
+    return storeIds;
+  }
 
-    // lowercase tags
+  /**
+   * fixTags
+   *
+   * @param tags
+   * @return
+   */
+  private Set<String> fixTags(Set<String> tags) {
     if (tags != null) {
       Set<String> fixedTags = new HashSet<>();
       for (String tag : tags) {
@@ -332,6 +328,30 @@ public class ProductServiceImpl implements ProductService {
         tags = null;
       }
     }
+    return tags;
+  }
+
+  /**
+   * buildQuery
+   *
+   * @param ids
+   * @param storeIds
+   * @param tags
+   * @param countries
+   * @param member
+   * @param deleted
+   * @param disabled
+   * @return
+   * @throws Exception
+   */
+  private TypedQuery<Product> buildQuery(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled) throws Exception {
+    // fixing ids
+    ids = this.fixIds(ids);
+    storeIds = this.fixIds(storeIds);
+    storeIds = this.combineStoreIdsAndMemberFollowedStores(storeIds, member);
+
+    // lowercase tags
+    tags = this.fixTags(tags);
 
     //  build criteriaQuery
     CriteriaBuilder builder = this.em.getCriteriaBuilder();
@@ -392,19 +412,27 @@ public class ProductServiceImpl implements ProductService {
    * com.dailydealsbox.database.model.Member, boolean, boolean, org.springframework.data.domain.Pageable)
    */
   @Override
-  public Page<Product> list(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled, Pageable pageable) throws Exception {
-    TypedQuery<Product> query = this.buildQuery(ids, storeIds, tags, countries, member, deleted, disabled);
+  public Page<Product> list(Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled, Pageable pageable) throws Exception {
+    // fixing storeIds
+    storeIds = this.fixIds(storeIds);
+    storeIds = this.combineStoreIdsAndMemberFollowedStores(storeIds, member);
+    Set<Store> stores = this.storeService.listAll(storeIds, countries, null, false);
 
-    // Here you have to count the total size of the result
-    int totalRows = query.getResultList().size();
-    query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
-    query.setMaxResults(pageable.getPageSize());
+    // lowercase tags
+    tags = this.fixTags(tags);
 
-    String[] ss = StringUtils.splitByWholeSeparatorPreserveAllTokens(pageable.getSort().toString(), ":");
-    ///////////////////////////// not finish yet
+    Page<Product> products = null;
+    if (stores != null && tags != null) {
+      products = this.repo.findByStoresAndTagsAndDeletedAndDisabled(stores, tags, deleted, disabled, pageable);
+    } else if (stores != null) {
+      products = this.repo.findByStoresAndDeletedAndDisabled(stores, deleted, disabled, pageable);
+    } else if (tags != null) {
+      products = this.repo.findByTagsAndDeletedAndDisabled(tags, deleted, disabled, pageable);
+    } else {
+      products = this.repo.findByDisabledAndDeleted(deleted, disabled, pageable);
+    }
 
-    Page<Product> page = new PageImpl<Product>(query.getResultList(), pageable, totalRows);
-    return page;
+    return products;
   }
 
 }

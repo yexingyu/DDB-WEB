@@ -18,7 +18,6 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,18 +118,18 @@ public class StoreServiceImpl implements StoreService {
    * @see com.dailydealsbox.database.service.StoreService#list(java.util.Set, java.util.Set, com.dailydealsbox.configuration.BaseEnum.STORE_TYPE, boolean,
    * org.springframework.data.domain.Pageable)
    */
-  @Override
-  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted, Pageable pageable) {
-    TypedQuery<Store> query = this.buildQuery(ids, countries, type, deleted);
-
-    // Here you have to count the total size of the result
-    int totalRows = query.getResultList().size();
-    query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
-    query.setMaxResults(pageable.getPageSize());
-
-    Page<Store> page = new PageImpl<Store>(query.getResultList(), pageable, totalRows);
-    return page;
-  }
+  //  @Override
+  //  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted, Pageable pageable) {
+  //    TypedQuery<Store> query = this.buildQuery(ids, countries, type, deleted);
+  //
+  //    // Here you have to count the total size of the result
+  //    int totalRows = query.getResultList().size();
+  //    query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+  //    query.setMaxResults(pageable.getPageSize());
+  //
+  //    Page<Store> page = new PageImpl<Store>(query.getResultList(), pageable, totalRows);
+  //    return page;
+  //  }
 
   /*
    * (non-Javadoc)
@@ -184,4 +183,33 @@ public class StoreServiceImpl implements StoreService {
     return this.em.createQuery(criteriaQuery);
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.StoreService#list(java.util.Set, java.util.Set, com.dailydealsbox.configuration.BaseEnum.STORE_TYPE, boolean,
+   * org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted, Pageable pageable) {
+    Page<Store> stores = null;
+
+    if (ids != null && countries != null && type != null) {
+      stores = this.repo.findByIdsAndCountriesAndTypeAndDeleted(ids, countries, type, deleted, pageable);
+    } else if (ids != null && countries != null) {
+      stores = this.repo.findByIdsAndCountriesAndDeleted(ids, countries, deleted, pageable);
+    } else if (ids != null && type != null) {
+      stores = this.repo.findByIdsAndTypeAndDeleted(ids, type, deleted, pageable);
+    } else if (countries != null && type != null) {
+      stores = this.repo.findByCountriesAndTypeAndDeleted(countries, type, deleted, pageable);
+    } else if (ids != null) {
+      stores = this.repo.findByIdsAndDeleted(ids, deleted, pageable);
+    } else if (countries != null) {
+      stores = this.repo.findByCountriesAndDeleted(countries, deleted, pageable);
+    } else if (type != null) {
+      stores = this.repo.findByTypeAndDeleted(type, deleted, pageable);
+    } else {
+      stores = this.repo.findByDeleted(deleted, pageable);
+    }
+
+    return stores;
+  }
 }

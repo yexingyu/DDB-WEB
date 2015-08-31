@@ -25,6 +25,106 @@ import com.dailydealsbox.database.model.Store;
 public interface StoreRepository extends CrudRepository<Store, Integer> {
 
   /**
+   * findByDeleted
+   *
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByDeleted(boolean deleted, Pageable pageable);
+
+  /**
+   * findByIdsAndDeleted
+   *
+   * @param ids
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select s from Store s where s.id in ?1 and deleted = ?2")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByIdsAndDeleted(Set<Integer> ids, boolean deleted, Pageable pageable);
+
+  /**
+   * findByCountriesAndDeleted
+   *
+   * @param countries
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where s.country in ?1 and deleted = ?2")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByCountriesAndDeleted(Set<COUNTRY> countries, boolean deleted, Pageable pageable);
+
+  /**
+   * findByIdsAndCountriesAndDeleted
+   *
+   * @param ids
+   * @param countries
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where s.id in ?1 and s.country in ?2 and deleted = ?3")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByIdsAndCountriesAndDeleted(Set<Integer> ids, Set<COUNTRY> countries, boolean deleted, Pageable pageable);
+
+  /**
+   * findByIdsAndCountriesAndTypeAndDeleted
+   *
+   * @param ids
+   * @param countries
+   * @param type
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where s.id in :ids and s.country in :countries and type = :type and deleted = :deleted")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByIdsAndCountriesAndTypeAndDeleted(@Param("ids") Set<Integer> ids, @Param("countries") Set<COUNTRY> countries, @Param("type") STORE_TYPE type,
+      @Param("deleted") boolean deleted, Pageable pageable);
+
+  /**
+   * findByCountriesAndTypeAndDeleted
+   *
+   * @param countries
+   * @param type
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where s.country in :countries and type = :type and deleted = :deleted")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByCountriesAndTypeAndDeleted(@Param("countries") Set<COUNTRY> countries, @Param("type") STORE_TYPE type, @Param("deleted") boolean deleted, Pageable pageable);
+
+  /**
+   * findByTypeAndDeleted
+   * 
+   * @param type
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where type = :type and deleted = :deleted")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByTypeAndDeleted(@Param("type") STORE_TYPE type, @Param("deleted") boolean deleted, Pageable pageable);
+
+  /**
+   * findByIdsAndTypeAndDeleted
+   *
+   * @param ids
+   * @param type
+   * @param deleted
+   * @param pageable
+   * @return
+   */
+  @Query(value = "select distinct s from Store s where s.id in :ids and type = :type and deleted = :deleted")
+  @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+  public Page<Store> findByIdsAndTypeAndDeleted(@Param("ids") Set<Integer> ids, @Param("type") STORE_TYPE type, @Param("deleted") boolean deleted, Pageable pageable);
+
+  /**
    * findAllByDefaultFollowedTrueAndDeletedFalseOrderByIdAsc
    *
    * @return
