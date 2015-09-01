@@ -73,9 +73,20 @@ public class WebApplication extends SpringBootServletInitializer {
   //@Autowired
   //private RequestMappingHandlerAdapter adapter;
 
+  /**
+   * crondMinutely
+   */
   @Scheduled(initialDelay = 60000, fixedRate = 60000)
   public void crondMinutely() {
     logger.info("crondMinutely() is called.");
+  }
+
+  /**
+   * crondSecondly
+   */
+  @Scheduled(initialDelay = 1000, fixedRate = 1000)
+  public void crondSecondly() {
+    logger.info("crondSecondly() is called.");
   }
 
   @Bean
