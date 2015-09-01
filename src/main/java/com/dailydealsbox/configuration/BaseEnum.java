@@ -107,12 +107,9 @@ public class BaseEnum {
    * @author x_ye
    */
   public static enum STORE_CATEGORY {
-    SC_APS("Animals & Pet Supplies"), SC_AA("Apparel & Accessories"), SC_AE("Arts & Entertainment"), SC_BT(
-        "Baby & Toddler"), SC_BI("Business & Industrial"), SC_CO("Cameras & Optics"), SC_EL(
-        "Electronics"), SC_FBT("Food, Beverages & Tobacco"), SC_FN("Furniture"), SC_HW("Hardware"), SC_HB(
-        "Health & Beauty"), SC_HG("Home & Garden"), SC_MT("Mature"), SC_MD("Media"), SC_SW(
-        "Software"), SC_SG("Sporting Goods"), SC_TG("Toys & Games"), SC_VP("Vehicles & Parts"), SC_ALL(
-        "Retailor in Store, Online"), SC_OR("Retailor Online");
+    SC_APS("Animals & Pet Supplies"), SC_AA("Apparel & Accessories"), SC_AE("Arts & Entertainment"), SC_BT("Baby & Toddler"), SC_BI("Business & Industrial"), SC_CO("Cameras & Optics"), SC_EL(
+        "Electronics"), SC_FBT("Food, Beverages & Tobacco"), SC_FN("Furniture"), SC_HW("Hardware"), SC_HB("Health & Beauty"), SC_HG("Home & Garden"), SC_MT("Mature"), SC_MD("Media"), SC_SW(
+            "Software"), SC_SG("Sporting Goods"), SC_TG("Toys & Games"), SC_VP("Vehicles & Parts"), SC_ALL("Retailor in Store, Online"), SC_OR("Retailor Online");
 
     private final String name;
 
@@ -249,8 +246,7 @@ public class BaseEnum {
    * @author x_ye
    */
   public static enum ORDER_STATUS {
-    NEW("New Order"), CONFIRMED("Customer Confirmed"), WF_DOWNPAYMENT("Waiting For Downpayment"), APPROVED(
-        "Approved Order"), SHIPPED("Shipped Order"), FIN("Finished Order");
+    NEW("New Order"), CONFIRMED("Customer Confirmed"), WF_DOWNPAYMENT("Waiting For Downpayment"), APPROVED("Approved Order"), SHIPPED("Shipped Order"), FIN("Finished Order");
     private final String name;
 
     private ORDER_STATUS(String name) {
@@ -263,10 +259,16 @@ public class BaseEnum {
     }
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum MEMBER_ROLE {
-    MEMBER, ADMIN;
+    MEMBER, CONTRIBUTOR, ADMIN;
   }
 
+  /**
+   * @author x_ye
+   */
   public static enum RESPONSE_STATUS {
     SUCCESS, ERROR, NEED_LOGIN, NO_PERMISSION, EMPTY_RESULT;
   }

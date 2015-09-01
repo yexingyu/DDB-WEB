@@ -343,8 +343,12 @@ public class ProductController {
   @RequestMapping(method = { RequestMethod.POST })
   @ApiOperation(value = "insert product", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Insert a new product.")
   @DDBAuthorization({ MEMBER_ROLE.ADMIN })
-  public GenericResponseData insert(@ApiParam(value = "product object", required = true) @RequestBody Product product) {
+  public GenericResponseData insert(@ApiParam(value = "product object", required = true) @RequestBody Product product, HttpServletRequest request) {
     if (product.validate()) {
+      AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+      Member me = this.memberService.get(token.getMemberId());
+      product.setAddBy(me.getId());
+      product.setAddByName(me.getFirstName());
       Product productFromDb = this.productService.insert(product);
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
     } else {

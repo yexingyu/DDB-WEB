@@ -77,6 +77,9 @@ public class Product extends BaseEntityModel {
   @Column(name = "add_by", nullable = true)
   private int addBy;
 
+  @Column(name = "add_by_name", nullable = true)
+  private String addByName;
+
   @NotNull
   @Column(name = "count_likes", nullable = false, insertable = false, updatable = false)
   private int countLikes;
@@ -315,6 +318,21 @@ public class Product extends BaseEntityModel {
     }
 
     return true;
+  }
+
+  /**
+   * @return the addByName
+   */
+  public String getAddByName() {
+    return this.addByName;
+  }
+
+  /**
+   * @param addByName
+   *          the addByName to set
+   */
+  public void setAddByName(String addByName) {
+    this.addByName = addByName;
   }
 
   /**
