@@ -435,4 +435,17 @@ public class ProductServiceImpl implements ProductService {
     return products;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.database.service.ProductService#updateReputation()
+   */
+  @Override
+  public void updateReputation() throws Exception {
+    Set<Product> products = this.listAll(null, null, null, null, null, false, false);
+    for (Product product : products) {
+      product.computeReputation();
+      this.repo.save(product);
+    }
+  }
+
 }

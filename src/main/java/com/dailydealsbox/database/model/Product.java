@@ -232,7 +232,6 @@ public class Product extends BaseEntityModel {
    * @return the reputation
    */
   public double getReputation() {
-    this.computeReputation();
     return this.reputation;
   }
 

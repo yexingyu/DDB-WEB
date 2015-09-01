@@ -60,7 +60,7 @@ public interface ProductService {
 
   /**
    * list
-   * 
+   *
    * @param storeIds
    * @param tags
    * @param countries
@@ -131,4 +131,11 @@ public interface ProductService {
    * @return
    */
   public Set<ProductTag> listAllTag();
+
+  /**
+   * updateReputation
+   * 
+   * @throws Exception
+   */
+  public void updateReputation() throws Exception;
 }

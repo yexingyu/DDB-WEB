@@ -41,6 +41,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
+import com.dailydealsbox.database.service.ProductService;
 import com.dailydealsbox.web.filter.DDBAuthorizationInterceptor;
 
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -69,26 +70,40 @@ public class WebApplication extends SpringBootServletInitializer {
   private Environment         environment;
   @Autowired
   DDBAuthorizationInterceptor authInterceptor;
-
+  @Autowired
+  ProductService              productService;
   //@Autowired
   //private RequestMappingHandlerAdapter adapter;
 
   /**
    * crondMinutely
    */
-  @Scheduled(initialDelay = 60000, fixedRate = 60000)
+  @Scheduled(initialDelay = 60 * 1000, fixedRate = 60 * 1000)
   public void crondMinutely() {
+    logger.info("crondMinutely() is running.");
     logger.info("crondMinutely() is called.");
   }
 
   /**
-   * crondSecondly
+   * crondHourly
    */
-  @Scheduled(initialDelay = 1000, fixedRate = 1000)
-  public void crondSecondly() {
-    logger.info("crondSecondly() is called.");
+  @Scheduled(initialDelay = 3600 * 1000, fixedRate = 3600 * 1000)
+  public void crondHourly() {
+    logger.info("crondHourly() is running.");
+    // update reputation
+    try {
+      this.productService.updateReputation();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    logger.info("crondHourly() is called.");
   }
 
+  /**
+   * getAdapter
+   *
+   * @return
+   */
   @Bean
   WebMvcConfigurerAdapter getAdapter() {
     return new WebMvcConfigurerAdapter() {
