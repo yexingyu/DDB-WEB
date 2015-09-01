@@ -3,13 +3,13 @@
  */
 package com.dailydealsbox.web.controller;
 
-import java.util.HashSet;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.database.model.Store;
+import com.dailydealsbox.database.model.Product;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductTagRepository;
 import com.dailydealsbox.database.repository.StoreRepository;
@@ -76,12 +76,18 @@ public class TestController {
     //Set<Store> rst = this.repoStore.findByIds(ids);
     //Page<Product> rst = this.productRepo.searchByName("iphone", pageable);
     //Member me = this.memberService.getByAccount("yexingyu@gmail.com");
-    Set<Integer> ids = new HashSet<Integer>();
-    ids.add(1);
-    ids.add(2);
+    //    Set<Integer> ids = new HashSet<Integer>();
+    //    ids.add(1);
+    //    ids.add(2);
+    //
+    //    Page<Store> rst = this.storeService.list(ids, null, null, false, pageable);
 
-    Page<Store> rst = this.storeService.list(ids, null, null, false, pageable);
-
+    Calendar c = Calendar.getInstance();
+    c.clear(Calendar.MILLISECOND);
+    c.clear(Calendar.SECOND);
+    c.clear(Calendar.MINUTE);
+    Date stamp = c.getTime();
+    Set<Product> rst = this.productRepo.findAllByModifiedAtGreaterThanAndDeletedFalseAndDisabledFalse(stamp);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, rst);
   }
 

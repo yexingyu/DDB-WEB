@@ -133,9 +133,9 @@ public interface ProductService {
   public Set<ProductTag> listAllTag();
 
   /**
-   * updateReputation
-   * 
+   * fixProduct
+   *
    * @throws Exception
    */
-  public void updateReputation() throws Exception;
+  public void fixProduct() throws Exception;
 }

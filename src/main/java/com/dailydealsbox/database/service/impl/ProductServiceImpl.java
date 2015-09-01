@@ -4,6 +4,8 @@
 package com.dailydealsbox.database.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -437,11 +439,17 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.ProductService#updateReputation()
+   * @see com.dailydealsbox.database.service.ProductService#fixProduct()
    */
   @Override
-  public void updateReputation() throws Exception {
-    Set<Product> products = this.listAll(null, null, null, null, null, false, false);
+  public void fixProduct() throws Exception {
+    Calendar c = Calendar.getInstance();
+    c.clear(Calendar.MILLISECOND);
+    c.clear(Calendar.SECOND);
+    c.clear(Calendar.MINUTE);
+    c.add(Calendar.HOUR_OF_DAY, -2);
+    Date stamp = c.getTime();
+    Set<Product> products = this.repo.findAllByModifiedAtGreaterThanAndDeletedFalseAndDisabledFalse(stamp);
     for (Product product : products) {
       product.computeReputation();
       this.repo.save(product);

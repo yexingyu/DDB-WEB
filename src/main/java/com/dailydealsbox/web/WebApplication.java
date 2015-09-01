@@ -92,7 +92,7 @@ public class WebApplication extends SpringBootServletInitializer {
     logger.info("crondHourly() is running.");
     // update reputation
     try {
-      this.productService.updateReputation();
+      this.productService.fixProduct();
     } catch (Exception e) {
       e.printStackTrace();
     }

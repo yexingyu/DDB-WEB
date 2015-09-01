@@ -3,6 +3,7 @@
  */
 package com.dailydealsbox.database.repository;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.QueryHint;
@@ -115,4 +116,12 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   @Modifying
   @Query("update Product p set p.countReviews = p.countReviews + 1 where p.id = ?1")
   public void increaseCountReviews(int productId);
+
+  /**
+   * findAllByModifiedAtGreaterThanAndDeletedFalseAndDisabledFalse
+   *
+   * @param stamp
+   * @return
+   */
+  public Set<Product> findAllByModifiedAtGreaterThanAndDeletedFalseAndDisabledFalse(Date stamp);
 }
