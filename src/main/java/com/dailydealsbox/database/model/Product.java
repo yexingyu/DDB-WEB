@@ -85,6 +85,10 @@ public class Product extends BaseEntityModel {
   @Column(name = "count_reviews", nullable = false, insertable = false, updatable = false)
   private int countReviews;
 
+  @NotNull
+  @Column(name = "reputation")
+  private double reputation;
+
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -209,11 +213,11 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * getReputation
+   * computeReputation
    *
    * @return
    */
-  public double getReputation() {
+  public void computeReputation() {
     double reputation = 0;
     if (this.getLinks() != null) {
       for (ProductLink link : this.getLinks()) {
@@ -221,7 +225,23 @@ public class Product extends BaseEntityModel {
         reputation = r > reputation ? r : reputation;
       }
     }
-    return reputation;
+    this.setReputation(reputation);
+  }
+
+  /**
+   * @return the reputation
+   */
+  public double getReputation() {
+    this.computeReputation();
+    return this.reputation;
+  }
+
+  /**
+   * @param reputation
+   *          the reputation to set
+   */
+  public void setReputation(double reputation) {
+    this.reputation = reputation;
   }
 
   /**

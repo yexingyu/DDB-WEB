@@ -33,6 +33,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -59,6 +61,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableJpaRepositories("com.dailydealsbox.database.repository")
 @EnableSwagger2
 @EnableCaching
+@EnableScheduling
 public class WebApplication extends SpringBootServletInitializer {
   public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
 
@@ -69,6 +72,11 @@ public class WebApplication extends SpringBootServletInitializer {
 
   //@Autowired
   //private RequestMappingHandlerAdapter adapter;
+
+  @Scheduled(initialDelay = 60000, fixedRate = 60000)
+  public void crondMinutely() {
+    logger.info("crondMinutely() is called.");
+  }
 
   @Bean
   WebMvcConfigurerAdapter getAdapter() {
@@ -198,19 +206,6 @@ public class WebApplication extends SpringBootServletInitializer {
     transactionManager.setEntityManagerFactory(this.entityManagerFactory().getObject());
     return transactionManager;
   }
-
-  /**
-   * mappingJackson2HttpMessageConverter
-   *
-   * @return
-   */
-  //  @Bean
-  //  public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-  //    ObjectMapper mapper = new ObjectMapper();
-  //    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-  //    MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(mapper);
-  //    return converter;
-  //  }
 
   /*
    * (non-Javadoc)
