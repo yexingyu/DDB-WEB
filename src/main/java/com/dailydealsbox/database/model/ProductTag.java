@@ -19,6 +19,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -26,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "product_tag")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductTag extends BaseModel {
 
   @NotNull

@@ -13,6 +13,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
 import com.dailydealsbox.database.model.base.BaseEntityModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -21,6 +24,8 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
 @Table(name = "product_review")
 @SQLDelete(sql = "update product_review set deleted = true where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductReview extends BaseEntityModel {
 
   @NotNull

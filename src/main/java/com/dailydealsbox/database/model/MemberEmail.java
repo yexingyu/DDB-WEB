@@ -21,6 +21,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.primitives.Longs;
 
 /**
@@ -29,6 +32,8 @@ import com.google.common.primitives.Longs;
 @Entity
 @Table(name = "member_email")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MemberEmail extends BaseModel {
 
   @NotNull

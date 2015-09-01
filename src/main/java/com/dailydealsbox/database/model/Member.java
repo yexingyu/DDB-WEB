@@ -29,6 +29,9 @@ import org.hibernate.annotations.Where;
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_LOGIN_TYPE;
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -38,6 +41,8 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
 @SQLDelete(sql = "update member set deleted = true where id = ?")
 @Where(clause = "deleted = 0")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Member extends BaseEntityModel {
 
   @NotNull

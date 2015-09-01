@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -19,6 +19,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.dailydealsbox.configuration.BaseEnum.LANGUAGE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -26,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "product_text")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductText extends BaseModel {
   @NotNull
   @Column(name = "language", nullable = false)
@@ -34,41 +39,41 @@ public class ProductText extends BaseModel {
 
   @NotNull
   @Column(name = "name", nullable = false, length = 256)
-  private String   name;
+  private String name;
 
   @NotNull
   @Column(name = "description", nullable = false, length = 256)
-  private String   description;
+  private String description;
 
   @Column(name = "warranty", length = 1024)
-  private String   warranty;
+  private String warranty;
 
   @Column(name = "return_policy", length = 1024)
-  private String   returnPolicy;
+  private String returnPolicy;
 
   @Column(name = "shipping_info", length = 254)
-  private String   shippingInfo;
+  private String shippingInfo;
 
   @Column(name = "coupon", length = 45)
-  private String   coupon;
+  private String coupon;
 
   @Column(name = "meta_title", length = 128)
-  private String   metaTitle;
+  private String metaTitle;
 
   @Column(name = "meta_keyword", length = 64)
-  private String   metaKeyword;
+  private String metaKeyword;
 
   @Column(name = "meta_description", length = 512)
-  private String   metaDescription;
+  private String metaDescription;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id")
-  private Product  product;
+  private Product product;
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {

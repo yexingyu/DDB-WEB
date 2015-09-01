@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -21,6 +21,9 @@ import com.dailydealsbox.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_ADDRESS_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -28,32 +31,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "order_address")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderAddress extends BaseModel {
 
   @NotNull
   @Column(name = "address1", nullable = false, length = 255)
-  private String              address1;
+  private String address1;
 
   @NotNull
   @Column(name = "address2", nullable = false, length = 255)
-  private String              address2;
+  private String address2;
 
   @NotNull
   @Column(name = "city", nullable = false, length = 255)
-  private String              city;
+  private String city;
 
   @NotNull
   @Column(name = "region", nullable = false, length = 255)
-  private String              region;
+  private String region;
 
   @NotNull
   @Column(name = "country", nullable = false)
   @Enumerated(EnumType.STRING)
-  private COUNTRY             country;
+  private COUNTRY country;
 
   @NotNull
   @Column(name = "post_code", nullable = false, length = 50)
-  private String              postCode;
+  private String postCode;
 
   @NotNull
   @Column(name = "type", nullable = false)
@@ -63,11 +68,11 @@ public class OrderAddress extends BaseModel {
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "order_id")
-  private Order               order;
+  private Order order;
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {

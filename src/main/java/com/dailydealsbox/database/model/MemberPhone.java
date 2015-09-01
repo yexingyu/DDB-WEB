@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -20,6 +20,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.dailydealsbox.configuration.BaseEnum.MEMBER_PHONE_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -27,15 +30,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "member_phone")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MemberPhone extends BaseModel {
 
   @NotNull
   @Column(name = "country_code", nullable = false, length = 10)
-  private String            countryCode;
+  private String countryCode;
 
   @NotNull
   @Column(name = "phone_number", nullable = false, length = 50)
-  private String            phoneNumber;
+  private String phoneNumber;
 
   @NotNull
   @Column(name = "type", nullable = false)
@@ -45,11 +50,11 @@ public class MemberPhone extends BaseModel {
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
-  private Member            member;
+  private Member member;
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -20,6 +20,9 @@ import com.dailydealsbox.configuration.BaseEnum.PRODUCT_TAX_TITLE;
 import com.dailydealsbox.configuration.BaseEnum.PRODUCT_TAX_TYPE;
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -27,9 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "product_tax")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductTax extends BaseModel {
-
-
 
   @NotNull
   @Column(name = "title", nullable = false)
@@ -39,16 +42,16 @@ public class ProductTax extends BaseModel {
   @NotNull
   @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private PRODUCT_TAX_TYPE  type;
+  private PRODUCT_TAX_TYPE type;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id")
-  private Product           product;
+  private Product product;
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {
@@ -99,6 +102,5 @@ public class ProductTax extends BaseModel {
   public void setProduct(Product product) {
     this.product = product;
   }
-
 
 }

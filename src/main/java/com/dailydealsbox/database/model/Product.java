@@ -31,6 +31,9 @@ import com.dailydealsbox.configuration.BaseEnum;
 import com.dailydealsbox.configuration.BaseEnum.CURRENCY;
 import com.dailydealsbox.configuration.GenericConfiguration;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -39,6 +42,8 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
 @Table(name = "product")
 @SQLDelete(sql = "update product set deleted = true where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product extends BaseEntityModel {
 
   @NotNull
@@ -205,7 +210,7 @@ public class Product extends BaseEntityModel {
 
   /**
    * getReputation
-   * 
+   *
    * @return
    */
   public double getReputation() {

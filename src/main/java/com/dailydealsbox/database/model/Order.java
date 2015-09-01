@@ -22,6 +22,9 @@ import org.hibernate.annotations.SQLDelete;
 
 import com.dailydealsbox.configuration.BaseEnum.ORDER_STATUS;
 import com.dailydealsbox.database.model.base.BaseEntityModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -30,167 +33,166 @@ import com.dailydealsbox.database.model.base.BaseEntityModel;
 @Table(name = "`order`")
 @SQLDelete(sql = "update `order` set deleted = true where id = ?")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Order extends BaseEntityModel {
   //customer info
   @NotNull
   @Column(name = "member_id", nullable = false)
-  private int               memberId;
+  private int memberId;
 
   @NotNull
   @Size(min = 4, max = 100)
   @Column(name = "first_name", nullable = false, length = 45)
-  private String            firstName;
+  private String firstName;
 
   @NotNull
   @Size(min = 4, max = 100)
   @Column(name = "last_name", nullable = false, length = 45)
-  private String            lastName;
+  private String lastName;
 
   @NotNull
   @Size(min = 4, max = 45)
   @Column(name = "email", nullable = false, length = 45)
-  private String            email;
+  private String email;
 
   @NotNull
   @Size(min = 4, max = 45)
   @Column(name = "company_email", nullable = false, length = 45)
-  private String            companyEmail;
+  private String companyEmail;
 
   @NotNull
   @Size(min = 4, max = 100)
   @Column(name = "phone", nullable = false, length = 45)
-  private String            phone;
+  private String phone;
 
   //product info
   @NotNull
   @Column(name = "product_id", nullable = false)
-  private int               productId;
+  private int productId;
 
   @NotNull
   @Size(min = 4, max = 512)
   @Column(name = "product_url", nullable = false, length = 512)
-  private String            proudctUrl;
+  private String proudctUrl;
 
   @NotNull
   @Size(min = 4, max = 512)
   @Column(name = "product_image", nullable = false, length = 512)
-  private String            proudctImage;
+  private String proudctImage;
 
   @NotNull
   @Column(name = "product_price", nullable = false)
-  private double            productPrice;
+  private double productPrice;
 
   @NotNull
   @Size(min = 4, max = 512)
   @Column(name = "product_name", nullable = false, length = 512)
-  private String            productName;
+  private String productName;
 
   @NotNull
   @Size(min = 4, max = 2048)
   @Column(name = "product_descritpion", nullable = false, length = 2048)
-  private String            productDescription;
+  private String productDescription;
 
   @NotNull
   @Size(min = 2, max = 128)
   @Column(name = "product_option_value", nullable = false, length = 128)
-  private String            productOptionValue;
+  private String productOptionValue;
 
   @NotNull
   @Column(name = "product_quantity", nullable = false)
-  private int               productQuantity;
+  private int productQuantity;
 
   //order info
   @NotNull
   @Column(name = "sub_total", nullable = false)
-  private double            subTotal;
+  private double subTotal;
 
   @NotNull
   @Size(min = 2, max = 64)
   @Column(name = "tax_type", nullable = false, length = 64)
-  private String            taxType;
+  private String taxType;
 
   //order tax info
   @NotNull
   @Column(name = "tax_rate", nullable = false)
-  private double            taxRate;
+  private double taxRate;
 
   @NotNull
   @Column(name = "tax_amount", nullable = false)
-  private double            taxAmount;
+  private double taxAmount;
 
   //order fee info
   @NotNull
   @Column(name = "shipping", nullable = false)
-  private double            shipping;
+  private double shipping;
 
   @NotNull
   @Size(min = 2, max = 64)
   @Column(name = "fee_type", nullable = false, length = 64)
-  private String            feeType;
+  private String feeType;
 
   @NotNull
   @Column(name = "fee_amout", nullable = false)
-  private double            feeAmout;
+  private double feeAmout;
 
   @NotNull
   @Column(name = "total", nullable = false)
-  private double            total;
+  private double total;
 
   //financial info
   @NotNull
   @Column(name = "down_payment", nullable = false)
-  private double            downPayment;
+  private double downPayment;
 
   @NotNull
   @Column(name = "principal", nullable = false)
-  private double            principal;
+  private double principal;
 
   @NotNull
   @Column(name = "apr", nullable = false)
-  private double            apr;
+  private double apr;
 
   @NotNull
   @Column(name = "number_of_payment", nullable = false)
-  private int               numberOfPayment;
+  private int numberOfPayment;
 
   @NotNull
   @Column(name = "monthly_payment", nullable = false)
-  private double            monthlyPayment;
+  private double monthlyPayment;
 
   @NotNull
   @Column(name = "interest", nullable = false)
-  private double            interest;
+  private double interest;
 
   @NotNull
   @Column(name = "paid_sequence_number", nullable = false)
-  private int               paiedSequenceNumber;
+  private int paiedSequenceNumber;
 
   //payment info
   @NotNull
   @Column(name = "paid_amount", nullable = false)
-  private double            paidAmount;
+  private double paidAmount;
 
   @NotNull
   @Column(name = "erned_interest", nullable = false)
-  private double            ernedInterest;
+  private double ernedInterest;
 
   @NotNull
   @Column(name = "paymentRecievable", nullable = false)
-  private double            paymentRecievable;
+  private double paymentRecievable;
 
   @NotNull
   @Column(name = "remaining_balance", nullable = false)
-  private double            remainingBalance;
+  private double remainingBalance;
 
   @NotNull
   @Column(name = "status", nullable = false)
   @Enumerated(EnumType.STRING)
-  private ORDER_STATUS      status;
+  private ORDER_STATUS status;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "order",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<OrderAddress> addresses;
 

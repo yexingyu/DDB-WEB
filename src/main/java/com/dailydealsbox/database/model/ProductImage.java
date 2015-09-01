@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.dailydealsbox.database.model;
 
@@ -17,6 +17,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * @author x_ye
@@ -24,22 +27,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "product_image")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductImage extends BaseModel {
 
   @NotNull
   @Column(name = "url", nullable = false, length = 512)
-  private String  url;
+  private String url;
 
   @Column(name = "alt", length = 256)
-  private String  alt;
+  private String alt;
 
   @NotNull
   @Column(name = "width", nullable = false)
-  private int     width;
+  private int width;
 
   @NotNull
   @Column(name = "height", nullable = false)
-  private int     height;
+  private int height;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
@@ -48,7 +53,7 @@ public class ProductImage extends BaseModel {
 
   /**
    * validate
-   * 
+   *
    * @return
    */
   public boolean validate() {
