@@ -53,7 +53,7 @@ import com.dailydealsbox.database.service.StoreService;
  * @author x_ye
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
   @Resource

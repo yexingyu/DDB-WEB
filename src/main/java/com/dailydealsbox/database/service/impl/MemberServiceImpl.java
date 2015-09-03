@@ -22,7 +22,7 @@ import com.dailydealsbox.database.service.MemberService;
  * @author x_ye
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class MemberServiceImpl implements MemberService {
 
   @Resource

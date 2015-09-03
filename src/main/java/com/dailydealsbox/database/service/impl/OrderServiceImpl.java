@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.configuration.BaseEnum.ORDER_STATUS;
 import com.dailydealsbox.database.model.Order;
@@ -18,6 +19,7 @@ import com.dailydealsbox.database.service.OrderService;
  * @author x_ye
  */
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
   @Autowired
   private OrderRepository repo;

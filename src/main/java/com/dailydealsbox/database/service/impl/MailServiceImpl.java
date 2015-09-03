@@ -19,7 +19,7 @@ import com.dailydealsbox.web.mail.SmtpMailSender;
  * @author x_ye
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class MailServiceImpl implements MailService {
 
   @Autowired
