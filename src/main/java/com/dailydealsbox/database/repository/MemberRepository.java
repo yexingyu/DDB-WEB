@@ -3,10 +3,13 @@
  */
 package com.dailydealsbox.database.repository;
 
+import java.util.Set;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.Member;
 
 /**
@@ -23,12 +26,20 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
   public Member findByAccount(String account);
 
   /**
-   * findByDeleted
-   * 
+   * findByRoleAndDeletedFalse
+   *
+   * @param role
+   * @return
+   */
+  public Set<Member> findByRole(MEMBER_ROLE role);
+
+  /**
+   * findByDelete
+   *
    * @param deleted
    * @param pageable
    * @return
    */
-  public Page<Member> findByDeleted(boolean deleted, Pageable pageable);
+  public Page<Member> findByDelete(boolean deleted, Pageable pageable);
 
 }

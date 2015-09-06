@@ -3,9 +3,12 @@
  */
 package com.dailydealsbox.database.service;
 
+import java.util.Set;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.database.model.Member;
 
 /**
@@ -30,7 +33,7 @@ public interface MemberService {
 
   /**
    * list
-   *
+   * 
    * @param deleted
    * @param pageable
    * @return
@@ -52,4 +55,12 @@ public interface MemberService {
    * @return
    */
   public Member insert(Member member);
+
+  /**
+   * listByRole
+   *
+   * @param role
+   * @return
+   */
+  public Set<Member> listByRole(MEMBER_ROLE role);
 }

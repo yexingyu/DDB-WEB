@@ -4,6 +4,7 @@
 package com.dailydealsbox.web.controller;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -347,8 +348,23 @@ public class ProductController {
     if (product.validate()) {
       AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
       Member me = this.memberService.get(token.getMemberId());
-      product.setAddBy(me.getId());
-      product.setAddByName(me.getFirstName());
+      if (me.getRole() == MEMBER_ROLE.ADMIN) {
+        Member contributor = me;
+        Set<Member> contributors = this.memberService.listByRole(MEMBER_ROLE.CONTRIBUTOR);
+        if (contributors != null) {
+          Member[] arrContributors = contributors.toArray(new Member[contributors.size()]);
+          int max = contributors.size() - 1;
+          int min = 0;
+          int randomNum = new Random().nextInt((max - min) + 1) + min;
+          contributor = arrContributors[randomNum];
+        }
+        product.setAddBy(contributor.getId());
+        product.setAddByName(contributor.getFirstName());
+
+      } else {
+        product.setAddBy(me.getId());
+        product.setAddByName(me.getFirstName());
+      }
       Product productFromDb = this.productService.insert(product);
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);
     } else {

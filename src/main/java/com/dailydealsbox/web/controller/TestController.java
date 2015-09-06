@@ -3,8 +3,6 @@
  */
 package com.dailydealsbox.web.controller;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.database.model.Product;
+import com.dailydealsbox.database.model.Member;
 import com.dailydealsbox.database.repository.ProductRepository;
 import com.dailydealsbox.database.repository.ProductTagRepository;
 import com.dailydealsbox.database.repository.StoreRepository;
@@ -82,12 +81,7 @@ public class TestController {
     //
     //    Page<Store> rst = this.storeService.list(ids, null, null, false, pageable);
 
-    Calendar c = Calendar.getInstance();
-    c.clear(Calendar.MILLISECOND);
-    c.clear(Calendar.SECOND);
-    c.clear(Calendar.MINUTE);
-    Date stamp = c.getTime();
-    Set<Product> rst = this.productRepo.findAllByModifiedAtGreaterThanAndDeletedFalseAndDisabledFalse(stamp);
+    Set<Member> rst = this.memberService.listByRole(MEMBER_ROLE.CONTRIBUTOR);
     return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, rst);
   }
 
