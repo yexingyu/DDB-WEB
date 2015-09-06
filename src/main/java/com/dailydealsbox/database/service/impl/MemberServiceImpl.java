@@ -122,7 +122,7 @@ public class MemberServiceImpl implements MemberService {
    */
   @Override
   public Page<Member> list(boolean deleted, Pageable pageable) {
-    return this.repo.findByDelete(deleted, pageable);
+    return this.repo.findByDeleted(deleted, pageable);
   }
 
   /*

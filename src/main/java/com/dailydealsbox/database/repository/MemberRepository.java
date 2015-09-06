@@ -34,12 +34,12 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
   public Set<Member> findByRole(MEMBER_ROLE role);
 
   /**
-   * findByDelete
+   * findByDeleted
    *
    * @param deleted
    * @param pageable
    * @return
    */
-  public Page<Member> findByDelete(boolean deleted, Pageable pageable);
+  public Page<Member> findByDeleted(boolean deleted, Pageable pageable);
 
 }
