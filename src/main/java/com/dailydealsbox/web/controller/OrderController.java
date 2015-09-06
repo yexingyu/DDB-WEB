@@ -87,9 +87,11 @@ public class OrderController {
   @DDBAuthorization
   public GenericResponseData list(
       @ApiParam(value = "filter: is deleted", required = false, defaultValue = "false") @RequestParam(value = "deleted", required = false, defaultValue = "false") boolean deleted,
-      @ApiIgnore Pageable pageable, HttpServletRequest request) {
+      @ApiIgnore Pageable pageable, HttpServletRequest request) throws Exception {
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
     Page<Order> orders = this.orderService.listByMemberId(token.getMemberId(), deleted, pageable);
+    System.out.println(orders);
+
     if (orders == null || orders.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {

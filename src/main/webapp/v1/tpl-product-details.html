@@ -1,54 +1,54 @@
 <div class="container">
-	<div class="row">
+    <div class="row">
         <div class="col-sm-12">
-        	<span><b>Tags:</b></span>
-        	<span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"> <a><b>{{tag.value}}</b></a></span>
-        </div>       
-	</div>
- 	
-	
-	<div class="row">
+            <span><b>Tags:</b></span>
+            <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"> <a><b>{{tag.value}}</b></a></span>
+        </div>
+    </div>
+
+
+    <div class="row">
         <div class="col-sm-9">
-			<h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3>
+            <h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3>
         </div>
         <div class="col-sm-3">
-                                <img ng-src="./images/favicon/{{item.store.favicon}}">
-                                <span><a> {{item.store.website}}</a></span>
-                                <button type="button" class="btn btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
-                                <button type="button" class="btn btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
-                                <a href=“{{item.store.dealPage}}?>Deal Page</a>
-        </div>        
-        
+            <img ng-src="./images/favicon/{{item.store.favicon}}">
+            <span><a> {{item.store.website}}</a></span>
+            <button type="button" class="btn btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
+            <button type="button" class="btn btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
+            <a href=“{{item.store.dealPage}}?>Deal Page</a>
+        </div>
 
-	</div>
-	
+
+    </div>
+
     <div class="row">
         <div class="col-sm-6">
-		    <div class="main-image sp-wrap col-lg-12 no-padding" style="display: inline-block;">
-		      <div class="sp-large">
-		        <img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img">
-		      </div>
-		    </div>
+            <div class="main-image sp-wrap col-lg-12 no-padding" style="display: inline-block;">
+                <div class="sp-large">
+                    <img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img">
+                </div>
+            </div>
         </div>
-        <div class="col-sm-6">      
-          <div class="row">
-	          <div class="col-sm-12">
-	          <h3 class="price_RoyalBlue">${{item.currentPrice}}</h3>
-	          </div>         
-          </div>
-          <div class="row">
-	          <div class="col-sm-12">
-						<form class="form-inline">
-						  <div class="form-group">	          
-	                      <label>Options:</label> 
-	                      <select ng-model="option" class="form-control">
-                           <option value="{{option.value}}"  ng-selected="key === option" ng-repeat="option in item.options">{{option.value}}</option>
-                          </select> 
-                       </div>
-                       </form>    
-	          </div>         
-          </div>            
-          <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="price_RoyalBlue">${{item.currentPrice}}</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>Options:</label>
+                            <select ng-model="option" class="form-control">
+                                <option value="{{option.value}}" ng-selected="key === option" ng-repeat="option in item.options">{{option.value}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
                         <span ng-repeat="link in item.links ">
                             <div class="col-xs-8">
                               <span class="rating" ng-if="link.rating>4.75 && link.rating<=5">
@@ -85,131 +85,132 @@
                                   <i class="fa fa-star fa-3"></i>
                                   <i class="fa fa-star-o fa-3"></i> 
                                   <i class="fa fa-star-o fa-3"></i>                           
-                              </span>                                                                                           
-                              <b>{{link.rating}}</b> of <b>{{link.reviewNumber}}</b> reviews                                                            
+                              </span>
+                                <b>{{link.rating}}</b> of <b>{{link.reviewNumber}}</b> reviews
                             </div>
                         
                             <div class="col-xs-4">
                                 <span><a href="{{link.url}}">by {{link.name}}</a> </span>
                             </div>
-                        </span>		            
-          
-          </div>
-          <div>
-          <hr>
-          </div>
-          <div class="row">
- 	          <div class="col-sm-12">
-	          <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description}}</p>
-	          </div>         
-          </div>        
-         
-          <div class="row">
-	          <div class="col-sm-12">
-		            <div class="row">
-		
-		                <div class="col-sm-12">
-		                    <div class="panel panel-primary">
-		                        <div class="panel-heading">Down Payment
-		                        </div>
-		                        <div class="row">
-		                            <div class="col-sm-12">
-		                                <h4 class="price_RoyalBlue">${{item.downpayment}} by Interac email money transfer</h4>
-		                            </div>
-		                        </div>
-		
-		                    </div>
-		
-		                </div>
-		            </div>
-	          </div>         
-          </div>
-          
-          <div class="row">
-	          <div class="col-sm-12">
-		            <div class="row">
-		
-		                <div class="col-sm-12">
-		                    <div class="panel panel-primary">
-		                        <div class="panel-heading">Monthly Payments
-		                        </div>
-		                        <div class="row">
-		                            <div class="col-sm-12">
-		                                <h4 class="price_RoyalBlue">${{item.monthlyPayment}} * 12M by Post Date Cheque</h4>
-		                            </div>
-		                        </div>
-		
-		                    </div>
-		
-		                </div>
-		            </div>
-	          </div>         
-          </div>                     
-          <div class="row">
-	          <div class="col-sm-12">
-	          <a href="{{item.url}}">Deal Link</a>
-	          </div>         
-          </div> 	
-          <div class="row">
- 	          <div class="col-sm-12" >
-          
-	 	          <div class="pull-right">
-					<a href="#/product/{{item.id}}/order" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-calendar"></span> Pay Monthly</a>
-		          </div>
-	          </div>                       
-      
-          </div>      
-      
+                        </span>
+
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Down Payment
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="price_RoyalBlue">${{item.downpayment}} by Interac email money transfer</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Monthly Payments
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="price_RoyalBlue">${{item.monthlyPayment}} * 12M by Post Date Cheque</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{item.url}}">Deal Link</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="pull-right">
+                        <a href="#/product/{{item.id}}/order" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-calendar"></span> Pay Monthly</a>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
     <div class="row">
-    	          <div class="col-sm-12" >
-	 	          <div class="pull-left">
-				      <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
-				        popover-template="$root.popoverTemplate.reviewTemplateUrl"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
+        <div class="col-sm-12">
+            <div class="pull-left">
+                <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span></a> <a popover-placement="top"
+                                                                                                                                                                          popover-template="$root.popoverTemplate.reviewTemplateUrl"><span
+                class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">{{item.countReviews}}</span></a>
 
-		          </div>
-	          </div>   
- 	          <div class="col-sm-12" >
-              	<hr>
- 	          </div>    
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <hr>
+        </div>
     </div>
     <div class="row">
- 	          <div class="col-sm-12" >
-				<div class="panel panel-info">
-				      <div class="panel-heading">
-				        <h3 class="panel-title">Reputations:</h3>
-				      </div>
-				      <div class="panel-body">
-				        <div ng-repeat="link in item.links"><a href="{{link.url}}" target="_blank">{{link.name}}</a> - {{link.rating}} of  {{link.reviewNumber}} Reviews</div>  
-				      </div>
-			  	</div>
- 	          </div>    
-    </div>	        
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reputations:</h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-repeat="link in item.links"><a href="{{link.url}}" target="_blank">{{link.name}}</a> - {{link.rating}} of {{link.reviewNumber}} Reviews</div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
- 	          <div class="col-sm-12" >
-				<div class="panel panel-info">
-				      <div class="panel-heading">
-				        <h3 class="panel-title">Comments:</h3>
-				      </div>
-				      <div class="panel-body">
-				        <div ng-repeat="review in item.reviews.content">Rating: {{review.rating}} - {{review.content}}</div>  
-				      </div>
-			  	</div>
- 	          </div>    
-    </div>	
-    
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Comments:</h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-repeat="review in item.reviews.content">Rating: {{review.rating}} - {{review.content}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
- 	          <div class="col-sm-12" >
-				<div class="panel panel-info">
-				      <div class="panel-heading">
-				        <h3 class="panel-title">More To Explore</h3>
-				      </div>
-				      <div class="panel-body">
-				        You may also interested in these products.
-				      </div>
-			  	</div>
- 	          </div>    
-    </div>	    
-    	
-</div>		
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">More To Explore</h3>
+                </div>
+                <div class="panel-body">
+                    You may also interested in these products.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

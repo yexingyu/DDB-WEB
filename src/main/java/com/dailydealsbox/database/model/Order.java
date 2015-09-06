@@ -180,7 +180,7 @@ public class Order extends BaseEntityModel {
   private double ernedInterest;
 
   @NotNull
-  @Column(name = "paymentRecievable", nullable = false)
+  @Column(name = "payment_recievable", nullable = false)
   private double paymentRecievable;
 
   @NotNull
@@ -447,6 +447,28 @@ public class Order extends BaseEntityModel {
    */
   public void setTaxType(String taxType) {
     this.taxType = taxType;
+  }
+
+  /**
+   * @return the productName
+   */
+  public String getProductName() {
+    return this.productName;
+  }
+
+  /**
+   * @param productName
+   *          the productName to set
+   */
+  public void setProductName(String productName) {
+    this.productName = productName;
+  }
+
+  /**
+   * @return the paiedSequenceNumber
+   */
+  public int getPaiedSequenceNumber() {
+    return this.paiedSequenceNumber;
   }
 
   /**
