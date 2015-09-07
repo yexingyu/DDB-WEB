@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dailydealsbox.configuration.BaseEnum;
-import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.web.base.GenericResponseData;
+import com.dailydealsbox.web.configuration.BaseEnum;
+import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

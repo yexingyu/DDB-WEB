@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dailydealsbox.configuration.BaseEnum;
 import com.dailydealsbox.web.base.GenericResponseData;
+import com.dailydealsbox.web.configuration.BaseEnum;
 
 import springfox.documentation.annotations.ApiIgnore;
 

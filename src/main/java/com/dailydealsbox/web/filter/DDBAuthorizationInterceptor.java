@@ -19,10 +19,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseAuthorization;
+import com.dailydealsbox.web.database.service.AuthorizationService;
 
 /**
  * @author x_ye

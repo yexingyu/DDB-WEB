@@ -17,9 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.dailydealsbox.database.service.AuthorizationService;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseAuthorization;
+import com.dailydealsbox.web.database.service.AuthorizationService;
 
 /**
  * @author x_ye

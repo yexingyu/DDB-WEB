@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
-import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.database.model.Member;
-import com.dailydealsbox.database.repository.ProductRepository;
-import com.dailydealsbox.database.repository.ProductTagRepository;
-import com.dailydealsbox.database.repository.StoreRepository;
-import com.dailydealsbox.database.service.MailService;
-import com.dailydealsbox.database.service.MemberService;
-import com.dailydealsbox.database.service.ProductService;
-import com.dailydealsbox.database.service.StoreService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
+import com.dailydealsbox.web.configuration.BaseEnum.MEMBER_ROLE;
+import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
+import com.dailydealsbox.web.database.model.Member;
+import com.dailydealsbox.web.database.repository.ProductRepository;
+import com.dailydealsbox.web.database.repository.ProductTagRepository;
+import com.dailydealsbox.web.database.repository.StoreRepository;
+import com.dailydealsbox.web.database.service.MailService;
+import com.dailydealsbox.web.database.service.MemberService;
+import com.dailydealsbox.web.database.service.ProductService;
+import com.dailydealsbox.web.database.service.StoreService;
 
 import springfox.documentation.annotations.ApiIgnore;
 

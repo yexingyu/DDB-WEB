@@ -3,15 +3,9 @@
  */
 package com.dailydealsbox.web;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 
-import javax.persistence.SharedCacheMode;
-import javax.sql.DataSource;
-
-import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,27 +15,19 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
-import com.dailydealsbox.database.service.ProductService;
+import com.dailydealsbox.web.database.service.ProductService;
 import com.dailydealsbox.web.filter.DDBAuthorizationInterceptor;
 
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -56,24 +42,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author x_ye
  */
 @SpringBootApplication
-@ComponentScan("com.dailydealsbox")
 @EnableTransactionManagement
-@PropertySource(value = { "classpath:database.properties" })
-@EnableJpaRepositories("com.dailydealsbox.database.repository")
+@EnableJpaRepositories("com.dailydealsbox.web.database.repository")
 @EnableSwagger2
-@EnableCaching
 @EnableScheduling
 public class WebApplication extends SpringBootServletInitializer {
   public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
 
   @Autowired
-  private Environment         environment;
-  @Autowired
   DDBAuthorizationInterceptor authInterceptor;
   @Autowired
   ProductService              productService;
-  //@Autowired
-  //private RequestMappingHandlerAdapter adapter;
 
   /**
    * crondMinutely
@@ -97,6 +76,29 @@ public class WebApplication extends SpringBootServletInitializer {
       e.printStackTrace();
     }
     logger.info("crondHourly() is called.");
+  }
+
+  /**
+   * getEhCacheManager
+   *
+   * @return
+   */
+  @Bean
+  public CacheManager getEhCacheManager() {
+    return new EhCacheCacheManager(this.getEhCacheFactory().getObject());
+  }
+
+  /**
+   * getEhCacheFactory
+   *
+   * @return
+   */
+  @Bean
+  public EhCacheManagerFactoryBean getEhCacheFactory() {
+    EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
+    factoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+    factoryBean.setShared(true);
+    return factoryBean;
   }
 
   /**
@@ -139,98 +141,6 @@ public class WebApplication extends SpringBootServletInitializer {
     SimpleCacheManager cacheManager = new SimpleCacheManager();
     cacheManager.setCaches(caches);
     return cacheManager;
-  }
-
-  /**
-   * faviconHandlerMapping
-   *
-   * @return
-   */
-  @Bean
-  public SimpleUrlHandlerMapping faviconHandlerMapping() {
-    SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
-    mapping.setOrder(Integer.MIN_VALUE);
-    mapping.setUrlMap(Collections.singletonMap("favicon.ico", this.faviconRequestHandler()));
-    return mapping;
-  }
-
-  /**
-   * faviconRequestHandler
-   *
-   * @return
-   */
-  @Bean
-  protected ResourceHttpRequestHandler faviconRequestHandler() {
-    ResourceHttpRequestHandler requestHandler = new ResourceHttpRequestHandler();
-    requestHandler.setLocations(Arrays.<Resource> asList(new ClassPathResource("/")));
-    return requestHandler;
-  }
-
-  /**
-   * dataSource
-   *
-   * @return
-   */
-  @Bean
-  public DataSource dataSource() {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName(this.environment.getRequiredProperty("jdbc.driverClassName"));
-    dataSource.setUrl(this.environment.getRequiredProperty("jdbc.url"));
-    dataSource.setUsername(this.environment.getRequiredProperty("jdbc.username"));
-    dataSource.setPassword(this.environment.getRequiredProperty("jdbc.password"));
-    return dataSource;
-  }
-
-  /**
-   * entityManagerFactory
-   *
-   * @return
-   */
-  @Bean
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-    entityManagerFactoryBean.setDataSource(this.dataSource());
-    entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-    entityManagerFactoryBean.setPackagesToScan("com.dailydealsbox.database.model");
-    entityManagerFactoryBean.setJpaProperties(this.hibernateProperties());
-    entityManagerFactoryBean.setSharedCacheMode(SharedCacheMode.ALL);
-    return entityManagerFactoryBean;
-  }
-
-  /**
-   * hibernateProperties
-   *
-   * @return
-   */
-  private Properties hibernateProperties() {
-    Properties properties = new Properties();
-
-    // hibernate connection settings
-    properties.put("hibernate.dialect", this.environment.getRequiredProperty("hibernate.dialect"));
-    properties.put("hibernate.show_sql", this.environment.getRequiredProperty("hibernate.show_sql"));
-    properties.put("hibernate.format_sql", this.environment.getRequiredProperty("hibernate.format_sql"));
-    properties.put("hibernate.enable_lazy_load_no_trans", true);
-
-    // Second Cache Settings
-    properties.put("hibernate.cache.provider_class", "org.hibernate.cache.EhCacheProvider");
-    properties.put("hibernate.cache.use_structured_entries", true);
-    properties.put("hibernate.cache.use_query_cache", true);
-    properties.put("hibernate.cache.use_second_level_cache", true);
-    properties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
-    properties.put("net.sf.ehcache.configurationResourceName", "ehcache.xml");
-    return properties;
-  }
-
-  /**
-   * transactionManager
-   *
-   * @return
-   */
-  @Bean
-  public JpaTransactionManager transactionManager() {
-    JpaTransactionManager transactionManager = new JpaTransactionManager();
-    transactionManager.setEntityManagerFactory(this.entityManagerFactory().getObject());
-    return transactionManager;
   }
 
   /*

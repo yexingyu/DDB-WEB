@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dailydealsbox.configuration.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.database.model.Member;
-import com.dailydealsbox.database.service.AuthorizationService;
-import com.dailydealsbox.database.service.MemberService;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
+import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
+import com.dailydealsbox.web.database.model.Member;
+import com.dailydealsbox.web.database.service.AuthorizationService;
+import com.dailydealsbox.web.database.service.MemberService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

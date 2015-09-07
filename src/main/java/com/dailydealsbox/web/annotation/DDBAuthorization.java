@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 
 import org.springframework.web.bind.annotation.Mapping;
 
-import com.dailydealsbox.configuration.BaseEnum.MEMBER_ROLE;
+import com.dailydealsbox.web.configuration.BaseEnum.MEMBER_ROLE;
 
 /**
  * @author x_ye
