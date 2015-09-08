@@ -101,5 +101,13 @@ h4 a {
 
 	border-bottom: 1px solid #ccc;
 	border-bottom-width: 90%;
-}	
+}
+.header-search{
+	width: 670px;
+}
+.header-container {
+	margin-right: 5px;
+    margin-left: 5px;
+}
+
 }

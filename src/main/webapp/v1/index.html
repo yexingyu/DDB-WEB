@@ -25,39 +25,96 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="navbar-header pull-left">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Daily Deals Box</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+	      <form class="navbar-form navbar-left" role="search">
+
+			<div class="input-group">
+		      <input type="text" class="form-control header-search" size="35" placeholder="">
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+		      </span>
+		    </div><!-- /input-group -->
+
+	      </form>
+          <ul class="nav navbar-nav navbar-right pull-right">
+            <li><a href="../navbar-static-top/">Labor Day</a></li>
+            <li><a href="../navbar-static-top/">End of Summer</a></li>
+            <li><a href="../navbar-static-top/">Back to School</a></li>
+            <li><a href="../navbar-static-top/">Outdoor Winter</a></li>
+            <li><a href="../navbar-static-top/">Extreme Weather</a></li>
+            <li>
+				<!-- Go to www.addthis.com/dashboard to customize your tools -->
+				<div class="addthis_sharing_toolbox pull-right"></div>
+            </li>                                                  
+          </ul>  
+
+        </div><!--/.nav-collapse -->
+
+    </nav>
+
+
 <div class="navbar-wrapper" ng-controller="NavBarCtrl">
-    <div class="container">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
-                        class="icon-bar"></span> <span class="icon-bar"></span>
-                    </button>
-				    <a class="navbar-brand" href="#/all">DDB</a>
-                </div>
 
-                <div id="navbar" class="navbar-collapse collapse">
-			        <div class="col-sm-3 col-md-3 pull-left">
-			        <form class="navbar-form" role="search">
-			        <div class="input-group">
-			            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-			            <div class="input-group-btn">
-			                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-			            </div>
-			        </div>
-			        </form>
-			        </div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="#/all"><span class="glyphicon glyphicon-globe"></span>National</a></li>
+        <nav class="navbar">
+
+			        <div class="col-sm-2">
+			          <ul class="nav navbar-nav">
+			            <li class="dropdown">
+			              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deals By Category<span class="caret"></span></a>
+			              <ul class="dropdown-menu">
+			                <li><a href="#/all">All</a></li>
+			                <li role="separator" class="divider"></li>
+			                <li class="dropdown-header">Electroics</li>
+			                <li><a href="#/all?tags=g4,s6%20edge,smart%20phone,iphone%206">Phones</a></li>
+			                <li><a href="#/all?tags=macbook,laptop">Laptops</a></li>
+			                <li><a href="#/all?tags=tablet,ipad,%20ipad%20air">Tablets,iPad</a></li>
+			                <li><a href="tags=smart%20tv,led%20tv,4k">TVs</a></li>
+			                <li><a href="#/all?tags=dslr,dslr%20camera">Cameras</a></li>			                
+			                <li><a href="#/all?tags=Xbox%20One">Gaming</a></li>
+			                <li><a href="#/all?tags=headphones">Headphones</a></li>
+			                <li><a href="#/all?tags=%20bluetooth%20speaker,wireless%20speaker,sound%20system">Sound</a></li>			                
+			                
+			                <li role="separator" class="divider"></li>
+			                <li class="dropdown-header">Fashion</li>
+			                <li><a href="#">Clothings</a></li>
+			                <li><a href="#">Shoes</a></li>
+			                <li><a href="#">Handbags</a></li>
+			                
+			                
+			              </ul>
+			            </li>
+			          </ul>   
+			        </div >
+			        <div class="col-sm-7">
+			        <ul class="nav navbar-nav">
+			            <li><a href="#/all"><span class="glyphicon glyphicon-globe"></span>Online</a></li>
                         <li><a href="#/local"><span class="glyphicon glyphicon-map-marker"></span>Local</a></li>
-                        <li><a href="#/store"><span class="glyphicon glyphicons-shop"></span>Stores</a></li>                        
-                        <li><a href="#/following"><span class="glyphicon glyphicon-plus"></span>Following</a></li>
+                        <li><a href="#/store"><span class="glyphicon glyphicons-shop"></span>Your Stores</a></li>                        
+                        <li><a href="#/following"><span class="glyphicon glyphicon-plus"></span>Your Following</a></li>
                         <li><a href="#/following"><span class="glyphicon glyphicon-share"></span>Sharing</a></li>
-
-
-                        <li class="dropdown ng-hide" ng-show="$root.profile.account.trim()">
+                        <li>
+                            <a ng-click="switchLanguage()">
+                                <span ng-show="$root.language.language === 'EN'">en français</span>
+                                <span class="ng-hide" ng-show="$root.language.language === 'FR'">in English</span>
+                            </a>
+                        </li>
+			        </ul>
+			        </div>
+			        <div class="col-sm-3">
+			        <ul class="nav navbar-nav">
+			             <li class="dropdown ng-hide" ng-show="$root.profile.account.trim()">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{$root.profile.firstName + $root.profile.lastName}}</a>
                             <ul class="dropdown-menu">
                                 <li><a href="#/order/me">My Orders</a></li>
@@ -68,26 +125,16 @@
                             </ul>
                         </li>
                         <li ng-show="!$root.profile.account.trim()"><a ng-click="login()"><span class="glyphicon glyphicon-user"></span>Log In</a></li>
-                        <li>
-                            <a ng-click="switchLanguage()">
-                                <span ng-show="$root.language.language === 'EN'"><img src="./images/canada.png">FR</span>
-                                <span class="ng-hide" ng-show="$root.language.language === 'FR'"><img src="./images/canada.png">EN</span>
-                            </a>
-                        </li>
-                        <li>
-							<!-- Go to www.addthis.com/dashboard to customize your tools -->
-							<div class="addthis_sharing_toolbox pull-right"></div>
-                        </li>                                                    
-                    </ul>
-                </div>
-            </div>
+                        <li><a>Like List</a></li>
+			        </ul>
+			        </div>
         </nav>
-    </div>
+
 </div>
 <!-- Marketing messaging and featurettes
   ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
-<div class="container marketing">
+<div class="container">
     <div ng-view></div>
     <!-- FOOTER -->
     <footer>
