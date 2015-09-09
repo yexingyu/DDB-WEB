@@ -9,14 +9,14 @@
 
     <div class="row">
         <div class="col-sm-9">
-            <a href="{{item.url}}"><h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3></a>
+            <a href="{{item.url}}" target="_blank"><h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3></a>
         </div>
         <div class="col-sm-3">
             <img ng-src="./images/favicon/{{item.store.favicon}}">
             <span><a> {{item.store.website}}</a></span>
             <button type="button" class="btn btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
             <button type="button" class="btn btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
-            <a href="{{item.store.dealPage}}">Deal Page</a>
+            <a href="{{item.store.dealPage}}" target="_blank">Deal Page</a>
         </div>
 
 
@@ -26,7 +26,7 @@
         <div class="col-sm-6">
             <div class="main-image sp-wrap col-lg-12 no-padding" style="display: inline-block;">
                 <div class="sp-large">
-                    <a href="{{item.url}}"><img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img"></a>
+                    <a href="{{item.url}}" target="_blank"><img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img"></a>
                 </div>
             </div>
         </div>
@@ -90,7 +90,7 @@
                             </div>
                         
                             <div class="col-xs-4">
-                                <span><a href="{{link.url}}">by {{link.name}}</a> </span>
+                                <span><a href="{{link.url}}" target="_blank">by {{link.name}}</a> </span>
                             </div>
                         </span>
 
@@ -157,7 +157,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{{item.url}}">Buy it from the {{item.store.website}}</a>
+                    <a href="{{item.url}}" target="_blank">Buy it from the {{item.store.website}}</a>
                 </div>
             </div>
 
