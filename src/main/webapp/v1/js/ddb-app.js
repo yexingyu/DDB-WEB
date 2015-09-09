@@ -62,6 +62,11 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
             templateUrl: 'tpl-store.html',
             controller: 'StoreCtrl'
 
+        }).when('/share', {
+            templateUrl: 'tpl-share.html',
+            controller: 'StoreCtrl'
+            	
+            	
         }).otherwise({
             redirectTo: '/all'
         });
