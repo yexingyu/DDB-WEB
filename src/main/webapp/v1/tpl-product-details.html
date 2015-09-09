@@ -9,14 +9,14 @@
 
     <div class="row">
         <div class="col-sm-9">
-            <h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3>
+            <a href="{{item.url}}"><h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3></a>
         </div>
         <div class="col-sm-3">
             <img ng-src="./images/favicon/{{item.store.favicon}}">
             <span><a> {{item.store.website}}</a></span>
             <button type="button" class="btn btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
             <button type="button" class="btn btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
-            <a href=“{{item.store.dealPage}}?>Deal Page</a>
+            <a href="{{item.store.dealPage}}">Deal Page</a>
         </div>
 
 
@@ -26,7 +26,7 @@
         <div class="col-sm-6">
             <div class="main-image sp-wrap col-lg-12 no-padding" style="display: inline-block;">
                 <div class="sp-large">
-                    <img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img">
+                    <a href="{{item.url}}"><img ng-src="{{item.images[0].url}}" class="img-responsive" alt="img"></a>
                 </div>
             </div>
         </div>
@@ -147,7 +147,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{{item.url}}">Deal Link</a>
+                    <a href="{{item.url}}">Buy it from the {{item.store.website}}</a>
                 </div>
             </div>
             <div class="row">
