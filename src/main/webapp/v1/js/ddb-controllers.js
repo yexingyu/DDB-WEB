@@ -633,7 +633,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 }
             });
         };
-        $scope.pagination = {'page': 1, 'size': 9, 'sort': 'createdAt,desc'};
+        $scope.pagination = {'page': 1, 'size': 16, 'sort': 'createdAt,desc'};
         $scope.loading();
 
         // load more product
