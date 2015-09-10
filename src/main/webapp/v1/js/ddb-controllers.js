@@ -22,7 +22,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         $scope.logout = function () {
             CookieService.logout();
             $scope.$root.profile = {};
-            $location.path('/home');
+            $location.path('/all');
         };
 
         // switch language
@@ -91,6 +91,8 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                     // register success
                     console.log('register success');
                     $scope.isRegisterFail = false;
+                    $modalInstance.close(response.data);
+                    $location.path('/welcome');
                 } else {
                     // register fail
                     console.log('register fail');
@@ -404,7 +406,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                     $scope.product = ProductModel.fix(response.data);
                     $scope.order.productId = $scope.product.id;
                 } else {
-                    $location.path('/home');
+                    $location.path('/all');
                 }
             });
 
@@ -423,7 +425,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                         $window.history.back();
                     });
                 } else {
-                    $location.path('/home');
+                    $location.path('/all');
                 }
             });
 
@@ -475,7 +477,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                     $location.path('/order/' + $scope.order.id + '/confirm');
                 } else {
                     // fail
-                    $location.path('/home');
+                    $location.path('/all');
                 }
             });
         };
@@ -684,6 +686,12 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      */
     .controller('LocalCtrl', ['$scope', '$location', 'ProductService', function ($scope, $location, ProductService) {
     }])
+    
+    /*
+     * WelcomeCtrl definition
+     */
+    .controller('WelcomeCtrl', ['$scope', '$location', 'ProductService','LoginService', function ($scope, $location, ProductService, LoginService) {
+    }])    
 
     /*
      * AboutCtrl definition

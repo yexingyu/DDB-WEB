@@ -69,6 +69,10 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         }).when('/category', {
             templateUrl: 'tpl-category.html',
             controller: 'CategoryCtrl'            	
+
+        }).when('/welcome', {
+            templateUrl: 'tpl-welcome.html',
+            controller: 'WelcomeCtrl' 
             	
         }).otherwise({
             redirectTo: '/all'
