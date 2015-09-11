@@ -3,6 +3,12 @@
    <div class="row">
 	   <div class="col-sm-12">
 	   	<h3>Following</h3>
+	    <div ng-show="!$root.profile.account.trim()">
+	    <p> Please Log In or click "+Follow" and start to follow your favorite stores.</p>
+	    </div>
+	    <div ng-show="$root.profile.account.trim()">
+	    <p> Stores you are following.</p>
+	    </div> 		     	   	
 	   </div>
    </div>  
    <!-- following store list-->
@@ -45,8 +51,8 @@
 	                     <i class="fa fa-user">{{store.countFollowings}}</i>
 	                </div>	                	                
 	                <div class="col-xs-5">
-	                    <a type="button" class="btn btn-sm btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
-	                    <a type="button" class="btn btn-sm btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
+	                    <a type="button" class="btn btn-sm btn-success" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
+	                    <a type="button" class="btn btn-sm btn-danger" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
 	                     
 	                </div>	                
 	            </div>            
@@ -59,7 +65,15 @@
     <!--to follow store title-->
    <div class="row">
 	   <div class="col-sm-12">
-	   		<h3>Explore More</h3>
+	        <div ng-show="!$root.profile.account.trim()">
+	   			<h3>All Stores</h3>
+	   			<p>Click "+Follow" button and start following.</p>
+	   		</div>
+	        <div ng-show="$root.profile.account.trim()">
+	   			<h3>Explore More</h3>
+	   			<p>Click "+follow" button and receive more deals.</p>
+	   		</div>	   		
+	   		
 	   </div>
    </div>
  <!--to follow store list-->     
@@ -102,8 +116,8 @@
 	                     <i class="fa fa-user">{{store.countFollowings}}</i>
 	                </div>	                	                
 	                <div class="col-xs-5">
-	                    <a type="button" class="btn btn-sm btn-primary" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
-	                    <a type="button" class="btn btn-sm btn-primary" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
+	                    <a type="button" class="btn btn-sm btn-success" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
+	                    <a type="button" class="btn btn-sm btn-danger" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
 	                     
 	                </div>	                
 	            </div>            
