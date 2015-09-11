@@ -115,24 +115,6 @@ public class StoreServiceImpl implements StoreService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.database.service.StoreService#list(java.util.Set, java.util.Set, com.dailydealsbox.configuration.BaseEnum.STORE_TYPE, boolean,
-   * org.springframework.data.domain.Pageable)
-   */
-  //  @Override
-  //  public Page<Store> list(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted, Pageable pageable) {
-  //    TypedQuery<Store> query = this.buildQuery(ids, countries, type, deleted);
-  //
-  //    // Here you have to count the total size of the result
-  //    int totalRows = query.getResultList().size();
-  //    query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
-  //    query.setMaxResults(pageable.getPageSize());
-  //
-  //    Page<Store> page = new PageImpl<Store>(query.getResultList(), pageable, totalRows);
-  //    return page;
-  //  }
-
-  /*
-   * (non-Javadoc)
    * @see com.dailydealsbox.database.service.StoreService#listAll(java.util.Set, java.util.Set, com.dailydealsbox.configuration.BaseEnum.STORE_TYPE, boolean)
    */
   @Override
