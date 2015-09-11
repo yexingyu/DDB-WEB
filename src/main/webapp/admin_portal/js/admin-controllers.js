@@ -242,6 +242,14 @@ angular
                                 value : ""
                             }, {
                                 value : ""
+                            }, {
+                                value : ""
+                            }, {
+                                value : ""
+                            }, {
+                                value : ""
+                            }, {
+                                value : ""
                             }];
                             
                             $scope.tag_hot = [{
@@ -327,17 +335,22 @@ angular
 
 
 
-                                        $scope.tag_hot = [{
-                                            value : ""
-                                        }];
-                                        
+
                                         
                                         
                                         $scope.product.tags = [ {
                                             value : ""
                                         }, {
                                             value : ""
-                                        } ];
+                                        }, {
+                                            value : ""
+                                        }, {
+                                            value : ""
+                                        }, {
+                                            value : ""
+                                        }, {
+                                            value : ""
+                                        }     ];
 
                                         $scope.product.links = [ {
                                             url : "",

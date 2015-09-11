@@ -277,10 +277,9 @@ public class SpiderServiceImpl implements SpiderService {
       String fee2String = doc.select(this.HTML_PATH_EBAYCOM.get("import")).first().text();
       double fee1Double = 0.00;
       try {
-        if (fee1String.equals("Free")) {
+        if (fee1String.equals("FREE")) {
           fee1Double = 0.00;
-        }
-        if (!fee1String.equals("Free")) {
+        } else {
           Number fee1Number = numberFormat.parse(StringUtils.remove(fee1String, "$"));
           fee1Double = fee1Number.doubleValue();
         }
