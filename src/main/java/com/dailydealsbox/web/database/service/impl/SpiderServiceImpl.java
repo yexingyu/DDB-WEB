@@ -276,6 +276,7 @@ public class SpiderServiceImpl implements SpiderService {
       String fee1String = doc.select(this.HTML_PATH_EBAYCOM.get("shipping")).first().text();
       String fee2String = doc.select(this.HTML_PATH_EBAYCOM.get("import")).first().text();
       double fee1Double = 0.00;
+      double fee2Double = 0.00;
       try {
         if (fee1String.equals("FREE")) {
           fee1Double = 0.00;
@@ -283,9 +284,12 @@ public class SpiderServiceImpl implements SpiderService {
           Number fee1Number = numberFormat.parse(StringUtils.remove(fee1String, "$"));
           fee1Double = fee1Number.doubleValue();
         }
-
-        Number fee2Number = numberFormat.parse(StringUtils.remove(fee2String, "$"));
-        double fee2Double = fee2Number.doubleValue();
+        if (fee2String.equals("")) {
+          fee2Double = 0.00;
+        } else {
+          Number fee2Number = numberFormat.parse(StringUtils.remove(fee2String, "$"));
+          fee2Double = fee2Number.doubleValue();
+        }
 
         fee1.setValue(fee1Double);
         fee2.setValue(fee2Double);
