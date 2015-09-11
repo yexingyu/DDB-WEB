@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -359,7 +360,8 @@ public class ProductController {
           contributor = arrContributors[randomNum];
         }
         product.setAddBy(contributor.getId());
-        product.setAddByName(contributor.getFirstName());
+        //product.setAddByName(contributor.getFirstName());
+        product.setAddByName(StringUtils.substringBefore(contributor.getAccount(), "@"));
 
       } else {
         product.setAddBy(me.getId());
