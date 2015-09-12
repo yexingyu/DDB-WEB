@@ -120,6 +120,7 @@ public class StoreServiceImpl implements StoreService {
   @Override
   public Set<Store> listAll(Set<Integer> ids, Set<COUNTRY> countries, STORE_TYPE type, boolean deleted) {
     TypedQuery<Store> query = this.buildQuery(ids, countries, type, deleted);
+    query.setHint("org.hibernate.cacheable", true);
     return new HashSet<Store>(query.getResultList());
   }
 

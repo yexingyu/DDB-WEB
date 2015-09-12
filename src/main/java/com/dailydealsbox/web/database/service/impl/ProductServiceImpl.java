@@ -409,6 +409,7 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public Set<Product> listAll(Set<Integer> ids, Set<Integer> storeIds, Set<String> tags, Set<COUNTRY> countries, Member member, boolean deleted, boolean disabled) throws Exception {
     TypedQuery<Product> query = this.buildQuery(ids, storeIds, tags, countries, member, deleted, disabled);
+    query.setHint("org.hibernate.cacheable", true);
     return new HashSet<Product>(query.getResultList());
   }
 
