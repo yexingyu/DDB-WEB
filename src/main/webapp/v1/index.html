@@ -80,11 +80,11 @@
 			        <div class="col-sm-2">
 			          <ul class="nav navbar-nav">
 			            <li class="dropdown">
-			              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deals By Category<span class="caret"></span></a>
+			              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deals by Category<span class="caret"></span></a>
 			              <ul class="dropdown-menu">
 			                <li><a href="#/all">All Deals</a></li>
 			                <li role="separator" class="divider"></li>
-			                <li class="dropdown-header">Electroics</li>
+			                <li class="dropdown-header">Electronics</li>
 			                <li><a href="#/all?tags=g4,s6%20edge,smart%20phone,iphone%206">Phones</a></li>
 			                <li><a href="#/all?tags=macbook,laptop">Laptops</a></li>
 			                <li><a href="#/all?tags=tablet,ipad,%20ipad%20air">Tablets,iPad</a></li>
@@ -110,10 +110,9 @@
 			        <ul class="nav navbar-nav">
 			            <li><a href="#/all"><span class="glyphicon glyphicon-globe"></span>Online</a></li>
                         <li><a href="#/local"><span class="glyphicon glyphicon-map-marker"></span>Local</a></li>
-                        <li><a href="#/store"><span class="glyphicon glyphicons-shop"></span>Your Stores</a></li>                        
+                        <li><a href="#/store"><span class="glyphicon glyphicons-shop"></span>Stores</a></li>                        
                         <li><a href="#/following"><span class="glyphicon glyphicon-plus"></span>Your Following</a></li>
                         <li><a href="#/share"><span class="glyphicon glyphicon-share"></span>Sharing</a></li>
-                        <li><a href="#/contact"><span class="glyphicon glyphicon-envelope"></span>Contact Us</a></li>
                         <li><a href="#/about"><span class="glyphicon glyphicon-file"></span>About Us</a></li>                        
                         <li>
                             <a ng-click="switchLanguage()">
@@ -136,7 +135,7 @@
                             </ul>
                         </li>
                         <li ng-show="!$root.profile.account.trim()"><a ng-click="login()"><span class="glyphicon glyphicon-user"></span>Log In</a></li>
-                        <li><a>Like List</a></li>
+                        <li><a><span class="glyphicon glyphicon-heart"></span>Your Likes</a></li>
 			        </ul>
 			        </div>
         </nav>
