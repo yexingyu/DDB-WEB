@@ -691,7 +691,13 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      * WelcomeCtrl definition
      */
     .controller('WelcomeCtrl', ['$scope', '$location', 'ProductService','LoginService', function ($scope, $location, ProductService, LoginService) {
-    }])    
+    }]) 
+    
+    /*
+     * DiscussCtrl definition
+     */
+    .controller('DiscussCtrl', ['$scope', '$location', 'ProductService','LoginService', function ($scope, $location, ProductService, LoginService) {
+    }])       
 
     /*
      * AboutCtrl definition

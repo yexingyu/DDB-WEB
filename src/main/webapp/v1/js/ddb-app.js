@@ -65,6 +65,10 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         }).when('/share', {
             templateUrl: 'tpl-share.html',
             controller: 'ShareCtrl'
+            	
+        }).when('/discuss', {
+            templateUrl: 'tpl-discuss.html',
+            controller: 'DiscussCtrl'            	
 
         }).when('/category', {
             templateUrl: 'tpl-category.html',

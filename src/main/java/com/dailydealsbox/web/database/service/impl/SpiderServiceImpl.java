@@ -609,14 +609,16 @@ public class SpiderServiceImpl implements SpiderService {
       Element productPriceElement1 = doc.select(this.HTML_PATH_NEWEGGCA.get("price")).first();
       if (productPriceElement1 != null) {
 
-        productPrice = productPriceElement1.text().replace(" –", "");
+        productPrice = doc.select(this.HTML_PATH_NEWEGGCA.get("price")).first().select("strong")
+            .text()
+            + doc.select(this.HTML_PATH_NEWEGGCA.get("price")).first().select("sup").text();
       } else {
         productPrice = "0.00";
       }
 
       Number number;
       try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
+        number = numberFormat.parse(productPrice);
         double p = number.doubleValue();
         ProductPrice price = new ProductPrice();
         price.setValue(p);
