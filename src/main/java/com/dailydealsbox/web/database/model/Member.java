@@ -48,50 +48,82 @@ public class Member extends BaseEntityModel {
   @NotNull
   @Size(min = 10, max = 100)
   @Column(name = "account", nullable = false, length = 100)
-  private String account;
+  private String             account;
 
   @NotNull
   @Column(name = "password", nullable = false, length = 32)
-  private String password;
+  private String             password;
 
   @NotNull
   @Column(name = "first_name", nullable = false, length = 100)
-  private String firstName = "";
+  private String             firstName  = "";
 
   @NotNull
   @Column(name = "middle_name", nullable = false, length = 100)
-  private String middleName = "";
+  private String             middleName = "";
 
   @NotNull
   @Column(name = "last_name", nullable = false, length = 100)
-  private String lastName = "";
+  private String             lastName   = "";
 
+  //discuss forum attributes
+  @NotNull
+  @Column(name = "nick_name", nullable = false, length = 100)
+  private String             nickName   = "";
+
+  @Column(name = "signature", length = 160)
+  private String             signature  = "";
+
+  @Column(name = "avatar", length = 45)
+  private String             avatar     = "";
+
+  @Column(name = "level", length = 45)
+  private String             level      = "";
+
+  @Column(name = "point")
+  private int                point;
+
+  @Column(name = "point_redeemed")
+  private int                pointRedeemed;
+
+  //
   @NotNull
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_ROLE role = MEMBER_ROLE.MEMBER;
+  private MEMBER_ROLE        role       = MEMBER_ROLE.MEMBER;
 
   @NotNull
   @Column(name = "login_type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_LOGIN_TYPE loginType;
+  private MEMBER_LOGIN_TYPE  loginType;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<MemberPhone> phones;
+  private Set<MemberPhone>   phones;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<MemberEmail> emails;
+  private Set<MemberEmail>   emails;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberAddress> addresses;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-  @JoinTable(name = "relation_member_store", joinColumns = { @JoinColumn(name = "member_id") }, inverseJoinColumns = { @JoinColumn(name = "store_id") })
+  @JoinTable(name = "relation_member_store",
+    joinColumns = { @JoinColumn(name = "member_id") },
+    inverseJoinColumns = { @JoinColumn(name = "store_id") })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<Store> stores;
+  private Set<Store>         stores;
 
   /**
    * validate
@@ -254,6 +286,97 @@ public class Member extends BaseEntityModel {
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
+  }
+
+  // forum attributes
+  /**
+   * @return the nickName
+   */
+  public String getNickName() {
+    return this.nickName;
+  }
+
+  /**
+   * @param nickName
+   *          the nickName to set
+   */
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
+  }
+
+  /**
+   * @return the signature
+   */
+  public String getSignature() {
+    return this.signature;
+  }
+
+  /**
+   * @param signature
+   *          the signature to set
+   */
+  public void setSignature(String signature) {
+    this.signature = signature;
+  }
+
+  /**
+   * @return the avatar
+   */
+  public String getAvatar() {
+    return this.avatar;
+  }
+
+  /**
+   * @param avatar
+   *          the avatar to set
+   */
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
+  /**
+   * @return the level
+   */
+  public String getLevel() {
+    return this.level;
+  }
+
+  /**
+   * @param level
+   *          the level to set
+   */
+  public void setLevel(String level) {
+    this.level = level;
+  }
+
+  /**
+   * @return the point
+   */
+  public int getPoint() {
+    return this.point;
+  }
+
+  /**
+   * @param point
+   *          the point to set
+   */
+  public void setPoint(int point) {
+    this.point = point;
+  }
+
+  /**
+   * @return the point_redeemed
+   */
+  public int getPointRedeemed() {
+    return this.pointRedeemed;
+  }
+
+  /**
+   * @param point
+   *          the point to set
+   */
+  public void setPointRedeemed(int pointredeemed) {
+    this.pointRedeemed = pointredeemed;
   }
 
   /**
