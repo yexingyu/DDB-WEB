@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12   div_with_bottom">
+                    <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-7 pull-left">
                                 <img ng-src="./images/add_product.png" height="16px">
@@ -27,8 +27,16 @@
                             </div>
                         </div>
                     </div>                    
-                    <div class="col-xs-12 pull-right">
-                        Shared By:{{item.addByName}}
+                    <div class="col-xs-12   div_with_bottom">
+                        <div class="row">
+                     
+                            <div class="col-xs-2 pull-left">
+                                <img ng-src="./avatar/{{item.poster.avatar}}">
+                            </div>
+                            <div class="col-xs-10 pull-right">
+                            	<span class="product_time">{{item.poster.nickName}}</span>
+                            </div>
+                        </div>
                     </div>                   
                     <div class="col-xs-12">
                         <a href="#/product/{{item.id}}"><img class="product_list_image" ng-src="{{item.images[0].url}}" alt="{{item.images[0].alt}}" style="height:180px"></a>

@@ -50,87 +50,115 @@ public class Product extends BaseEntityModel {
   @NotNull
   @Size(min = 10, max = 512)
   @Column(name = "url", nullable = false, length = 512)
-  private String url;
+  private String             url;
 
   @NotNull
   @Column(name = "`key`", nullable = false, length = 64)
-  private String key;
+  private String             key;
 
   @NotNull
   @Column(name = "current_price", nullable = false)
-  private double currentPrice;
+  private double             currentPrice;
 
   @NotNull
   @Column(name = "currency", nullable = false)
   @Enumerated(EnumType.STRING)
-  private CURRENCY currency;
+  private CURRENCY           currency;
 
   @NotNull
   @Column(name = "disabled", nullable = false)
   @Type(type = "org.hibernate.type.NumericBooleanType")
-  private boolean disabled;
+  private boolean            disabled;
 
   @Column(name = "expired_at", nullable = true)
-  private Date expiredAt;
+  private Date               expiredAt;
 
   @Column(name = "activate_at", nullable = true)
-  private Date activateAt;
+  private Date               activateAt;
 
   @Column(name = "add_by", nullable = true)
-  private int addBy;
+  private int                addBy;
 
   @Column(name = "add_by_name", nullable = true)
-  private String addByName;
+  private String             addByName;
 
   @NotNull
   @Column(name = "count_likes", nullable = false, insertable = false, updatable = false)
-  private int countLikes;
+  private int                countLikes;
 
   @NotNull
   @Column(name = "count_reviews", nullable = false, insertable = false, updatable = false)
-  private int countReviews;
+  private int                countReviews;
 
   @NotNull
   @Column(name = "reputation")
-  private double reputation;
+  private double             reputation;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Store store;
+  private Store              store;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "poster_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductText> texts;
+  private Poster             poster;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductImage> images;
+  private Set<ProductText>   texts;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductPrice> prices;
+  private Set<ProductImage>  images;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductFee> fees;
+  private Set<ProductPrice>  prices;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductTax> taxes;
+  private Set<ProductFee>    fees;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductLink> links;
+  private Set<ProductTax>    taxes;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Set<ProductLink>   links;
+
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "product",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductOption> options;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-  @JoinTable(name = "relation_product_tag", joinColumns = { @JoinColumn(name = "product_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+  @JoinTable(name = "relation_product_tag",
+    joinColumns = { @JoinColumn(name = "product_id") },
+    inverseJoinColumns = { @JoinColumn(name = "tag_id") })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductTag> tags;
+  private Set<ProductTag>    tags;
 
   /**
    * getDealPrice
@@ -167,7 +195,8 @@ public class Product extends BaseEntityModel {
    */
   public double getMonthlyPayment() {
     double mpr = GenericConfiguration.ARP / GenericConfiguration.PAYMENTS;
-    double mp = mpr * this.getPrincipal() / (1 - Math.pow((1 + mpr), -GenericConfiguration.PAYMENTS));
+    double mp = mpr * this.getPrincipal()
+        / (1 - Math.pow((1 + mpr), -GenericConfiguration.PAYMENTS));
     return this.precision(mp);
   }
 
@@ -470,6 +499,21 @@ public class Product extends BaseEntityModel {
    */
   public void setStore(Store store) {
     this.store = store;
+  }
+
+  /**
+   * @return the poster
+   */
+  public Poster getPoster() {
+    return this.poster;
+  }
+
+  /**
+   * @param store
+   *          the store to set
+   */
+  public void setPoster(Poster poster) {
+    this.poster = poster;
   }
 
   /**

@@ -3,10 +3,30 @@
         <h2>Modify Profile</h2>
         <a href="#/profile" class="btn btn-default">Back to Profile</a>
     </div>
+    <!-- Emails -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Emails</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row" ng-repeat="email in profile.emails">
+                <div class="col-xs-6">
+                    <input name="email_{{email.id}}" type="email" ng-model="email.email" size="40" class="form-control" required/>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="profile.emails.splice($index, 1)"></span>
+                </div>
+            </div>
+            <div class="row">
+                <a ng-click="profile.emails.push({})" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add</a>
+            </div>
+        </div>
+    </div>    
+    
     <!-- Basic Infomation -->
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Basic Informations</h3>
+            <h3 class="panel-title">Personal Informations</h3>
         </div>
         <div class="panel-body" class="form-horizontal">
             <div class="form-group">
@@ -87,25 +107,7 @@
             </div>
         </div>
     </div>
-    <!-- Emails -->
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Emails</h3>
-        </div>
-        <div class="panel-body">
-            <div class="row" ng-repeat="email in profile.emails">
-                <div class="col-xs-6">
-                    <input name="email_{{email.id}}" type="email" ng-model="email.email" size="40" class="form-control" required/>
-                </div>
-                <div>
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="profile.emails.splice($index, 1)"></span>
-                </div>
-            </div>
-            <div class="row">
-                <a ng-click="profile.emails.push({})" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add</a>
-            </div>
-        </div>
-    </div>
+
     <!-- Addresses -->
     <div class="panel panel-default">
         <div class="panel-heading">

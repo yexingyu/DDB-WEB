@@ -4,7 +4,23 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Basic Informations</h3>
+        <h3 class="panel-title">Emails</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="email in profile.emails">{{email.email}}
+                <span ng-if="email.verified" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                <span ng-if="!email.verified" class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                <a ng-if="!email.verified" ng-click="sendEmailVerification(email)">[Verify Email]</a>
+                <div ng-if="email.sent === 1" class="alert alert-success" role="alert">Send email verification success, please check your email.</div>
+                <div ng-if="email.sent === 2" class="alert alert-success" role="alert">Send email verification fail, please try again.</div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Personal Information</h3>
     </div>
     <div class="panel-body">
         <ul class="list-group">
@@ -33,6 +49,13 @@
                 </div>
             </li>
          </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">DDB Commnunity Information</h3>
+    </div>
+    <div class="panel-body">
          <ul class="list-group">
             <li class="list-group-item">
                 <div class="row">
@@ -102,22 +125,7 @@
         </ul>
     </div>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Emails</h3>
-    </div>
-    <div class="panel-body">
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="email in profile.emails">{{email.email}}
-                <span ng-if="email.verified" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                <span ng-if="!email.verified" class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                <a ng-if="!email.verified" ng-click="sendEmailVerification(email)">[Verify Email]</a>
-                <div ng-if="email.sent === 1" class="alert alert-success" role="alert">Send email verification success, please check your email.</div>
-                <div ng-if="email.sent === 2" class="alert alert-success" role="alert">Send email verification fail, please try again.</div>
-            </li>
-        </ul>
-    </div>
-</div>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Addresses</h3>
