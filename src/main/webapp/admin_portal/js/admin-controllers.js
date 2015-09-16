@@ -11,7 +11,16 @@ angular
         /*
          * DashboardCtrl definition
          */
-        .controller('DashboardCtrl', [ '$scope', '$location', function($scope, $location) {
+        .controller('DashboardCtrl', [ '$scope', '$location','ProfileService', function($scope, $location,ProfileService) {
+            // retreive profile
+            $scope.$root.profile = {};
+            ProfileService.profile(function (response) {
+                if (response.status == 'SUCCESS') {
+                    $scope.$root.profile = response.data;
+                    console.log($scope.$root.profile);
+                }
+            });
+        	
         } ])
 
         /*
