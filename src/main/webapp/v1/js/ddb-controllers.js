@@ -471,13 +471,15 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         // submit button
         $scope.submit = function () {
             OrderService.add($scope.order, function (response) {
-                if (response.status === 'SUCCESS') {
+                console.log($scope.order);
+            	console.log(response);
+            	if (response.status === 'SUCCESS') {
                     // submit success
                     $scope.order = response.data;
-                    $location.path('/order/' + $scope.order.id + '/confirm');
+                    $location.path('/order/me');
                 } else {
                     // fail
-                    $location.path('/all');
+                    $location.path('/order/me');
                 }
             });
         };

@@ -1,14 +1,20 @@
 <div class="container">
-    <div ng-repeat="order in orders.content" class="row">
-        <div class="col-xs-6">
-            <a href="#/order/id/{{order.id}}">{{order.product.texts[0].name}}</a>
-        </div>
-        <div class="col-xs-6">
-            {{order.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}
-        </div>
-    </div>
+	<table class="table table-hover">
+	    <thead>
+		  <tr>
+			  <th>Product</th>
+			  <th>Date Ordered</th>
+			  <th>Status</th>
+		  </tr>
+		</thead>  
+	  <tr ng-repeat="order in orders.content">
+	  <td><a href="#/order/id/{{order.id}}">{{order.product.texts[0].name}}</a></td>
+	  <td>{{order.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+	  <td>{{order.status}}</td>
+	  </tr>
+	</table>
+
 </div>
-<hr>
-<pre>
-{{orders | json}}
-</pre>
+
+
+
