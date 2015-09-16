@@ -37,15 +37,15 @@ import com.google.common.primitives.Longs;
 public class MemberEmail extends BaseModel {
 
   @NotNull
-  @Column(name = "email", nullable = false, length = 100)
+  @Column(name = "email")
   private String email;
 
   @NotNull
-  @Column(name = "`primary`", nullable = false)
+  @Column(name = "`primary`")
   private boolean primary;
 
   @NotNull
-  @Column(name = "verified", nullable = false)
+  @Column(name = "verified")
   private boolean verified;
 
   @JsonIgnore
@@ -54,7 +54,7 @@ public class MemberEmail extends BaseModel {
   private Member member;
 
   @NotNull
-  @Column(name = "hash_code", nullable = false)
+  @Column(name = "hash_code")
   private String hashCode;
 
   @Column(name = "verified_at")
@@ -97,8 +97,7 @@ public class MemberEmail extends BaseModel {
   }
 
   /**
-   * @param primary
-   *          the primary to set
+   * @param primary the primary to set
    */
   public void setPrimary(boolean primary) {
     this.primary = primary;
@@ -112,8 +111,7 @@ public class MemberEmail extends BaseModel {
   }
 
   /**
-   * @param hashCode
-   *          the hashCode to set
+   * @param hashCode the hashCode to set
    */
   public void setHashCode(String hashCode) {
     this.hashCode = hashCode;
@@ -127,8 +125,7 @@ public class MemberEmail extends BaseModel {
   }
 
   /**
-   * @param verifiedAt
-   *          the verifiedAt to set
+   * @param verifiedAt the verifiedAt to set
    */
   public void setVerifiedAt(Date verifiedAt) {
     this.verifiedAt = verifiedAt;
@@ -142,8 +139,7 @@ public class MemberEmail extends BaseModel {
   }
 
   /**
-   * @param verifiedIp
-   *          the verifiedIp to set
+   * @param verifiedIp the verifiedIp to set
    */
   public void setVerifiedIp(String verifiedIp) {
     this.verifiedIp = verifiedIp;
@@ -157,8 +153,7 @@ public class MemberEmail extends BaseModel {
   }
 
   /**
-   * @param verified
-   *          the verified to set
+   * @param verified the verified to set
    */
   public void setVerified(boolean verified) {
     this.verified = verified;
@@ -172,8 +167,7 @@ public class MemberEmail extends BaseModel {
   }
 
   /**
-   * @param member
-   *          the member to set
+   * @param member the member to set
    */
   public void setMember(Member member) {
     this.member = member;
@@ -187,8 +181,7 @@ public class MemberEmail extends BaseModel {
   }
 
   /**
-   * @param email
-   *          the email to set
+   * @param email the email to set
    */
   public void setEmail(String email) {
     this.email = email;

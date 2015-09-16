@@ -20,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
@@ -48,117 +47,93 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Product extends BaseEntityModel {
 
   @NotNull
-  @Size(min = 10, max = 512)
-  @Column(name = "url", nullable = false, length = 512)
-  private String             url;
+  @Column(name = "url")
+  private String url;
 
   @NotNull
-  @Column(name = "`key`", nullable = false, length = 64)
-  private String             key;
+  @Column(name = "`key`")
+  private String key;
 
   @NotNull
-  @Column(name = "current_price", nullable = false)
-  private double             currentPrice;
+  @Column(name = "current_price")
+  private double currentPrice;
 
   @NotNull
-  @Column(name = "currency", nullable = false)
+  @Column(name = "currency")
   @Enumerated(EnumType.STRING)
-  private CURRENCY           currency;
+  private CURRENCY currency;
 
   @NotNull
-  @Column(name = "disabled", nullable = false)
+  @Column(name = "disabled")
   @Type(type = "org.hibernate.type.NumericBooleanType")
-  private boolean            disabled;
+  private boolean disabled;
 
-  @Column(name = "expired_at", nullable = true)
-  private Date               expiredAt;
+  @Column(name = "expired_at")
+  private Date expiredAt;
 
-  @Column(name = "activate_at", nullable = true)
-  private Date               activateAt;
+  @Column(name = "activate_at")
+  private Date activateAt;
 
-  @Column(name = "add_by", nullable = true)
-  private int                addBy;
+  @Column(name = "add_by")
+  private int addBy;
 
-  @Column(name = "add_by_name", nullable = true)
-  private String             addByName;
-
-  @NotNull
-  @Column(name = "count_likes", nullable = false, insertable = false, updatable = false)
-  private int                countLikes;
+  @Column(name = "add_by_name")
+  private String addByName;
 
   @NotNull
-  @Column(name = "count_reviews", nullable = false, insertable = false, updatable = false)
-  private int                countReviews;
+  @Column(name = "count_likes", insertable = false, updatable = false)
+  private int countLikes;
+
+  @NotNull
+  @Column(name = "count_reviews", insertable = false, updatable = false)
+  private int countReviews;
 
   @NotNull
   @Column(name = "reputation")
-  private double             reputation;
+  private double reputation;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Store              store;
+  private Store store;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "poster_id")
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Poster             poster;
+  private Poster poster;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductText>   texts;
+  private Set<ProductText> texts;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductImage>  images;
+  private Set<ProductImage> images;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductPrice>  prices;
+  private Set<ProductPrice> prices;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductFee>    fees;
+  private Set<ProductFee> fees;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductTax>    taxes;
+  private Set<ProductTax> taxes;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductLink>   links;
+  private Set<ProductLink> links;
 
-  @OneToMany(fetch = FetchType.LAZY,
-    mappedBy = "product",
-    cascade = { CascadeType.ALL },
-    orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = { CascadeType.ALL }, orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductOption> options;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-  @JoinTable(name = "relation_product_tag",
-    joinColumns = { @JoinColumn(name = "product_id") },
-    inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+  @JoinTable(name = "relation_product_tag", joinColumns = { @JoinColumn(name = "product_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<ProductTag>    tags;
+  private Set<ProductTag> tags;
 
   /**
    * getDealPrice
@@ -195,8 +170,7 @@ public class Product extends BaseEntityModel {
    */
   public double getMonthlyPayment() {
     double mpr = GenericConfiguration.ARP / GenericConfiguration.PAYMENTS;
-    double mp = mpr * this.getPrincipal()
-        / (1 - Math.pow((1 + mpr), -GenericConfiguration.PAYMENTS));
+    double mp = mpr * this.getPrincipal() / (1 - Math.pow((1 + mpr), -GenericConfiguration.PAYMENTS));
     return this.precision(mp);
   }
 
@@ -270,8 +244,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param reputation
-   *          the reputation to set
+   * @param reputation the reputation to set
    */
   public void setReputation(double reputation) {
     this.reputation = reputation;
@@ -285,8 +258,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param currentPrice
-   *          the currentPrice to set
+   * @param currentPrice the currentPrice to set
    */
   public void setCurrentPrice(double currentPrice) {
     this.currentPrice = currentPrice;
@@ -300,8 +272,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param currency
-   *          the currency to set
+   * @param currency the currency to set
    */
   public void setCurrency(CURRENCY currency) {
     this.currency = currency;
@@ -359,8 +330,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param addByName
-   *          the addByName to set
+   * @param addByName the addByName to set
    */
   public void setAddByName(String addByName) {
     this.addByName = addByName;
@@ -374,8 +344,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param taxes
-   *          the taxes to set
+   * @param taxes the taxes to set
    */
   public void setTaxes(Set<ProductTax> taxes) {
     this.taxes = taxes;
@@ -389,8 +358,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param fees
-   *          the fees to set
+   * @param fees the fees to set
    */
   public void setFees(Set<ProductFee> fees) {
     this.fees = fees;
@@ -404,8 +372,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param prices
-   *          the prices to set
+   * @param prices the prices to set
    */
   public void setPrices(Set<ProductPrice> prices) {
     this.prices = prices;
@@ -419,8 +386,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param images
-   *          the images to set
+   * @param images the images to set
    */
   public void setImages(Set<ProductImage> images) {
     this.images = images;
@@ -434,8 +400,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param texts
-   *          the texts to set
+   * @param texts the texts to set
    */
   public void setTexts(Set<ProductText> texts) {
     this.texts = texts;
@@ -449,8 +414,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param links
-   *          the links to set
+   * @param links the links to set
    */
   public void setLinks(Set<ProductLink> links) {
     this.links = links;
@@ -464,8 +428,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param options
-   *          the options to set
+   * @param options the options to set
    */
   public void setOptions(Set<ProductOption> options) {
     this.options = options;
@@ -479,8 +442,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param tags
-   *          the tags to set
+   * @param tags the tags to set
    */
   public void setTags(Set<ProductTag> tags) {
     this.tags = tags;
@@ -494,8 +456,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param store
-   *          the store to set
+   * @param store the store to set
    */
   public void setStore(Store store) {
     this.store = store;
@@ -509,8 +470,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param store
-   *          the store to set
+   * @param store the store to set
    */
   public void setPoster(Poster poster) {
     this.poster = poster;
@@ -524,8 +484,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param url
-   *          the url to set
+   * @param url the url to set
    */
   public void setUrl(String url) {
     this.url = url;
@@ -539,8 +498,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param key
-   *          the key to set
+   * @param key the key to set
    */
   public void setKey(String key) {
     this.key = key;
@@ -561,8 +519,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param countLikes
-   *          the countLikes to set
+   * @param countLikes the countLikes to set
    */
   public void setCountLikes(int countLikes) {
     this.countLikes = countLikes;
@@ -576,16 +533,14 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param countReviews
-   *          the countReviews to set
+   * @param countReviews the countReviews to set
    */
   public void setCountReviews(int countReviews) {
     this.countReviews = countReviews;
   }
 
   /**
-   * @param expiredAt
-   *          the expiredAt to set
+   * @param expiredAt the expiredAt to set
    */
   public void setExpiredAt(Date expiredAt) {
     this.expiredAt = expiredAt;
@@ -599,8 +554,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param disabled
-   *          the disabled to set
+   * @param disabled the disabled to set
    */
   public void setDisabled(boolean disabled) {
     this.disabled = disabled;
@@ -614,8 +568,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param activateAt
-   *          the activateAt to set
+   * @param activateAt the activateAt to set
    */
   public void setActivateAt(Date activateAt) {
     this.activateAt = activateAt;
@@ -629,8 +582,7 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param addBy
-   *          the addBy to set
+   * @param addBy the addBy to set
    */
   public void setAddBy(int addBy) {
     this.addBy = addBy;

@@ -41,8 +41,7 @@ public class StoreLocation extends BaseModel {
   }
 
   /**
-   * @param store
-   *          the store to set
+   * @param store the store to set
    */
   public void setStore(Store store) {
     this.store = store;

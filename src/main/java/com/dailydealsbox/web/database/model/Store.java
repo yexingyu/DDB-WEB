@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
@@ -44,7 +43,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Store extends BaseEntityModel {
 
   @NotNull
-  @Size(min = 4, max = 100)
   @Column(name = "name")
   private String name;
 
@@ -115,11 +113,6 @@ public class Store extends BaseEntityModel {
   @Column(name = "add_by")
   private int addBy;
 
-  //  @JsonIgnore
-  //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
-  //  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  //  private Set<Product> products;
-
   /**
    * validate
    *
@@ -144,8 +137,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param addBy
-   *          the addBy to set
+   * @param addBy the addBy to set
    */
   public void setAddBy(int addBy) {
     this.addBy = addBy;
@@ -159,8 +151,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param locations
-   *          the locations to set
+   * @param locations the locations to set
    */
   public void setLocations(Set<StoreLocation> locations) {
     this.locations = locations;
@@ -174,8 +165,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param verified
-   *          the verified to set
+   * @param verified the verified to set
    */
   public void setVerified(boolean verified) {
     this.verified = verified;
@@ -189,8 +179,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param defaultFollowed
-   *          the defaultFollowed to set
+   * @param defaultFollowed the defaultFollowed to set
    */
   public void setDefaultFollowed(boolean defaultFollowed) {
     this.defaultFollowed = defaultFollowed;
@@ -204,8 +193,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param type
-   *          the type to set
+   * @param type the type to set
    */
   public void setType(STORE_TYPE type) {
     this.type = type;
@@ -219,17 +207,14 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param name
-   *          the name to set
+   * @param name the name to set
    */
   public void setName(String name) {
     this.name = name;
   }
 
   /**
-   * @param store
-   *          category
-   *          the store category to set
+   * @param store category the store category to set
    */
   public void setCategory(STORE_CATEGORY category) {
     this.category = category;
@@ -250,8 +235,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param description
-   *          the description to set
+   * @param description the description to set
    */
   public void setDescription(String description) {
     this.description = description;
@@ -265,8 +249,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param countFollowings
-   *          the countFollowings to set
+   * @param countFollowings the countFollowings to set
    */
   public void setCountFollowings(int countFollowings) {
     this.countFollowings = countFollowings;
@@ -280,8 +263,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param countLikes
-   *          the countLikes to set
+   * @param countLikes the countLikes to set
    */
   public void setCountLikes(int countLikes) {
     this.countLikes = countLikes;
@@ -295,8 +277,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param logo
-   *          the logo to set
+   * @param logo the logo to set
    */
   public void setLogo(String logo) {
     this.logo = logo;
@@ -310,8 +291,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param favicon
-   *          the favicon to set
+   * @param favicon the favicon to set
    */
   public void setFavicon(String favicon) {
     this.favicon = favicon;
@@ -325,8 +305,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param website
-   *          the website to set
+   * @param website the website to set
    */
   public void setWebsite(String website) {
     this.website = website;
@@ -340,8 +319,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param dealPage
-   *          the dealPage to set
+   * @param dealPage the dealPage to set
    */
   public void setDealPage(String dealPage) {
     this.dealPage = dealPage;
@@ -355,8 +333,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param country
-   *          the country to set
+   * @param country the country to set
    */
   public void setCountry(COUNTRY country) {
     this.country = country;
@@ -370,8 +347,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param members
-   *          the members to set
+   * @param members the members to set
    */
   public void setMembers(Set<Member> members) {
     this.members = members;
@@ -385,8 +361,7 @@ public class Store extends BaseEntityModel {
   }
 
   /**
-   * @param province
-   *          the province to set
+   * @param province the province to set
    */
   public void setProvince(String province) {
     this.province = province;

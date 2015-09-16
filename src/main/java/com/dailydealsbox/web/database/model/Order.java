@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -38,157 +37,140 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Order extends BaseEntityModel {
   //customer info
   @NotNull
-  @Column(name = "member_id", nullable = false)
+  @Column(name = "member_id")
   private int memberId;
 
   @NotNull
-  @Size(min = 4, max = 100)
-  @Column(name = "first_name", nullable = false, length = 45)
+  @Column(name = "first_name")
   private String firstName;
 
   @NotNull
-  @Size(min = 4, max = 100)
-  @Column(name = "last_name", nullable = false, length = 45)
+  @Column(name = "last_name")
   private String lastName;
 
   @NotNull
-  @Size(min = 4, max = 45)
-  @Column(name = "email", nullable = false, length = 45)
+  @Column(name = "email")
   private String email;
 
   @NotNull
-  @Size(min = 4, max = 45)
-  @Column(name = "company_email", nullable = false, length = 45)
+  @Column(name = "company_email")
   private String companyEmail;
 
   @NotNull
-  @Size(min = 4, max = 100)
-  @Column(name = "phone", nullable = false, length = 45)
+  @Column(name = "phone")
   private String phone;
 
-  //product info
   @NotNull
-  @Column(name = "product_id", nullable = false)
+  @Column(name = "product_id")
   private int productId;
 
   @NotNull
-  @Size(min = 4, max = 512)
-  @Column(name = "product_url", nullable = false, length = 512)
+  @Column(name = "product_url")
   private String proudctUrl;
 
   @NotNull
-  @Size(min = 4, max = 512)
-  @Column(name = "product_image", nullable = false, length = 512)
+  @Column(name = "product_image")
   private String proudctImage;
 
   @NotNull
-  @Column(name = "product_price", nullable = false)
+  @Column(name = "product_price")
   private double productPrice;
 
   @NotNull
-  @Size(min = 4, max = 512)
-  @Column(name = "product_name", nullable = false, length = 512)
+  @Column(name = "product_name")
   private String productName;
 
   @NotNull
-  @Size(min = 4, max = 2048)
-  @Column(name = "product_descritpion", nullable = false, length = 2048)
+  @Column(name = "product_descritpion")
   private String productDescription;
 
   @NotNull
-  @Size(min = 2, max = 128)
-  @Column(name = "product_option_value", nullable = false, length = 128)
+  @Column(name = "product_option_value")
   private String productOptionValue;
 
   @NotNull
-  @Column(name = "product_quantity", nullable = false)
+  @Column(name = "product_quantity")
   private int productQuantity;
 
   //order info
   @NotNull
-  @Column(name = "sub_total", nullable = false)
+  @Column(name = "sub_total")
   private double subTotal;
 
   @NotNull
-  @Size(min = 2, max = 64)
-  @Column(name = "tax_type", nullable = false, length = 64)
+  @Column(name = "tax_type")
   private String taxType;
 
-  //order tax info
   @NotNull
-  @Column(name = "tax_rate", nullable = false)
+  @Column(name = "tax_rate")
   private double taxRate;
 
   @NotNull
-  @Column(name = "tax_amount", nullable = false)
+  @Column(name = "tax_amount")
   private double taxAmount;
 
-  //order fee info
   @NotNull
-  @Column(name = "shipping", nullable = false)
+  @Column(name = "shipping")
   private double shipping;
 
   @NotNull
-  @Size(min = 2, max = 64)
-  @Column(name = "fee_type", nullable = false, length = 64)
+  @Column(name = "fee_type")
   private String feeType;
 
   @NotNull
-  @Column(name = "fee_amout", nullable = false)
+  @Column(name = "fee_amout")
   private double feeAmout;
 
   @NotNull
-  @Column(name = "total", nullable = false)
+  @Column(name = "total")
   private double total;
 
-  //financial info
   @NotNull
-  @Column(name = "down_payment", nullable = false)
+  @Column(name = "down_payment")
   private double downPayment;
 
   @NotNull
-  @Column(name = "principal", nullable = false)
+  @Column(name = "principal")
   private double principal;
 
   @NotNull
-  @Column(name = "apr", nullable = false)
+  @Column(name = "apr")
   private double apr;
 
   @NotNull
-  @Column(name = "number_of_payment", nullable = false)
+  @Column(name = "number_of_payment")
   private int numberOfPayment;
 
   @NotNull
-  @Column(name = "monthly_payment", nullable = false)
+  @Column(name = "monthly_payment")
   private double monthlyPayment;
 
   @NotNull
-  @Column(name = "interest", nullable = false)
+  @Column(name = "interest")
   private double interest;
 
   @NotNull
-  @Column(name = "paid_sequence_number", nullable = false)
+  @Column(name = "paid_sequence_number")
   private int paiedSequenceNumber;
 
-  //payment info
   @NotNull
-  @Column(name = "paid_amount", nullable = false)
+  @Column(name = "paid_amount")
   private double paidAmount;
 
   @NotNull
-  @Column(name = "erned_interest", nullable = false)
+  @Column(name = "erned_interest")
   private double ernedInterest;
 
   @NotNull
-  @Column(name = "payment_recievable", nullable = false)
+  @Column(name = "payment_recievable")
   private double paymentRecievable;
 
   @NotNull
-  @Column(name = "remaining_balance", nullable = false)
+  @Column(name = "remaining_balance")
   private double remainingBalance;
 
   @NotNull
-  @Column(name = "status", nullable = false)
+  @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private ORDER_STATUS status;
 
@@ -214,8 +196,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param memberId
-   *          the memberId to set
+   * @param memberId the memberId to set
    */
   public void setMemberId(int memberId) {
     this.memberId = memberId;
@@ -229,8 +210,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param firstName
-   *          the firstName to set
+   * @param firstName the firstName to set
    */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
@@ -244,8 +224,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param lastName
-   *          the lastName to set
+   * @param lastName the lastName to set
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
@@ -259,8 +238,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param email
-   *          the email to set
+   * @param email the email to set
    */
   public void setEmail(String email) {
     this.email = email;
@@ -274,8 +252,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param companyEmail
-   *          the companyEmail to set
+   * @param companyEmail the companyEmail to set
    */
   public void setCompanyEmail(String companyEmail) {
     this.companyEmail = companyEmail;
@@ -289,8 +266,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param phone
-   *          the phone to set
+   * @param phone the phone to set
    */
   public void setPhone(String phone) {
     this.phone = phone;
@@ -305,8 +281,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param productId
-   *          the productId to set
+   * @param productId the productId to set
    */
   public void setProductId(int productId) {
     this.productId = productId;
@@ -320,8 +295,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param proudctUrl
-   *          the proudctUrl to set
+   * @param proudctUrl the proudctUrl to set
    */
   public void setProudctUrl(String proudctUrl) {
     this.proudctUrl = proudctUrl;
@@ -335,8 +309,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param proudctImage
-   *          the proudctImage to set
+   * @param proudctImage the proudctImage to set
    */
   public void setProudctImage(String proudctImage) {
     this.proudctImage = proudctImage;
@@ -350,8 +323,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param productPrice
-   *          the productPrice to set
+   * @param productPrice the productPrice to set
    */
   public void setProductPrice(double productPrice) {
     this.productPrice = productPrice;
@@ -365,8 +337,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param proudctName
-   *          the proudctName to set
+   * @param proudctName the proudctName to set
    */
   public void setProudctName(String proudctName) {
     this.productName = proudctName;
@@ -380,8 +351,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param proudctDescription
-   *          the proudctDescription to set
+   * @param proudctDescription the proudctDescription to set
    */
   public void setProductDescription(String proudctDescription) {
     this.productDescription = proudctDescription;
@@ -395,8 +365,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param productOptionValue
-   *          the productOptionValue to set
+   * @param productOptionValue the productOptionValue to set
    */
   public void setProductOptionValue(String productOptionValue) {
     this.productOptionValue = productOptionValue;
@@ -410,8 +379,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param productQuantity
-   *          the productQuantity to set
+   * @param productQuantity the productQuantity to set
    */
   public void setProductQuantity(int productQuantity) {
     this.productQuantity = productQuantity;
@@ -427,8 +395,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param subTotal
-   *          the subTotal to set
+   * @param subTotal the subTotal to set
    */
   public void setSubTotal(double subTotal) {
     this.subTotal = subTotal;
@@ -442,8 +409,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param taxType
-   *          the taxType to set
+   * @param taxType the taxType to set
    */
   public void setTaxType(String taxType) {
     this.taxType = taxType;
@@ -457,8 +423,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param productName
-   *          the productName to set
+   * @param productName the productName to set
    */
   public void setProductName(String productName) {
     this.productName = productName;
@@ -479,8 +444,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param taxRate
-   *          the taxRate to set
+   * @param taxRate the taxRate to set
    */
   public void setTaxRate(double taxRate) {
     this.taxRate = taxRate;
@@ -494,8 +458,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param taxAmount
-   *          the taxAmount to set
+   * @param taxAmount the taxAmount to set
    */
   public void setTaxAmount(double taxAmount) {
     this.taxAmount = taxAmount;
@@ -509,8 +472,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param shipping
-   *          the shipping to set
+   * @param shipping the shipping to set
    */
   public void setShipping(double shipping) {
     this.shipping = shipping;
@@ -524,8 +486,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param feeType
-   *          the feeType to set
+   * @param feeType the feeType to set
    */
   public void setFeeType(String feeType) {
     this.feeType = feeType;
@@ -539,8 +500,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param fee_amout
-   *          the feeAmout to set
+   * @param fee_amout the feeAmout to set
    */
   public void setFeeAmout(double feeAmout) {
     this.feeAmout = feeAmout;
@@ -554,8 +514,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param total
-   *          the total to set
+   * @param total the total to set
    */
   public void setTotal(double total) {
     this.total = total;
@@ -570,8 +529,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param downPayment
-   *          the downPaymentto set
+   * @param downPayment the downPaymentto set
    */
   public void setDownPayment(double downayment) {
     this.downPayment = downayment;
@@ -585,8 +543,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param principal
-   *          the principal to set
+   * @param principal the principal to set
    */
   public void setPrincipal(double principal) {
     this.principal = principal;
@@ -600,8 +557,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param apr
-   *          the apr to set
+   * @param apr the apr to set
    */
   public void setApr(double apr) {
     this.apr = apr;
@@ -615,8 +571,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param monthlyPayment
-   *          the monthlyPayment to set
+   * @param monthlyPayment the monthlyPayment to set
    */
   public void setMonthlyPayment(double monthly_payment) {
     this.monthlyPayment = monthly_payment;
@@ -630,8 +585,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param numberOfPayment
-   *          the numberOfPayment to set
+   * @param numberOfPayment the numberOfPayment to set
    */
   public void setNumberOfPayment(int numberOfPayment) {
     this.numberOfPayment = numberOfPayment;
@@ -645,8 +599,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param interest
-   *          the interest to set
+   * @param interest the interest to set
    */
   public void setInterest(double interest) {
     this.interest = interest;
@@ -660,8 +613,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param paiedSequenceNumber
-   *          the paiedSequenceNumber to set
+   * @param paiedSequenceNumber the paiedSequenceNumber to set
    */
   public void setPaiedSequenceNumber(int paiedSequenceNumber) {
     this.paiedSequenceNumber = paiedSequenceNumber;
@@ -675,8 +627,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param paidAmount
-   *          the paidAmount to set
+   * @param paidAmount the paidAmount to set
    */
   public void setPaidAmount(double paidAmount) {
     this.paidAmount = paidAmount;
@@ -690,8 +641,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param ernedInterest
-   *          the ernedInterest to set
+   * @param ernedInterest the ernedInterest to set
    */
   public void setErnedInterest(double ernedInterest) {
     this.ernedInterest = ernedInterest;
@@ -705,8 +655,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param paymentRecievable
-   *          the paymentRecievable to set
+   * @param paymentRecievable the paymentRecievable to set
    */
   public void setPaymentRecievable(double paymentRecievable) {
     this.paymentRecievable = paymentRecievable;
@@ -720,8 +669,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param remainingBalance
-   *          the remainingBalance to set
+   * @param remainingBalance the remainingBalance to set
    */
   public void setRemainingBalance(double remainingBalance) {
     this.remainingBalance = remainingBalance;
@@ -736,8 +684,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param addresses
-   *          the addresses to set
+   * @param addresses the addresses to set
    */
   public void setAddresses(Set<OrderAddress> addresses) {
     this.addresses = addresses;
@@ -752,8 +699,7 @@ public class Order extends BaseEntityModel {
   }
 
   /**
-   * @param status
-   *          the status to set
+   * @param status the status to set
    */
   public void setStatus(ORDER_STATUS status) {
     this.status = status;

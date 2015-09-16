@@ -36,32 +36,32 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class OrderAddress extends BaseModel {
 
   @NotNull
-  @Column(name = "address1", nullable = false, length = 255)
+  @Column(name = "address1")
   private String address1;
 
   @NotNull
-  @Column(name = "address2", nullable = false, length = 255)
+  @Column(name = "address2")
   private String address2;
 
   @NotNull
-  @Column(name = "city", nullable = false, length = 255)
+  @Column(name = "city")
   private String city;
 
   @NotNull
-  @Column(name = "region", nullable = false, length = 255)
+  @Column(name = "region")
   private String region;
 
   @NotNull
-  @Column(name = "country", nullable = false)
+  @Column(name = "country")
   @Enumerated(EnumType.STRING)
   private COUNTRY country;
 
   @NotNull
-  @Column(name = "post_code", nullable = false, length = 50)
+  @Column(name = "post_code")
   private String postCode;
 
   @NotNull
-  @Column(name = "type", nullable = false)
+  @Column(name = "type")
   @Enumerated(EnumType.STRING)
   private MEMBER_ADDRESS_TYPE type;
 
@@ -96,8 +96,7 @@ public class OrderAddress extends BaseModel {
   }
 
   /**
-   * @param type
-   *          the type to set
+   * @param type the type to set
    */
   public void setType(MEMBER_ADDRESS_TYPE type) {
     this.type = type;
@@ -111,8 +110,7 @@ public class OrderAddress extends BaseModel {
   }
 
   /**
-   * @param order
-   *          the order to set
+   * @param order the order to set
    */
   public void setOrder(Order order) {
     this.order = order;
@@ -126,8 +124,7 @@ public class OrderAddress extends BaseModel {
   }
 
   /**
-   * @param address1
-   *          the address1 to set
+   * @param address1 the address1 to set
    */
   public void setAddress1(String address1) {
     this.address1 = address1;
@@ -141,8 +138,7 @@ public class OrderAddress extends BaseModel {
   }
 
   /**
-   * @param address2
-   *          the address2 to set
+   * @param address2 the address2 to set
    */
   public void setAddress2(String address2) {
     this.address2 = address2;
@@ -156,8 +152,7 @@ public class OrderAddress extends BaseModel {
   }
 
   /**
-   * @param city
-   *          the city to set
+   * @param city the city to set
    */
   public void setCity(String city) {
     this.city = city;
@@ -171,8 +166,7 @@ public class OrderAddress extends BaseModel {
   }
 
   /**
-   * @param region
-   *          the region to set
+   * @param region the region to set
    */
   public void setRegion(String region) {
     this.region = region;
@@ -186,8 +180,7 @@ public class OrderAddress extends BaseModel {
   }
 
   /**
-   * @param country
-   *          the country to set
+   * @param country the country to set
    */
   public void setCountry(COUNTRY country) {
     this.country = country;
@@ -201,8 +194,7 @@ public class OrderAddress extends BaseModel {
   }
 
   /**
-   * @param postCode
-   *          the postCode to set
+   * @param postCode the postCode to set
    */
   public void setPostCode(String postCode) {
     this.postCode = postCode;

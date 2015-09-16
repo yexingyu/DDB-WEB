@@ -36,28 +36,27 @@ public class Poster extends BaseEntityModel {
   //discuss forum attributes
   @NotNull
   @Column(name = "nick_name", nullable = false, length = 100)
-  private String      nickName  = "";
+  private String nickName = "";
 
   @Column(name = "signature", length = 160)
-  private String      signature = "";
+  private String signature = "";
 
   @Column(name = "avatar", length = 45)
-  private String      avatar    = "";
+  private String avatar = "";
 
   @Column(name = "level", length = 45)
-  private String      level     = "";
+  private String level = "";
 
   @Column(name = "point")
-  private int         point;
+  private int point;
 
   @Column(name = "point_redeemed")
-  private int         pointRedeemed;
+  private int pointRedeemed;
 
-  //
   @NotNull
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_ROLE role      = MEMBER_ROLE.MEMBER;
+  private MEMBER_ROLE role = MEMBER_ROLE.MEMBER;
 
   // forum attributes
   /**
@@ -68,8 +67,7 @@ public class Poster extends BaseEntityModel {
   }
 
   /**
-   * @param nickName
-   *          the nickName to set
+   * @param nickName the nickName to set
    */
   public void setNickName(String nickName) {
     this.nickName = nickName;
@@ -83,8 +81,7 @@ public class Poster extends BaseEntityModel {
   }
 
   /**
-   * @param signature
-   *          the signature to set
+   * @param signature the signature to set
    */
   public void setSignature(String signature) {
     this.signature = signature;
@@ -98,8 +95,7 @@ public class Poster extends BaseEntityModel {
   }
 
   /**
-   * @param avatar
-   *          the avatar to set
+   * @param avatar the avatar to set
    */
   public void setAvatar(String avatar) {
     this.avatar = avatar;
@@ -113,8 +109,7 @@ public class Poster extends BaseEntityModel {
   }
 
   /**
-   * @param level
-   *          the level to set
+   * @param level the level to set
    */
   public void setLevel(String level) {
     this.level = level;
@@ -128,8 +123,7 @@ public class Poster extends BaseEntityModel {
   }
 
   /**
-   * @param point
-   *          the point to set
+   * @param point the point to set
    */
   public void setPoint(int point) {
     this.point = point;
@@ -143,8 +137,7 @@ public class Poster extends BaseEntityModel {
   }
 
   /**
-   * @param point
-   *          the point to set
+   * @param point the point to set
    */
   public void setPointRedeemed(int pointredeemed) {
     this.pointRedeemed = pointredeemed;
