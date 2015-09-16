@@ -214,7 +214,10 @@
         <div class="panel-body">
           <div class="form-group">
 
-            <label>Tags - 1.Brand 2. Event (labor day 2015) 3. Top Category(TV) 4. Sub Category(led tv) 5.Parameters(1080p, 60") 6.Color :</label>
+            <label>Tags - 1.Brand 2. Event (labor day 2015) 3. Top <a href="/v1/index.html#/category" target="_blank">Category</a>(eletronics) 4. Sub <a href="/v1/index.html#/category" target="_blank">Category</a>(televisions) 5, product type (led tv) 6.parameters(1080p, 60",64gb) 7.Color 
+            
+            :</label>
+            <p>if possible try to use one word other than two word for tag.</p>
             <p>
 	          <span ng-repeat="tag in product.tags">  <input
 	              class="form-control"  ng-model="tag.value" placeholder ="Enter tag word"> [<a ng-click="product.tags.splice($index, 1)">X</a>] <br />
