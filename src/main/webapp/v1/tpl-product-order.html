@@ -151,7 +151,7 @@
                                             <select class="form-control" ng-model="product_quantity" ng-init=" product_quantity = 1" ng-options="o.v as o.n for o in [{ n:1, v: 1 }, { n: 2, v: 2 }, { n: 3, v: 3 }, { n: 4, v: 5 }, { n: 5, v: 5 }]">
                                             </select>
                                         </div>
-                                        <div class="col-xs-12"><h4>Options:</h4>
+                                        <div class="col-xs-12" ng-hide ="!product.options.length"><h4>Options:</h4>
                                             <select class="form-control" ng-model="order.option" ng-options="option.value as option.value group by option.type for option in product.options">
                                             </select>
                                         </div>
