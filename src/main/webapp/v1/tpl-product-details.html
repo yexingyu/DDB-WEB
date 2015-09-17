@@ -36,7 +36,7 @@
                     <h3 class="price_RoyalBlue">{{item.currency}}${{item.currentPrice}}</h3>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" ng-hide ="!item.options.length">
                 <div class="col-sm-12">
                     <form class="form-inline">
                         <div class="form-group">
