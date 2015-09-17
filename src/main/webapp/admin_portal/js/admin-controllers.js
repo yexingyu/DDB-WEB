@@ -76,6 +76,7 @@ angular
                             // submit method
                             $scope.submit = function() {
                                 console.log($scope.product);
+                                console.log(JSON.stringify($scope.product));
                                 ProductService.edit($scope.product, function(response) {
                                     if (response.status == 'SUCCESS') {
                                         $scope.product = response.data;
