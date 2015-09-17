@@ -75,7 +75,7 @@ h4 a {
 
 .product_list_image {
 
-	height: 180px;
+	max-height: 180px;
 	
 }
 
