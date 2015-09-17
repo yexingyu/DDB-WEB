@@ -30,6 +30,10 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
             templateUrl: 'tpl-product-details.html',
             controller: 'ProductDetailsCtrl'
 
+        }).when('/m/product/:id', {
+            templateUrl: 'tpl-product-details-m.html',
+            controller: 'ProductDetailsCtrl'
+            	
         }).when('/product/:id/order', {
             templateUrl: 'tpl-product-order.html',
             controller: 'ProductOrderCtrl'
