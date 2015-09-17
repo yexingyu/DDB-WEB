@@ -1,25 +1,58 @@
 package com.dailydealsbox.web.parser;
 
-public class ProductPage {
-  //page info
-  private String url;
-  private String domainName;
-  private String key;
-  private String doc;
+import java.io.IOException;
+import java.util.Date;
 
-  //html path info
-  private String htmlPathName;
-  private String htmlPathDescription;
-  private String htmlPathImage;
-  private String htmlPathPrice;
+import org.jsoup.Jsoup;
+
+import com.dailydealsbox.web.configuration.BaseEnum.CURRENCY;
+
+public class ProductPage {
+  //product status
+  public boolean                  active;
+
+  //page info
+  public String                   url;
+  public String                   domainName;
+  public String                   key;
+  public org.jsoup.nodes.Document doc;
+  public Date                     expirition;
+
+  //store info
+  public int                      storeId;
+  public CURRENCY                 currency;
+
+  //HTML path - product info
+  public String                   htmlPathName;
+  public String                   htmlPathDescription;
+  public String                   htmlPathImage;
+  public String                   htmlPathPrice;
+
+  //HTML path - fees
+  public String                   htmlPathShipping;
+  public String                   htmlPathEco;
+  public String                   htmlPathImport;
 
   //parsing result
-  private String name;
-  private String description;
-  private String iamge;
-  private String price;
+  public String                   name;
+  public String                   description;
+  public String                   image;
+  public String                   price;
 
-  // url  
+  public double                   shippingFee;
+  public double                   ecoFee;
+  public double                   importFee;
+
+  public ProductPage() {
+
+  }
+
+  public ProductPage(int storeId, CURRENCY currency) {
+    this.storeId = storeId;
+    this.currency = currency;
+  }
+
+  // URL  
   public String getUrl() {
     return this.url;
   }
@@ -47,12 +80,13 @@ public class ProductPage {
   }
 
   // doc  
-  public String getDoc() {
+  public org.jsoup.nodes.Document getDoc() {
     return this.doc;
   }
 
-  public void setDoc(String doc) {
-    this.doc = doc;
+  public void setDoc(org.jsoup.nodes.Document doc) throws IOException {
+    this.doc = Jsoup.connect(this.url).get();
+    ;
   }
 
   // htmlPathName  
@@ -96,9 +130,7 @@ public class ProductPage {
     return this.name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  public void setName() throws IOException {}
 
   // description  
   public String getDescription() {
@@ -109,13 +141,13 @@ public class ProductPage {
     this.description = description;
   }
 
-  // iamge  
-  public String getIamge() {
-    return this.iamge;
+  // images 
+  public String getImage() {
+    return this.image;
   }
 
-  public void setIamge(String iamge) {
-    this.iamge = iamge;
+  public void setImage(String image) {
+    this.image = image;
   }
 
   // price  
