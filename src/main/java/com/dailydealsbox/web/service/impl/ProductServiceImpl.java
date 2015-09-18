@@ -461,4 +461,13 @@ public class ProductServiceImpl implements ProductService {
     }
   }
 
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.web.service.ProductService#search(java.lang.String, org.springframework.data.domain.Pageable)
+   */
+  @Override
+  public Page<Product> search(String keyword, Pageable pageable) throws Exception {
+    return repo.searchByName(keyword, pageable);
+  }
+
 }

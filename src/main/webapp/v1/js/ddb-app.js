@@ -75,8 +75,7 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
             controller: 'DiscussCtrl'            	
 
         }).when('/category', {
-            templateUrl: 'tpl-category.html',
-            controller: 'CategoryCtrl'            	
+            templateUrl: 'tpl-category.html'
 
         }).when('/welcome', {
             templateUrl: 'tpl-welcome.html',

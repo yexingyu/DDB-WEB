@@ -204,6 +204,29 @@ public class ProductController {
   }
 
   /**
+   * search
+   *
+   * @param keyword
+   * @param pageable
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "search", method = RequestMethod.GET)
+  @ApiOperation(value = "search product", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Search pageable products.")
+  @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
+      @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
+  public GenericResponseData search(@ApiParam(value = "search keyword", required = true) @RequestParam(value = "keyword", required = false) String keyword, @ApiIgnore Pageable pageable)
+      throws Exception {
+    Page<Product> products = this.productService.search(keyword, pageable);
+    if (products == null || products.getNumberOfElements() == 0) {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
+    } else {
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, products);
+    }
+  }
+
+  /**
    * listAll
    *
    * @param ids

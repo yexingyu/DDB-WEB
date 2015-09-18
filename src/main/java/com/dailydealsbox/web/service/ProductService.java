@@ -138,4 +138,13 @@ public interface ProductService {
    * @throws Exception
    */
   public void fixProduct() throws Exception;
+
+  /**
+   * search
+   *
+   * @param keyword
+   * @param pageable
+   * @return
+   */
+  public Page<Product> search(String keyword, Pageable pageable) throws Exception;
 }

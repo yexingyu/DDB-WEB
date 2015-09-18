@@ -25,6 +25,12 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             $location.path('/all');
         };
 
+        // search
+        $scope.keyword = $location.search()['keyword'];
+        $scope.search = function () {
+            $location.path('/search').search({keyword: $scope.keyword});
+        };
+
         // switch language
         $scope.language = $scope.$root.language;
         $scope.switchLanguage = function () {
@@ -107,6 +113,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      */
     .controller('SearchCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
         $scope.requestSearch = $location.search();
+        $scope.keyword = $scope.requestSearch['keyword'];
         $scope.items = [];
         $scope.actions = {
             'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
@@ -134,17 +141,18 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 $scope.pagination.total = response.data.totalElements;
             }
         };
+
         $scope.me = {'loaded': false};
         $scope.loading = function () {
             if ($scope.me.loaded) {
-                ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});
+                ProductService.search(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'keyword': $scope.keyword});
             } else {
                 ProfileService.profile(function (response) {
                     if (response.status === 'SUCCESS') {
                         angular.extend($scope.me, response.data);
                     }
                     $scope.me.loaded = true;
-                    ProductService.list(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'tags': $scope.tags.result, 'store_ids': $scope.stores.result});
+                    ProductService.search(callback, $scope.pagination.page - 1, $scope.pagination.size, $scope.pagination.sort, {'keyword': $scope.keyword});
                 });
             }
         };
@@ -472,8 +480,8 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         $scope.submit = function () {
             OrderService.add($scope.order, function (response) {
                 console.log($scope.order);
-            	console.log(response);
-            	if (response.status === 'SUCCESS') {
+                console.log(response);
+                if (response.status === 'SUCCESS') {
                     // submit success
                     $scope.order = response.data;
                     $location.path('/order/me');
@@ -688,18 +696,18 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      */
     .controller('LocalCtrl', ['$scope', '$location', 'ProductService', function ($scope, $location, ProductService) {
     }])
-    
+
     /*
      * WelcomeCtrl definition
      */
-    .controller('WelcomeCtrl', ['$scope', '$location', 'ProductService','LoginService', function ($scope, $location, ProductService, LoginService) {
-    }]) 
-    
+    .controller('WelcomeCtrl', ['$scope', '$location', 'ProductService', 'LoginService', function ($scope, $location, ProductService, LoginService) {
+    }])
+
     /*
      * DiscussCtrl definition
      */
-    .controller('DiscussCtrl', ['$scope', '$location', 'ProductService','LoginService', function ($scope, $location, ProductService, LoginService) {
-    }])       
+    .controller('DiscussCtrl', ['$scope', '$location', 'ProductService', 'LoginService', function ($scope, $location, ProductService, LoginService) {
+    }])
 
     /*
      * AboutCtrl definition

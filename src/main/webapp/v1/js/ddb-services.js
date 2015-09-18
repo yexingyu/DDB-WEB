@@ -134,6 +134,13 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 filter = typeof filter !== 'undefined' ? filter : {};
                 return $resource('/api/product', angular.extend({'page': page, 'size': size, 'sort': sort}, filter), {}).get(callback);
             },
+            search: function (callback, page, size, sort, filter) {
+                page = typeof page !== 'undefined' ? page : 0;
+                size = typeof size !== 'undefined' ? size : 20;
+                sort = typeof sort !== 'undefined' ? sort : "createdAt,desc";
+                filter = typeof filter !== 'undefined' ? filter : {};
+                return $resource('/api/product/search', angular.extend({'page': page, 'size': size, 'sort': sort}, filter), {}).get(callback);
+            },
             listFollowed: function (callback, page, size, sort) {
                 page = typeof page !== 'undefined' ? page : 0;
                 size = typeof size !== 'undefined' ? size : 20;
