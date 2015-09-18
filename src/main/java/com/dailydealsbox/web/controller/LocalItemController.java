@@ -24,9 +24,9 @@ import com.dailydealsbox.web.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.web.database.model.LocalItem;
 import com.dailydealsbox.web.database.model.Member;
-import com.dailydealsbox.web.database.service.LocalItemService;
-import com.dailydealsbox.web.database.service.MemberService;
-import com.dailydealsbox.web.database.service.StoreService;
+import com.dailydealsbox.web.service.LocalItemService;
+import com.dailydealsbox.web.service.MemberService;
+import com.dailydealsbox.web.service.StoreService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

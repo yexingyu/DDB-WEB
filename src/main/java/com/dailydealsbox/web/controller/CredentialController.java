@@ -30,9 +30,9 @@ import com.dailydealsbox.web.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.web.database.model.Member;
 import com.dailydealsbox.web.database.model.MemberEmail;
-import com.dailydealsbox.web.database.service.AuthorizationService;
-import com.dailydealsbox.web.database.service.MailService;
-import com.dailydealsbox.web.database.service.MemberService;
+import com.dailydealsbox.web.service.AuthorizationService;
+import com.dailydealsbox.web.service.MailService;
+import com.dailydealsbox.web.service.MemberService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

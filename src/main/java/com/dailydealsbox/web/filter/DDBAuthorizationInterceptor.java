@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
 import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.AuthorizationToken;
 import com.dailydealsbox.web.base.BaseAuthorization;
-import com.dailydealsbox.web.database.service.AuthorizationService;
+import com.dailydealsbox.web.service.AuthorizationService;
 
 /**
  * @author x_ye

@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service;
+package com.dailydealsbox.web.service;
 
 import com.dailydealsbox.web.database.model.MemberEmail;
 

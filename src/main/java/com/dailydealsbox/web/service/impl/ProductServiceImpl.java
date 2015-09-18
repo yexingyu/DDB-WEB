@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service.impl;
+package com.dailydealsbox.web.service.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,8 +46,8 @@ import com.dailydealsbox.web.database.repository.ProductLikeRepository;
 import com.dailydealsbox.web.database.repository.ProductRepository;
 import com.dailydealsbox.web.database.repository.ProductReviewRepository;
 import com.dailydealsbox.web.database.repository.ProductTagRepository;
-import com.dailydealsbox.web.database.service.ProductService;
-import com.dailydealsbox.web.database.service.StoreService;
+import com.dailydealsbox.web.service.ProductService;
+import com.dailydealsbox.web.service.StoreService;
 
 /**
  * @author x_ye

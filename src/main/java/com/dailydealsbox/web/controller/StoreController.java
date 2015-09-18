@@ -29,9 +29,9 @@ import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.web.configuration.BaseEnum.STORE_TYPE;
 import com.dailydealsbox.web.database.model.Member;
 import com.dailydealsbox.web.database.model.Store;
-import com.dailydealsbox.web.database.service.AuthorizationService;
-import com.dailydealsbox.web.database.service.MemberService;
-import com.dailydealsbox.web.database.service.StoreService;
+import com.dailydealsbox.web.service.AuthorizationService;
+import com.dailydealsbox.web.service.MemberService;
+import com.dailydealsbox.web.service.StoreService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

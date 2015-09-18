@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service.impl;
+package com.dailydealsbox.web.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +13,7 @@ import com.dailydealsbox.web.configuration.BaseEnum.ORDER_STATUS;
 import com.dailydealsbox.web.database.model.Order;
 import com.dailydealsbox.web.database.model.OrderAddress;
 import com.dailydealsbox.web.database.repository.OrderRepository;
-import com.dailydealsbox.web.database.service.OrderService;
+import com.dailydealsbox.web.service.OrderService;
 
 /**
  * @author x_ye

@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service.impl;
+package com.dailydealsbox.web.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,7 +26,7 @@ import com.dailydealsbox.web.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.web.configuration.BaseEnum.STORE_TYPE;
 import com.dailydealsbox.web.database.model.Store;
 import com.dailydealsbox.web.database.repository.StoreRepository;
-import com.dailydealsbox.web.database.service.StoreService;
+import com.dailydealsbox.web.service.StoreService;
 
 /**
  * @author x_ye

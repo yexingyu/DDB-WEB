@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service.impl;
+package com.dailydealsbox.web.service.impl;
 
 import java.util.Set;
 
@@ -19,7 +19,7 @@ import com.dailydealsbox.web.database.model.MemberAddress;
 import com.dailydealsbox.web.database.model.MemberEmail;
 import com.dailydealsbox.web.database.model.MemberPhone;
 import com.dailydealsbox.web.database.repository.MemberRepository;
-import com.dailydealsbox.web.database.service.MemberService;
+import com.dailydealsbox.web.service.MemberService;
 
 /**
  * @author x_ye

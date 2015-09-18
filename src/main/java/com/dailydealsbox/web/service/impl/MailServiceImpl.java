@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service.impl;
+package com.dailydealsbox.web.service.impl;
 
 import java.util.Calendar;
 
@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.web.database.model.MemberEmail;
 import com.dailydealsbox.web.database.repository.MemberEmailRepository;
-import com.dailydealsbox.web.database.service.MailService;
 import com.dailydealsbox.web.mail.SmtpMailSender;
+import com.dailydealsbox.web.service.MailService;
 
 /**
  * @author x_ye

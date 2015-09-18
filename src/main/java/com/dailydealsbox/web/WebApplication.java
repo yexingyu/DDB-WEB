@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.dailydealsbox.web.database.service.ProductService;
 import com.dailydealsbox.web.filter.DDBAuthorizationInterceptor;
+import com.dailydealsbox.web.service.ProductService;
 
 import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;

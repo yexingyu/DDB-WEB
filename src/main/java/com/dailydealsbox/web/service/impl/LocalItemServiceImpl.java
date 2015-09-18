@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service.impl;
+package com.dailydealsbox.web.service.impl;
 
 import java.util.Set;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.dailydealsbox.web.database.model.LocalItem;
 import com.dailydealsbox.web.database.repository.LocalItemRepository;
-import com.dailydealsbox.web.database.service.LocalItemService;
+import com.dailydealsbox.web.service.LocalItemService;
 
 /**
  * @author TimoYe

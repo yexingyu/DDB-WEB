@@ -1,13 +1,13 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service.impl;
+package com.dailydealsbox.web.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dailydealsbox.web.base.BaseAuthorization;
-import com.dailydealsbox.web.database.service.AuthorizationService;
+import com.dailydealsbox.web.service.AuthorizationService;
 
 /**
  * @author x_ye

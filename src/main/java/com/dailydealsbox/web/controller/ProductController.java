@@ -34,9 +34,9 @@ import com.dailydealsbox.web.database.model.ProductLike;
 import com.dailydealsbox.web.database.model.ProductReview;
 import com.dailydealsbox.web.database.model.ProductTag;
 import com.dailydealsbox.web.database.model.Store;
-import com.dailydealsbox.web.database.service.MemberService;
-import com.dailydealsbox.web.database.service.ProductService;
-import com.dailydealsbox.web.database.service.StoreService;
+import com.dailydealsbox.web.service.MemberService;
+import com.dailydealsbox.web.service.ProductService;
+import com.dailydealsbox.web.service.StoreService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

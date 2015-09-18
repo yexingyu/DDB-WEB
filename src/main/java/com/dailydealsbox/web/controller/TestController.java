@@ -22,10 +22,10 @@ import com.dailydealsbox.web.database.model.Member;
 import com.dailydealsbox.web.database.repository.ProductRepository;
 import com.dailydealsbox.web.database.repository.ProductTagRepository;
 import com.dailydealsbox.web.database.repository.StoreRepository;
-import com.dailydealsbox.web.database.service.MailService;
-import com.dailydealsbox.web.database.service.MemberService;
-import com.dailydealsbox.web.database.service.ProductService;
-import com.dailydealsbox.web.database.service.StoreService;
+import com.dailydealsbox.web.service.MailService;
+import com.dailydealsbox.web.service.MemberService;
+import com.dailydealsbox.web.service.ProductService;
+import com.dailydealsbox.web.service.StoreService;
 
 import springfox.documentation.annotations.ApiIgnore;
 

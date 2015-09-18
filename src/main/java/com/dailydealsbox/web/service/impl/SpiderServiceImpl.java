@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.service.impl;
+package com.dailydealsbox.web.service.impl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -36,7 +36,7 @@ import com.dailydealsbox.web.database.model.ProductPrice;
 import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
-import com.dailydealsbox.web.database.service.SpiderService;
+import com.dailydealsbox.web.service.SpiderService;
 
 /**
  * @author x_ye
