@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-12">
             <span><b>Tags:</b></span>
-            <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"> <a><b>{{tag.value}}</b></a></span>
+            <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a></span>
         </div>
     </div>
 
