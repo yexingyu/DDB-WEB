@@ -30,6 +30,11 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         $scope.search = function () {
             $location.path('/search').search({keyword: $scope.keyword});
         };
+        $scope.searchKeypress = function (event) {
+            if (event.which === 13) {
+                $scope.search();
+            }
+        };
 
         // switch language
         $scope.language = $scope.$root.language;

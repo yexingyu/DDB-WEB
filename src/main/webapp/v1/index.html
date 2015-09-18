@@ -40,7 +40,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-left" role="search">
                 <div class="input-group">
-                    <input type="text" class="form-control header-search" size="35" placeholder="" ng-model="keyword">
+                    <input type="text" class="form-control header-search" size="35" placeholder="" ng-model="keyword" ng-keypress="searchKeypress($event)">
                     <span class="input-group-btn">
 		                <button class="btn btn-default" type="button" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button>
 		            </span>
