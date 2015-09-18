@@ -9,39 +9,39 @@ import com.dailydealsbox.web.configuration.BaseEnum.CURRENCY;
 
 public class ProductPage {
   //product status
-  public boolean                  active;
+  public boolean                   active;
 
   //page info
-  public String                   url;
-  public String                   domainName;
-  public String                   key;
-  public org.jsoup.nodes.Document doc;
-  public Date                     expirition;
+  public String                    url;
+  public String                    domainName;
+  public String                    key;
+  private org.jsoup.nodes.Document doc;
+  public Date                      expirition;
 
   //store info
-  public int                      storeId;
-  public CURRENCY                 currency;
+  public int                       storeId;
+  public CURRENCY                  currency;
 
   //HTML path - product info
-  public String                   htmlPathName;
-  public String                   htmlPathDescription;
-  public String                   htmlPathImage;
-  public String                   htmlPathPrice;
+  public String                    htmlPathName;
+  public String                    htmlPathDescription;
+  public String                    htmlPathImage;
+  public String                    htmlPathPrice;
 
   //HTML path - fees
-  public String                   htmlPathShipping;
-  public String                   htmlPathEco;
-  public String                   htmlPathImport;
+  public String                    htmlPathShipping;
+  public String                    htmlPathEco;
+  public String                    htmlPathImport;
 
   //parsing result
-  public String                   name;
-  public String                   description;
-  public String                   image;
-  public String                   price;
+  public String                    name;
+  public String                    description;
+  public String                    image;
+  public String                    price;
 
-  public double                   shippingFee;
-  public double                   ecoFee;
-  public double                   importFee;
+  public double                    shippingFee;
+  public double                    ecoFee;
+  public double                    importFee;
 
   public ProductPage() {
 
