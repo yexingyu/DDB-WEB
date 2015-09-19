@@ -15,11 +15,16 @@ public class ProductPage {
   public String                    url;
   public String                    domainName;
   public String                    key;
-  public Date                      expirition;
+  public Date                      expiration;
 
   //store info
   public int                       storeId;
   public CURRENCY                  currency;
+  
+  //HTML path - meta
+  public String                    htmlPathMetaName;
+  public String                    htmlPathMetaDescription;
+  public String                    htmlPathMetaKeywords;  
 
   //HTML path - product info
   public String                    htmlPathName;
@@ -32,44 +37,78 @@ public class ProductPage {
   public String                    htmlPathEcoFee;
   public String                    htmlPathImportFee;
 
-  //parsing result
-  public String                    name;
-  public String                    description;
-  public String                    image;
-  public String                    price;
-
-  public double                    shippingFee;
-  public double                    ecoFee;
-  public double                    importFee;
-
-  //jsoup object
+  //jsoup object - meta
+  private org.jsoup.nodes.Element  elementMetaName;
+  private org.jsoup.nodes.Element  elementMetaDescription;
+  private org.jsoup.nodes.Element  elementMetaKeywords;  
+  
+  //jsoup object - product info
   private org.jsoup.nodes.Document doc;
   private org.jsoup.nodes.Element  elementName;
   private org.jsoup.nodes.Element  elementDescription;
   private org.jsoup.nodes.Element  elementPrice;
   private org.jsoup.nodes.Element  elementImage;
+
+  //jsoup object - fees
   private org.jsoup.nodes.Element  elementShippingFee;
   private org.jsoup.nodes.Element  elementEcoFee;
   private org.jsoup.nodes.Element  elementImportFee;
-
+  
+  //index - meta
+  private int                      indexMetaName;
+  private int                      indexMetaDescription;
+  private int                      indexMetaKeywords;
+  
+  //index - product info
   private int                      indexName;
   private int                      indexDescription;
   private int                      indexPrice;
   private int                      indexImage;
+  
+  //index - fees
   private int                      indexShippingFee;
   private int                      indexEcoFee;
   private int                      indexImportFee;
+  
+  //parsing result - meta
+  public String                    MetaName;
+  public String                    MetaDescription;
+  public String                    MetaKeywords;
+  
+  //parsing result - product info
+  public String                    name;
+  public String                    description;
+  public String                    image;
+  public String                    price;
+
+  //parsing result - fees
+  public double                    shippingFee;
+  public double                    ecoFee;
+  public double                    importFee;
+
+
 
   public ProductPage() {
 
   }
-
-  public ProductPage(int storeId, CURRENCY currency) {
+  
+  //constructor
+  public ProductPage(String pageUrl, int storeId, CURRENCY currency) {
+    this.setUrl(pageUrl);
     this.storeId = storeId;
     this.currency = currency;
   }
 
-  // URL  
+  // active  
+  public boolean getActive() {
+    return this.active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
+  }  
+  
+  //page info - URL  
   public String getUrl() {
     return this.url;
   }
@@ -77,8 +116,9 @@ public class ProductPage {
   public void setUrl(String url) {
     this.url = url;
   }
+  
 
-  // domainName  
+  //page info - domainName  
   public String getDomainName() {
     return this.domainName;
   }
@@ -87,7 +127,7 @@ public class ProductPage {
     this.domainName = domainName;
   }
 
-  // key  
+  //page info - key  
   public String getKey() {
     return this.key;
   }
@@ -95,6 +135,61 @@ public class ProductPage {
   public void setKey(String key) {
     this.key = key;
   }
+  
+  //page info - expiration  
+  public Date getExpiration() {
+    return this.expiration;
+  }
+
+  public void setExpiration(Date expiration) {
+    this.expiration = expiration;
+  }  
+  
+  //store info - storeId  
+  public int getStoreId() {
+    return this.storeId;
+  }
+
+  public void setStoreId(int storeId) {
+    this.storeId = storeId;
+  }  
+  
+  //store info - currency  
+  public CURRENCY getCurrency() {
+    return this.currency;
+  }
+
+  public void setCurrency(CURRENCY currency) {
+    this.currency = currency;
+  }
+
+  
+  // htmlPathMetaName  
+  public String getHtmlPathMetaName() {
+    return this.htmlPathMetaName;
+  }
+
+  public void setHtmlPathMetaName(String htmlPathMetaName) {
+    this.htmlPathMetaName = htmlPathMetaName;
+  }
+  
+  // htmlPathMetaDescription  
+  public String getHtmlPathMetaDescription() {
+    return this.htmlPathMetaDescription;
+  }
+
+  public void setHtmlPathMetaDescription(String htmlPathMetaDescription) {
+    this.htmlPathMetaDescription = htmlPathMetaDescription;
+  }
+  
+  // htmlPathMetaKeywords  
+  public String getHtmlPathMetaKeywords() {
+    return this.htmlPathMetaKeywords;
+  }
+
+  public void setHtmlPathMetaKeywords(String htmlPathMetaKeywords) {
+    this.htmlPathMetaKeywords = htmlPathMetaKeywords;
+  }  
 
   // htmlPathName  
   public String getHtmlPathName() {
@@ -131,54 +226,109 @@ public class ProductPage {
   public void setHtmlPathPrice(String htmlPathPrice) {
     this.htmlPathPrice = htmlPathPrice;
   }
-
-  // name  
-  public String getName() {
-    return this.name;
+  
+  // index - metaName  
+  public int getIndexMetaName() {
+    return this.indexMetaName;
   }
 
-  public void setName() throws IOException {
-    this.doc.select(this.htmlPathName).first().select("h1").first().text();
-
+  public void setIndexMetaName(int indexMetaName) {
+    this.indexMetaName = indexMetaName;
+  }
+  
+  // index - metaDescription  
+  public int getIndexMetaDescription() {
+    return this.indexMetaDescription;
   }
 
-  // description  
-  public String getDescription() {
-    return this.description;
+  public void setIndexMetaDescription(int indexMetaDescription) {
+    this.indexMetaDescription = indexMetaDescription;
+  }
+  
+  // index - metaKeywords  
+  public int getIndexMetaKeywords() {
+    return this.indexMetaKeywords;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setIndexMetaKeywords(int indexMetaKeywords) {
+    this.indexMetaKeywords = indexMetaKeywords;
+  }
+  
+  
+  // index - name  
+  public int getIndexName() {
+    return this.indexName;
   }
 
-  // images 
-  public String getImage() {
-    return this.image;
+  public void setIndexName(int indexName) {
+    this.indexName = indexName;
+  }
+  
+  // index - description  
+  public int getIndexDescription() {
+    return this.indexDescription;
   }
 
-  public void setImage(String image) {
-    this.image = image;
+  public void setIndexDescription(int indexDescription) {
+    this.indexDescription = indexDescription;
+  }
+  
+  // index - price  
+  public int getIndexPrice() {
+    return this.indexPrice;
   }
 
-  // price  
-  public String getPirce() {
-    return this.price;
+  public void setIndexPrice(int indexPrice) {
+    this.indexPrice = indexPrice;
+  }  
+  
+  // index - image 
+  public int getIndexImage() {
+    return this.indexImage;
   }
 
-  public void setPirce(String price) {
-    this.price = price;
+  public void setIndexImage(int indexImage) {
+    this.indexImage = indexImage;
+  }
+  
+  // index - shippingFee 
+  public int getIndexShippingFee() {
+    return this.indexShippingFee;
   }
 
+  public void setIndexShippingFee(int indexShippingFee) {
+    this.indexShippingFee = indexShippingFee;
+  }
+  
+  // index - ecoFee 
+  public int getIndexEcoFee() {
+    return this.indexEcoFee;
+  }
+
+  public void setIndexEcoFee(int indexEcoFee) {
+    this.indexEcoFee = indexEcoFee;
+  }    
+  
+  // index - importFee 
+  public int getIndexImportFee() {
+    return this.indexImportFee;
+  }
+
+  public void setIndexImportFee(int indexImportFee) {
+    this.indexImportFee = indexImportFee;
+  }  
+  
   // doc  
   public org.jsoup.nodes.Document getDoc() {
     return this.doc;
   }
 
-  public void setDoc(org.jsoup.nodes.Document doc) throws IOException {
+  public void setDoc() throws IOException {
     this.doc = Jsoup.connect(this.url).get();
     ;
-  }
-
+  }  
+  
+  
   // elementName 
   public org.jsoup.nodes.Element getElementName() {
     return this.elementName;
@@ -240,6 +390,47 @@ public class ProductPage {
 
   public void setElementImportFee() throws IOException {
     this.elementImportFee = this.doc.select(this.htmlPathImportFee).get(this.indexImportFee);
+  }  
+
+  // name  
+  public String getName() {
+    return this.name;
   }
+
+  public void setName() throws IOException {
+    this.doc.select(this.htmlPathName).first().select("h1").first().text();
+
+  }
+
+  // result - description  
+  public String getDescription() {
+    return this.description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  //  result - images 
+  public String getImage() {
+    return this.image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  //  result - price  
+  public String getPirce() {
+    return this.price;
+  }
+
+  public void setPirce(String price) {
+    this.price = price;
+  }
+
+
+
+
 
 }
