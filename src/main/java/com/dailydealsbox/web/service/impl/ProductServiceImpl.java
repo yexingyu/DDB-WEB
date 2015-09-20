@@ -467,7 +467,7 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public Page<Product> search(String keyword, Pageable pageable) throws Exception {
-    return repo.searchByName(keyword, pageable);
+    return repo.search(keyword, pageable);
   }
 
 }

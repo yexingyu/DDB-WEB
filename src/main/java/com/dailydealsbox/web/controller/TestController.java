@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dailydealsbox.web.annotation.DDBAuthorization;
 import com.dailydealsbox.web.base.GenericResponseData;
-import com.dailydealsbox.web.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
-import com.dailydealsbox.web.database.model.Member;
+import com.dailydealsbox.web.database.model.Product;
 import com.dailydealsbox.web.database.repository.ProductRepository;
 import com.dailydealsbox.web.database.repository.ProductTagRepository;
 import com.dailydealsbox.web.database.repository.StoreRepository;
@@ -81,8 +81,13 @@ public class TestController {
     //
     //    Page<Store> rst = this.storeService.list(ids, null, null, false, pageable);
 
-    Set<Member> rst = this.memberService.listByRole(MEMBER_ROLE.CONTRIBUTOR);
-    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, rst);
+    try {
+      Page<Product> rst = this.productRepo.search("evenflo", pageable);
+      return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, rst);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
 }
