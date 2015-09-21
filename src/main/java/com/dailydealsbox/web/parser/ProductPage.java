@@ -1,7 +1,10 @@
 package com.dailydealsbox.web.parser;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 
@@ -10,9 +13,10 @@ import com.dailydealsbox.web.configuration.BaseEnum.CURRENCY;
 public class ProductPage {
   //product status
   public boolean                   active;
+  public boolean                   existing;
 
   //page info
-  public String                    url;
+  public URL                       url;
   public String                    domainName;
   public String                    key;
   public Date                      expiration;
@@ -20,11 +24,11 @@ public class ProductPage {
   //store info
   public int                       storeId;
   public CURRENCY                  currency;
-  
+  //HTML path **********************************************
   //HTML path - meta
   public String                    htmlPathMetaName;
   public String                    htmlPathMetaDescription;
-  public String                    htmlPathMetaKeywords;  
+  public String                    htmlPathMetaKeywords;
 
   //HTML path - product info
   public String                    htmlPathName;
@@ -37,11 +41,12 @@ public class ProductPage {
   public String                    htmlPathEcoFee;
   public String                    htmlPathImportFee;
 
+  //jsoup object **********************************************
   //jsoup object - meta
   private org.jsoup.nodes.Element  elementMetaName;
   private org.jsoup.nodes.Element  elementMetaDescription;
-  private org.jsoup.nodes.Element  elementMetaKeywords;  
-  
+  private org.jsoup.nodes.Element  elementMetaKeywords;
+
   //jsoup object - product info
   private org.jsoup.nodes.Document doc;
   private org.jsoup.nodes.Element  elementName;
@@ -53,28 +58,29 @@ public class ProductPage {
   private org.jsoup.nodes.Element  elementShippingFee;
   private org.jsoup.nodes.Element  elementEcoFee;
   private org.jsoup.nodes.Element  elementImportFee;
-  
+
+  // index **********************************************
   //index - meta
   private int                      indexMetaName;
   private int                      indexMetaDescription;
   private int                      indexMetaKeywords;
-  
+
   //index - product info
   private int                      indexName;
   private int                      indexDescription;
   private int                      indexPrice;
   private int                      indexImage;
-  
+
   //index - fees
   private int                      indexShippingFee;
   private int                      indexEcoFee;
   private int                      indexImportFee;
-  
+  //parsing result **********************************************
   //parsing result - meta
-  public String                    MetaName;
-  public String                    MetaDescription;
-  public String                    MetaKeywords;
-  
+  public String                    metaName;
+  public String                    metaDescription;
+  public String                    metaKeywords;
+
   //parsing result - product info
   public String                    name;
   public String                    description;
@@ -86,14 +92,12 @@ public class ProductPage {
   public double                    ecoFee;
   public double                    importFee;
 
-
-
   public ProductPage() {
 
   }
-  
+
   //constructor
-  public ProductPage(String pageUrl, int storeId, CURRENCY currency) {
+  public ProductPage(URL pageUrl, int storeId, CURRENCY currency) {
     this.setUrl(pageUrl);
     this.storeId = storeId;
     this.currency = currency;
@@ -106,17 +110,25 @@ public class ProductPage {
 
   public void setActive(boolean active) {
     this.active = active;
-  }  
-  
+  }
+
+  // existing  
+  public boolean getExisting() {
+    return this.existing;
+  }
+
+  public void setExisting(boolean existing) {
+    this.existing = existing;
+  }
+
   //page info - URL  
-  public String getUrl() {
+  public URL getUrl() {
     return this.url;
   }
 
-  public void setUrl(String url) {
+  public void setUrl(URL url) {
     this.url = url;
   }
-  
 
   //page info - domainName  
   public String getDomainName() {
@@ -132,10 +144,23 @@ public class ProductPage {
     return this.key;
   }
 
-  public void setKey(String key) {
-    this.key = key;
+  public void setKey() {
+    // String to be scanned to find the pattern.
+    String pattern = "\\/product\\/(\\w+)\\/ref";
+
+    // Create a Pattern object
+    Pattern r = Pattern.compile(pattern);
+
+    // Now create matcher object.
+    Matcher m = r.matcher(url.toString());
+    if (m.find()) {
+      this.key = m.group(1);
+
+    } else {
+      this.key = null;
+    }
   }
-  
+
   //page info - expiration  
   public Date getExpiration() {
     return this.expiration;
@@ -143,8 +168,8 @@ public class ProductPage {
 
   public void setExpiration(Date expiration) {
     this.expiration = expiration;
-  }  
-  
+  }
+
   //store info - storeId  
   public int getStoreId() {
     return this.storeId;
@@ -152,8 +177,8 @@ public class ProductPage {
 
   public void setStoreId(int storeId) {
     this.storeId = storeId;
-  }  
-  
+  }
+
   //store info - currency  
   public CURRENCY getCurrency() {
     return this.currency;
@@ -163,7 +188,7 @@ public class ProductPage {
     this.currency = currency;
   }
 
-  
+  // html get set **********************************************
   // htmlPathMetaName  
   public String getHtmlPathMetaName() {
     return this.htmlPathMetaName;
@@ -172,7 +197,7 @@ public class ProductPage {
   public void setHtmlPathMetaName(String htmlPathMetaName) {
     this.htmlPathMetaName = htmlPathMetaName;
   }
-  
+
   // htmlPathMetaDescription  
   public String getHtmlPathMetaDescription() {
     return this.htmlPathMetaDescription;
@@ -181,7 +206,7 @@ public class ProductPage {
   public void setHtmlPathMetaDescription(String htmlPathMetaDescription) {
     this.htmlPathMetaDescription = htmlPathMetaDescription;
   }
-  
+
   // htmlPathMetaKeywords  
   public String getHtmlPathMetaKeywords() {
     return this.htmlPathMetaKeywords;
@@ -189,7 +214,7 @@ public class ProductPage {
 
   public void setHtmlPathMetaKeywords(String htmlPathMetaKeywords) {
     this.htmlPathMetaKeywords = htmlPathMetaKeywords;
-  }  
+  }
 
   // htmlPathName  
   public String getHtmlPathName() {
@@ -226,7 +251,8 @@ public class ProductPage {
   public void setHtmlPathPrice(String htmlPathPrice) {
     this.htmlPathPrice = htmlPathPrice;
   }
-  
+
+  // **********************************************
   // index - metaName  
   public int getIndexMetaName() {
     return this.indexMetaName;
@@ -235,7 +261,7 @@ public class ProductPage {
   public void setIndexMetaName(int indexMetaName) {
     this.indexMetaName = indexMetaName;
   }
-  
+
   // index - metaDescription  
   public int getIndexMetaDescription() {
     return this.indexMetaDescription;
@@ -244,7 +270,7 @@ public class ProductPage {
   public void setIndexMetaDescription(int indexMetaDescription) {
     this.indexMetaDescription = indexMetaDescription;
   }
-  
+
   // index - metaKeywords  
   public int getIndexMetaKeywords() {
     return this.indexMetaKeywords;
@@ -253,8 +279,7 @@ public class ProductPage {
   public void setIndexMetaKeywords(int indexMetaKeywords) {
     this.indexMetaKeywords = indexMetaKeywords;
   }
-  
-  
+
   // index - name  
   public int getIndexName() {
     return this.indexName;
@@ -263,7 +288,7 @@ public class ProductPage {
   public void setIndexName(int indexName) {
     this.indexName = indexName;
   }
-  
+
   // index - description  
   public int getIndexDescription() {
     return this.indexDescription;
@@ -272,7 +297,7 @@ public class ProductPage {
   public void setIndexDescription(int indexDescription) {
     this.indexDescription = indexDescription;
   }
-  
+
   // index - price  
   public int getIndexPrice() {
     return this.indexPrice;
@@ -280,8 +305,8 @@ public class ProductPage {
 
   public void setIndexPrice(int indexPrice) {
     this.indexPrice = indexPrice;
-  }  
-  
+  }
+
   // index - image 
   public int getIndexImage() {
     return this.indexImage;
@@ -290,7 +315,7 @@ public class ProductPage {
   public void setIndexImage(int indexImage) {
     this.indexImage = indexImage;
   }
-  
+
   // index - shippingFee 
   public int getIndexShippingFee() {
     return this.indexShippingFee;
@@ -299,7 +324,7 @@ public class ProductPage {
   public void setIndexShippingFee(int indexShippingFee) {
     this.indexShippingFee = indexShippingFee;
   }
-  
+
   // index - ecoFee 
   public int getIndexEcoFee() {
     return this.indexEcoFee;
@@ -307,8 +332,8 @@ public class ProductPage {
 
   public void setIndexEcoFee(int indexEcoFee) {
     this.indexEcoFee = indexEcoFee;
-  }    
-  
+  }
+
   // index - importFee 
   public int getIndexImportFee() {
     return this.indexImportFee;
@@ -316,19 +341,54 @@ public class ProductPage {
 
   public void setIndexImportFee(int indexImportFee) {
     this.indexImportFee = indexImportFee;
-  }  
-  
+  }
+
+  //jsoup element **********************************************
   // doc  
   public org.jsoup.nodes.Document getDoc() {
     return this.doc;
   }
 
   public void setDoc() throws IOException {
-    this.doc = Jsoup.connect(this.url).get();
+
+    try {
+      this.doc = Jsoup.connect(this.url.toString()).get();
+    } catch (IOException e) {
+      e.printStackTrace();
+      this.doc = null;
+    }
     ;
-  }  
-  
-  
+  }
+
+  //elementMetaName
+  public org.jsoup.nodes.Element getElementMetaName() {
+    return this.elementMetaName;
+  }
+
+  public void setElementMetaName() throws IOException {
+    this.elementMetaName = this.doc.select(this.htmlPathMetaName).get(this.indexMetaName);
+  }
+
+  //elementMetaDescription
+  public org.jsoup.nodes.Element getElementMetaDescription() {
+    return this.elementMetaDescription;
+  }
+
+  public void setElementMetaDescription() throws IOException {
+    this.elementMetaDescription = this.doc.select(this.htmlPathMetaDescription).get(
+        this.indexMetaDescription);
+  }
+
+  //elementMetaKeywords
+  public org.jsoup.nodes.Element getElementMetaKeywords() {
+    return this.elementMetaKeywords;
+  }
+
+  public void setElementMetaKeywords() throws IOException {
+    this.elementMetaKeywords = this.doc.select(this.htmlPathMetaKeywords).get(
+        this.indexMetaKeywords);
+  }
+
   // elementName 
   public org.jsoup.nodes.Element getElementName() {
     return this.elementName;
@@ -390,7 +450,35 @@ public class ProductPage {
 
   public void setElementImportFee() throws IOException {
     this.elementImportFee = this.doc.select(this.htmlPathImportFee).get(this.indexImportFee);
-  }  
+  }
+
+  //parsing result **********************************************
+  // result - metaName 
+  public String getMetaName() {
+    return this.description;
+  }
+
+  public void setMetaName(String metaName) {
+    this.metaName = metaName;
+  }
+
+  // result - metaDescription 
+  public String getMetaDescription() {
+    return this.description;
+  }
+
+  public void setMetaDescription(String metaDescription) {
+    this.metaDescription = metaDescription;
+  }
+
+  // result - metaKeywords 
+  public String getMetaKeywords() {
+    return this.description;
+  }
+
+  public void setMetaKeywords(String metaKeywords) {
+    this.metaKeywords = metaKeywords;
+  }
 
   // name  
   public String getName() {
@@ -398,7 +486,7 @@ public class ProductPage {
   }
 
   public void setName() throws IOException {
-    this.doc.select(this.htmlPathName).first().select("h1").first().text();
+    this.elementName.text();
 
   }
 
@@ -407,8 +495,8 @@ public class ProductPage {
     return this.description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setDescription() {
+    this.description = this.elementDescription.text();
   }
 
   //  result - images 
@@ -428,9 +516,5 @@ public class ProductPage {
   public void setPirce(String price) {
     this.price = price;
   }
-
-
-
-
 
 }

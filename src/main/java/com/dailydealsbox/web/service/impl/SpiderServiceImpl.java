@@ -36,6 +36,7 @@ import com.dailydealsbox.web.database.model.ProductPrice;
 import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
+import com.dailydealsbox.web.parser.HomeDepot;
 import com.dailydealsbox.web.service.SpiderService;
 
 /**
@@ -217,6 +218,10 @@ public class SpiderServiceImpl implements SpiderService {
       case "www.newegg.ca":
         this.getProductFromNeweggCA(oUrl, product, LANGUAGE.EN);
         break;
+      case "www.homedepot.ca":
+        this.getProductFromHomedepotCA(oUrl, product, LANGUAGE.EN);
+        break;
+
       default:
         break;
     }
@@ -954,6 +959,117 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
+  private Product getProductFromHomedepotCA(URL url, Product product, LANGUAGE language)
+      throws Exception {
+    // homeDepot product page info
+    HomeDepot homeDepotPage = new HomeDepot();
+    homeDepotPage.setStoreId(7);
+    homeDepotPage.setUrl(url);
+    homeDepotPage.setKey();
+    homeDepotPage.setDoc();
+    homeDepotPage.setName();
+    homeDepotPage.setDescription();
+
+    //set product url
+    product.setUrl(homeDepotPage.url.toString());
+
+    //set product status
+    product.setDisabled(false);
+    //set product key
+    product.setKey(homeDepotPage.getKey());
+
+    //set product store
+    Store store = new Store();
+    store.setId(homeDepotPage.getStoreId());
+    product.setStore(store);
+
+    //set product expired date
+
+    product.setExpiredAt(homeDepotPage.getExpiration());
+
+    //set product tax
+    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
+    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
+    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
+
+    if (product.getTaxes().isEmpty()) {
+      ProductTax tax1 = new ProductTax();
+      tax1.setTitle(federal);
+      tax1.setType(percentage);
+
+      ProductTax tax2 = new ProductTax();
+      tax2.setTitle(provincial);
+      tax2.setType(percentage);
+
+      product.getTaxes().add(tax1);
+      product.getTaxes().add(tax2);
+    }
+
+    // language switch
+    String urlStr = homeDepotPage.url.toString();
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    //set product fees
+    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
+    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
+    if (product.getFees().isEmpty()) {
+      ProductFee fee1 = new ProductFee();
+      fee1.setTitle(feeShipping);
+      fee1.setType(feeType);
+      fee1.setValue(0);
+
+      product.getFees().add(fee1);
+    }
+
+    //set product tax
+    if (product.getPrices().isEmpty()) {
+      String productPrice = homeDepotPage.getPirce();
+      Number number;
+      try {
+        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
+        double p = number.doubleValue();
+        ProductPrice price = new ProductPrice();
+        price.setValue(p);
+        product.getPrices().add(price);
+        product.setCurrentPrice(p);
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(homeDepotPage.getName());
+    text.setDescription(homeDepotPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      ProductImage image = new ProductImage();
+      image.setUrl(String.format("%s://%s", url.getProtocol(), homeDepotPage.getImage()));
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
   private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language)
       throws Exception {
     //set product url
