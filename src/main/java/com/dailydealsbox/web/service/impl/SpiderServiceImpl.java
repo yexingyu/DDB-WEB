@@ -36,7 +36,7 @@ import com.dailydealsbox.web.database.model.ProductPrice;
 import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
-import com.dailydealsbox.web.parser.HomeDepot;
+import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.service.SpiderService;
 
 /**
@@ -967,7 +967,7 @@ public class SpiderServiceImpl implements SpiderService {
     product.setUrl(url.toString());
 
     // homeDepot product page info
-    HomeDepot homeDepotPage = new HomeDepot();
+    HomeDepotCa homeDepotPage = new HomeDepotCa();
     homeDepotPage.setStoreId(7);
     homeDepotPage.setUrl(url);
     homeDepotPage.setKey();
