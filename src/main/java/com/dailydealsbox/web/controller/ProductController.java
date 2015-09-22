@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +28,7 @@ import com.dailydealsbox.web.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.web.configuration.BaseEnum.MEMBER_ROLE;
 import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.web.database.model.Member;
+import com.dailydealsbox.web.database.model.Poster;
 import com.dailydealsbox.web.database.model.Product;
 import com.dailydealsbox.web.database.model.ProductLike;
 import com.dailydealsbox.web.database.model.ProductReview;
@@ -192,6 +192,12 @@ public class ProductController {
     Page<Product> products = null;
     try {
       products = this.productService.list(storeIds, tags, countries, null, deleted, disabled, pageable);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    try {
+      System.out.println(products);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -382,13 +388,9 @@ public class ProductController {
           int randomNum = new Random().nextInt((max - min) + 1) + min;
           contributor = arrContributors[randomNum];
         }
-        product.setAddBy(contributor.getId());
-        //product.setAddByName(contributor.getFirstName());
-        product.setAddByName(StringUtils.substringBefore(contributor.getAccount(), "@"));
-
+        product.setPoster(new Poster(contributor));
       } else {
-        product.setAddBy(me.getId());
-        product.setAddByName(me.getFirstName());
+        product.setPoster(new Poster(me));
       }
       Product productFromDb = this.productService.insert(product);
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, productFromDb);

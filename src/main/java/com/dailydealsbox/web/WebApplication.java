@@ -107,7 +107,7 @@ public class WebApplication extends SpringBootServletInitializer {
    * @return
    */
   @Bean
-  WebMvcConfigurerAdapter getAdapter() {
+  public WebMvcConfigurerAdapter getAdapter() {
     return new WebMvcConfigurerAdapter() {
       @Override
       public void addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry registry) {
@@ -145,9 +145,7 @@ public class WebApplication extends SpringBootServletInitializer {
 
   /*
    * (non-Javadoc)
-   * @see
-   * org.springframework.boot.context.web.SpringBootServletInitializer#configure(org.springframework
-   * .boot.builder.SpringApplicationBuilder)
+   * @see org.springframework.boot.context.web.SpringBootServletInitializer#configure(org.springframework .boot.builder.SpringApplicationBuilder)
    */
   @Override
   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

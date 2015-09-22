@@ -74,12 +74,6 @@ public class Product extends BaseEntityModel {
   @Column(name = "activate_at")
   private Date activateAt;
 
-  @Column(name = "add_by")
-  private int addBy;
-
-  @Column(name = "add_by_name")
-  private String addByName;
-
   @NotNull
   @Column(name = "count_likes", insertable = false, updatable = false)
   private int countLikes;
@@ -323,20 +317,6 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @return the addByName
-   */
-  public String getAddByName() {
-    return this.addByName;
-  }
-
-  /**
-   * @param addByName the addByName to set
-   */
-  public void setAddByName(String addByName) {
-    this.addByName = addByName;
-  }
-
-  /**
    * @return the taxes
    */
   public Set<ProductTax> getTaxes() {
@@ -572,20 +552,6 @@ public class Product extends BaseEntityModel {
    */
   public void setActivateAt(Date activateAt) {
     this.activateAt = activateAt;
-  }
-
-  /**
-   * @return the addBy
-   */
-  public int getAddBy() {
-    return this.addBy;
-  }
-
-  /**
-   * @param addBy the addBy to set
-   */
-  public void setAddBy(int addBy) {
-    this.addBy = addBy;
   }
 
 }
