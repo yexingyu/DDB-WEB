@@ -1,5 +1,6 @@
 package com.dailydealsbox.web.parser;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,5 +22,28 @@ public class HomeDepot extends ProductPage {
     Date expiredDate = now.getTime();
     this.expiration = expiredDate;
 
+  }
+
+  @Override
+  public void setName() throws IOException {
+    this.name = this.doc.select("h1").first().text();
+
+  }
+
+  @Override
+  public void setDescription() throws IOException {
+    this.description = this.doc.select("div.overview").first().text();
+
+  }
+
+  @Override
+  public void setImage() throws IOException {
+    this.image = "www.homedepot.ca"
+        + this.doc.select("div.main-product-info").get(0).select("img").get(0).attr("src");
+  }
+
+  @Override
+  public void setPrice() throws IOException {
+    this.price = 0.00;
   }
 }
