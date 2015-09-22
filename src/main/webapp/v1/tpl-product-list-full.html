@@ -86,7 +86,7 @@
                             </div>
                         </span>
                     <div class="col-xs-12">
-                        <h5 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name }}</h5>
+                        <h5 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name }}</h4>
                     </div>                        
                     <div class="col-xs-12 div_with_bottom">
                         <span class="old-price" ng-if="item.compareValue>0.">{{item.currency}}${{item.compareValue | number:2}}</span>
@@ -94,6 +94,30 @@
                         <span ng-repeat="fee in item.fees">+ <img ng-src="./images/{{fee.title}}.png" height="20px" alt="{{fee.title}}"> ${{fee.value | number:2}}</span><br>
                         <span>SubTotal: CAD${{item.total}}</span>
                     </div>
+                       
+
+
+                    <div class="col-xs-12" ng-if="item.currentPrice>=90">
+                        <div class="row">
+                            <div class="col-xs-12 pull-left">
+                                    <span class="highlight_RoyalBlue">Down: CAD${{item.downpayment | number:2}}</span>
+
+                            </div>
+                            <div class="col-xs-12 pull-left">
+
+                                    <span class="highlight_RoyalBlue">+ CAD${{item.monthlyPayment | number:2}} for {{item.payments}} Months</span>
+
+                            </div>
+                            <div class="col-xs-12">
+                                    <a href="#/product/{{item.id}}/order" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-calendar"></span> Pay Monthly</a>
+                            </div>                                                         
+
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                    	<hr>
+                    </div>
+                    
                     <div class="col-xs-12 pull-left">
                         <div class="row">
                             <div class="col-xs-12 pull-left">
@@ -104,7 +128,7 @@
                     </div>
                     <div class="col-xs-12">
                     	<hr>
-                    </div>
+                    </div>                    
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-2">

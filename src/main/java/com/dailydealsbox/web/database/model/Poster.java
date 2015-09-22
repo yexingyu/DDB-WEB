@@ -16,7 +16,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import com.dailydealsbox.web.configuration.BaseEnum.MEMBER_ROLE;
-import com.dailydealsbox.web.database.model.base.BaseEntityModel;
+import com.dailydealsbox.web.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -31,20 +31,19 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Poster extends BaseEntityModel {
+public class Poster extends BaseModel {
 
-  //discuss forum attributes
   @NotNull
-  @Column(name = "nick_name", nullable = false, length = 100)
+  @Column(name = "nick_name")
   private String nickName = "";
 
-  @Column(name = "signature", length = 160)
+  @Column(name = "signature")
   private String signature = "";
 
-  @Column(name = "avatar", length = 45)
+  @Column(name = "avatar")
   private String avatar = "";
 
-  @Column(name = "level", length = 45)
+  @Column(name = "level")
   private String level = "";
 
   @Column(name = "point")
@@ -54,11 +53,31 @@ public class Poster extends BaseEntityModel {
   private int pointRedeemed;
 
   @NotNull
-  @Column(name = "role", nullable = false)
+  @Column(name = "role")
   @Enumerated(EnumType.STRING)
   private MEMBER_ROLE role = MEMBER_ROLE.MEMBER;
 
-  // forum attributes
+  /**
+   * constructor
+   */
+  public Poster() {}
+
+  /**
+   * constructor
+   *
+   * @param member
+   */
+  public Poster(Member member) {
+    this.setId(member.getId());
+    this.setAvatar(member.getAvatar());
+    this.setLevel(member.getLevel());
+    this.setNickName(member.getNickName());
+    this.setPoint(member.getPoint());
+    this.setPointRedeemed(member.getPointRedeemed());
+    this.setRole(member.getRole());
+    this.setSignature(member.getSignature());
+  }
+
   /**
    * @return the nickName
    */
@@ -141,6 +160,20 @@ public class Poster extends BaseEntityModel {
    */
   public void setPointRedeemed(int pointredeemed) {
     this.pointRedeemed = pointredeemed;
+  }
+
+  /**
+   * @return the role
+   */
+  public MEMBER_ROLE getRole() {
+    return this.role;
+  }
+
+  /**
+   * @param role the role to set
+   */
+  public void setRole(MEMBER_ROLE role) {
+    this.role = role;
   }
 
 }

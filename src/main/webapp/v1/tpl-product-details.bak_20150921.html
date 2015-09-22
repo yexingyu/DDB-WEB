@@ -36,7 +36,7 @@
                     <h3 class="price_RoyalBlue">{{item.currency}}${{item.currentPrice}}</h3>
                 </div>
             </div>
-            <div class="row" ng-hide="!item.options.length">
+            <div class="row" ng-hide ="!item.options.length">
                 <div class="col-sm-12">
                     <form class="form-inline">
                         <div class="form-group">
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="row">
-                <span ng-repeat="link in item.links ">
+                        <span ng-repeat="link in item.links ">
                             <div class="col-xs-8">
                               <span class="rating" ng-if="link.rating>4.75 && link.rating<=5">
                                   <i class="fa fa-star fa-3"></i>
@@ -103,7 +103,58 @@
                     <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description}}</p>
                 </div>
             </div>
+            <div ng-if="item.currentPrice>=90">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
 
+                        <div class="col-sm-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Down Payment
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="price_RoyalBlue">${{item.downpayment}} by Interac email money transfer</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Monthly Payments
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="price_RoyalBlue">${{item.monthlyPayment}} * 12M by Post Date Cheque</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="pull-right">
+                        <a href="#/product/{{item.id}}/order" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-calendar"></span> Pay Monthly</a>
+                    </div>
+                </div>
+
+            </div>            
+            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <a href="{{item.url}}" target="_blank">Buy it from the {{item.store.website}}</a>
