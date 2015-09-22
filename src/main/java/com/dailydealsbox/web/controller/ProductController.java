@@ -195,13 +195,6 @@ public class ProductController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
-    try {
-      System.out.println(products);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
     if (products == null || products.getNumberOfElements() == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.EMPTY_RESULT, "");
     } else {
