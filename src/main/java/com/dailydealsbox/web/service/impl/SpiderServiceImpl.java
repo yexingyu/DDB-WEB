@@ -963,37 +963,32 @@ public class SpiderServiceImpl implements SpiderService {
    */
   private Product getProductFromHomedepotCA(URL url, Product product, LANGUAGE language)
       throws Exception {
+    //set product url
+    product.setUrl(url.toString());
+
     // homeDepot product page info
     HomeDepot homeDepotPage = new HomeDepot();
     homeDepotPage.setStoreId(7);
     homeDepotPage.setUrl(url);
     homeDepotPage.setKey();
+    homeDepotPage.setExpiration();
 
     homeDepotPage.setDoc();
-
     homeDepotPage.setName();
-
     homeDepotPage.setDescription();
-
     homeDepotPage.setImage();
     homeDepotPage.setPrice();
-
-    //set product url
-    product.setUrl(homeDepotPage.url.toString());
 
     //set product status
     product.setDisabled(false);
     //set product key
     product.setKey(homeDepotPage.getKey());
+    product.setExpiredAt(homeDepotPage.getExpiration());
 
     //set product store
     Store store = new Store();
     store.setId(homeDepotPage.getStoreId());
     product.setStore(store);
-
-    //set product expired date
-
-    product.setExpiredAt(homeDepotPage.getExpiration());
 
     //set product tax
     PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;

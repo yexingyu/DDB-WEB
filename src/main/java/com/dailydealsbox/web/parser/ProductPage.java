@@ -2,9 +2,8 @@ package com.dailydealsbox.web.parser;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 
@@ -97,20 +96,7 @@ public class ProductPage {
   }
 
   public void setKey() {
-    // String to be scanned to find the pattern.
-    String pattern = "\\/product\\/(\\w+)\\/ref";
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile(pattern);
-
-    // Now create matcher object.
-    Matcher m = r.matcher(url.toString());
-    if (m.find()) {
-      this.key = m.group(1);
-
-    } else {
-      this.key = null;
-    }
+    this.key = "";
   }
 
   //page info - expiration  
@@ -118,8 +104,14 @@ public class ProductPage {
     return this.expiration;
   }
 
-  public void setExpiration(Date expiration) {
-    this.expiration = expiration;
+  public void setExpiration() {
+    //set expiration to next 2 days
+    Calendar now = Calendar.getInstance();
+    int days = 2;
+    now.add(Calendar.DAY_OF_YEAR, days);
+
+    Date expiredDate = now.getTime();
+    this.expiration = expiredDate;
   }
 
   //store info - storeId  
