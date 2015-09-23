@@ -45,7 +45,7 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
                 return $resource('/api/credential/facebook', {}, {}).save(accessToken, callback);
             },
             showLoginBox: function (success, dismiss) {
-                return $modal.open({animation: true, templateUrl: 'tpl-login.html', controller: 'LoginCtrl', size: 'md'}).result.then(success, dismiss);
+                return $modal.open({animation: true, templateUrl: 'tpl/tpl-login.html', controller: 'LoginCtrl', size: 'md'}).result.then(success, dismiss);
             }
         };
     }])

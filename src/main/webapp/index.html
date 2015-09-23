@@ -1,10 +1,182 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en" ng-app="ddbApp">
 <head>
-    <title>Daily Deals Box</title>
-    <meta http-equiv="refresh" content="0;URL='/v1/index.html'"/>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:site_name" content="dailydealsbox.com" />
+    <meta property="og:url" content="http://www.dailydealsbox.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Helping Canadians save money by viewing deals from hundreds of stores in one place!" />
+
+    <meta name="keywords" content="daily deals, Canadian deals, flyers,ddb, daily deals box" />
+    <meta name="description" content="Helping Canadians save money by viewing deals from hundreds of stores in one place!" />
+
+    <meta name="google-site-verification" content="_EmkfAkmC_gv6pRuX5uhTcfR6mV9Z9Eve7_V_VPw0jg" />
+    <title>Canada Daily Deals Box</title>
+    <link href="bower_components/angular/angular-csp.css" rel="stylesheet">
+    <link href="bower_components/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+
+<div ng-controller="NavBarCtrl">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="navbar-header pull-left">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/all">Daily Deals Box</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control header-search" size="35" placeholder="What are you looking for?" ng-model="keyword" ng-keypress="searchKeypress($event)">
+                    <span class="input-group-btn">
+		                <button class="btn btn-default" type="button" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button>
+		            </span>
+                </div>
+            </form>
+            <ul class="nav navbar-nav">
+                <li>
+                    <img class="header-icon" alt="Sales Events" src="images/popular.png">
+                </li>
+                <li><a href="#/search?keyword=tv">TV</a></li>
+                <li><a href="#/search?keyword=apple">apple</a></li>
+                <li><a href="#/search?keyword=smartphone">smartphone</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right pull-right">
+                <li>
+                    <img class="header-icon" alt="Sales Events" src="images/sale.png">
+                </li>
+                <li><a href="#/all?tags=walmart%20anniversary%202015">walmart anniversary</a></li>
+                <li>
+                    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                    <div class="addthis_sharing_toolbox pull-right"></div>
+                </li>
+            </ul>
+
+        </div>
+        <!--/.nav-collapse -->
+    </nav>
+
+    <div class="navbar-wrapper">
+        <nav class="navbar">
+            <div class="col-sm-2">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deals by Category<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/all">All Deals</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Electronics</li>
+                            <li><a href="#/all?tags=g4,s6%20edge,smart%20phone,iphone%206">Cell Phones & Accessories</a></li>
+                            <li><a href="#/all?tags=macbook,laptop">Computers</a></li>
+                            <li><a href="#/all?tags=tablet,ipad,%20ipad%20air">Tablets,iPad</a></li>
+                            <li><a href="#/all?tags=smart%20tv,led%20tv,4k,tv">Televisions & Video</a></li>
+                            <li><a href="#/all?tags=dslr,dslr%20camera">Camera, Photo & Video</a></li>
+                            <li><a href="#/all?tags=Xbox%20One">Video Games</a></li>
+                            <li><a href="#/all?tags=headphones,%20bluetooth%20speaker,wireless%20speaker,sound%20system">Home & Portable Audio</a></li>
+
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Fashion</li>
+                            <li><a href="#">Clothings</a></li>
+                            <li><a href="#">Shoes</a></li>
+                            <li><a href="#">Handbags</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#/category">More Categories</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-7">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/all"><span class="glyphicon glyphicon-globe"></span>Online</a></li>
+                    <li><a href="#/local"><span class="glyphicon glyphicon-map-marker"></span>Local</a></li>
+                    <li><a href="#/store"><span class="glyphicon glyphicons-shop"></span>Stores</a></li>
+                    <li><a href="#/following"><span class="glyphicon glyphicon-plus"></span>Your Follow</a></li>
+                    <li><a href="#/share"><span class="glyphicon glyphicon-share"></span>Share</a></li>
+                    <li><a href="#/discuss"><span class="glyphicon glyphicon-retweet"></span>Discuss</a></li>
+                    <li><a href="#/about"><span class="glyphicon glyphicon-file"></span>DDB</a></li>
+                    <li>
+                        <a ng-click="switchLanguage()">
+                            <span ng-show="$root.language.language === 'EN'">en français</span>
+                            <span class="ng-hide" ng-show="$root.language.language === 'FR'">in English</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown ng-hide" ng-show="$root.profile.account.trim()">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img ng-src="images/avatar/{{profile.avatar}}"> {{$root.profile.firstName + $root.profile.lastName}}
+                            <ul class="dropdown-menu">
+                                <li role="separator" class="divider" />
+                                <li><a href="#/profile"><span class="glyphicon glyphicon-cog"></span>Profile</a></li>
+                                <li><a href="#/profile/edit"><span class="glyphicon glyphicon-edit"></span>Profile Edit</a></li>
+                                <li><a ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li ng-show="!$root.profile.account.trim()"><a ng-click="login()"><span class="glyphicon glyphicon-user"></span>Log In</a></li>
+                    <li><a><span class="glyphicon glyphicon-heart"></span>Your Likes</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Marketing messaging and featurettes
+  ================================================== -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
+<div class="container">
+    <div class="ng-view" autoscroll></div>
+    <!-- FOOTER -->
+    <footer>
+        <p class="pull-right">
+            <a onclick="window.scrollTo(0,0);">Back to top</a>
+        </p>
+
+        <p>
+            &copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a>
+        </p>
+    </footer>
+</div>
+<!-- /.container -->
+
+
+<script src="js/google-analytics.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+<script src="bower_components/fingerprint/fingerprint.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-md5/angular-md5.js"></script>
+<script src="bower_components/angular-easyfb/angular-easyfb.js"></script>
+<script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
+<script src="js/ddb-app.js"></script>
+<script src="js/ddb-controllers.js"></script>
+<script src="js/ddb-services.js"></script>
+<script src="js/ddb-models.js"></script>
+<script src="js/ddb-constants.js"></script>
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55ce2e4dccefc1a9" async="async"></script>
+
 </body>
 </html>

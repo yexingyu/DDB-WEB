@@ -12,6 +12,7 @@
                 <span ng-if="email.verified" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
                 <span ng-if="!email.verified" class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                 <a ng-if="!email.verified" ng-click="sendEmailVerification(email)">[Verify Email]</a>
+
                 <div ng-if="email.sent === 1" class="alert alert-success" role="alert">Send email verification success, please check your email.</div>
                 <div ng-if="email.sent === 2" class="alert alert-success" role="alert">Send email verification fail, please try again.</div>
             </li>
@@ -48,7 +49,7 @@
                     <div>{{profile.lastName}}</div>
                 </div>
             </li>
-         </ul>
+        </ul>
     </div>
 </div>
 <div class="panel panel-default">
@@ -56,7 +57,7 @@
         <h3 class="panel-title">DDB Commnunity Information</h3>
     </div>
     <div class="panel-body">
-         <ul class="list-group">
+        <ul class="list-group">
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-md-3">
@@ -72,13 +73,13 @@
                     </div>
                     <div>{{profile.signature}}</div>
                 </div>
-            </li> 
+            </li>
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-md-3">
                         <b>Avatar:</b>
                     </div>
-                    <div><img src = "avatar/{{profile.avatar}}"></img></div>
+                    <div><img ng-src="images/avatar/{{profile.avatar}}"></div>
                 </div>
             </li>
             <li class="list-group-item">
@@ -88,7 +89,7 @@
                     </div>
                     <div>{{profile.level}}</div>
                 </div>
-            </li> 
+            </li>
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-md-3">
@@ -96,7 +97,7 @@
                     </div>
                     <div>{{profile.point}}</div>
                 </div>
-            </li> 
+            </li>
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-md-3">
@@ -104,7 +105,7 @@
                     </div>
                     <div>{{profile.pointRedeemed}}</div>
                 </div>
-            </li>                                                                            
+            </li>
         </ul>
     </div>
 </div>

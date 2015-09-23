@@ -446,7 +446,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             $scope.next = function () {
                 $modal.open({
                     animation: true,
-                    templateUrl: 'tpl-product-order-confirm.html',
+                    templateUrl: 'tpl/tpl-product-order-confirm.html',
                     controller: 'ProductOrderConfirmCtrl',
                     size: 'lg',
                     backdrop: true,

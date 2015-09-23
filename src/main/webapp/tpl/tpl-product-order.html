@@ -11,11 +11,11 @@
                                 <div class="form-group">
                                     <label for="firstName" class="col-xs-2 control-label">Email:</label>
 
-									<div class="col-xs-4">
+                                    <div class="col-xs-4">
                                         {{profile.account}}
                                     </div>
 
-                                </div>                            
+                                </div>
                                 <div class="form-group">
                                     <label for="firstName" class="col-xs-2 control-label">First Name</label>
 
@@ -117,18 +117,18 @@
                         <div class="panel-heading">Customer Note:
                         </div>
                         <div class="row">
-                            
+
                             <div class="col-xs-12">
                                 <label for="exampleInputEmail1">Please add any notes if needed:</label>
                                 <hr>
                                 <textarea class="form-control" rows="3"></textarea>
                                 <hr>
 
-                            </div>    
+                            </div>
                         </div>
-                    </div>           
+                    </div>
+                </div>
             </div>
-           </div>
         </div>
 
         <div class="col-xs-4">
@@ -141,17 +141,18 @@
                             <div class="col-xs-12">
                                 <a href="{{product.url}}"><h4>Product Name</h4></a>
 
-                            </div>                        
+                            </div>
                             <div class="col-xs-12">
                                 <div class="row">
                                     <div class="col-xs-12"><img ng-src="{{product.images[0].url}}" style="max-width:100%">
                                     </div>
                                     <form class="form-horizontal">
-                                        <div class="col-xs-12" ><h4>Quantity:</h4>
-                                            <select class="form-control" ng-model="product_quantity" ng-init=" product_quantity = 1" ng-options="o.v as o.n for o in [{ n:1, v: 1 }, { n: 2, v: 2 }, { n: 3, v: 3 }, { n: 4, v: 5 }, { n: 5, v: 5 }]">
+                                        <div class="col-xs-12"><h4>Quantity:</h4>
+                                            <select class="form-control" ng-model="product_quantity" ng-init=" product_quantity = 1"
+                                                    ng-options="o.v as o.n for o in [{ n:1, v: 1 }, { n: 2, v: 2 }, { n: 3, v: 3 }, { n: 4, v: 5 }, { n: 5, v: 5 }]">
                                             </select>
                                         </div>
-                                        <div class="col-xs-12" ng-hide ="!product.options.length"><h4>Options:</h4>
+                                        <div class="col-xs-12" ng-hide="!product.options.length"><h4>Options:</h4>
                                             <select class="form-control" ng-model="order.option" ng-options="option.value as option.value group by option.type for option in product.options">
                                             </select>
                                         </div>
@@ -164,7 +165,7 @@
                         </div>
                     </div>
                 </div>
-            </div>        
+            </div>
             <div class="row">
 
                 <div class="col-xs-12">
@@ -181,14 +182,15 @@
                         <div class="row" ng-repeat="fee in product.fees">
                             <div class="col-sm-6" align="left" ng-if="fee.title != 'CREDIT_APPLICATEION'"><h4>{{fee.title}}:</h4>
                             </div>
-                            <div class="col-sm-6" align="left" ng-if="fee.title == 'CREDIT_APPLICATEION'"><h4>{{fee.title}}: 
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#refundTips">Refundable</button>
+                            <div class="col-sm-6" align="left" ng-if="fee.title == 'CREDIT_APPLICATEION'">
+                                <h4>{{fee.title}}:
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#refundTips">Refundable</button>
                             </div>
                             <div class="col-sm-6" align="right">
                                 <h4>{{fee.value |currency}}</h4>
                             </div>
                         </div>
-                         <div class="row">
+                        <div class="row">
                             <div class="col-sm-6" align="left"><h4>Quantity:</h4>
                             </div>
                             <div class="col-sm-6" align="right">
@@ -209,13 +211,13 @@
                         </div>
 
                         <div ng-if="product.store.country == 'CA'">
-	                        <div class="row">
-	                            <div class="col-sm-6" align="left"><h4>{{tax_rate[ order.addresses[0].region]["tax_type"]}}:</h4>
-	                            </div>
-	                            <div class="col-sm-6" align="right">
-	                                <h4>{{product.total * tax_rate[order.addresses[0].region]["total_rate"] * product_quantity |currency }}</h4>
-	                            </div>
-	                        </div>
+                            <div class="row">
+                                <div class="col-sm-6" align="left"><h4>{{tax_rate[ order.addresses[0].region]["tax_type"]}}:</h4>
+                                </div>
+                                <div class="col-sm-6" align="right">
+                                    <h4>{{product.total * tax_rate[order.addresses[0].region]["total_rate"] * product_quantity |currency }}</h4>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -266,7 +268,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_1 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -274,7 +276,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_2 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -282,7 +284,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_3 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -290,7 +292,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_4 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -298,7 +300,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_5 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -306,7 +308,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_6 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -314,7 +316,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_7 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -322,7 +324,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_8 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -330,7 +332,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_9 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -338,7 +340,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_10 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -346,7 +348,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_11 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                         <div class="row">
@@ -354,7 +356,7 @@
                             </div>
                             <div class="col-xs-4" align="right">{{month_12 | date:'yyyy-MM' }}-{{payDay}}
                             </div>
-                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"])  *  product_quantity| currency}}
+                            <div class="col-xs-3" align="right">{{product.monthlyPayment * (1+tax_rate[order.addresses[0].region]["total_rate"]) * product_quantity| currency}}
                             </div>
                         </div>
                     </div>
@@ -372,296 +374,340 @@
                     <div class="panel-heading">Loan Agreement
                     </div>
 
-<div class=WordSection1>
+                    <div class=WordSection1>
 
-<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
-normal'>LOAN AGREEMENT<o:p></o:p></b></p>
+                        <p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'>LOAN AGREEMENT
+                            <o:p></o:p>
+                        </b></p>
 
-<p class=MsoNormal><b style='mso-bidi-font-weight:normal'>THIS LOAN AGREEMENT (this
-"Agreement") dated this 26th day of May, 2015<o:p></o:p></b></p>
+                        <p class=MsoNormal><b style='mso-bidi-font-weight:normal'>THIS LOAN AGREEMENT (this
+                            "Agreement") dated this 26th day of May, 2015
+                            <o:p></o:p>
+                        </b></p>
 
-<p class=MsoNormal><b style='mso-bidi-font-weight:normal'>BETWEEN:<o:p></o:p></b></p>
+                        <p class=MsoNormal><b style='mso-bidi-font-weight:normal'>BETWEEN:
+                            <o:p></o:p>
+                        </b></p>
 
-<p class=MsoNormal align=center style='text-align:center'>Joe Lender of {{}}</p>
+                        <p class=MsoNormal align=center style='text-align:center'>Joe Lender of {{}}</p>
 
-<p class=MsoNormal align=center style='text-align:center'>(<span class=GramE>the</span>
-"Lender")</p>
+                        <p class=MsoNormal align=center style='text-align:center'>(<span class=GramE>the</span>
+                            "Lender")</p>
 
-<p class=MsoNormal align=right style='text-align:right'><b style='mso-bidi-font-weight:
-normal'>OF THE FIRST PART<o:p></o:p></b></p>
+                        <p class=MsoNormal align=right style='text-align:right'><b style='mso-bidi-font-weight:
+normal'>OF THE FIRST PART
+                            <o:p></o:p>
+                        </b></p>
 
-<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
-normal'>AND<o:p></o:p></b></p>
+                        <p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'>AND
+                            <o:p></o:p>
+                        </b></p>
 
-<p class=MsoNormal align=center style='text-align:center'>Jane Borrower of {{}}</p>
+                        <p class=MsoNormal align=center style='text-align:center'>Jane Borrower of {{}}</p>
 
-<p class=MsoNormal align=center style='text-align:center'>(<span class=GramE>the</span>
-"Borrower")</p>
+                        <p class=MsoNormal align=center style='text-align:center'>(<span class=GramE>the</span>
+                            "Borrower")</p>
 
-<p class=MsoNormal align=right style='text-align:right'><b style='mso-bidi-font-weight:
-normal'>OF THE SECOND PART<o:p></o:p></b></p>
+                        <p class=MsoNormal align=right style='text-align:right'><b style='mso-bidi-font-weight:
+normal'>OF THE SECOND PART
+                            <o:p></o:p>
+                        </b></p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'>IN CONSIDERATION OF </b>the Lender loaning
-certain monies (the "Loan") to the Borrower to finance the Borrower's purchase
-of <span class=SpellE>xxxx</span> (the "Merchandise") from <span class=SpellE>yyy</span>
-(the "Merchant"), and the Borrower repaying the Loan to the Lender, both
-parties agree to keep, perform and fulfill the promises and conditions set out
-in this Agreement:</p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'>IN CONSIDERATION OF </b>the Lender loaning
+                            certain monies (the "Loan") to the Borrower to finance the Borrower's purchase
+                            of <span class=SpellE>xxxx</span> (the "Merchandise") from <span class=SpellE>yyy</span>
+                            (the "Merchant"), and the Borrower repaying the Loan to the Lender, both
+                            parties agree to keep, perform and fulfill the promises and conditions set out
+                            in this Agreement:</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Administrative Agent<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Administrative Agent
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>The
-Lender and the Borrower appoint <span class=SpellE>Dailydealsbox</span> Inc.
-("DDB") as their sole administrative agent (the "Administrative Agent") for
-loan origination, bookkeeping and mediation. All communication between the
-Lender and the Borrower shall be conducted through the Administrative Agent.
-The Administrative Agent charges to the Borrower a one-time $19 fee for loan
-origination, which can be waived if certain conditions are met. The basic fee
-is 1% of the total Loan Amount to the Lender, which shall be paid with the loan
-proceeds disbursement. Please refer to fee schedules on DDB website for charges
-for additional services.</p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>The
+                            Lender and the Borrower appoint <span class=SpellE>Dailydealsbox</span> Inc.
+                            ("DDB") as their sole administrative agent (the "Administrative Agent") for
+                            loan origination, bookkeeping and mediation. All communication between the
+                            Lender and the Borrower shall be conducted through the Administrative Agent.
+                            The Administrative Agent charges to the Borrower a one-time $19 fee for loan
+                            origination, which can be waived if certain conditions are met. The basic fee
+                            is 1% of the total Loan Amount to the Lender, which shall be paid with the loan
+                            proceeds disbursement. Please refer to fee schedules on DDB website for charges
+                            for additional services.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Loan Amount &amp; Interest<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Loan Amount &amp; Interest
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>The Lender promises to loan $600.00 CAD to the
-Borrower and the Borrower promises to repay this principal amount to the
-Lender, with interest payable on the unpaid principal at the rate of 2.00
-percent per month, calculated monthly not in advance.</p>
+                            Borrower and the Borrower promises to repay this principal amount to the
+                            Lender, with interest payable on the unpaid principal at the rate of 2.00
+                            percent per month, calculated monthly not in advance.</p>
 
-<p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>The loan proceeds will be disbursed to DDB's
-trust account first and will be applied to the purchase of the Merchandise from
-the third-party Merchant. The borrower will not receive any funds. The
-Merchandise will be shipped directly to the Borrower's shipping address on the
-Borrower's DDB profile. The Borrower confirms the accuracy of the address and
-will be responsible for any losses or damages from the point when the
-Merchandise is handed to the commercial carrier. DDB does not take title to the
-Merchandise.</p>
+                            trust account first and will be applied to the purchase of the Merchandise from
+                            the third-party Merchant. The borrower will not receive any funds. The
+                            Merchandise will be shipped directly to the Borrower's shipping address on the
+                            Borrower's DDB profile. The Borrower confirms the accuracy of the address and
+                            will be responsible for any losses or damages from the point when the
+                            Merchandise is handed to the commercial carrier. DDB does not take title to the
+                            Merchandise.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Payment<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Payment
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>This Loan will be repaid in consecutive monthly
-instalments of principal and interest on the twenty-fourth day of each month
-commencing the month following execution of this Agreement and continuing until
-May 24<sup>th</sup>, 2016 with the balance then owing under this Agreement
-being paid at that time. The Borrower will provide to the Administrative Agent
-twelve signed checks (payable to Joe Lender), dated on May 24<sup>th</sup> of
-each of the twelve months following the loan date.</p>
+                            instalments of principal and interest on the twenty-fourth day of each month
+                            commencing the month following execution of this Agreement and continuing until
+                            May 24<sup>th</sup>, 2016 with the balance then owing under this Agreement
+                            being paid at that time. The Borrower will provide to the Administrative Agent
+                            twelve signed checks (payable to Joe Lender), dated on May 24<sup>th</sup> of
+                            each of the twelve months following the loan date.</p>
 
-<p class=MsoListParagraphCxSpMiddle style='text-align:justify;text-justify:
+                        <p class=MsoListParagraphCxSpMiddle style='text-align:justify;text-justify:
 inter-ideograph;text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>At any time while not in default under this
-Agreement, the Borrower may pay the outstanding balance then owing under this
-Agreement to the Lender without further bonus or penalty.</p>
+                            Agreement, the Borrower may pay the outstanding balance then owing under this
+                            Agreement to the Lender without further bonus or penalty.</p>
 
-<p class=MsoListParagraphCxSpLast><o:p>&nbsp;</o:p></p>
+                        <p class=MsoListParagraphCxSpLast>
+                            <o:p>&nbsp;</o:p>
+                        </p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Default<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Default
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>Notwithstanding anything to the contrary in this
-Agreement, if the Borrower defaults in the performance of any obligation under
-this Agreement, then the Lender may declare the principal amount owing and
-interest due under this Agreement at that time to be immediately due and
-payable.</p>
+                            Agreement, if the Borrower defaults in the performance of any obligation under
+                            this Agreement, then the Lender may declare the principal amount owing and
+                            interest due under this Agreement at that time to be immediately due and
+                            payable.</p>
 
-<p class=MsoListParagraphCxSpMiddle style='text-align:justify;text-justify:
+                        <p class=MsoListParagraphCxSpMiddle style='text-align:justify;text-justify:
 inter-ideograph;text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>Further, if the Lender declares the principle
-amount owing under this Agreement to be immediately due and payable, and the
-Borrower fails to provide full payment, interest in the amount of 2.5 percent
-per month, calculated monthly not in advance, will be charged on the
-outstanding amount, commencing the day the principal amount is declared due and
-payable, until full payment is received by the lender.</p>
+                            amount owing under this Agreement to be immediately due and payable, and the
+                            Borrower fails to provide full payment, interest in the amount of 2.5 percent
+                            per month, calculated monthly not in advance, will be charged on the
+                            outstanding amount, commencing the day the principal amount is declared due and
+                            payable, until full payment is received by the lender.</p>
 
-<p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>If the Borrower defaults in payment as required
-under this Agreement or after demand for ten (10) days, the Security will be
-immediately provided to the Lender and the Lender is granted all rights of
-repossession as a secured party. The Borrower assumes all costs related to the
-repossession. </p>
+                            under this Agreement or after demand for ten (10) days, the Security will be
+                            immediately provided to the Lender and the Lender is granted all rights of
+                            repossession as a secured party. The Borrower assumes all costs related to the
+                            repossession. </p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Security<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Security
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraphCxSpFirst style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>This Loan is secured by following security (the
-"Security"): the Merchandise.</p>
+                            "Security"): the Merchandise.</p>
 
-<p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraphCxSpLast style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            style='mso-list:Ignore'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>The Borrower grants to the Lender a security
-interest in the Security until this Loan is paid in full. The Lender will be
-listed as a lender on the title of the Security whether or not the Lender
-elects to perfect the security interest in the Security. The Borrower will do
-everything necessary to assist the Lender in perfecting its security interest.</p>
+                            interest in the Security until this Loan is paid in full. The Lender will be
+                            listed as a lender on the title of the Security whether or not the Lender
+                            elects to perfect the security interest in the Security. The Borrower will do
+                            everything necessary to assist the Lender in perfecting its security interest.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Governing Law<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Governing Law
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+                            style='mso-list:Ignore'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span></span><![endif]>This Agreement will be construed in accordance
-with and governed by the laws of the Province of Quebec. The parties expressly
-state that the English language is to be the choice of language for this
-Agreement.</p>
+                            with and governed by the laws of the Province of Quebec. The parties expressly
+                            state that the English language is to be the choice of language for this
+                            Agreement.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Costs<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Costs
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+                            style='mso-list:Ignore'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span></span><![endif]>All costs, expenses and expenditures including,
-without limitation, the complete legal costs incurred by enforcing this
-Agreement as a result of any default of the Borrower, will be added to the
-principal then outstanding and will immediately be paid by the Borrower.</p>
+                            without limitation, the complete legal costs incurred by enforcing this
+                            Agreement as a result of any default of the Borrower, will be added to the
+                            principal then outstanding and will immediately be paid by the Borrower.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Binding Effect<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Binding Effect
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>12.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+                            style='mso-list:Ignore'>12.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span></span><![endif]>This Agreement will pass to the benefit of and
-be binding upon the respective heirs, executors, administrators, successors and
-permitted assigns of the Borrower and Lender. The Borrower waives presentment
-for payment, notice of non-payment, protest, and notice of protest.</p>
+                            be binding upon the respective heirs, executors, administrators, successors and
+                            permitted assigns of the Borrower and Lender. The Borrower waives presentment
+                            for payment, notice of non-payment, protest, and notice of protest.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Amendments<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Amendments
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>13.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+                            style='mso-list:Ignore'>13.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span></span><![endif]>This Agreement may only be amended or modified
-by a written instrument executed by both the Borrower and the Lender.</p>
+                            by a written instrument executed by both the Borrower and the Lender.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Severability<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Severability
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>14.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+                            style='mso-list:Ignore'>14.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span></span><![endif]>The clauses and paragraphs contained in this
-Agreement are intended to be read and construed independently of each other. If
-any term, covenant, condition or provision of this Agreement is held by a court
-of competent jurisdiction to be invalid, void or unenforceable, it is the
-parties' intent that such provision be reduced in scope by the court only to
-the extent deemed necessary by that court to render the provision reasonable
-and enforceable and the remainder of the provisions of this Agreement will in
-no way be affected, impaired or in validated as a result.</p>
+                            Agreement are intended to be read and construed independently of each other. If
+                            any term, covenant, condition or provision of this Agreement is held by a court
+                            of competent jurisdiction to be invalid, void or unenforceable, it is the
+                            parties' intent that such provision be reduced in scope by the court only to
+                            the extent deemed necessary by that court to render the provision reasonable
+                            and enforceable and the remainder of the provisions of this Agreement will in
+                            no way be affected, impaired or in validated as a result.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>General Provisions<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>General Provisions
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>15.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+                            style='mso-list:Ignore'>15.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span></span><![endif]>Headings are inserted for the convenience of the
-parties only and are not to be considered when interpreting this Agreement.
-Words in the singular mean and include the plural and vice versa. Words in the
-masculine mean and include the feminine and vice versa.</p>
+                            parties only and are not to be considered when interpreting this Agreement.
+                            Words in the singular mean and include the plural and vice versa. Words in the
+                            masculine mean and include the feminine and vice versa.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Entire Agreement<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Entire Agreement
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>16.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+                            style='mso-list:Ignore'>16.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span></span><![endif]>This Agreement constitutes the entire agreement
-between the parties and there are no further items or provisions, either oral
-or otherwise.</p>
+                            between the parties and there are no further items or provisions, either oral
+                            or otherwise.</p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'><u>Miscellaneous<o:p></o:p></u></b></p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'><u>Miscellaneous
+                            <o:p></o:p>
+                        </u></b></p>
 
-<p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
+                        <p class=MsoListParagraph style='text-align:justify;text-justify:inter-ideograph;
 text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
-style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+                            style='mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
 mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin'><span
-style='mso-list:Ignore'>17.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+                            style='mso-list:Ignore'>17.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span></span><![endif]>Electronic signature (service provided by <span
-class=SpellE>Signority</span>) will be used wherever a signature is needed. All
-notices, agreements, disclosures and other communications from the
-Administrative Agent shall be provided electronically on DDB website and with
-email reminders if you so choose. The Administrative Agent will use verified
-email addresses on the DDB website for the reminders of new messages. The
-Administrative Agent recommends you log in to your DDB account once-a-day at a
-minimum, as certain communications may be time sensitive. Failure to read
-messages in DDB website does not absolve either the Lender or the Borrower from
-knowing and complying with the content of those messages.</p>
+                            class=SpellE>Signority</span>) will be used wherever a signature is needed. All
+                            notices, agreements, disclosures and other communications from the
+                            Administrative Agent shall be provided electronically on DDB website and with
+                            email reminders if you so choose. The Administrative Agent will use verified
+                            email addresses on the DDB website for the reminders of new messages. The
+                            Administrative Agent recommends you log in to your DDB account once-a-day at a
+                            minimum, as certain communications may be time sensitive. Failure to read
+                            messages in DDB website does not absolve either the Lender or the Borrower from
+                            knowing and complying with the content of those messages.</p>
 
-<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-justify:
-inter-ideograph'><o:p>&nbsp;</o:p></p>
+                        <p class=MsoNormal style='margin-left:.25in;text-align:justify;text-justify:
+inter-ideograph'>
+                            <o:p>&nbsp;</o:p>
+                        </p>
 
-<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
-style='mso-bidi-font-weight:normal'>IN WITNESS WHEREOF,</b> the parties have
-duly affixed their signatures under hand and seal on this 28<sup>th</sup> day
-of May, 2015.</p>
+                        <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b
+                            style='mso-bidi-font-weight:normal'>IN WITNESS WHEREOF,</b> the parties have
+                            duly affixed their signatures under hand and seal on this 28<sup>th</sup> day
+                            of May, 2015.</p>
 
-<p>SIGNED, SEALED, AND DELIVERED</p>                                      
-<p>this 28th day of May, 2015.                                                           Joe Lender</p>
+                        <p>SIGNED, SEALED, AND DELIVERED</p>
 
-<p>SINGNED, SEALED, AND DELIVERED</p>
-<p>this 28th day of May, 2015                                                     Jane Borrower</p>
+                        <p>this 28th day of May, 2015. Joe Lender</p>
 
-</div>
+                        <p>SINGNED, SEALED, AND DELIVERED</p>
+
+                        <p>this 28th day of May, 2015 Jane Borrower</p>
+
+                    </div>
 
                 </div>
             </div>
@@ -751,9 +797,9 @@ of May, 2015.</p>
 
 
                 <div class="content-pmessage">
-                <p>
-                It is simple to get refund for the credit application fee, Just share our page.
-                </p>
+                    <p>
+                        It is simple to get refund for the credit application fee, Just share our page.
+                    </p>
                 </div>
             </div>
 

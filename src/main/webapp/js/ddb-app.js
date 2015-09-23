@@ -7,80 +7,79 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         });
 
         $routeProvider.when('/following', {
-            templateUrl: 'tpl-following.html',
+            templateUrl: 'tpl/tpl-following.html',
             controller: 'FollowingCtrl'
-        
+
         }).when('/local', {
-            templateUrl: 'tpl-local.html',
+            templateUrl: 'tpl/tpl-local.html',
             controller: 'LocalCtrl'
-            	
+
         }).when('/contact', {
-            templateUrl: 'tpl-contact.html',
+            templateUrl: 'tpl/tpl-contact.html',
             controller: 'ContactCtrl'
 
         }).when('/about', {
-            templateUrl: 'tpl-about.html',
+            templateUrl: 'tpl/tpl-about.html',
             controller: 'AboutCtrl'
 
         }).when('/all', {
-            templateUrl: 'tpl-all.html',
+            templateUrl: 'tpl/tpl-all.html',
             controller: 'AllCtrl'
 
         }).when('/product/:id', {
-            templateUrl: 'tpl-product-details.html',
+            templateUrl: 'tpl/tpl-product-details.html',
             controller: 'ProductDetailsCtrl'
 
         }).when('/m/product/:id', {
-            templateUrl: 'tpl-product-details-m.html',
+            templateUrl: 'tpl/tpl-product-details-m.html',
             controller: 'ProductDetailsCtrl'
-            	
+
         }).when('/product/:id/order', {
-            templateUrl: 'tpl-product-order.html',
+            templateUrl: 'tpl/tpl-product-order.html',
             controller: 'ProductOrderCtrl'
 
         }).when('/search', {
-            templateUrl: 'tpl-search.html',
+            templateUrl: 'tpl/tpl-search.html',
             controller: 'SearchCtrl'
 
         }).when('/order/me', {
-            templateUrl: 'tpl-order-me.html',
+            templateUrl: 'tpl/tpl-order-me.html',
             controller: 'OrderMeCtrl'
 
         }).when('/order/id/:id', {
-            templateUrl: 'tpl-order-details.html',
+            templateUrl: 'tpl/tpl-order-details.html',
             controller: 'OrderDetailsCtrl'
 
         }).when('/profile', {
-            templateUrl: 'tpl-profile.html',
+            templateUrl: 'tpl/tpl-profile.html',
             controller: 'ProfileCtrl'
 
         }).when('/profile/edit', {
-            templateUrl: 'tpl-profile-edit.html',
+            templateUrl: 'tpl/tpl-profile-edit.html',
             controller: 'ProfileEditCtrl'
 
         }).when('/profile/verify_email/:hashCode', {
-            templateUrl: 'tpl-profile-verify-email.html',
+            templateUrl: 'tpl/tpl-profile-verify-email.html',
             controller: 'ProfileVerifyEmailCtrl'
 
         }).when('/store', {
-            templateUrl: 'tpl-store.html',
+            templateUrl: 'tpl/tpl-store.html',
             controller: 'StoreCtrl'
 
         }).when('/share', {
-            templateUrl: 'tpl-share.html',
-            controller: 'ShareCtrl'
-            	
+            templateUrl: 'tpl/tpl-share.html',
+     
         }).when('/discuss', {
-            templateUrl: 'tpl-discuss.html',
-            controller: 'DiscussCtrl'            	
+            templateUrl: 'tpl/tpl-discuss.html',
+            controller: 'DiscussCtrl'
 
         }).when('/category', {
-            templateUrl: 'tpl-category.html'
+            templateUrl: 'tpl/tpl-category.html'
 
         }).when('/welcome', {
-            templateUrl: 'tpl-welcome.html',
-            controller: 'WelcomeCtrl' 
-            	
+            templateUrl: 'tpl/tpl-welcome.html',
+            controller: 'WelcomeCtrl'
+
         }).otherwise({
             redirectTo: '/all'
         });
@@ -103,7 +102,7 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
 
         // set templates
         $rootScope.popoverTemplate = {
-            reviewTemplateUrl: 'tpl-product-review.html'
+            reviewTemplateUrl: 'tpl/tpl-product-review.html'
         };
 
         $rootScope.$on('$routeChangeSuccess', function (event) {
