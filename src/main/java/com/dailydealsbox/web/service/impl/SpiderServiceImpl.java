@@ -37,6 +37,7 @@ import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
 import com.dailydealsbox.web.parser.HomeDepotCa;
+import com.dailydealsbox.web.parser.TheBayCa;
 import com.dailydealsbox.web.service.SpiderService;
 
 /**
@@ -223,7 +224,10 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromHomedepotCA(oUrl, product, LANGUAGE.EN);
         this.getProductFromHomedepotCA(oUrl, product, LANGUAGE.FR);
         break;
-
+      case "www.thebay.ca":
+        this.getProductFromThebayCA(oUrl, product, LANGUAGE.EN);
+        this.getProductFromThebayCA(oUrl, product, LANGUAGE.FR);
+        break;
       default:
         break;
     }
@@ -955,7 +959,7 @@ public class SpiderServiceImpl implements SpiderService {
   }
 
   /**
-   * getProductFromBestbuyUS
+   * getProductFromHomedepotCA
    *
    * @param url
    * @param product
@@ -1065,6 +1069,117 @@ public class SpiderServiceImpl implements SpiderService {
       //set image
       ProductImage image = new ProductImage();
       image.setUrl(String.format("%s://%s", url.getProtocol(), homeDepotPage.getImage()));
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
+  private Product getProductFromThebayCA(URL url, Product product, LANGUAGE language)
+      throws Exception {
+    // language switch
+    String urlStr = url.toString();
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    //product page info
+    TheBayCa theBayPage = new TheBayCa();
+    theBayPage.setActive(true);
+    theBayPage.setStoreId(7);
+    theBayPage.setUrl(urlStr);
+    theBayPage.setKey();
+    theBayPage.setExpiration();
+
+    theBayPage.setDoc();
+    theBayPage.setName();
+    theBayPage.setDescription();
+    theBayPage.setImage();
+    theBayPage.setPrice();
+
+    //set product url
+    product.setUrl(theBayPage.getUrl());
+
+    //set product key
+    product.setKey(theBayPage.getKey());
+
+    //set product Expiration
+    product.setExpiredAt(theBayPage.getExpiration());
+
+    //set product status
+    product.setDisabled(!theBayPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(theBayPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(theBayPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(theBayPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(theBayPage.getName());
+    text.setDescription(theBayPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(String.format("%s://%s", url.getProtocol(), theBayPage.getImage()));
       //add image to product
       product.getImages().add(image);
     }
