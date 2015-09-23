@@ -1,7 +1,6 @@
 package com.dailydealsbox.web.parser;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,7 +14,7 @@ public class ProductPage {
   public boolean                  existing;
 
   //page info
-  public URL                      url;
+  public String                   url;
   public String                   domainName;
   public String                   key;
   public Date                     expiration;
@@ -48,8 +47,8 @@ public class ProductPage {
   }
 
   //constructor
-  public ProductPage(URL pageUrl, int storeId, CURRENCY currency) {
-    this.setUrl(pageUrl);
+  public ProductPage(String productPageUrl, int storeId, CURRENCY currency) {
+    this.setUrl(productPageUrl);
     this.storeId = storeId;
     this.currency = currency;
   }
@@ -73,11 +72,11 @@ public class ProductPage {
   }
 
   //page info - URL  
-  public URL getUrl() {
+  public String getUrl() {
     return this.url;
   }
 
-  public void setUrl(URL url) {
+  public void setUrl(String url) {
     this.url = url;
   }
 

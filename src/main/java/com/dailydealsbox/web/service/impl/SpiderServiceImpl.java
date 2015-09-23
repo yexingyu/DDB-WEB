@@ -963,53 +963,8 @@ public class SpiderServiceImpl implements SpiderService {
    */
   private Product getProductFromHomedepotCA(URL url, Product product, LANGUAGE language)
       throws Exception {
-    //set product url
-    product.setUrl(url.toString());
-
-    // homeDepot product page info
-    HomeDepotCa homeDepotPage = new HomeDepotCa();
-    homeDepotPage.setStoreId(7);
-    homeDepotPage.setUrl(url);
-    homeDepotPage.setKey();
-    homeDepotPage.setExpiration();
-
-    homeDepotPage.setDoc();
-    homeDepotPage.setName();
-    homeDepotPage.setDescription();
-    homeDepotPage.setImage();
-    homeDepotPage.setPrice();
-
-    //set product status
-    product.setDisabled(false);
-    //set product key
-    product.setKey(homeDepotPage.getKey());
-    product.setExpiredAt(homeDepotPage.getExpiration());
-
-    //set product store
-    Store store = new Store();
-    store.setId(homeDepotPage.getStoreId());
-    product.setStore(store);
-
-    //set product tax
-    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
-    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
-    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-
-    if (product.getTaxes().isEmpty()) {
-      ProductTax tax1 = new ProductTax();
-      tax1.setTitle(federal);
-      tax1.setType(percentage);
-
-      ProductTax tax2 = new ProductTax();
-      tax2.setTitle(provincial);
-      tax2.setType(percentage);
-
-      product.getTaxes().add(tax1);
-      product.getTaxes().add(tax2);
-    }
-
     // language switch
-    String urlStr = homeDepotPage.url.toString();
+    String urlStr = url.toString();
     NumberFormat numberFormat;
     switch (language) {
       case EN:
@@ -1029,25 +984,69 @@ public class SpiderServiceImpl implements SpiderService {
         break;
     }
 
-    //set product fees
-    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
-    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
-    if (product.getFees().isEmpty()) {
-      ProductFee fee1 = new ProductFee();
-      fee1.setTitle(feeShipping);
-      fee1.setType(feeType);
-      fee1.setValue(0);
+    //product page info
+    HomeDepotCa homeDepotPage = new HomeDepotCa();
+    homeDepotPage.setActive(true);
+    homeDepotPage.setStoreId(7);
+    homeDepotPage.setUrl(urlStr);
+    homeDepotPage.setKey();
+    homeDepotPage.setExpiration();
 
-      product.getFees().add(fee1);
-    }
+    homeDepotPage.setDoc();
+    homeDepotPage.setName();
+    homeDepotPage.setDescription();
+    homeDepotPage.setImage();
+    homeDepotPage.setPrice();
+
+    //set product url
+    product.setUrl(homeDepotPage.getUrl());
+
+    //set product key
+    product.setKey(homeDepotPage.getKey());
+
+    //set product Expiration
+    product.setExpiredAt(homeDepotPage.getExpiration());
+
+    //set product status
+    product.setDisabled(!homeDepotPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(homeDepotPage.getStoreId());
+    product.setStore(store);
 
     //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
     if (product.getPrices().isEmpty()) {
-
       try {
-
+        //set price
         ProductPrice price = new ProductPrice();
         price.setValue(homeDepotPage.getPrice());
+        //add price to product
         product.getPrices().add(price);
         product.setCurrentPrice(homeDepotPage.getPrice());
         product.setCurrency(CURRENCY.CAD);
@@ -1063,8 +1062,10 @@ public class SpiderServiceImpl implements SpiderService {
     product.getTexts().add(text);
 
     if (product.getImages().isEmpty()) {
+      //set image
       ProductImage image = new ProductImage();
       image.setUrl(String.format("%s://%s", url.getProtocol(), homeDepotPage.getImage()));
+      //add image to product
       product.getImages().add(image);
     }
 

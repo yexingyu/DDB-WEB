@@ -17,7 +17,7 @@ public class HomeDepotCa extends ProductPage {
     Pattern r = Pattern.compile(pattern);
 
     // Now create matcher object.
-    Matcher m = r.matcher(this.url.toString());
+    Matcher m = r.matcher(this.url);
     if (m.find()) {
       this.key = m.group(1);
 
