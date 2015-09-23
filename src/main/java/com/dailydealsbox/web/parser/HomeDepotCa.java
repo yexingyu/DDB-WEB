@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HomeDepot extends ProductPage {
+public class HomeDepotCa extends ProductPage {
 
   @Override
   public void setKey() {

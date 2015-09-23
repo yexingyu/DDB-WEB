@@ -1,0 +1,148 @@
+<div class="well">
+    <h2>Welcome {{profile.firstName}} {{profile.lastName}}!</h2>
+    <a href="#/profile/edit" class="btn btn-default">Edit</a>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Emails</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="email in profile.emails">{{email.email}}
+                <span ng-if="email.verified" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                <span ng-if="!email.verified" class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                <a ng-if="!email.verified" ng-click="sendEmailVerification(email)">[Verify Email]</a>
+
+                <div ng-if="email.sent === 1" class="alert alert-success" role="alert">Send email verification success, please check your email.</div>
+                <div ng-if="email.sent === 2" class="alert alert-success" role="alert">Send email verification fail, please try again.</div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Personal Information</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>First Name:</b>
+                    </div>
+                    <div>{{profile.firstName}}</div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Middle Name:</b>
+                    </div>
+                    <div>{{profile.middleName}}</div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Last Name:</b>
+                    </div>
+                    <div>{{profile.lastName}}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">DDB Commnunity Information</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Nick Name:</b>
+                    </div>
+                    <div>{{profile.nickName}}</div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Signature:</b>
+                    </div>
+                    <div>{{profile.signature}}</div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Avatar:</b>
+                    </div>
+                    <div><img ng-src="images/avatar/{{profile.avatar}}"></div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Level:</b>
+                    </div>
+                    <div>{{profile.level}}</div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Points:</b>
+                    </div>
+                    <div>{{profile.point}}</div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Point Redeemed:</b>
+                    </div>
+                    <div>{{profile.pointRedeemed}}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Phones</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="row" ng-repeat="phone in profile.phones">
+                    <div class="col-md-3">
+                        <b>{{$root.constant.MEMBER_PHONE_TYPE[phone.type]}}:</b>
+                    </div>
+                    <div>{{phone.countryCode}} {{phone.phoneNumber}}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Addresses</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="row" ng-repeat="address in profile.addresses">
+                    <div class="col-md-3">
+                        <b>{{$root.constant.MEMBER_ADDRESS_TYPE[address.type]}}:</b>
+                    </div>
+                    <div>{{address.address1}} {{address.address2}}, {{address.city}}, {{address.region}}, {{$root.constant.COUNTRY[address.country]}}, {{address.postCode}}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+

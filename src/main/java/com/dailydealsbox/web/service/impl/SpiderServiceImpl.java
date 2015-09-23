@@ -36,7 +36,7 @@ import com.dailydealsbox.web.database.model.ProductPrice;
 import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
-import com.dailydealsbox.web.parser.HomeDepot;
+import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.service.SpiderService;
 
 /**
@@ -207,6 +207,7 @@ public class SpiderServiceImpl implements SpiderService {
         break;
       case "www.bestbuy.com":
         this.getProductFromBestbuyCOM(oUrl, product, LANGUAGE.EN);
+        this.getProductFromBestbuyCOM(oUrl, product, LANGUAGE.FR);
         break;
       case "www.amazon.ca":
         this.getProductFromAmazonCA(oUrl, product, LANGUAGE.EN);
@@ -220,6 +221,7 @@ public class SpiderServiceImpl implements SpiderService {
         break;
       case "www.homedepot.ca":
         this.getProductFromHomedepotCA(oUrl, product, LANGUAGE.EN);
+        this.getProductFromHomedepotCA(oUrl, product, LANGUAGE.FR);
         break;
 
       default:
@@ -961,31 +963,32 @@ public class SpiderServiceImpl implements SpiderService {
    */
   private Product getProductFromHomedepotCA(URL url, Product product, LANGUAGE language)
       throws Exception {
+    //set product url
+    product.setUrl(url.toString());
+
     // homeDepot product page info
-    HomeDepot homeDepotPage = new HomeDepot();
+    HomeDepotCa homeDepotPage = new HomeDepotCa();
     homeDepotPage.setStoreId(7);
     homeDepotPage.setUrl(url);
     homeDepotPage.setKey();
+    homeDepotPage.setExpiration();
+
     homeDepotPage.setDoc();
     homeDepotPage.setName();
     homeDepotPage.setDescription();
-
-    //set product url
-    product.setUrl(homeDepotPage.url.toString());
+    homeDepotPage.setImage();
+    homeDepotPage.setPrice();
 
     //set product status
     product.setDisabled(false);
     //set product key
     product.setKey(homeDepotPage.getKey());
+    product.setExpiredAt(homeDepotPage.getExpiration());
 
     //set product store
     Store store = new Store();
     store.setId(homeDepotPage.getStoreId());
     product.setStore(store);
-
-    //set product expired date
-
-    product.setExpiredAt(homeDepotPage.getExpiration());
 
     //set product tax
     PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
@@ -1010,14 +1013,14 @@ public class SpiderServiceImpl implements SpiderService {
     NumberFormat numberFormat;
     switch (language) {
       case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        if (StringUtils.containsIgnoreCase(urlStr, "/produit/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/produit/", "/product/");
         }
         numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
         break;
       case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        if (StringUtils.containsIgnoreCase(urlStr, "/product/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/product/", "/produit/");
         }
         numberFormat = NumberFormat.getInstance(Locale.FRANCE);
         break;
@@ -1040,15 +1043,13 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product tax
     if (product.getPrices().isEmpty()) {
-      String productPrice = homeDepotPage.getPirce();
-      Number number;
+
       try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
-        double p = number.doubleValue();
+
         ProductPrice price = new ProductPrice();
-        price.setValue(p);
+        price.setValue(homeDepotPage.getPrice());
         product.getPrices().add(price);
-        product.setCurrentPrice(p);
+        product.setCurrentPrice(homeDepotPage.getPrice());
         product.setCurrency(CURRENCY.CAD);
       } catch (Exception e) {
         e.printStackTrace();
