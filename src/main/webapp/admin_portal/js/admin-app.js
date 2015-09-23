@@ -1,48 +1,44 @@
 angular.module(
-        'adminApp',
-        [ 'ngRoute', 'ddbApp.constants', 'adminApp.controllers', 'adminApp.services',
-                'ddbApp.services' ]).config([ '$routeProvider', function($routeProvider) {
-    $routeProvider.when('/home', {
-        templateUrl : 'tpl-admin-home.html',
-        controller : 'AdminHomeCtrl'
+    'adminApp',
+    ['ngRoute', 'ddbApp.constants', 'adminApp.controllers', 'adminApp.services',
+        'ddbApp.services']).config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/home', {
+            templateUrl: 'tpl/tpl-admin-home.html',
+            controller: 'AdminHomeCtrl'
 
-    }).when('/login', {
-        templateUrl : 'tpl-admin-login.html',
-        controller : 'AdminLoginCtrl'
+        }).when('/dashboard', {
+            templateUrl: 'tpl/tpl-admin-dashboard.html',
+            controller: 'DashboardCtrl'
 
-    }).when('/dashboard', {
-        templateUrl : 'tpl-admin-dashboard.html',
-        controller : 'DashboardCtrl'
+        }).when('/product', {
+            templateUrl: 'tpl/tpl-admin-product-index.html',
+            controller: 'PMCtrl'
 
-    }).when('/product', {
-        templateUrl : 'tpl-admin-product-index.html',
-        controller : 'PMCtrl'
+        }).when('/product/add', {
+            templateUrl: 'tpl/tpl-admin-product-add.html',
+            controller: 'PMProductAdd'
 
-    }).when('/product/add', {
-        templateUrl : 'tpl-admin-product-add.html',
-        controller : 'PMProductAdd'
+        }).when('/product/:id', {
+            templateUrl: 'tpl/tpl-admin-product-edit.html',
+            controller: 'PMProductEdit'
 
-    }).when('/product/:id', {
-        templateUrl : 'tpl-admin-product-edit.html',
-        controller : 'PMProductEdit'
-    
-    }).when('/store/add', {
-        templateUrl : 'tpl-admin-store-add.html',
-        controller : 'PMStoreAdd'
-        	
-    }).when('/flot', {
-        templateUrl : 'tpl-admin-flot.html',
-        controller : 'FlotCtrl'
+        }).when('/store/add', {
+            templateUrl: 'tpl/tpl-admin-store-add.html',
+            controller: 'PMStoreAdd'
 
-    }).when('/morris', {
-        templateUrl : 'tpl-admin-morris.html',
-        controller : 'MorrisCtrl'
+        }).when('/flot', {
+            templateUrl: 'tpl/tpl-admin-flot.html',
+            controller: 'FlotCtrl'
 
-    }).otherwise({
-        redirectTo : '/dashboard'
-    });
-} ])
+        }).when('/morris', {
+            templateUrl: 'tpl/tpl-admin-morris.html',
+            controller: 'MorrisCtrl'
 
-.run([ '$rootScope', '$window', 'ConstantService', function($rootScope, $window, ConstantService) {
-    ConstantService.init();
-} ]);
+        }).otherwise({
+            redirectTo: '/dashboard'
+        });
+    }])
+
+    .run(['$rootScope', '$window', 'ConstantService', function ($rootScope, $window, ConstantService) {
+        ConstantService.init();
+    }]);
