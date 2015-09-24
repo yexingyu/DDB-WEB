@@ -36,6 +36,7 @@ import com.dailydealsbox.web.database.model.ProductPrice;
 import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
+import com.dailydealsbox.web.parser.BrownsShoesCom;
 import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.parser.TheBayCa;
 import com.dailydealsbox.web.service.SpiderService;
@@ -227,6 +228,10 @@ public class SpiderServiceImpl implements SpiderService {
       case "www.thebay.com":
         this.getProductFromThebayCA(oUrl, product, LANGUAGE.EN);
         this.getProductFromThebayCA(oUrl, product, LANGUAGE.FR);
+        break;
+      case "www.brownsshoes.com":
+        this.getProductFromBrownsshoesCOM(oUrl, product, LANGUAGE.EN);
+        this.getProductFromBrownsshoesCOM(oUrl, product, LANGUAGE.FR);
         break;
       default:
         break;
@@ -1187,6 +1192,117 @@ public class SpiderServiceImpl implements SpiderService {
       //set image
       ProductImage image = new ProductImage();
       image.setUrl(theBayPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
+  private Product getProductFromBrownsshoesCOM(URL url, Product product, LANGUAGE language)
+      throws Exception {
+    // language switch
+    String urlStr = url.toString();
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/default/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/default/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/default/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    //product page info
+    BrownsShoesCom brownsShoesPage = new BrownsShoesCom();
+    brownsShoesPage.setActive(true);
+    brownsShoesPage.setStoreId();
+    brownsShoesPage.setUrl(urlStr);
+    brownsShoesPage.setExpiration();
+
+    brownsShoesPage.setDoc();
+    brownsShoesPage.setKey();
+    brownsShoesPage.setName();
+    brownsShoesPage.setDescription();
+    brownsShoesPage.setImage();
+    brownsShoesPage.setPrice();
+
+    //set product url
+    product.setUrl(brownsShoesPage.getUrl());
+
+    //set product key
+    product.setKey(brownsShoesPage.getKey());
+
+    //set product Expiration
+    product.setExpiredAt(brownsShoesPage.getExpiration());
+
+    //set product status
+    product.setDisabled(!brownsShoesPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(brownsShoesPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(brownsShoesPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(brownsShoesPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(brownsShoesPage.getName());
+    text.setDescription(brownsShoesPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(brownsShoesPage.getImage());
       //add image to product
       product.getImages().add(image);
     }
