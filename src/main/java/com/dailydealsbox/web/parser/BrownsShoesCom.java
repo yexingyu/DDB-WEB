@@ -38,7 +38,11 @@ public class BrownsShoesCom extends ProductPage {
   public void setName() throws IOException {
     String productBrand;
     productBrand = this.doc.select("span.last").get(0).text();
-    this.name = productBrand + " " + this.doc.select("h2.product-name").first().text();
+
+    try {
+      this.name = productBrand + " " + this.doc.select("h2.product-name").first().text();
+    } catch (NullPointerException e) {}
+    this.name = "";
   }
 
   @Override
@@ -59,7 +63,22 @@ public class BrownsShoesCom extends ProductPage {
   public void setPrice() throws IOException {
     String product_price_text;
     String priceString;
-    product_price_text = this.doc.select("span.price-sales").get(0).text();
+    try {
+      product_price_text = this.doc.select("span.price-sales").get(0).text();
+    } catch (IndexOutOfBoundsException e) {
+      product_price_text = "";
+    }
+
+    try {
+      product_price_text = this.doc.select("span.price-end").get(0).text();
+    } catch (IndexOutOfBoundsException e) {
+      product_price_text = "";
+    }
+    try {
+      product_price_text = this.doc.select("span.price-standard").get(0).text();
+    } catch (IndexOutOfBoundsException e) {
+      product_price_text = "";
+    }
 
     String pricePattern = "\\$(.+)";
     //pattern
