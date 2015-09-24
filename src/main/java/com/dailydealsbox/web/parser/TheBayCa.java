@@ -8,8 +8,31 @@ import java.util.regex.Pattern;
 public class TheBayCa extends ProductPage {
 
   @Override
-  public void setKey() {
+  public void setStoreId() {
+    this.storeId = 19;
+  }
 
+  @Override
+  public void setKey() {
+    //key
+    String pageSource;
+    pageSource = this.doc.html();
+    String keyPattern = "productId: (\\d+)";
+    String keyString = "";
+
+    // Create a Pattern object
+    Pattern r = Pattern.compile(keyPattern);
+
+    // Now create matcher object.
+    Matcher m = r.matcher(pageSource);
+    if (m.find()) {
+      keyString = m.group(1);
+
+    } else {
+      key = null;
+    }
+
+    this.key = keyString;
   }
 
   @Override
@@ -48,7 +71,7 @@ public class TheBayCa extends ProductPage {
     //image
     String product_image_text;
     product_image_text = doc.select("div#gallery_main1").get(0).select("script").html();
-    String image_pattern = "(http.*)\"";
+    String image_pattern = "(http.*)\\?";
     String imageUrl;
 
     // Create a Pattern object

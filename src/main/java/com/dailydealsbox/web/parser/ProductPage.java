@@ -118,8 +118,8 @@ public class ProductPage {
     return this.storeId;
   }
 
-  public void setStoreId(int storeId) {
-    this.storeId = storeId;
+  public void setStoreId() {
+    this.storeId = 0;
   }
 
   //store info - currency  

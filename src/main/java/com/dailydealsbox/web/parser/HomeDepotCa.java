@@ -9,6 +9,11 @@ import java.util.regex.Pattern;
 public class HomeDepotCa extends ProductPage {
 
   @Override
+  public void setStoreId() {
+    this.storeId = 7;
+  }
+
+  @Override
   public void setKey() {
     // String to be scanned to find the pattern.
     String pattern = "/([0-9]{6})";
@@ -62,7 +67,7 @@ public class HomeDepotCa extends ProductPage {
 
   @Override
   public void setImage() throws IOException {
-    this.image = "www.homedepot.ca"
+    this.image = "http://" + "www.homedepot.ca"
         + this.doc.select("div.main-product-info").get(0).select("img").get(0).attr("src");
   }
 

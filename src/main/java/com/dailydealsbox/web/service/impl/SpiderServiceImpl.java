@@ -224,7 +224,7 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromHomedepotCA(oUrl, product, LANGUAGE.EN);
         this.getProductFromHomedepotCA(oUrl, product, LANGUAGE.FR);
         break;
-      case "www.thebay.ca":
+      case "www.thebay.com":
         this.getProductFromThebayCA(oUrl, product, LANGUAGE.EN);
         this.getProductFromThebayCA(oUrl, product, LANGUAGE.FR);
         break;
@@ -991,12 +991,12 @@ public class SpiderServiceImpl implements SpiderService {
     //product page info
     HomeDepotCa homeDepotPage = new HomeDepotCa();
     homeDepotPage.setActive(true);
-    homeDepotPage.setStoreId(7);
+    homeDepotPage.setStoreId();
     homeDepotPage.setUrl(urlStr);
-    homeDepotPage.setKey();
     homeDepotPage.setExpiration();
 
     homeDepotPage.setDoc();
+    homeDepotPage.setKey();
     homeDepotPage.setName();
     homeDepotPage.setDescription();
     homeDepotPage.setImage();
@@ -1068,7 +1068,7 @@ public class SpiderServiceImpl implements SpiderService {
     if (product.getImages().isEmpty()) {
       //set image
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s", url.getProtocol(), homeDepotPage.getImage()));
+      image.setUrl(homeDepotPage.getImage());
       //add image to product
       product.getImages().add(image);
     }
@@ -1076,6 +1076,13 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
+  /**
+   * getProductFromTheBayCA
+   *
+   * @param url
+   * @param product
+   * @param language
+   */
   private Product getProductFromThebayCA(URL url, Product product, LANGUAGE language)
       throws Exception {
     // language switch
@@ -1083,14 +1090,14 @@ public class SpiderServiceImpl implements SpiderService {
     NumberFormat numberFormat;
     switch (language) {
       case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        if (StringUtils.containsIgnoreCase(urlStr, "/produit/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/produit/", "/product/");
         }
         numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
         break;
       case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        if (StringUtils.containsIgnoreCase(urlStr, "/product/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/product/", "/produit/");
         }
         numberFormat = NumberFormat.getInstance(Locale.FRANCE);
         break;
@@ -1102,12 +1109,12 @@ public class SpiderServiceImpl implements SpiderService {
     //product page info
     TheBayCa theBayPage = new TheBayCa();
     theBayPage.setActive(true);
-    theBayPage.setStoreId(7);
+    theBayPage.setStoreId();
     theBayPage.setUrl(urlStr);
-    theBayPage.setKey();
     theBayPage.setExpiration();
 
     theBayPage.setDoc();
+    theBayPage.setKey();
     theBayPage.setName();
     theBayPage.setDescription();
     theBayPage.setImage();
@@ -1179,7 +1186,7 @@ public class SpiderServiceImpl implements SpiderService {
     if (product.getImages().isEmpty()) {
       //set image
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s", url.getProtocol(), theBayPage.getImage()));
+      image.setUrl(theBayPage.getImage());
       //add image to product
       product.getImages().add(image);
     }
