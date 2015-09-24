@@ -1226,7 +1226,7 @@ public class SpiderServiceImpl implements SpiderService {
     BrownsShoesCom brownsShoesPage = new BrownsShoesCom();
     brownsShoesPage.setActive(true);
     brownsShoesPage.setStoreId();
-    brownsShoesPage.setUrl(urlStr);
+    brownsShoesPage.setUrl(url.toString());
     brownsShoesPage.setExpiration();
 
     brownsShoesPage.setDoc();

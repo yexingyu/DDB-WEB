@@ -142,7 +142,7 @@ public class ProductPage {
       this.doc = Jsoup
           .connect(this.url.toString())
           .userAgent(
-              "Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30")
           .get();
     } catch (IOException e) {
       e.printStackTrace();

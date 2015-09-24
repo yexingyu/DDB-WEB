@@ -15,7 +15,8 @@ public class BrownsShoesCom extends ProductPage {
   public void setKey() {
 
     //key
-    String keyPattern = "//.+/(\\d+)";
+    String keyPattern = "pid=(\\d+)";
+    ;
     String keyString = "";
     //pattern
     Pattern r = Pattern.compile(keyPattern);
@@ -36,21 +37,21 @@ public class BrownsShoesCom extends ProductPage {
   @Override
   public void setName() throws IOException {
     String productBrand;
-    productBrand = this.doc.select("span.last").first().text();
+    productBrand = this.doc.select("span.last").get(0).text();
     this.name = productBrand + " " + this.doc.select("h2.product-name").first().text();
   }
 
   @Override
   public void setDescription() throws IOException {
 
-    this.description = doc.select("div.product-main-attributes").first().text();
+    this.description = this.doc.select("div.product-main-attributes").first().text();
   }
 
   @Override
   public void setImage() throws IOException {
     //image
     this.image = this.doc.select("div#thumbnails").get(0).select("img").attr("src")
-        .replace("?sh=100", "250");
+        .replace("?sh=100", "?sh=250");
     ;
   }
 
