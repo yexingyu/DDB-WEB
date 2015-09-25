@@ -15,7 +15,7 @@ public class BrownsShoesCom extends ProductPage {
   public void setKey() {
 
     //key
-    String keyPattern = "pid=(\\d+)";
+    String keyPattern = "http://.+/(\\d+)";
     ;
     String keyString = "";
     //pattern
@@ -41,8 +41,9 @@ public class BrownsShoesCom extends ProductPage {
 
     try {
       this.name = productBrand + " " + this.doc.select("h2.product-name").first().text();
-    } catch (NullPointerException e) {}
-    this.name = "";
+    } catch (NullPointerException e) {
+      this.name = "";
+    }
   }
 
   @Override
@@ -63,22 +64,20 @@ public class BrownsShoesCom extends ProductPage {
   public void setPrice() throws IOException {
     String product_price_text;
     String priceString;
-    try {
-      product_price_text = this.doc.select("span.price-sales").get(0).text();
-    } catch (IndexOutOfBoundsException e) {
-      product_price_text = "";
-    }
-
-    try {
-      product_price_text = this.doc.select("span.price-end").get(0).text();
-    } catch (IndexOutOfBoundsException e) {
-      product_price_text = "";
-    }
+    product_price_text = "";
     try {
       product_price_text = this.doc.select("span.price-standard").get(0).text();
     } catch (IndexOutOfBoundsException e) {
       product_price_text = "";
     }
+    try {
+      product_price_text = this.doc.select("span.price-sales").get(0).text();
+    } catch (IndexOutOfBoundsException e) {
+
+    }
+    try {
+      product_price_text = this.doc.select("span.price-end").get(0).text();
+    } catch (IndexOutOfBoundsException e) {}
 
     String pricePattern = "\\$(.+)";
     //pattern

@@ -42,3 +42,17 @@ angular.module(
     .run(['$rootScope', '$window', 'ConstantService', function ($rootScope, $window, ConstantService) {
         ConstantService.init();
     }]);
+
+angular.filter( 'domain', function () {
+	  return function ( input ) {
+	    var matches,
+	        output = "",
+	        urls = /\w+:\/\/([\w|\.]+)/;
+
+	    matches = urls.exec( input );
+
+	    if ( matches !== null ) output = matches[1];
+
+	    return output;
+	  };
+	});

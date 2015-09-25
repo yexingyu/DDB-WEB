@@ -91,7 +91,7 @@
         <p>
           <span ng-repeat="link in product.links"> 
           URL: <input class="form-control" type="text" ng-model="link.url" placeholder ="Enter reference link URL"/> 
-          Site Domain Name: <input class="form-control" type="text" ng-model="link.name" placeholder ="Enter domain name of the URL"/>
+          Site Domain Name: <input class="form-control" type="text" ng-model="link.name" placeholder ="Enter domain name of the URL" value="test">
            Rating: <input class="form-control" type="text" ng-model="link.rating" placeholder ="Enter 5 star rating value"/>
            Number of Reviews: <input class="form-control" type="text" ng-model="link.reviewNumber" placeholder ="Enter number of reviews"/>
             [<a ng-click="product.links.splice($index, 1)">X</a>] <br />
