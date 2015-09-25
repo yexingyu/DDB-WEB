@@ -140,7 +140,7 @@ public class ProductPage {
 
     try {
       this.doc = Jsoup
-          .connect(this.url.toString())
+          .connect(this.url)
           .userAgent(
               "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30")
           .get();

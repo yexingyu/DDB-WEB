@@ -38,6 +38,7 @@ import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
 import com.dailydealsbox.web.parser.BrownsShoesCom;
 import com.dailydealsbox.web.parser.HomeDepotCa;
+import com.dailydealsbox.web.parser.SephoraCom;
 import com.dailydealsbox.web.parser.TheBayCa;
 import com.dailydealsbox.web.service.SpiderService;
 
@@ -233,6 +234,11 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromBrownsshoesCOM(oUrl, product, LANGUAGE.EN);
         this.getProductFromBrownsshoesCOM(oUrl, product, LANGUAGE.FR);
         break;
+      case "www.sephora.com":
+        this.getProductFromSephoraCOM(oUrl, product, LANGUAGE.EN);
+        this.getProductFromSephoraCOM(oUrl, product, LANGUAGE.FR);
+        break;
+
       default:
         break;
     }
@@ -1303,6 +1309,118 @@ public class SpiderServiceImpl implements SpiderService {
       //set image
       ProductImage image = new ProductImage();
       image.setUrl(brownsShoesPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
+  private Product getProductFromSephoraCOM(URL url, Product product, LANGUAGE language)
+      throws Exception {
+    // language switch
+    String urlStr = url.toString();
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/default/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/default/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/default/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    //product page info
+    SephoraCom sephoraPage = new SephoraCom();
+    sephoraPage.setActive(true);
+    sephoraPage.setStoreId();
+    sephoraPage
+        .setUrl("http://www.sephora.com/tonique-confort-comforting-rehydrating-toner-P54509?skuId=534529");
+    sephoraPage.setExpiration();
+
+    sephoraPage.setDoc();
+    sephoraPage.setKey();
+    sephoraPage.setName();
+    sephoraPage.setDescription();
+    sephoraPage.setImage();
+    sephoraPage.setPrice();
+
+    //set product url
+    product.setUrl(sephoraPage.getUrl());
+
+    //set product key
+    product.setKey(sephoraPage.getKey());
+
+    //set product Expiration
+    product.setExpiredAt(sephoraPage.getExpiration());
+
+    //set product status
+    product.setDisabled(!sephoraPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(sephoraPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(sephoraPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(sephoraPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(sephoraPage.getName());
+    text.setDescription(sephoraPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(sephoraPage.getImage());
       //add image to product
       product.getImages().add(image);
     }
