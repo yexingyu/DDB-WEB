@@ -39,11 +39,7 @@ public class SephoraCom extends ProductPage {
   public void setDoc() throws IOException {
 
     try {
-      this.doc = Jsoup
-          .connect(this.url)
-          .userAgent(
-              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30")
-          .get();
+      this.doc = Jsoup.connect(this.url).get();
     } catch (IOException e) {
       e.printStackTrace();
       this.doc = null;

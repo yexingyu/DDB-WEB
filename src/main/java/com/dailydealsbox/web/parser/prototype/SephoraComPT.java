@@ -16,6 +16,7 @@ public class SephoraComPT {
   public static void main(String[] args) throws IOException {
     //set url
     String url = "http://www.sephora.com/tonique-confort-comforting-rehydrating-toner-P54509?skuId=534529";
+    URL url ;
 
     //set doc
     Document doc = Jsoup

@@ -235,8 +235,8 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromBrownsshoesCOM(oUrl, product, LANGUAGE.FR);
         break;
       case "www.sephora.com":
-        this.getProductFromSephoraCOM(oUrl, product, LANGUAGE.EN);
-        this.getProductFromSephoraCOM(oUrl, product, LANGUAGE.FR);
+        this.getProductFromSephoraCOM(url, product, LANGUAGE.EN);
+        this.getProductFromSephoraCOM(url, product, LANGUAGE.FR);
         break;
 
       default:
@@ -1316,10 +1316,10 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromSephoraCOM(URL url, Product product, LANGUAGE language)
+  private Product getProductFromSephoraCOM(String url, Product product, LANGUAGE language)
       throws Exception {
     // language switch
-    String urlStr = url.toString();
+    String urlStr = url;
     NumberFormat numberFormat;
     switch (language) {
       case EN:
@@ -1343,8 +1343,7 @@ public class SpiderServiceImpl implements SpiderService {
     SephoraCom sephoraPage = new SephoraCom();
     sephoraPage.setActive(true);
     sephoraPage.setStoreId();
-    sephoraPage
-        .setUrl("http://www.sephora.com/tonique-confort-comforting-rehydrating-toner-P54509?skuId=534529");
+    sephoraPage.setUrl(url);
     sephoraPage.setExpiration();
 
     sephoraPage.setDoc();
