@@ -91,6 +91,22 @@ public class TheBayCa extends ProductPage {
 
   @Override
   public void setPrice() throws IOException {
-    this.price = 0.00;
+    //price
+
+    String pricePattern = "\"offerPrice\" : \"\\$(\\d+.\\d+)\"";
+    String priceString = "";
+    //pattern
+    Pattern r = Pattern.compile(pricePattern);
+
+    //mathcer
+    Matcher m = r.matcher(this.doc.html());
+    if (m.find()) {
+      priceString = m.group(1);
+
+    } else {
+      priceString = "0.00";
+    }
+    ;
+    this.price = Double.parseDouble(priceString);
   }
 }

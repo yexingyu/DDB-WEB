@@ -231,8 +231,8 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromThebayCA(oUrl, product, LANGUAGE.FR);
         break;
       case "www.brownsshoes.com":
-        this.getProductFromBrownsshoesCOM(oUrl, product, LANGUAGE.EN);
-        this.getProductFromBrownsshoesCOM(oUrl, product, LANGUAGE.FR);
+        this.getProductFromBrownsshoesCOM(url, product, LANGUAGE.EN);
+        this.getProductFromBrownsshoesCOM(url, product, LANGUAGE.FR);
         break;
       case "www.sephora.com":
         this.getProductFromSephoraCOM(url, product, LANGUAGE.EN);
@@ -1205,10 +1205,10 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromBrownsshoesCOM(URL url, Product product, LANGUAGE language)
+  private Product getProductFromBrownsshoesCOM(String url, Product product, LANGUAGE language)
       throws Exception {
     // language switch
-    String urlStr = url.toString();
+    String urlStr = url;
     NumberFormat numberFormat;
     switch (language) {
       case EN:
@@ -1232,7 +1232,7 @@ public class SpiderServiceImpl implements SpiderService {
     BrownsShoesCom brownsShoesPage = new BrownsShoesCom();
     brownsShoesPage.setActive(true);
     brownsShoesPage.setStoreId();
-    brownsShoesPage.setUrl(url.toString());
+    brownsShoesPage.setUrl(url);
     brownsShoesPage.setExpiration();
 
     brownsShoesPage.setDoc();
