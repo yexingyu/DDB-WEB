@@ -4,18 +4,18 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SephoraCom extends ProductPage {
+public class BananaRepublicCa extends ProductPage {
 
   @Override
   public void setStoreId() {
-    this.storeId = 23;
+    this.storeId = 16;
   }
 
   @Override
   public void setKey() {
 
     //key
-    String keyPattern = "skuId=(\\d+)";
+    String keyPattern = "pid=(\\d+)";
     String keyString = "";
     //pattern
     Pattern r = Pattern.compile(keyPattern);
@@ -35,38 +35,39 @@ public class SephoraCom extends ProductPage {
 
   @Override
   public void setName() throws IOException {
-    this.name = this.doc.select("meta[itemprop=\"name\"]").attr("content");
+    this.name = this.doc.select("h1").get(0).text();
   }
 
   @Override
   public void setDescription() throws IOException {
 
-    this.description = this.doc.select("meta[property=\"og:description\"]").attr("content");
+    this.description = this.doc.select("div#tabWindow").get(0).text();
   }
 
   @Override
   public void setImage() throws IOException {
     //image
-    this.image = this.doc.select("meta[itemprop=\"image\"]").attr("content");
+    this.image = "";
     ;
   }
 
   @Override
   public void setPrice() throws IOException {
     //price
+    String product_price_text = doc.html();
 
-    String pricePattern = "\"price\":\"(\\d+.\\d+)\"";
+    String pricePattern = "CA\\$(\\d+.\\d+)";
     String priceString = "";
     //pattern
     Pattern r = Pattern.compile(pricePattern);
 
-    //mathcer
-    Matcher m = r.matcher(this.doc.html());
+    //matcher
+    Matcher m = r.matcher(product_price_text);
     if (m.find()) {
       priceString = m.group(1);
 
     } else {
-      priceString = "0.00";
+      priceString = null;
     }
     ;
     this.price = Double.parseDouble(priceString);
