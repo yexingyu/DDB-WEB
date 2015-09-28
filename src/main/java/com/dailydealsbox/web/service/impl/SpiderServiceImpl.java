@@ -40,6 +40,7 @@ import com.dailydealsbox.web.parser.AdidasCa;
 import com.dailydealsbox.web.parser.BananaRepublicCa;
 import com.dailydealsbox.web.parser.BrownsShoesCom;
 import com.dailydealsbox.web.parser.CanadianTireCa;
+import com.dailydealsbox.web.parser.GapCanadaCa;
 import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.parser.SephoraCom;
 import com.dailydealsbox.web.parser.SportsExpertsCa;
@@ -257,6 +258,10 @@ public class SpiderServiceImpl implements SpiderService {
       case "www.sportsexperts.ca":
         this.getProductFromSportsExpertsCa(url, product, LANGUAGE.EN);
         this.getProductFromSportsExpertsCa(url, product, LANGUAGE.FR);
+        break;
+      case "www.gapcanada.ca":
+        this.getProductFromGapCanadaCa(url, product, LANGUAGE.EN);
+        this.getProductFromGapCanadaCa(url, product, LANGUAGE.FR);
         break;
       default:
         break;
@@ -1883,6 +1888,117 @@ public class SpiderServiceImpl implements SpiderService {
       //set image
       ProductImage image = new ProductImage();
       image.setUrl(sportsExpertsCaPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
+  private Product getProductFromGapCanadaCa(String url, Product product, LANGUAGE language)
+      throws Exception {
+    // language switch
+    String urlStr = url;
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    //product page info
+    GapCanadaCa gapCanadaCaPage = new GapCanadaCa();
+    gapCanadaCaPage.setActive(true);
+    gapCanadaCaPage.setStoreId();
+    gapCanadaCaPage.setUrl(url);
+    gapCanadaCaPage.setExpiration();
+
+    gapCanadaCaPage.setDoc();
+    gapCanadaCaPage.setKey();
+    gapCanadaCaPage.setName();
+    gapCanadaCaPage.setDescription();
+    gapCanadaCaPage.setImage();
+    gapCanadaCaPage.setPrice();
+
+    //set product url
+    product.setUrl(gapCanadaCaPage.getUrl());
+
+    //set product key
+    product.setKey(gapCanadaCaPage.getKey());
+
+    //set product Expiration
+    product.setExpiredAt(gapCanadaCaPage.getExpiration());
+
+    //set product status
+    product.setDisabled(!gapCanadaCaPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(gapCanadaCaPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(gapCanadaCaPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(gapCanadaCaPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(gapCanadaCaPage.getName());
+    text.setDescription(gapCanadaCaPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(gapCanadaCaPage.getImage());
       //add image to product
       product.getImages().add(image);
     }
