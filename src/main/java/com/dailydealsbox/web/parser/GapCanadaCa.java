@@ -8,7 +8,7 @@ public class GapCanadaCa extends ProductPage {
 
   @Override
   public void setStoreId() {
-    this.storeId = 16;
+    this.storeId = 25;
   }
 
   @Override
