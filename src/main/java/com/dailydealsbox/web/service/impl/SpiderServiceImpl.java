@@ -36,10 +36,13 @@ import com.dailydealsbox.web.database.model.ProductPrice;
 import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
+import com.dailydealsbox.web.parser.AdidasCa;
 import com.dailydealsbox.web.parser.BananaRepublicCa;
 import com.dailydealsbox.web.parser.BrownsShoesCom;
+import com.dailydealsbox.web.parser.CanadianTireCa;
 import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.parser.SephoraCom;
+import com.dailydealsbox.web.parser.SportsExpertsCa;
 import com.dailydealsbox.web.parser.TheBayCa;
 import com.dailydealsbox.web.service.SpiderService;
 
@@ -242,6 +245,18 @@ public class SpiderServiceImpl implements SpiderService {
       case "bananarepublic.gapcanada.ca":
         this.getProductFromBananaRepublicCa(url, product, LANGUAGE.EN);
         this.getProductFromBananaRepublicCa(url, product, LANGUAGE.FR);
+        break;
+      case "www.canadiantire.ca":
+        this.getProductFromCanadianTireCa(url, product, LANGUAGE.EN);
+        this.getProductFromCanadianTireCa(url, product, LANGUAGE.FR);
+        break;
+      case "www.adidas.ca":
+        this.getProductFromAdidasCa(url, product, LANGUAGE.EN);
+        this.getProductFromAdidasCa(url, product, LANGUAGE.FR);
+        break;
+      case "www.sportsexperts.ca":
+        this.getProductFromSportsExpertsCa(url, product, LANGUAGE.EN);
+        this.getProductFromSportsExpertsCa(url, product, LANGUAGE.FR);
         break;
       default:
         break;
@@ -1535,6 +1550,339 @@ public class SpiderServiceImpl implements SpiderService {
       //set image
       ProductImage image = new ProductImage();
       image.setUrl(bananaRepublicPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
+  private Product getProductFromCanadianTireCa(String url, Product product, LANGUAGE language)
+      throws Exception {
+    // language switch
+    String urlStr = url;
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    //product page info
+    CanadianTireCa canadianTireCaPage = new CanadianTireCa();
+    canadianTireCaPage.setActive(true);
+    canadianTireCaPage.setStoreId();
+    canadianTireCaPage.setUrl(url);
+    canadianTireCaPage.setExpiration();
+
+    canadianTireCaPage.setDoc();
+    canadianTireCaPage.setKey();
+    canadianTireCaPage.setName();
+    canadianTireCaPage.setDescription();
+    canadianTireCaPage.setImage();
+    canadianTireCaPage.setPrice();
+
+    //set product url
+    product.setUrl(canadianTireCaPage.getUrl());
+
+    //set product key
+    product.setKey(canadianTireCaPage.getKey());
+
+    //set product Expiration
+    product.setExpiredAt(canadianTireCaPage.getExpiration());
+
+    //set product status
+    product.setDisabled(!canadianTireCaPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(canadianTireCaPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(canadianTireCaPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(canadianTireCaPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(canadianTireCaPage.getName());
+    text.setDescription(canadianTireCaPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(canadianTireCaPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
+  private Product getProductFromAdidasCa(String url, Product product, LANGUAGE language)
+      throws Exception {
+    // language switch
+    String urlStr = url;
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    //product page info
+    AdidasCa adidasCaPage = new AdidasCa();
+    adidasCaPage.setActive(true);
+    adidasCaPage.setStoreId();
+    adidasCaPage.setUrl(url);
+    adidasCaPage.setExpiration();
+
+    adidasCaPage.setDoc();
+    adidasCaPage.setKey();
+    adidasCaPage.setName();
+    adidasCaPage.setDescription();
+    adidasCaPage.setImage();
+    adidasCaPage.setPrice();
+
+    //set product url
+    product.setUrl(adidasCaPage.getUrl());
+
+    //set product key
+    product.setKey(adidasCaPage.getKey());
+
+    //set product Expiration
+    product.setExpiredAt(adidasCaPage.getExpiration());
+
+    //set product status
+    product.setDisabled(!adidasCaPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(adidasCaPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(adidasCaPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(adidasCaPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(adidasCaPage.getName());
+    text.setDescription(adidasCaPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(adidasCaPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
+  private Product getProductFromSportsExpertsCa(String url, Product product, LANGUAGE language)
+      throws Exception {
+    // language switch
+    String urlStr = url;
+    NumberFormat numberFormat;
+    switch (language) {
+      case EN:
+        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+      case FR:
+        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
+          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
+        }
+        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+        break;
+      default:
+        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        break;
+    }
+
+    //product page info
+    SportsExpertsCa sportsExpertsCaPage = new SportsExpertsCa();
+    sportsExpertsCaPage.setActive(true);
+    sportsExpertsCaPage.setStoreId();
+    sportsExpertsCaPage.setUrl(url);
+    sportsExpertsCaPage.setExpiration();
+
+    sportsExpertsCaPage.setDoc();
+    sportsExpertsCaPage.setKey();
+    sportsExpertsCaPage.setName();
+    sportsExpertsCaPage.setDescription();
+    sportsExpertsCaPage.setImage();
+    sportsExpertsCaPage.setPrice();
+
+    //set product url
+    product.setUrl(sportsExpertsCaPage.getUrl());
+
+    //set product key
+    product.setKey(sportsExpertsCaPage.getKey());
+
+    //set product Expiration
+    product.setExpiredAt(sportsExpertsCaPage.getExpiration());
+
+    //set product status
+    product.setDisabled(!sportsExpertsCaPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(sportsExpertsCaPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(sportsExpertsCaPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(sportsExpertsCaPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(sportsExpertsCaPage.getName());
+    text.setDescription(sportsExpertsCaPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(sportsExpertsCaPage.getImage());
       //add image to product
       product.getImages().add(image);
     }
