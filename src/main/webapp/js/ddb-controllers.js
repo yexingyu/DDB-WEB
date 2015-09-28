@@ -275,11 +275,11 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         ProductService.get(id, function (response) {
             if (response.status == 'SUCCESS') {
                 angular.extend($scope.item, response.data);
+                ProductModel.fixLikeAndReviewOnProduct($scope.item);
             }
         });
 
         // retrieve product reviews
-        ProductModel.fixLikeAndReviewOnProduct($scope.item);
         $scope.item.reviews = {page: 0, size: 20};
         ProductService.reviews(id, $scope.item.reviews.page, $scope.item.reviews.size, function (response) {
             if (response.status == 'SUCCESS') {

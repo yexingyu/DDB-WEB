@@ -68,7 +68,7 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
 
         }).when('/share', {
             templateUrl: 'tpl/tpl-share.html',
-     
+
         }).when('/discuss', {
             templateUrl: 'tpl/tpl-discuss.html',
             controller: 'DiscussCtrl'
@@ -129,16 +129,3 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         };
     });
 
-app.filter( 'domain', function () {
-	  return function ( input ) {
-	    var matches,
-	        output = "",
-	        urls = /\w+:\/\/([\w|\.]+)/;
-
-	    matches = urls.exec( input );
-
-	    if ( matches !== null ) output = matches[1];
-
-	    return output;
-	  };
-	});
