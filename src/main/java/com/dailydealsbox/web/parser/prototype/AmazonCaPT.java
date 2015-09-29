@@ -12,10 +12,10 @@ import org.jsoup.nodes.Document;
 /**
  * product info
  */
-public class SephoraComPT {
+public class AmazonCaPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://www.sephora.com/tonique-confort-comforting-rehydrating-toner-P54509?skuId=534529";
+    String url = "http://www.amazon.ca/Upgraded-Rechargeable-Control-Training-Vibration/dp/B00N8JTLZU/ref=zg_bs_pet-supplies_2";
 
     //set doc
     Document doc = Jsoup
@@ -25,7 +25,7 @@ public class SephoraComPT {
         .get();
 
     //key
-    String keyPattern = "skuId=(\\d+)";
+    String keyPattern = "dp/(.*)/";
     String keyString = "";
     //pattern
     Pattern r = Pattern.compile(keyPattern);
@@ -49,32 +49,35 @@ public class SephoraComPT {
     //String product_import_text;
 
     //name
-    product_name_text = doc.select("meta[itemprop=\"name\"]").attr("content");
+    product_name_text = doc.select("meta[name=\"title\"]").attr("content");
 
     //description
-    product_description_text = doc.select("meta[property=\"og:description\"]").attr("content");
+    product_description_text = doc.select("meta[name=\"description\"]").attr("content");
 
     //image
-    product_image_text = doc.select("meta[itemprop=\"image\"]").attr("content");
+    product_image_text = doc.select("div#imgTagWrapperId").first().select("img").first()
+        .attr("data-a-dynamic-image");
 
-    //price
-    product_price_text = doc.html();
-
-    String pricePattern = "\"price\":\"(\\d+.\\d+)\"";
-    String priceString = "";
+    //image
+    String imagePattern = "([^\\[]+)\":";
+    String imageString = "";
     //pattern
-    r = Pattern.compile(pricePattern);
+    r = Pattern.compile(imagePattern);
 
     //matcher
-    m = r.matcher(product_price_text);
+    m = r.matcher(product_image_text);
     if (m.find()) {
-      priceString = m.group(1);
+      imageString = m.group(1);
 
     } else {
-      priceString = null;
+      imageString = null;
     }
     ;
-    product_price_text = priceString;
+
+    product_image_text = imageString.replace("{\"", "");
+    //price
+    product_price_text = doc.select("span#priceblock_ourprice").text();
+    ;
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 
