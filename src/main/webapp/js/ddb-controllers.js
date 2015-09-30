@@ -121,7 +121,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         $scope.keyword = $scope.requestSearch['keyword'];
         $scope.items = [];
         $scope.actions = {
-            'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
+            'like': ProductModel.like, 'unlike': ProductModel.unlike, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
         };
         $scope.pagination = {'page': 1, 'size': 36, 'sort': 'createdAt,desc'};
         $scope.pagination.change = function () {
@@ -174,7 +174,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         $scope.requestSearch = $location.search();
         $scope.items = [];
         $scope.actions = {
-            'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
+            'like': ProductModel.like, 'unlike': ProductModel.unlike, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
         };
         $scope.pagination = {'page': 1, 'size': 36, 'sort': 'createdAt,desc'};
         $scope.pagination.change = function () {
@@ -268,7 +268,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
         var id = $routeParams.id;
         $scope.item = {};
         $scope.actions = {
-            'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
+            'like': ProductModel.like, 'unlike': ProductModel.unlike, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
         };
 
         // retrieve product details
@@ -620,7 +620,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     .controller('FollowingCtrl', ['$scope', '$location', 'ProductService', 'LoginService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, LoginService, ProfileService, ProductModel, StoreModel) {
         $scope.items = [];
         $scope.actions = {
-            'like': ProductModel.like, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
+            'like': ProductModel.like, 'unlike': ProductModel.unlike, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
         };
 
         // callback function for ProductService

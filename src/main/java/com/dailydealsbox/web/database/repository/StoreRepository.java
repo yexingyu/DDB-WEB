@@ -101,7 +101,7 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
 
   /**
    * findByTypeAndDeleted
-   * 
+   *
    * @param type
    * @param deleted
    * @param pageable
@@ -140,6 +140,15 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
   @Modifying
   @Query("update Store s set s.countLikes = s.countLikes + 1 where s.id = ?1")
   public void increaseCountLikes(int storeId);
+
+  /**
+   * increaseCountUnlikes
+   *
+   * @param storeId
+   */
+  @Modifying
+  @Query("update Store s set s.countUnlikes = s.countUnlikes + 1 where s.id = ?1")
+  public void increaseCountUnlikes(int storeId);
 
   /**
    * increaseCountFollowings

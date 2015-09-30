@@ -169,10 +169,10 @@ public class ProductServiceImpl implements ProductService {
 
   /*
    * (non-Javadoc)
-   * @see com.dailydealsbox.service.ProductService#addLike(int, java.lang.String, java.lang.String)
+   * @see com.dailydealsbox.web.service.ProductService#addLike(int, java.lang.String, java.lang.String, boolean)
    */
   @Override
-  public int addLike(int productId, String fingerprint, String ip) {
+  public int addLike(int productId, String fingerprint, String ip, boolean positive) {
     if (null != this.repoLike.findFirstByProductIdAndIpAndFingerprint(productId, ip, fingerprint)) { return -1; }
     if (this.repoLike.countByProductIdAndIp(productId, ip) > 10) { return -2; }
 
@@ -186,13 +186,18 @@ public class ProductServiceImpl implements ProductService {
       like.setIp(ip);
       like.setFingerprint(fingerprint);
       like.setProductId(productId);
+      like.setPositive(positive);
       this.repoLike.save(like);
 
       // update product.count_likes
-      this.repo.increaseCountLikes(productId);
+      if (positive) {
+        this.repo.increaseCountLikes(productId);
+      } else {
+        this.repo.increaseCountUnlikes(productId);
+      }
 
       // update store.count_likes
-      this.storeService.increaseCountLikes(product.getStore().getId());
+      this.storeService.increaseCountLikes(product.getStore().getId(), positive);
     } catch (Exception e) {
       e.printStackTrace();
     }

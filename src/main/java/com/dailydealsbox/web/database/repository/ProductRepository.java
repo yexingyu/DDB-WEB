@@ -109,6 +109,10 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
   @Query("update Product p set p.countLikes = p.countLikes + 1 where p.id = ?1")
   public void increaseCountLikes(int productId);
 
+  @Modifying
+  @Query("update Product p set p.countUnlikes = p.countUnlikes + 1 where p.id = ?1")
+  public void increaseCountUnlikes(int productId);
+
   /**
    * increaseCountReviews
    *
