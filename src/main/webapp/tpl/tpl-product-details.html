@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <span><b>Tags:</b></span>
-            <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a></span>
+            <h2><span><b>Tags:</b></span>
+            <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a></span></h2>
         </div>
     </div>
 
@@ -100,15 +100,16 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
+                    <h2><a href="{{item.url}}" target="_blank">Buy it from the {{item.store.website}}</a></h2>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="col-sm-12">
                     <p ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.description}}</p>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <a href="{{item.url}}" target="_blank">Buy it from the {{item.store.website}}</a>
-                </div>
-            </div>
+
 
 
         </div>
@@ -142,7 +143,7 @@
         <div class="col-sm-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Comments:</h3>
+                    <h3 class="panel-title">Discuss:</h3>
                 </div>
                 <div class="panel-body">
                     <div ng-repeat="review in item.reviews.content">Rating: {{review.rating}} - {{review.content}}</div>
@@ -155,7 +156,7 @@
         <div class="col-sm-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">More To Explore</h3>
+                    <h3 class="panel-title">Recommendations for You</h3>
                 </div>
                 <div class="panel-body">
                     You may also interested in these products.
