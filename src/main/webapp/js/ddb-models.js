@@ -15,6 +15,13 @@ angular.module('ddbApp.models', [])
                     }
                 });
             },
+            unlike: function (product) {
+                ProductService.unlike(product.id, function (response) {
+                    if (response.status === 'SUCCESS' && response.data === 'Success') {
+                        product.countUnlikes++;
+                    }
+                });
+            },
             reviewHoveringOver: function (value, item) {
                 item.review.overStar = value;
             },

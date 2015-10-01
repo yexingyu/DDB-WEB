@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 import com.dailydealsbox.web.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,20 +32,25 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class ProductLike extends BaseModel {
 
   @NotNull
-  @Column(name = "fingerprint", nullable = false)
+  @Column(name = "fingerprint")
   private String fingerprint;
 
   @NotNull
-  @Column(name = "ip", nullable = false)
+  @Column(name = "ip")
   private String ip;
 
   @NotNull
-  @Column(name = "product_id", nullable = false)
+  @Column(name = "product_id")
   private int productId;
 
   @Temporal(value = TemporalType.TIMESTAMP)
-  @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
+  @Column(name = "created_at", updatable = false, insertable = false)
   private Date createdAt = new Date();
+
+  @NotNull
+  @Column(name = "positive")
+  @Type(type = "org.hibernate.type.NumericBooleanType")
+  private boolean positive;
 
   /**
    * validate
@@ -63,8 +69,7 @@ public class ProductLike extends BaseModel {
   }
 
   /**
-   * @param fingerprint
-   *          the fingerprint to set
+   * @param fingerprint the fingerprint to set
    */
   public void setFingerprint(String fingerprint) {
     this.fingerprint = fingerprint;
@@ -78,8 +83,7 @@ public class ProductLike extends BaseModel {
   }
 
   /**
-   * @param productId
-   *          the productId to set
+   * @param productId the productId to set
    */
   public void setProductId(int productId) {
     this.productId = productId;
@@ -93,8 +97,7 @@ public class ProductLike extends BaseModel {
   }
 
   /**
-   * @param createdAt
-   *          the createdAt to set
+   * @param createdAt the createdAt to set
    */
   public void setCreatedAt(Date createdAt) {
     this.createdAt = createdAt;
@@ -108,11 +111,24 @@ public class ProductLike extends BaseModel {
   }
 
   /**
-   * @param ip
-   *          the ip to set
+   * @param ip the ip to set
    */
   public void setIp(String ip) {
     this.ip = ip;
+  }
+
+  /**
+   * @return the positive
+   */
+  public boolean isPositive() {
+    return this.positive;
+  }
+
+  /**
+   * @param positive the positive to set
+   */
+  public void setPositive(boolean positive) {
+    this.positive = positive;
   }
 
 }

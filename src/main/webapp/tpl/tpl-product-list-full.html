@@ -130,11 +130,13 @@
                 </div>
                 <div class="col-xs-12">
                     <div class="row">
-                        <div class="col-xs-2">
-                        </div>
-                        <div class="col-xs-4 pull-right">
-                            <a ng-click="actions.like(item);"><span class="glyphicon glyphicon-heart highlight_RoyalBlue social_button" aria-hidden="true"></span><span
-                                class="badge">{{item.countLikes}}</span></a>
+                        <div class="col-xs-6 pull-right">
+                            <a ng-click="actions.like(item);">
+                                <span class="glyphicon glyphicon-thumbs-up highlight_RoyalBlue social_button" aria-hidden="true"></span><span class="badge">{{item.countLikes}}</span>
+                            </a>
+                            <a ng-click="actions.unlike(item);">
+                                <span class="glyphicon glyphicon-thumbs-down highlight_RoyalBlue social_button" aria-hidden="true"></span><span class="badge">{{item.countUnlikes}}</span>
+                            </a>
                         </div>
                         <div class="col-xs-2">
                         </div>

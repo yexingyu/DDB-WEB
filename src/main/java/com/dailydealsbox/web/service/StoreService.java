@@ -38,7 +38,7 @@ public interface StoreService {
 
   /**
    * listAll
-   * 
+   *
    * @param ids
    * @param countries
    * @param type
@@ -58,8 +58,9 @@ public interface StoreService {
    * increaseCountLikes
    *
    * @param storeId
+   * @param positive
    */
-  public void increaseCountLikes(int storeId);
+  public void increaseCountLikes(int storeId, boolean positive);
 
   /**
    * increaseCountFollowings

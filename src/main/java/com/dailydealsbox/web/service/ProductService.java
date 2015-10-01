@@ -94,9 +94,10 @@ public interface ProductService {
    * @param productId
    * @param fingerprint
    * @param ip
+   * @param positive
    * @return
    */
-  public int addLike(int productId, String fingerprint, String ip);
+  public int addLike(int productId, String fingerprint, String ip, boolean positive);
 
   /**
    * addReview

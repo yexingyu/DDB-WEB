@@ -35,7 +35,7 @@ public interface ProductLikeRepository extends CrudRepository<ProductLike, Integ
 
   /**
    * findByProductId
-   * 
+   *
    * @param productId
    * @param pageable
    * @return

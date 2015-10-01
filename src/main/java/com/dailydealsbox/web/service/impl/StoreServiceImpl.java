@@ -88,8 +88,12 @@ public class StoreServiceImpl implements StoreService {
    * @see com.dailydealsbox.database.service.StoreService#increaseCountLikes(int)
    */
   @Override
-  public void increaseCountLikes(int storeId) {
-    this.repo.increaseCountLikes(storeId);
+  public void increaseCountLikes(int storeId, boolean positive) {
+    if (positive) {
+      this.repo.increaseCountLikes(storeId);
+    } else {
+      this.repo.increaseCountUnlikes(storeId);
+    }
   }
 
   /*

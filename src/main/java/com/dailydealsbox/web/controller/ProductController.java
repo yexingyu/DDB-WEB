@@ -61,7 +61,7 @@ public class ProductController {
   private StoreService   storeService;
 
   /**
-   * addLike
+   * like
    *
    * @param productId
    * @param fingerprint
@@ -71,9 +71,38 @@ public class ProductController {
    */
   @RequestMapping(value = "id/{productId}/like", method = { RequestMethod.POST })
   @ApiOperation(value = "Product like", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Add new like for product.")
-  public GenericResponseData addLike(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
+  public GenericResponseData like(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
       @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request) throws Exception {
-    int rst = this.productService.addLike(productId, fingerprint, request.getRemoteAddr());
+    return this.addLike(productId, fingerprint, true, request);
+  }
+
+  /**
+   * unlike
+   *
+   * @param productId
+   * @param fingerprint
+   * @param request
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "id/{productId}/unlike", method = { RequestMethod.POST })
+  @ApiOperation(value = "Product like", response = GenericResponseData.class, responseContainer = "Map", produces = "application/json", notes = "Add new unlike for product.")
+  public GenericResponseData unlike(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
+      @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request) throws Exception {
+    return this.addLike(productId, fingerprint, false, request);
+  }
+
+  /**
+   * addLike
+   *
+   * @param productId
+   * @param fingerprint
+   * @param positive
+   * @param request
+   * @return
+   */
+  private GenericResponseData addLike(int productId, String fingerprint, boolean positive, HttpServletRequest request) {
+    int rst = this.productService.addLike(productId, fingerprint, request.getRemoteAddr(), positive);
     if (rst == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");
     } else if (rst == -1) {

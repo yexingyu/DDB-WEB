@@ -79,6 +79,10 @@ public class Product extends BaseEntityModel {
   private int countLikes;
 
   @NotNull
+  @Column(name = "count_unlikes", insertable = false, updatable = false)
+  private int countUnlikes;
+
+  @NotNull
   @Column(name = "count_reviews", insertable = false, updatable = false)
   private int countReviews;
 
@@ -503,6 +507,20 @@ public class Product extends BaseEntityModel {
    */
   public void setCountLikes(int countLikes) {
     this.countLikes = countLikes;
+  }
+
+  /**
+   * @return the countUnlikes
+   */
+  public int getCountUnlikes() {
+    return this.countUnlikes;
+  }
+
+  /**
+   * @param countUnlikes the countUnlikes to set
+   */
+  public void setCountUnlikes(int countUnlikes) {
+    this.countUnlikes = countUnlikes;
   }
 
   /**

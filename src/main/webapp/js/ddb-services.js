@@ -159,6 +159,9 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
             like: function (productId, callback) {
                 return $resource('/api/product/id/:id/like', {'id': productId}, {}).save(callback);
             },
+            unlike: function (productId, callback) {
+                return $resource('/api/product/id/:id/unlike', {'id': productId}, {}).save(callback);
+            },
             review: function (review, callback) {
                 return $resource('/api/product/id/:id/review', {'id': review.productId}, {}).save(review, callback);
             },
