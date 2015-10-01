@@ -2,7 +2,16 @@
     <div class="row">
         <div class="col-sm-12">
             <h2><span><b>Tags:</b></span>
-            <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> <button type="button" class="btn btn-xs btn-success">+Follow</button></span></h2>
+            <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> 
+            <button type="button" class="btn btn-xs btn-success">+Follow</button>
+            <button type="button" class="btn btn-xs btn-success" ng-click="followTag(tag)" ng-if="!tag.followed">+Follow</button>
+            <!--
+            <button type="button" class="btn btn-xs btn-danger" ng-click="unfollowTag(tag)" ng-if="tag.followed">-Follow</button>            
+            -->
+            </span></h2>
+                            <button type="button" class="btn btn-xs btn-success" ng-click="follow(item.store)" ng-if="!item.store.followed">+Follow</button>
+                            <button type="button" class="btn btn-xs btn-danger" ng-click="unfollow(item.store)" ng-if="item.store.followed">-Follow</button>
+            
         </div>
     </div>
 

@@ -286,6 +286,9 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 $scope.item.reviews = response.data;
             }
         });
+        
+        $scope.followTag = TagModel.followTag;
+        $scope.unfollowTag = TagModel.unfollowTag;
     }])
 
     /*
