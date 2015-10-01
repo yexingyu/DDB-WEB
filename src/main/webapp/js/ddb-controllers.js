@@ -287,8 +287,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             }
         });
         
-        $scope.followTag = TagModel.followTag;
-        $scope.unfollowTag = TagModel.unfollowTag;
+
     }])
 
     /*
