@@ -48,69 +48,87 @@ public class Member extends BaseEntityModel {
   @NotNull
   @Size(min = 10, max = 100)
   @Column(name = "account", nullable = false, length = 100)
-  private String account;
+  private String             account;
 
   @NotNull
   @Column(name = "password", nullable = false, length = 32)
-  private String password;
+  private String             password;
 
   @NotNull
   @Column(name = "first_name", nullable = false, length = 100)
-  private String firstName = "";
+  private String             firstName  = "";
 
   @NotNull
   @Column(name = "middle_name", nullable = false, length = 100)
-  private String middleName = "";
+  private String             middleName = "";
 
   @NotNull
   @Column(name = "last_name", nullable = false, length = 100)
-  private String lastName = "";
+  private String             lastName   = "";
 
   @NotNull
   @Column(name = "nick_name", nullable = false, length = 100)
-  private String nickName = "";
+  private String             nickName   = "";
 
   @Column(name = "signature", length = 160)
-  private String signature = "";
+  private String             signature  = "";
 
   @Column(name = "avatar", length = 45)
-  private String avatar = "";
+  private String             avatar     = "";
 
   @Column(name = "level", length = 45)
-  private String level = "";
+  private String             level      = "";
 
   @Column(name = "point")
-  private int point;
+  private int                point;
 
   @Column(name = "point_redeemed")
-  private int pointRedeemed;
+  private int                pointRedeemed;
 
   @NotNull
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_ROLE role = MEMBER_ROLE.MEMBER;
+  private MEMBER_ROLE        role       = MEMBER_ROLE.MEMBER;
 
   @NotNull
   @Column(name = "login_type", nullable = false)
   @Enumerated(EnumType.STRING)
-  private MEMBER_LOGIN_TYPE loginType;
+  private MEMBER_LOGIN_TYPE  loginType;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<MemberPhone> phones;
+  private Set<MemberPhone>   phones;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<MemberEmail> emails;
+  private Set<MemberEmail>   emails;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "member",
+    cascade = { CascadeType.ALL },
+    orphanRemoval = true)
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<MemberAddress> addresses;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-  @JoinTable(name = "relation_member_store", joinColumns = { @JoinColumn(name = "member_id") }, inverseJoinColumns = { @JoinColumn(name = "store_id") })
+  @JoinTable(name = "relation_member_store",
+    joinColumns = { @JoinColumn(name = "member_id") },
+    inverseJoinColumns = { @JoinColumn(name = "store_id") })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  private Set<Store> stores;
+  private Set<Store>         stores;
+
+  @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+  @JoinTable(name = "relation_member_tag",
+    joinColumns = { @JoinColumn(name = "member_id") },
+    inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Set<ProductTag>    tags;
 
   /**
    * validate
@@ -163,10 +181,26 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param stores the stores to set
+   * @param stores
+   *          the stores to set
    */
   public void setStores(Set<Store> stores) {
     this.stores = stores;
+  }
+
+  /**
+   * @return the ProductTags
+   */
+  public Set<ProductTag> getTags() {
+    return this.tags;
+  }
+
+  /**
+   * @param tags
+   *          the tags to set
+   */
+  public void setTags(Set<ProductTag> tags) {
+    this.tags = tags;
   }
 
   /**
@@ -177,7 +211,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param addresses the addresses to set
+   * @param addresses
+   *          the addresses to set
    */
   public void setAddresses(Set<MemberAddress> addresses) {
     this.addresses = addresses;
@@ -191,7 +226,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param loginType the loginType to set
+   * @param loginType
+   *          the loginType to set
    */
   public void setLoginType(MEMBER_LOGIN_TYPE loginType) {
     this.loginType = loginType;
@@ -205,7 +241,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param emails the emails to set
+   * @param emails
+   *          the emails to set
    */
   public void setEmails(Set<MemberEmail> emails) {
     this.emails = emails;
@@ -219,7 +256,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param phones the phones to set
+   * @param phones
+   *          the phones to set
    */
   public void setPhones(Set<MemberPhone> phones) {
     this.phones = phones;
@@ -233,7 +271,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param firstName the firstName to set
+   * @param firstName
+   *          the firstName to set
    */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
@@ -247,7 +286,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param middleName the middleName to set
+   * @param middleName
+   *          the middleName to set
    */
   public void setMiddleName(String middleName) {
     this.middleName = middleName;
@@ -261,7 +301,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param lastName the lastName to set
+   * @param lastName
+   *          the lastName to set
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
@@ -276,7 +317,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param nickName the nickName to set
+   * @param nickName
+   *          the nickName to set
    */
   public void setNickName(String nickName) {
     this.nickName = nickName;
@@ -290,7 +332,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param signature the signature to set
+   * @param signature
+   *          the signature to set
    */
   public void setSignature(String signature) {
     this.signature = signature;
@@ -304,7 +347,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param avatar the avatar to set
+   * @param avatar
+   *          the avatar to set
    */
   public void setAvatar(String avatar) {
     this.avatar = avatar;
@@ -318,7 +362,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param level the level to set
+   * @param level
+   *          the level to set
    */
   public void setLevel(String level) {
     this.level = level;
@@ -332,7 +377,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param point the point to set
+   * @param point
+   *          the point to set
    */
   public void setPoint(int point) {
     this.point = point;
@@ -346,7 +392,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param point the point to set
+   * @param point
+   *          the point to set
    */
   public void setPointRedeemed(int pointredeemed) {
     this.pointRedeemed = pointredeemed;
@@ -360,7 +407,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param role the role to set
+   * @param role
+   *          the role to set
    */
   public void setRole(MEMBER_ROLE role) {
     this.role = role;
@@ -374,7 +422,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param password the password to set
+   * @param password
+   *          the password to set
    */
   public void setPassword(String password) {
     this.password = password;
@@ -388,7 +437,8 @@ public class Member extends BaseEntityModel {
   }
 
   /**
-   * @param account the account to set
+   * @param account
+   *          the account to set
    */
   public void setAccount(String account) {
     this.account = account;
