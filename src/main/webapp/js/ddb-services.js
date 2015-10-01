@@ -121,6 +121,20 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
             }
         };
     }])
+    
+    /*
+     * TagService
+     */
+    .factory('TagService', ['$rootScope', '$resource', function ($rootScope, $resource) {
+        return {
+            followTag: function (storeId, callback) {
+                return $resource('/api/tag/id/:tagId/followTag', {'tagId': tagId}, {}).save(callback);
+            },
+            unfollowTag: function (storeId, callback) {
+                return $resource('/api/tag/id/:tagId/followTag', {'tagId': tagId}, {}).delete(callback);
+            }
+        };
+    }])    
 
     /*
      * ProductService

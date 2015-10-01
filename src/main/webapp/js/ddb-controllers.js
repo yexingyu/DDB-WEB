@@ -264,7 +264,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     /*
      * ProductDetailsCtrl definition
      */
-    .controller('ProductDetailsCtrl', ['$scope', '$location', '$routeParams', 'ProductService', 'ProductModel', function ($scope, $location, $routeParams, ProductService, ProductModel) {
+    .controller('ProductDetailsCtrl', ['$scope', '$location', '$routeParams', 'ProductService', 'ProductModel', 'TagModel', function ($scope, $location, $routeParams, ProductService, ProductModel,TagModel) {
         var id = $routeParams.id;
         $scope.item = {};
         $scope.actions = {
@@ -287,7 +287,8 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             }
         });
         
-
+        $scope.followTag = TagModel.followTag;
+        $scope.unfollowTag = TagModel.unfollowTag;
     }])
 
     /*

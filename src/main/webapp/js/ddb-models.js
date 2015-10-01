@@ -174,6 +174,52 @@ angular.module('ddbApp.models', [])
         };
 
     }])
+    
+    /*
+     * TagModel
+     */
+    .factory('TagModel', ['$rootScope', '$route', 'ProductService', 'TagService', 'LoginService', function ($rootScope, $route, ProductService, TagService, LoginService) {
+        return {
+            fixFollowed: function (store, followedTags) {
+                store.followed = false;
+                if (followedTags !== undefined && followedTags.length > 0) {
+                    angular.forEach(followedTags, function (followedTag) {
+                        if (store.id === followedTag.id) {
+                            store['followed'] = true;
+                            return;
+                        }
+                    });
+                }
+            },
+            followTag: function (tag) {
+                TagService.followTag(tag.id, function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $route.reload();
+                    } else if (response.status === 'NEED_LOGIN') {
+                        LoginService.showLoginBox(function (profile) {
+                            TagService.follow(tag.id, function (response) {
+                                $route.reload();
+                            });
+                        });
+                    }
+                });
+            },
+            unfollowTag: function (tag) {
+                TagService.unfollowTag(tag.id, function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $route.reload();
+                    } else if (response.status === 'NEED_LOGIN') {
+                        LoginService.showLoginBox(function (profile) {
+                            TagService.unfollow(tag.id, function (response) {
+                                $route.reload();
+                            });
+                        });
+                    }
+                });
+            }
+        };
+
+    }])
 
 
     /*
