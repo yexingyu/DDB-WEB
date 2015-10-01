@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2><span><b>Tags:</b></span>
-            <span class="glyphicon glyphicon-tag" ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a></span></h2>
+            <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> <button type="button" class="btn btn-xs btn-success">+Follow</button></span></h2>
         </div>
     </div>
 
