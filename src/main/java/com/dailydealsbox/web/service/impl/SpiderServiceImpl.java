@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -59,8 +58,8 @@ public class SpiderServiceImpl implements SpiderService {
   private Map<String, String> HTML_PATH_EBAYCOM   = new HashMap<>();
   private Map<String, String> HTML_PATH_EBAYCA    = new HashMap<>();
 
-  private Map<String, String> HTML_PATH_COSTCOCA  = new HashMap<>();
-  private Map<String, String> HTML_PATH_NEWEGGCA  = new HashMap<>();
+  private Map<String, String> HTML_PATH_COSTCOCA = new HashMap<>();
+  private Map<String, String> HTML_PATH_NEWEGGCA = new HashMap<>();
 
   /*
    * Constructor
@@ -272,8 +271,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private Product getProductFromEbayCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private Product getProductFromEbayCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -296,10 +294,6 @@ public class SpiderServiceImpl implements SpiderService {
       int days = (Calendar.SATURDAY - weekday + 5);
       now.add(Calendar.DAY_OF_YEAR, days);
     }
-    // now is the date you want
-    Date expiredDate = now.getTime();
-
-    product.setExpiredAt(expiredDate);
 
     // language switch
     String urlStr = url.toString();
@@ -407,34 +401,11 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private void getProductFromAmazonCOM(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private void getProductFromAmazonCOM(URL url, Product product, LANGUAGE language) throws Exception {
 
   }
 
-  private Product getProductFromAmazonCA(String url, Product product, LANGUAGE language)
-      throws Exception {
-    // language switch
-    String urlStr = url;
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
+  private Product getProductFromAmazonCA(String url, Product product, LANGUAGE language) throws Exception {
     //product page info
     AmazonCa amazonCaPage = new AmazonCa();
     amazonCaPage.setActive(true);
@@ -454,9 +425,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(amazonCaPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(amazonCaPage.getExpiration());
 
     //set product status
     product.setDisabled(!amazonCaPage.getActive());
@@ -532,8 +500,7 @@ public class SpiderServiceImpl implements SpiderService {
    */
 
   //http://www.newegg.ca/Product/Product.aspx?Item=N82E16824106002&icid=328803
-  private Product getProductFromNeweggCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private Product getProductFromNeweggCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -556,10 +523,6 @@ public class SpiderServiceImpl implements SpiderService {
       int days = (Calendar.SATURDAY - weekday + 5);
       now.add(Calendar.DAY_OF_YEAR, days);
     }
-    // now is the date you want
-    Date expiredDate = now.getTime();
-
-    product.setExpiredAt(expiredDate);
 
     //set product tax
     PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
@@ -625,9 +588,7 @@ public class SpiderServiceImpl implements SpiderService {
       Element productPriceElement1 = doc.select(this.HTML_PATH_NEWEGGCA.get("price")).first();
       if (productPriceElement1 != null) {
 
-        productPrice = doc.select(this.HTML_PATH_NEWEGGCA.get("price")).first().select("strong")
-            .text()
-            + doc.select(this.HTML_PATH_NEWEGGCA.get("price")).first().select("sup").text();
+        productPrice = doc.select(this.HTML_PATH_NEWEGGCA.get("price")).first().select("strong").text() + doc.select(this.HTML_PATH_NEWEGGCA.get("price")).first().select("sup").text();
       } else {
         productPrice = "0.00";
       }
@@ -654,8 +615,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(doc.select(this.HTML_PATH_NEWEGGCA.get("image")).first().select("img").get(2)
-          .attr("src").replace("$S35$", "$S120$"));
+      image.setUrl(doc.select(this.HTML_PATH_NEWEGGCA.get("image")).first().select("img").get(2).attr("src").replace("$S35$", "$S120$"));
       product.getImages().add(image);
     }
 
@@ -669,8 +629,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private void getProductFromBestbuyCOM(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private void getProductFromBestbuyCOM(URL url, Product product, LANGUAGE language) throws Exception {
 
   }
 
@@ -793,30 +752,6 @@ public class SpiderServiceImpl implements SpiderService {
     }
   }
 
-  /**
-   * getProductKeyFromAmazonCA
-   *
-   * @param url
-   * @return
-   * @throws Exception
-   */
-  private String getProductKeyFromAmazonCA(URL url) throws Exception {
-    // String to be scanned to find the pattern.
-    String pattern = "\\/product\\/(\\w+)\\/ref";
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile(pattern);
-
-    // Now create matcher object.
-    Matcher m = r.matcher(url.toString());
-    if (m.find()) {
-      return m.group(1);
-
-    } else {
-      return null;
-    }
-  }
-
   private String getProductKeyFromNeweggCA(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/product\\/(\\w+)\\/ref";
@@ -842,8 +777,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param language
    * @return
    */
-  private Product getProductFromBestbuyCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private Product getProductFromBestbuyCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -866,10 +800,6 @@ public class SpiderServiceImpl implements SpiderService {
       int days = (Calendar.SATURDAY - weekday + 5);
       now.add(Calendar.DAY_OF_YEAR, days);
     }
-    // now is the date you want
-    Date expiredDate = now.getTime();
-
-    product.setExpiredAt(expiredDate);
 
     //set product tax
     PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
@@ -955,8 +885,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(),
-          doc.select(this.HTML_PATH_BESTBUY.get("image")).first().attr("src")));
+      image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(), doc.select(this.HTML_PATH_BESTBUY.get("image")).first().attr("src")));
       product.getImages().add(image);
     }
 
@@ -970,28 +899,9 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private Product getProductFromHomedepotCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private Product getProductFromHomedepotCA(URL url, Product product, LANGUAGE language) throws Exception {
     // language switch
     String urlStr = url.toString();
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/produit/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/produit/", "/product/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/product/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/product/", "/produit/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
 
     //product page info
     HomeDepotCa homeDepotPage = new HomeDepotCa();
@@ -1012,9 +922,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(homeDepotPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(homeDepotPage.getExpiration());
 
     //set product status
     product.setDisabled(!homeDepotPage.getActive());
@@ -1088,28 +995,9 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private Product getProductFromThebayCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private Product getProductFromThebayCA(URL url, Product product, LANGUAGE language) throws Exception {
     // language switch
     String urlStr = url.toString();
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/produit/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/produit/", "/product/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/product/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/product/", "/produit/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
 
     //product page info
     TheBayCa theBayPage = new TheBayCa();
@@ -1130,9 +1018,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(theBayPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(theBayPage.getExpiration());
 
     //set product status
     product.setDisabled(!theBayPage.getActive());
@@ -1199,29 +1084,7 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromBrownsshoesCOM(String url, Product product, LANGUAGE language)
-      throws Exception {
-    // language switch
-    String urlStr = url;
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/default/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/default/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/default/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
+  private Product getProductFromBrownsshoesCOM(String url, Product product, LANGUAGE language) throws Exception {
     //product page info
     BrownsShoesCom brownsShoesPage = new BrownsShoesCom();
     brownsShoesPage.setActive(true);
@@ -1241,9 +1104,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(brownsShoesPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(brownsShoesPage.getExpiration());
 
     //set product status
     product.setDisabled(!brownsShoesPage.getActive());
@@ -1310,29 +1170,7 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromSephoraCOM(String url, Product product, LANGUAGE language)
-      throws Exception {
-    // language switch
-    String urlStr = url;
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/default/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/default/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/default/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
+  private Product getProductFromSephoraCOM(String url, Product product, LANGUAGE language) throws Exception {
     //product page info
     SephoraCom sephoraPage = new SephoraCom();
     sephoraPage.setActive(true);
@@ -1352,9 +1190,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(sephoraPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(sephoraPage.getExpiration());
 
     //set product status
     product.setDisabled(!sephoraPage.getActive());
@@ -1421,28 +1256,7 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromBananaRepublicCa(String url, Product product, LANGUAGE language)
-      throws Exception {
-    // language switch
-    String urlStr = url;
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/default/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/default/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/default/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
+  private Product getProductFromBananaRepublicCa(String url, Product product, LANGUAGE language) throws Exception {
 
     //product page info
     BananaRepublicCa bananaRepublicPage = new BananaRepublicCa();
@@ -1463,9 +1277,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(bananaRepublicPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(bananaRepublicPage.getExpiration());
 
     //set product status
     product.setDisabled(!bananaRepublicPage.getActive());
@@ -1532,29 +1343,7 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromCanadianTireCa(String url, Product product, LANGUAGE language)
-      throws Exception {
-    // language switch
-    String urlStr = url;
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
+  private Product getProductFromCanadianTireCa(String url, Product product, LANGUAGE language) throws Exception {
     //product page info
     CanadianTireCa canadianTireCaPage = new CanadianTireCa();
     canadianTireCaPage.setActive(true);
@@ -1574,9 +1363,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(canadianTireCaPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(canadianTireCaPage.getExpiration());
 
     //set product status
     product.setDisabled(!canadianTireCaPage.getActive());
@@ -1643,29 +1429,7 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromAdidasCa(String url, Product product, LANGUAGE language)
-      throws Exception {
-    // language switch
-    String urlStr = url;
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
+  private Product getProductFromAdidasCa(String url, Product product, LANGUAGE language) throws Exception {
     //product page info
     AdidasCa adidasCaPage = new AdidasCa();
     adidasCaPage.setActive(true);
@@ -1685,9 +1449,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(adidasCaPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(adidasCaPage.getExpiration());
 
     //set product status
     product.setDisabled(!adidasCaPage.getActive());
@@ -1754,29 +1515,7 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromSportsExpertsCa(String url, Product product, LANGUAGE language)
-      throws Exception {
-    // language switch
-    String urlStr = url;
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
+  private Product getProductFromSportsExpertsCa(String url, Product product, LANGUAGE language) throws Exception {
     //product page info
     SportsExpertsCa sportsExpertsCaPage = new SportsExpertsCa();
     sportsExpertsCaPage.setActive(true);
@@ -1796,9 +1535,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(sportsExpertsCaPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(sportsExpertsCaPage.getExpiration());
 
     //set product status
     product.setDisabled(!sportsExpertsCaPage.getActive());
@@ -1865,29 +1601,7 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromGapCanadaCa(String url, Product product, LANGUAGE language)
-      throws Exception {
-    // language switch
-    String urlStr = url;
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
+  private Product getProductFromGapCanadaCa(String url, Product product, LANGUAGE language) throws Exception {
     //product page info
     GapCanadaCa gapCanadaCaPage = new GapCanadaCa();
     gapCanadaCaPage.setActive(true);
@@ -1907,9 +1621,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product key
     product.setKey(gapCanadaCaPage.getKey());
-
-    //set product Expiration
-    product.setExpiredAt(gapCanadaCaPage.getExpiration());
 
     //set product status
     product.setDisabled(!gapCanadaCaPage.getActive());
@@ -1976,8 +1687,7 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -2000,10 +1710,6 @@ public class SpiderServiceImpl implements SpiderService {
       int days = (Calendar.SATURDAY - weekday + 5);
       now.add(Calendar.DAY_OF_YEAR, days);
     }
-    // now is the date you want
-    Date expiredDate = now.getTime();
-
-    product.setExpiredAt(expiredDate);
 
     //set product tax
     PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
@@ -2065,8 +1771,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product tax
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_WALMARTCA.get("price")).first()
-          .select("div.microdata-price").first().select("span").first().text();
+      String productPrice = doc.select(this.HTML_PATH_WALMARTCA.get("price")).first().select("div.microdata-price").first().select("span").first().text();
       Number number;
       try {
         number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
@@ -2083,24 +1788,20 @@ public class SpiderServiceImpl implements SpiderService {
 
     ProductText text = new ProductText();
     text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATH_WALMARTCA.get("name")).first().select("h1").first()
-        .text());
+    text.setName(doc.select(this.HTML_PATH_WALMARTCA.get("name")).first().select("h1").first().text());
     text.setDescription(doc.select(this.HTML_PATH_WALMARTCA.get("description")).first().text());
     product.getTexts().add(text);
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s", url.getProtocol(),
-          doc.select(this.HTML_PATH_WALMARTCA.get("image")).first().select("img.image").first()
-              .attr("src")));
+      image.setUrl(String.format("%s://%s", url.getProtocol(), doc.select(this.HTML_PATH_WALMARTCA.get("image")).first().select("img.image").first().attr("src")));
       product.getImages().add(image);
     }
 
     return product;
   }
 
-  private Product getProductFromCostcoCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private Product getProductFromCostcoCA(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -2123,10 +1824,6 @@ public class SpiderServiceImpl implements SpiderService {
       int days = (Calendar.SATURDAY - weekday + 5);
       now.add(Calendar.DAY_OF_YEAR, days);
     }
-    // now is the date you want
-    Date expiredDate = now.getTime();
-
-    product.setExpiredAt(expiredDate);
 
     //set product tax
     PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
@@ -2188,8 +1885,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     //set product tax
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_COSTCOCA.get("price")).first()
-          .select("span.currency").first().text();
+      String productPrice = doc.select(this.HTML_PATH_COSTCOCA.get("price")).first().select("span.currency").first().text();
       Number number;
       try {
         number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
@@ -2212,8 +1908,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getImages().isEmpty()) {
       ProductImage image = new ProductImage();
-      image.setUrl(doc.select(this.HTML_PATH_COSTCOCA.get("image")).first().select("img").first()
-          .attr("src"));
+      image.setUrl(doc.select(this.HTML_PATH_COSTCOCA.get("image")).first().select("img").first().attr("src"));
       product.getImages().add(image);
     }
 
@@ -2227,8 +1922,7 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private Product getProductFromEbayCOM(URL url, Product product, LANGUAGE language)
-      throws Exception {
+  private Product getProductFromEbayCOM(URL url, Product product, LANGUAGE language) throws Exception {
     //set product url
     product.setUrl(url.toString());
     //set product status
@@ -2251,10 +1945,6 @@ public class SpiderServiceImpl implements SpiderService {
       int days = (Calendar.SATURDAY - weekday + 5);
       now.add(Calendar.DAY_OF_YEAR, days);
     }
-    // now is the date you want
-    Date expiredDate = now.getTime();
-
-    product.setExpiredAt(expiredDate);
 
     // language switch
     String urlStr = url.toString();

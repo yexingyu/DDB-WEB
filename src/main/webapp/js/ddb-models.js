@@ -22,9 +22,6 @@ angular.module('ddbApp.models', [])
                     }
                 });
             },
-            reviewHoveringOver: function (value, item) {
-                item.review.overStar = value;
-            },
             review: function (product) {
                 ProductService.review(product.review, function (response) {
                     if (response.status === 'SUCCESS' && response.data === 'Success') {
@@ -41,8 +38,6 @@ angular.module('ddbApp.models', [])
                 product.review = {
                     'productId': product.id,
                     'content': '',
-                    'rating': 3,
-                    'overStar': 3,
                     'showMsg': 'None',
                     'msg': ''
                 };

@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.dailydealsbox.web.database.model.base;
+package com.dailydealsbox.web.database.model;
 
 import java.io.Serializable;
 

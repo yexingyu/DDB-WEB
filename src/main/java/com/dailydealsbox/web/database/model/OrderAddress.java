@@ -19,7 +19,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.web.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.web.configuration.BaseEnum.MEMBER_ADDRESS_TYPE;
-import com.dailydealsbox.web.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

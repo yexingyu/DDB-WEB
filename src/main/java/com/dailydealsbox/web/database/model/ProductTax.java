@@ -18,7 +18,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.dailydealsbox.web.configuration.BaseEnum.PRODUCT_TAX_TITLE;
 import com.dailydealsbox.web.configuration.BaseEnum.PRODUCT_TAX_TYPE;
-import com.dailydealsbox.web.database.model.base.BaseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

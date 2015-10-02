@@ -12,7 +12,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.SQLDelete;
 
-import com.dailydealsbox.web.database.model.base.BaseEntityModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -39,10 +38,6 @@ public class ProductReview extends BaseEntityModel {
   @NotNull
   @Column(name = "fingerprint", nullable = false)
   private String fingerprint;
-
-  @NotNull
-  @Column(name = "rating", nullable = false)
-  private int rating;
 
   @NotNull
   @Column(name = "content", nullable = false)
@@ -91,21 +86,6 @@ public class ProductReview extends BaseEntityModel {
    */
   public void setFingerprint(String fingerprint) {
     this.fingerprint = fingerprint;
-  }
-
-  /**
-   * @return the rating
-   */
-  public int getRating() {
-    return this.rating;
-  }
-
-  /**
-   * @param rating
-   *          the rating to set
-   */
-  public void setRating(int rating) {
-    this.rating = rating;
   }
 
   /**

@@ -3,7 +3,6 @@
  */
 package com.dailydealsbox.web.database.model;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -30,7 +29,6 @@ import org.hibernate.annotations.Type;
 import com.dailydealsbox.web.configuration.BaseEnum;
 import com.dailydealsbox.web.configuration.BaseEnum.CURRENCY;
 import com.dailydealsbox.web.configuration.GenericConfiguration;
-import com.dailydealsbox.web.database.model.base.BaseEntityModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -68,12 +66,6 @@ public class Product extends BaseEntityModel {
   @Type(type = "org.hibernate.type.NumericBooleanType")
   private boolean disabled;
 
-  @Column(name = "expired_at")
-  private Date expiredAt;
-
-  @Column(name = "activate_at")
-  private Date activateAt;
-
   @NotNull
   @Column(name = "count_likes", insertable = false, updatable = false)
   private int countLikes;
@@ -89,6 +81,11 @@ public class Product extends BaseEntityModel {
   @NotNull
   @Column(name = "reputation")
   private double reputation;
+
+  @NotNull
+  @Column(name = "soldout")
+  @Type(type = "org.hibernate.type.NumericBooleanType")
+  private boolean soldout;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "store_id")
@@ -277,20 +274,6 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * isActive
-   *
-   * @return
-   */
-  public boolean isActive() {
-    if (this.isDisabled()) { return false; }
-    if (this.isDeleted()) { return false; }
-    long now = System.currentTimeMillis();
-    if (this.getActivateAt() != null && now < this.getActivateAt().getTime()) { return false; }
-    if (this.getExpiredAt() != null && now > this.getExpiredAt().getTime()) { return false; }
-    return true;
-  }
-
-  /**
    * validate
    *
    * @return
@@ -374,6 +357,20 @@ public class Product extends BaseEntityModel {
    */
   public void setImages(Set<ProductImage> images) {
     this.images = images;
+  }
+
+  /**
+   * @return the soldout
+   */
+  public boolean isSoldout() {
+    return this.soldout;
+  }
+
+  /**
+   * @param soldout the soldout to set
+   */
+  public void setSoldout(boolean soldout) {
+    this.soldout = soldout;
   }
 
   /**
@@ -489,13 +486,6 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @return the expiredAt
-   */
-  public Date getExpiredAt() {
-    return this.expiredAt;
-  }
-
-  /**
    * @return the countLikes
    */
   public int getCountLikes() {
@@ -538,13 +528,6 @@ public class Product extends BaseEntityModel {
   }
 
   /**
-   * @param expiredAt the expiredAt to set
-   */
-  public void setExpiredAt(Date expiredAt) {
-    this.expiredAt = expiredAt;
-  }
-
-  /**
    * @return the disabled
    */
   public boolean isDisabled() {
@@ -556,20 +539,6 @@ public class Product extends BaseEntityModel {
    */
   public void setDisabled(boolean disabled) {
     this.disabled = disabled;
-  }
-
-  /**
-   * @return the activateAt
-   */
-  public Date getActivateAt() {
-    return this.activateAt;
-  }
-
-  /**
-   * @param activateAt the activateAt to set
-   */
-  public void setActivateAt(Date activateAt) {
-    this.activateAt = activateAt;
   }
 
 }

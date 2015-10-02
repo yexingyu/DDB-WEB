@@ -25,7 +25,6 @@ import org.hibernate.annotations.Type;
 import com.dailydealsbox.web.configuration.BaseEnum.COUNTRY;
 import com.dailydealsbox.web.configuration.BaseEnum.STORE_CATEGORY;
 import com.dailydealsbox.web.configuration.BaseEnum.STORE_TYPE;
-import com.dailydealsbox.web.database.model.base.BaseEntityModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

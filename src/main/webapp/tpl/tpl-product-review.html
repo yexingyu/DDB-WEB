@@ -1,10 +1,5 @@
-<h4>Rate&Discuss This Deal:</h4>
+<h4>Discuss This Deal:</h4>
 <div class="form-group">
-  <label>
-    <rating ng-model="item.review.rating" max="5" on-hover="actions.reviewHoveringOver(value, item)" on-leave="item.review.overStar = item.review.rating"></rating>
-    <span class="label" ng-class="{'label-warning': item.review.overStar<3, 'label-info': item.review.overStar>=3 && item.review.overStar<=4, 'label-success': item.review.overStar>=5}"
-        ng-show="item.review.rating">Rate: {{item.review.overStar}}</span>
-  </label>
   <textarea class="form-control" ng-model="item.review.content" rows="9"></textarea>
   <button class="btn btn-primary btn-xs form-control" ng-click="actions.review(item)">SUBMIT</button>
   <div class="alert alert-success" role="alert" ng-show="item.review.showMsg === 'message'">

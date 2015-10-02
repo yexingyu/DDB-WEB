@@ -212,8 +212,8 @@ public class ProductServiceImpl implements ProductService {
    */
   @Override
   public int addReview(ProductReview review) {
-    if (null != this.repoReview.findFirstByProductIdAndIpAndFingerprintAndDeletedFalse(review.getProductId(), review.getIp(), review.getFingerprint())) { return -1; }
-    if (this.repoReview.countByProductIdAndIp(review.getProductId(), review.getIp()) > 10) { return -2; }
+    //if (null != this.repoReview.findFirstByProductIdAndIpAndFingerprintAndDeletedFalse(review.getProductId(), review.getIp(), review.getFingerprint())) { return -1; }
+    //if (this.repoReview.countByProductIdAndIp(review.getProductId(), review.getIp()) > 10) { return -2; }
 
     // retrieve product item
     Product product = this.repo.findOne(review.getProductId());
