@@ -5,6 +5,9 @@ package com.dailydealsbox.web.database.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -43,6 +46,25 @@ public class ProductReview extends BaseEntityModel {
   @Column(name = "content", nullable = false)
   private String content;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "poster_id")
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Poster poster;
+
+  /**
+   * @return the poster
+   */
+  public Poster getPoster() {
+    return this.poster;
+  }
+
+  /**
+   * @param poster the poster to set
+   */
+  public void setPoster(Poster poster) {
+    this.poster = poster;
+  }
+
   /**
    * @return the productId
    */
@@ -51,8 +73,7 @@ public class ProductReview extends BaseEntityModel {
   }
 
   /**
-   * @param productId
-   *          the productId to set
+   * @param productId the productId to set
    */
   public void setProductId(int productId) {
     this.productId = productId;
@@ -66,8 +87,7 @@ public class ProductReview extends BaseEntityModel {
   }
 
   /**
-   * @param ip
-   *          the ip to set
+   * @param ip the ip to set
    */
   public void setIp(String ip) {
     this.ip = ip;
@@ -81,8 +101,7 @@ public class ProductReview extends BaseEntityModel {
   }
 
   /**
-   * @param fingerprint
-   *          the fingerprint to set
+   * @param fingerprint the fingerprint to set
    */
   public void setFingerprint(String fingerprint) {
     this.fingerprint = fingerprint;
@@ -96,8 +115,7 @@ public class ProductReview extends BaseEntityModel {
   }
 
   /**
-   * @param content
-   *          the content to set
+   * @param content the content to set
    */
   public void setContent(String content) {
     this.content = content;

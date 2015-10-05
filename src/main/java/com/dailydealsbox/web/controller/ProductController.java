@@ -150,12 +150,23 @@ public class ProductController {
   @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "page number", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "size", value = "page size", required = false, defaultValue = "20", dataType = "int", paramType = "query"),
       @ApiImplicitParam(name = "sort", value = "sorting. (eg. &sort=createdAt,desc)", required = false, defaultValue = "", dataType = "String", paramType = "query") })
+  @DDBAuthorization(requireAuthorization = false)
   public GenericResponseData addReview(@ApiParam(value = "product id", required = true) @PathVariable("productId") int productId,
       @ApiParam(value = "review", required = true) @RequestBody ProductReview review,
       @ApiParam(value = "fingerprint", required = true) @CookieValue(value = "fingerprint", required = true) String fingerprint, HttpServletRequest request) throws Exception {
+
+    // retrieve token from cookie
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    Poster poster = null;
+    if (token != null) {
+      Member me = this.memberService.get(token.getMemberId());
+      poster = new Poster(me);
+    }
+
     review.setProductId(productId);
     review.setIp(request.getRemoteAddr());
     review.setFingerprint(fingerprint);
+    review.setPoster(poster);
     int rst = this.productService.addReview(review);
     if (rst == 0) {
       return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, "Success");

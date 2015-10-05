@@ -35,18 +35,14 @@ public class DDBAuthorizationInterceptor implements HandlerInterceptor {
 
   /*
    * (non-Javadoc)
-   * @see
-   * org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest
-   * , javax.servlet.http.HttpServletResponse,
+   * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest , javax.servlet.http.HttpServletResponse,
    * java.lang.Object)
    */
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-      throws ServletException, IOException {
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException, IOException {
 
     if (handler instanceof ParameterizableViewController) { return true; }
-    DDBAuthorization authAnnotation = ((HandlerMethod) handler).getMethod().getDeclaredAnnotation(
-        DDBAuthorization.class);
+    DDBAuthorization authAnnotation = ((HandlerMethod) handler).getMethod().getDeclaredAnnotation(DDBAuthorization.class);
 
     // anonymous
     request.setAttribute(BaseAuthorization.TOKEN, null);
@@ -72,8 +68,7 @@ public class DDBAuthorizationInterceptor implements HandlerInterceptor {
 
       // roles checking
       request.setAttribute(BaseAuthorization.TOKEN, token);
-      if (!ArrayUtils.isEmpty(authAnnotation.value())
-          && !ArrayUtils.contains(authAnnotation.value(), token.getRole())) {
+      if (!ArrayUtils.isEmpty(authAnnotation.value()) && !ArrayUtils.contains(authAnnotation.value(), token.getRole())) {
         request.getRequestDispatcher("/no_permission").forward(request, response);
         return false;
       }
@@ -91,26 +86,21 @@ public class DDBAuthorizationInterceptor implements HandlerInterceptor {
 
   /*
    * (non-Javadoc)
-   * @see
-   * org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.http.HttpServletRequest
-   * , javax.servlet.http.HttpServletResponse,
+   * @see org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.http.HttpServletRequest , javax.servlet.http.HttpServletResponse,
    * java.lang.Object, org.springframework.web.servlet.ModelAndView)
    */
   @Override
-  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-      ModelAndView modelAndView) throws Exception {
+  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
     //System.out.println("postHandler: ");
   }
 
   /*
    * (non-Javadoc)
-   * @see org.springframework.web.servlet.HandlerInterceptor#afterCompletion(javax.servlet.http.
-   * HttpServletRequest, javax.servlet.http.HttpServletResponse,
+   * @see org.springframework.web.servlet.HandlerInterceptor#afterCompletion(javax.servlet.http. HttpServletRequest, javax.servlet.http.HttpServletResponse,
    * java.lang.Object, java.lang.Exception)
    */
   @Override
-  public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-      Object handler, Exception ex) throws Exception {
+  public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     //System.out.println("afterCompletion: ");
   }
 }
