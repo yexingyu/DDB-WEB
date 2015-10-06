@@ -29,6 +29,10 @@ angular.module('ddbApp', ['ngRoute', 'ddbApp.constants', 'ddbApp.controllers', '
         }).when('/product/:id', {
             templateUrl: 'tpl/tpl-product-details.html',
             controller: 'ProductDetailsCtrl'
+            	
+        }).when('/member', {
+            templateUrl: 'tpl/tpl-member-details.html',
+            controller: 'MemberDetailsCtrl'            	
 
         }).when('/m/product/:id', {
             templateUrl: 'tpl/tpl-product-details-m.html',

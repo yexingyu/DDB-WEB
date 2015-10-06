@@ -718,6 +718,11 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     }])
 
     /*
+     * MemberDetailsCtrl definition
+     */
+    .controller('MemberDetailsCtrl', ['$scope', '$location', 'ProductService', 'LoginService', function ($scope, $location, ProductService, LoginService) {
+    }])    
+    /*
      * AboutCtrl definition
      */
     .controller('AboutCtrl', ['$scope', '$location', function ($scope, $location) {
