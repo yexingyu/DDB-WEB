@@ -1,11 +1,11 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h2><span><b>Tags:</b></span>
+            <h2><b>Tags</b><span class="glyphicon glyphicon-tag">:</span>
             <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> 
-            <button type="button" class="btn btn-xs btn-success" ng-click="followTag(tag)" ng-if="!tag.followed">+Follow</button>
+            <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-plus" ng-click="followTag(tag)" ng-if="!tag.followed">Follow</button>
 
-            <button type="button" class="btn btn-xs btn-danger" ng-click="unfollowTag(tag)" ng-if="tag.followed">-Follow</button>            
+            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-minus" ng-click="unfollowTag(tag)" ng-if="tag.followed">Follow</button>            
 
             </span></h2>
         </div>
@@ -19,8 +19,8 @@
         <div class="col-sm-3">
             <img ng-src="./images/favicon/{{item.store.favicon}}">
             <span><a> {{item.store.website}}</a></span>
-            <button type="button" class="btn btn-xs" ng-click="follow(item.store)" ng-if="!item.store.followed">+ follow</button>
-            <button type="button" class="btn btn-xs" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
+            <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-plus" ng-click="follow(item.store)" ng-if="!item.store.followed">follow</button>
+            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-minus" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
             <a href="{{item.store.dealPage}}" target="_blank">Deal Page</a>
         </div>
 
