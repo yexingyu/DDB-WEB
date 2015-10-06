@@ -1,50 +1,58 @@
+
     <div class="row">
-        <div class="col-sm-6">
-		    <div class="row">
-			    <h4>Stores:</h4>
-		    </div>        
-		    <!-- following store list-->
-		    <div class="row">
-		        <div class="col-sm-3" ng-repeat="store in me.stores" >
-		            <div class="panel panel-default">
-		                <!-- Default panel contents -->
-		
-		                <div class="panel-body">
-		                    <div class="row">
-		                        <div class="col-xs-7" align="center">
-		                            <img ng-src="./images/favicon/{{store.favicon}}">
-		                        </div>
-		                        <div class="col-xs-5">
-		                            <a type="button" class="btn btn-xs btn-default" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></a>
-		                        </div>                        
-		                    </div>
-		
-		                </div>
-		            </div>
-		        </div>
-		    </div>            
+    <h2 class="glyphicon glyphicon-plus"> Your Follow</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">        
+			<div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">Stores</div>
+			  <div class="panel-body">
+					    <!-- following store list-->
+					    <div class="row">
+					        <div class="col-sm-3" ng-repeat="store in me.stores" >
+					            <div class="panel panel-default">
+					                <!-- Default panel contents -->
+					
+					                <div class="panel-body">
+					                    <div class="row">
+					                        <div class="col-xs-7" align="center">
+					                            <img ng-src="./images/favicon/{{store.favicon}}">
+					                        </div>
+					                        <div class="col-xs-5">
+					                            <a type="button" class="btn btn-xs btn-default" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></a>
+					                        </div>                        
+					                    </div>
+					
+					                </div>
+					            </div>
+					        </div>
+					    </div>    
+			  </div>			
+			</div>                
         </div>
         <div class="col-sm-6">
-		    <div class="row">
-			    <h4>Tags:</h4>
-		    </div>          
-		    <div class="row">
-		        <div class="col-sm-4" ng-repeat="tag in me.tags" >
-		            <div class="panel panel-default">
-		                <!-- Default panel contents -->
-		
-		                <div class="panel-body">
-		                    <div class="row">
-		                            <span><a href="#/all?tags={{tag.value}}">{{tag.value}}</a></span>         <a type="button" class="btn btn-xs btn-default" ng-click="unfollowTag(tag)"><span class="glyphicon glyphicon-minus"></span></a>            
-		                    </div>
-		                    
-		
-		                </div>
-		            </div>
-		        </div>
-		    </div>          
-        
-        
+			<div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading"><span class="glyphicon glyphicon-tag">Tags</span></div>
+			  <div class="panel-body">
+					    <div class="row">
+					        <div class="col-sm-4" ng-repeat="tag in me.tags" >
+					            <div class="panel panel-default">
+					                <!-- Default panel contents -->
+					
+					                <div class="panel-body">
+					                    <div class="row">
+					                            <span><b><a href="#/all?tags={{tag.value}}">{{tag.value}}</a></b></span> <a type="button" class="btn btn-xs btn-default" ng-click="unfollowTag(tag)"><span class="glyphicon glyphicon-minus"></span></a>            
+					                    </div>
+					                    
+					
+					                </div>
+					            </div>
+					        </div>
+					    </div>    
+			  </div>
+			</div>                
         </div>
     </div>
 
@@ -55,18 +63,22 @@
       
  
         
-        
+   
     <div ng-show="$root.profile.account.trim()">
-    <h3><p>Deals:</p></h3>
+		
+		<div>
+			<hr>
+		</div>
+		<div class="container">
+		    <div class="row" ng-include="'tpl/tpl-product-list-default.html'"></div>
+		    <div class="row">
+		        <div class="load-more-block text-center">
+		            <a class="btn btn-thin btn-default" ng-click="loadMore()">+ load more deals</a>
+		        </div>
+		    </div>
+		</div>
     </div>        
-<div class="container">
-    <div class="row" ng-include="'tpl/tpl-product-list-default.html'"></div>
-    <div class="row">
-        <div class="load-more-block text-center">
-            <a class="btn btn-thin btn-default" ng-click="loadMore()">+ load more deals</a>
-        </div>
-    </div>
-</div>
+
 
 
 
