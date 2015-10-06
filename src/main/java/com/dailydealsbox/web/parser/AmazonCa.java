@@ -72,8 +72,19 @@ public class AmazonCa extends ProductPage {
 
   @Override
   public void setPrice() throws IOException {
+    String productPriceText;
+    try {
+      productPriceText = this.doc.select("span#priceblock_ourprice").text();
+    } catch (IndexOutOfBoundsException e) {
+      productPriceText = "";
+    }
 
-    this.price = Double.parseDouble(doc.select("span#priceblock_ourprice").text()
-        .replace("CDN$ ", ""));
+    try {
+      productPriceText = this.doc.select("span#priceblock_dealprice").text();
+    } catch (IndexOutOfBoundsException e) {
+      productPriceText = "";
+    }
+
+    this.price = Double.parseDouble(productPriceText.replace("CDN$ ", ""));
   }
 }

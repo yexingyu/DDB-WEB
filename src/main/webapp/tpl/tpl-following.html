@@ -1,6 +1,8 @@
     <div>
     <h3>Your Following - Follow Your Favorite Stores</h3>
     </div>
+    <div>{{me.store |json}}</div>
+    
     <div ng-show="!$root.profile.account.trim()">
     <p>Default following stores are BestBuy.ca, Walmart.ca and Aamzon.ca. After Log In, you could follow or unfollow any stores.</p>
     </div>    
