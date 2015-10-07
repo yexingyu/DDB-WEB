@@ -1,7 +1,14 @@
-
     <div class="row">
         <div class="col-xs-5">
-            <h3>Online - All Online Deals in One Place</h3>
+            <h3 ng-if="!requestSearch.tags && !requestSearch.store_id" class="glyphicon glyphicon-globe"> Online</h3>
+            <h3 ng-if="requestSearch.tags">
+	            <span class="glyphicon glyphicon-tag"></span>
+	            <span>Tag : {{requestSearch.tags}}</span>
+            </h3>
+            <h3 ng-if="requestSearch.store_id">
+	            <span class="glyphicon glyphicon-tag"></span>
+	            <span>Store : {{requestSearch.store_id}} </span>
+            </h3>            
         </div>
         <div class="col-xs-7">
             <form class="form-inline">

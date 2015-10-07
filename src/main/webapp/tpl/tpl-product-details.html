@@ -19,8 +19,8 @@
         <div class="col-sm-3">
             <img ng-src="./images/favicon/{{item.store.favicon}}">
             <span><a> {{item.store.website}}</a></span>
-            <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-plus" ng-click="follow(item.store)" ng-if="!item.store.followed">follow</button>
-            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollow(item.store)" ng-if="item.store.followed">follow</button>
+            <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-plus" ng-click="follow(item.store)" ng-if="!item.store.followed">Follow</button>
+            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollow(item.store)" ng-if="item.store.followed">Follow</button>
             <a href="{{item.store.dealPage}}" target="_blank">Deal Page</a>
         </div>
 
