@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h2><b>Tags</b><span class="glyphicon glyphicon-tag">:</span>
+            <h2><span class="glyphicon glyphicon-tag"><b>Tags</b>:</span>
             <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> 
             <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-plus" ng-click="followTag(tag)" ng-if="!tag.followed">Follow</button>
 
@@ -20,7 +20,7 @@
             <img ng-src="./images/favicon/{{item.store.favicon}}">
             <span><a> {{item.store.website}}</a></span>
             <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-plus" ng-click="follow(item.store)" ng-if="!item.store.followed">follow</button>
-            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollow(item.store)" ng-if="item.store.followed">- follow</button>
+            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollow(item.store)" ng-if="item.store.followed">follow</button>
             <a href="{{item.store.dealPage}}" target="_blank">Deal Page</a>
         </div>
 
