@@ -4,7 +4,7 @@
         <div class="col-sm-12">
             <h3>Following</h3>
             <div ng-show="!$root.profile.account.trim()">
-                <p> Please Log In or click "+Follow" and start to follow your favorite stores.</p>
+                <p> Click "+Follow" and start to follow.</p>
             </div>
             <div ng-show="$root.profile.account.trim()">
                 <p> Stores you are following.</p>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-xs-5">
                             <a type="button" class="btn btn-sm btn-success" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span>Follow</a>
-                            <a type="button" class="btn btn-sm btn-danger" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span>Follow</a>
+                            <a type="button" class="btn btn-sm btn-default" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-remove"></span>Follow</a>
                         </div>
                     </div>
 
@@ -113,7 +113,7 @@
                         </div>
                         <div class="col-xs-5">
                             <a type="button" class="btn btn-sm btn-success" ng-if="!store.followed" ng-click="follow(store)"><span class="glyphicon glyphicon-plus"></span></i>Follow</a>
-                            <a type="button" class="btn btn-sm btn-danger" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-minus"></span></i>Follow</a>
+                            <a type="button" class="btn btn-sm btn-default" ng-if="store.followed" ng-click="unfollow(store)"><span class="glyphicon glyphicon-remove"></span></i>Follow</a>
 
                         </div>
                     </div>
