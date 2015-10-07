@@ -136,7 +136,7 @@
         <div class="col-sm-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Reputations:</h3>
+                    <h3 class="panel-title">Reputation</h3>
                 </div>
                 <div class="panel-body">
                     <div ng-repeat="link in item.links"><a href="{{link.url}}" target="_blank">{{link.name}}</a> - {{link.rating}} of {{link.reviewNumber}} Reviews</div>
@@ -148,7 +148,7 @@
         <div class="col-sm-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Discuss:</h3>
+                    <h3 class="panel-title">Discuss</h3>
                 </div>
                 <div class="panel-body">                
 					<table class="table table-striped" ng-repeat="review in item.reviews.content">
@@ -158,7 +158,8 @@
 									<span ng-if="!review.poster"><img ng-src="images/avatar/anonymous.gif"><span class="product_time"> Anonymous added a comment - Yesteaday</span></span></td>
                             </tr>
                             <tr>
-								<td><blockquote>{{review.content}}</blockquote></td>
+								<td><blockquote>{{review.content}}
+								</blockquote></td>
 							</tr>					
 					</table>
                 </div>
