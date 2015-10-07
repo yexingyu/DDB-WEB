@@ -150,12 +150,17 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Discuss:</h3>
                 </div>
-                <div class="panel-body">
-                    <div ng-repeat="review in item.reviews.content">
-                        {{review.content}}
-                        <span ng-if="review.poster">(<img ng-src="images/avatar/{{review.poster.avatar}}"><span class="product_time">{{review.poster.nickName}}</span>)</span>
-                        <span ng-if="!review.poster">(<span class="product_time">Anonymous</span>)</span>
-                    </div>
+                <div class="panel-body">                
+					<table class="table table-striped" ng-repeat="review in item.reviews.content">
+							<tr >
+								<td>
+									<span ng-if="review.poster"><img ng-src="images/avatar/{{review.poster.avatar}}"> <span class="product_time"><a href="#/member/">{{review.poster.nickName}}</a> added a comment - Yesterday </span></span>
+									<span ng-if="!review.poster"><img ng-src="images/avatar/anonymous.gif"><span class="product_time"> Anonymous added a comment - Yesteaday</span></span></td>
+                            </tr>
+                            <tr>
+								<td><blockquote>{{review.content}}</blockquote></td>
+							</tr>					
+					</table>
                 </div>
             </div>
         </div>
