@@ -31,6 +31,7 @@ import com.dailydealsbox.web.configuration.BaseEnum.PRODUCT_TAX_TYPE;
 import com.dailydealsbox.web.database.model.Product;
 import com.dailydealsbox.web.database.model.ProductFee;
 import com.dailydealsbox.web.database.model.ProductImage;
+import com.dailydealsbox.web.database.model.ProductLink;
 import com.dailydealsbox.web.database.model.ProductPrice;
 import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
@@ -181,6 +182,10 @@ public class SpiderServiceImpl implements SpiderService {
     }
     if (product.getFees() == null) {
       product.setFees(new HashSet<ProductFee>());
+    }
+
+    if (product.getLinks() == null) {
+      product.setLinks(new HashSet<ProductLink>());
     }
 
     // spider page based on host.
@@ -429,6 +434,9 @@ public class SpiderServiceImpl implements SpiderService {
     amazonCaPage.setImage();
     amazonCaPage.setPrice();
 
+    amazonCaPage.setRating();
+    amazonCaPage.setReviewsCount();
+
     //set product url
     product.setUrl(amazonCaPage.getUrl());
 
@@ -488,6 +496,15 @@ public class SpiderServiceImpl implements SpiderService {
     text.setName(amazonCaPage.getName());
     text.setDescription(amazonCaPage.getDescription());
     product.getTexts().add(text);
+
+    if (product.getLinks().isEmpty()) {
+      ProductLink link = new ProductLink();
+      link.setUrl(url);
+      link.setName("amazon.ca");
+      link.setRating(amazonCaPage.getRating());
+      link.setReviewNumber(amazonCaPage.getReviewsCount());
+      product.getLinks().add(link);
+    }
 
     if (product.getImages().isEmpty()) {
       //set image

@@ -26,6 +26,7 @@ public class ProductPage {
   public org.jsoup.nodes.Document doc;
 
   //parsing result **********************************************
+
   //parsing result - meta
   public String                   metaName;
   public String                   metaDescription;
@@ -36,6 +37,10 @@ public class ProductPage {
   public String                   description;
   public String                   image;
   public double                   price;
+
+  //parsing result - rating
+  public double                   rating;
+  public int                      reviewsCount;
 
   //parsing result - fees
   public double                   shippingFee;
@@ -111,6 +116,24 @@ public class ProductPage {
 
     Date expiredDate = now.getTime();
     this.expiration = expiredDate;
+  }
+
+  //page info - rating  
+  public double getRating() {
+    return this.rating;
+  }
+
+  public void setRating() {
+    this.rating = 0;
+  }
+
+  //page info - reviewsCount 
+  public int getReviewsCount() {
+    return this.reviewsCount;
+  }
+
+  public void setReviewsCount() {
+    this.reviewsCount = 0;
   }
 
   //store info - storeId  

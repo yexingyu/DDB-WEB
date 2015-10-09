@@ -15,7 +15,7 @@ import org.jsoup.nodes.Document;
 public class AmazonCaPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://www.amazon.ca/Upgraded-Rechargeable-Control-Training-Vibration/dp/B00N8JTLZU/ref=zg_bs_pet-supplies_2";
+    String url = "http://www.amazon.ca/gp/product/B00DDT116M?ref_=gbps_img_s-3_6082_56d2478a_GB-SUPPL&smid=A3LKP401NNASV6";
 
     //set doc
     Document doc = Jsoup
@@ -25,7 +25,7 @@ public class AmazonCaPT {
         .get();
 
     //key
-    String keyPattern = "dp/(.*)/";
+    String keyPattern = "product/(.*)\\?";
     String keyString = "";
     //pattern
     Pattern r = Pattern.compile(keyPattern);
@@ -45,6 +45,9 @@ public class AmazonCaPT {
     String product_description_text;
     String product_image_text;
     String product_price_text;
+    String product_rating;
+    String product_review_number;
+
     //String product_shipping_text;
     //String product_import_text;
 
@@ -79,6 +82,50 @@ public class AmazonCaPT {
     product_price_text = doc.select("span#priceblock_ourprice").text();
     ;
 
+    //product rating
+    product_rating = doc.html();
+    ;
+
+    //rating
+    String ratingPattern = "(\\d.\\d) out of 5 stars";
+    String ratingString = "";
+    //pattern
+    r = Pattern.compile(ratingPattern);
+
+    //matcher
+    m = r.matcher(product_rating);
+    if (m.find()) {
+      ratingString = m.group(1);
+
+    } else {
+      ratingString = null;
+    }
+    ;
+
+    product_rating = ratingString;
+
+    //product review number
+    product_review_number = doc.html();
+    ;
+
+    //reviews
+    String reviewsPattern = "(\\d+) reviews";
+    String reviewsString = "";
+    //pattern
+    r = Pattern.compile(reviewsPattern);
+
+    //matcher
+    m = r.matcher(product_review_number);
+    if (m.find()) {
+      reviewsString = m.group(1);
+
+    } else {
+      reviewsString = null;
+    }
+    ;
+
+    product_review_number = reviewsString;
+
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 
 
@@ -106,6 +153,8 @@ public class AmazonCaPT {
     System.out.println("product description: " + product_description_text);
     System.out.println("product image: " + product_image_text);
     System.out.println("product price: " + product_price_text);
+    System.out.println("product rating: " + product_rating);
+    System.out.println("product revies number: " + product_review_number);
     //System.out.println(product_shipping_text);
     //System.out.println(product_import_text);
     System.out.println("product expiration: " + expiredDate.toString());
