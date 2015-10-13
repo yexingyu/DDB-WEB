@@ -58,37 +58,31 @@
 	    <li><a href="#/store"><span class="glyphicon glyphicons-shop"></span>Stores</a></li>
 	    <li><a href="#/share"><span class="glyphicon glyphicon-share"></span>Share</a></li>
 	    <li><a href="#/discuss"><span class="glyphicon glyphicon-retweet"></span>Discuss</a></li>
-	    <li><a href="#/about"><span class="glyphicon glyphicon-file"></span>DDB</a></li>
-	    <li>
-	        <a ng-click="switchLanguage()">
-	            <span ng-show="$root.language.language === 'EN'">en français</span>
-	            <span class="ng-hide" ng-show="$root.language.language === 'FR'">in English</span>
-	        </a>
-	    </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">By Categories <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/all">All Deals</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Electronics</li>
-                            <li><a href="#/all?tags=g4,s6%20edge,smart%20phone,iphone%206">Cell Phones & Accessories</a></li>
-                            <li><a href="#/all?tags=macbook,laptop">Computers</a></li>
-                            <li><a href="#/all?tags=tablet,ipad,%20ipad%20air">Tablets,iPad</a></li>
-                            <li><a href="#/all?tags=smart%20tv,led%20tv,4k,tv">Televisions & Video</a></li>
-                            <li><a href="#/all?tags=dslr,dslr%20camera">Camera, Photo & Video</a></li>
-                            <li><a href="#/all?tags=Xbox%20One">Video Games</a></li>
-                            <li><a href="#/all?tags=headphones,%20bluetooth%20speaker,wireless%20speaker,sound%20system">Home & Portable Audio</a></li>
-
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Fashion</li>
-                            <li><a href="#">Clothings</a></li>
-                            <li><a href="#">Shoes</a></li>
-                            <li><a href="#">Handbags</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#/category">More Categories</a></li>
-
-                        </ul>
-      </li>
+	      <li class="dropdown">
+	        <a href="#" class="dropdown-toggle" data-toggle="dropdown">By Categories <b class="caret"></b></a>
+	                        <ul class="dropdown-menu">
+	                            <li><a href="#/all">All Deals</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li class="dropdown-header">Electronics</li>
+	                            <li><a href="#/all?tags=g4,s6%20edge,smart%20phone,iphone%206">Cell Phones & Accessories</a></li>
+	                            <li><a href="#/all?tags=macbook,laptop">Computers</a></li>
+	                            <li><a href="#/all?tags=tablet,ipad,%20ipad%20air">Tablets,iPad</a></li>
+	                            <li><a href="#/all?tags=smart%20tv,led%20tv,4k,tv">Televisions & Video</a></li>
+	                            <li><a href="#/all?tags=dslr,dslr%20camera">Camera, Photo & Video</a></li>
+	                            <li><a href="#/all?tags=Xbox%20One">Video Games</a></li>
+	                            <li><a href="#/all?tags=headphones,%20bluetooth%20speaker,wireless%20speaker,sound%20system">Home & Portable Audio</a></li>
+	
+	                            <li role="separator" class="divider"></li>
+	                            <li class="dropdown-header">Fashion</li>
+	                            <li><a href="#">Clothings</a></li>
+	                            <li><a href="#">Shoes</a></li>
+	                            <li><a href="#">Handbags</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#/category">More Categories</a></li>
+	
+	                        </ul>
+	      </li>
+	      <li><a href="#/about"><span class="glyphicon glyphicon-file"></span>DDB</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown ng-hide" ng-show="$root.profile.account.trim()">
@@ -104,6 +98,12 @@
                     </li>
                     <li ng-show="!$root.profile.account.trim()"><a ng-click="login()"><span class="glyphicon glyphicon-user"></span>Log In</a></li>
                     <li><a><span class="glyphicon glyphicon-heart"></span>Your Likes</a></li>
+                    <li>
+				        <a ng-click="switchLanguage()">
+				            <span ng-show="$root.language.language === 'EN'">en français</span>
+				            <span class="ng-hide" ng-show="$root.language.language === 'FR'">in English</span>
+				        </a>
+	               </li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>        
