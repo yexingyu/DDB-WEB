@@ -87,6 +87,7 @@ public class AmazonCa extends ProductPage {
   @Override
   public void setPrice() throws IOException {
     String productPriceText;
+    productPriceText = "0.00";
     try {
       productPriceText = this.doc.select("span#priceblock_ourprice").text();
     } catch (IndexOutOfBoundsException e) {
