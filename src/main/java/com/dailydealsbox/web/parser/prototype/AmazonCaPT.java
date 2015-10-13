@@ -15,7 +15,7 @@ import org.jsoup.nodes.Document;
 public class AmazonCaPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://www.amazon.ca/gp/product/B00DDT116M?ref_=gbps_img_s-3_6082_56d2478a_GB-SUPPL&smid=A3LKP401NNASV6";
+    String url = "http://www.amazon.ca/Titan-11018-Folding-Utility-Knife/dp/B000PRT1V2/ref=sr_1_1198?s=hi&ie=UTF8&qid=1444649180&sr=1-1198";
 
     //set doc
     Document doc = Jsoup
