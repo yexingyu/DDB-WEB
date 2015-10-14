@@ -41,6 +41,7 @@ import com.dailydealsbox.web.parser.AmazonCa;
 import com.dailydealsbox.web.parser.BananaRepublicCa;
 import com.dailydealsbox.web.parser.BrownsShoesCom;
 import com.dailydealsbox.web.parser.CanadianTireCa;
+import com.dailydealsbox.web.parser.EbayCom;
 import com.dailydealsbox.web.parser.GapCanadaCa;
 import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.parser.IkeaCa;
@@ -88,23 +89,6 @@ public class SpiderServiceImpl implements SpiderService {
     this.HTML_PATH_WALMARTCA.put("description", "P.description");
     this.HTML_PATH_WALMARTCA.put("image", "DIV.centered-img-wrap");
     this.HTML_PATH_WALMARTCA.put("price", "div.pricing-shipping");
-
-    //HTML_PATH_EBAYCOM
-    keyNameHtmlPath = "H1#itemTitle";
-    keyDescriptionHtmlPath = "DIV.itemAttr";
-    keyImageHtmlPath = "IMG#icImg";
-    keyPriceHtmlPath = "SPAN#mm-saleDscPrc";
-    keyPriceHtmlPath2 = "SPAN#prcIsum";
-    keyShippingHtmlPath = "SPAN#fshippingCost";
-    keyImportHtmlPath = "SPAN#impchCost";
-
-    this.HTML_PATH_EBAYCOM.put("name", keyNameHtmlPath);
-    this.HTML_PATH_EBAYCOM.put("description", keyDescriptionHtmlPath);
-    this.HTML_PATH_EBAYCOM.put("image", keyImageHtmlPath);
-    this.HTML_PATH_EBAYCOM.put("price", keyPriceHtmlPath);
-    this.HTML_PATH_EBAYCOM.put("price2", keyPriceHtmlPath2);
-    this.HTML_PATH_EBAYCOM.put("shipping", keyShippingHtmlPath);
-    this.HTML_PATH_EBAYCOM.put("import", keyImportHtmlPath);
 
     //HTML_PATH_EBAYCA
     keyNameHtmlPath = "H1#itemTitle";
@@ -199,8 +183,8 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromEbayCA(oUrl, product, LANGUAGE.FR);
         break;
       case "www.ebay.com":
-        this.getProductFromEbayCOM(oUrl, product, LANGUAGE.EN);
-        this.getProductFromEbayCOM(oUrl, product, LANGUAGE.FR);
+        this.getProductFromEbayCom(url, product, LANGUAGE.EN);
+        this.getProductFromEbayCom(url, product, LANGUAGE.FR);
         break;
 
       case "www.bestbuy.ca":
@@ -267,13 +251,13 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromIkeaCa(url, product, LANGUAGE.FR);
         break;
       case "www.zara.com":
-          this.getProductFromZaraCom(url, product, LANGUAGE.EN);
-          this.getProductFromZaraCom(url, product, LANGUAGE.FR);
-          break;   
+        this.getProductFromZaraCom(url, product, LANGUAGE.EN);
+        this.getProductFromZaraCom(url, product, LANGUAGE.FR);
+        break;
       case "www.staples.ca":
-          this.getProductFromStaplesCa(url, product, LANGUAGE.EN);
-          this.getProductFromStaplesCa(url, product, LANGUAGE.FR);
-          break;            
+        this.getProductFromStaplesCa(url, product, LANGUAGE.EN);
+        this.getProductFromStaplesCa(url, product, LANGUAGE.FR);
+        break;
       case "www.gapcanada.ca":
         this.getProductFromGapCanadaCa(url, product, LANGUAGE.EN);
         this.getProductFromGapCanadaCa(url, product, LANGUAGE.FR);
@@ -753,30 +737,6 @@ public class SpiderServiceImpl implements SpiderService {
    * @throws Exception
    */
   private String getProductKeyFromEbayCA(URL url) throws Exception {
-    // String to be scanned to find the pattern.
-    String pattern = "\\/(\\d+)";
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile(pattern);
-
-    // Now create matcher object.
-    Matcher m = r.matcher(url.toString());
-    if (m.find()) {
-      return m.group(1);
-
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * getProductKeyFromEbayCOM
-   *
-   * @param url
-   * @return
-   * @throws Exception
-   */
-  private String getProductKeyFromEbayCOM(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/(\\d+)";
 
@@ -1825,179 +1785,180 @@ public class SpiderServiceImpl implements SpiderService {
 
     return product;
   }
+
   private Product getProductFromStaplesCa(String url, Product product, LANGUAGE language)
-	      throws Exception {
-	    //product page info
-	    StaplesCa staplesCaPage = new StaplesCa();
-	    staplesCaPage.setActive(true);
-	    staplesCaPage.setStoreId();
-	    staplesCaPage.setUrl(url);
-	    staplesCaPage.setExpiration();
+      throws Exception {
+    //product page info
+    StaplesCa staplesCaPage = new StaplesCa();
+    staplesCaPage.setActive(true);
+    staplesCaPage.setStoreId();
+    staplesCaPage.setUrl(url);
+    staplesCaPage.setExpiration();
 
-	    staplesCaPage.setDoc();
-	    staplesCaPage.setKey();
-	    staplesCaPage.setName();
-	    staplesCaPage.setDescription();
-	    staplesCaPage.setImage();
-	    staplesCaPage.setPrice();
+    staplesCaPage.setDoc();
+    staplesCaPage.setKey();
+    staplesCaPage.setName();
+    staplesCaPage.setDescription();
+    staplesCaPage.setImage();
+    staplesCaPage.setPrice();
 
-	    //set product url
-	    product.setUrl(staplesCaPage.getUrl());
+    //set product url
+    product.setUrl(staplesCaPage.getUrl());
 
-	    //set product key
-	    product.setKey(staplesCaPage.getKey());
+    //set product key
+    product.setKey(staplesCaPage.getKey());
 
-	    //set product status
-	    product.setDisabled(!staplesCaPage.getActive());
+    //set product status
+    product.setDisabled(!staplesCaPage.getActive());
 
-	    //set product store
-	    Store store = new Store();
-	    store.setId(staplesCaPage.getStoreId());
-	    product.setStore(store);
+    //set product store
+    Store store = new Store();
+    store.setId(staplesCaPage.getStoreId());
+    product.setStore(store);
 
-	    //set product tax
-	    if (product.getTaxes().isEmpty()) {
-	      ProductTax federal = new ProductTax();
-	      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
-	      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-	      ProductTax provincial = new ProductTax();
-	      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
-	      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-	      product.getTaxes().add(federal);
-	      product.getTaxes().add(provincial);
-	    }
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
 
-	    //set product fees
+    //set product fees
 
-	    if (product.getFees().isEmpty()) {
-	      ProductFee shipping = new ProductFee();
-	      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
-	      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
-	      shipping.setValue(0.00);
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
 
-	      product.getFees().add(shipping);
-	    }
+      product.getFees().add(shipping);
+    }
 
-	    //set product price
-	    if (product.getPrices().isEmpty()) {
-	      try {
-	        //set price
-	        ProductPrice price = new ProductPrice();
-	        price.setValue(staplesCaPage.getPrice());
-	        //add price to product
-	        product.getPrices().add(price);
-	        product.setCurrentPrice(staplesCaPage.getPrice());
-	        product.setCurrency(CURRENCY.CAD);
-	      } catch (Exception e) {
-	        e.printStackTrace();
-	      }
-	    }
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(staplesCaPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(staplesCaPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
 
-	    ProductText text = new ProductText();
-	    text.setLanguage(language);
-	    text.setName(staplesCaPage.getName());
-	    text.setDescription(staplesCaPage.getDescription());
-	    product.getTexts().add(text);
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(staplesCaPage.getName());
+    text.setDescription(staplesCaPage.getDescription());
+    product.getTexts().add(text);
 
-	    if (product.getImages().isEmpty()) {
-	      //set image
-	      ProductImage image = new ProductImage();
-	      image.setUrl(staplesCaPage.getImage());
-	      //add image to product
-	      product.getImages().add(image);
-	    }
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(staplesCaPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
 
-	    return product;
-	  }  
-  
+    return product;
+  }
+
   private Product getProductFromZaraCom(String url, Product product, LANGUAGE language)
-	      throws Exception {
-	    //product page info
-	    ZaraCom zaraComPage = new ZaraCom();
-	    zaraComPage.setActive(true);
-	    zaraComPage.setStoreId();
-	    zaraComPage.setUrl(url);
-	    zaraComPage.setExpiration();
+      throws Exception {
+    //product page info
+    ZaraCom zaraComPage = new ZaraCom();
+    zaraComPage.setActive(true);
+    zaraComPage.setStoreId();
+    zaraComPage.setUrl(url);
+    zaraComPage.setExpiration();
 
-	    zaraComPage.setDoc();
-	    zaraComPage.setKey();
-	    zaraComPage.setName();
-	    zaraComPage.setDescription();
-	    zaraComPage.setImage();
-	    zaraComPage.setPrice();
+    zaraComPage.setDoc();
+    zaraComPage.setKey();
+    zaraComPage.setName();
+    zaraComPage.setDescription();
+    zaraComPage.setImage();
+    zaraComPage.setPrice();
 
-	    //set product url
-	    product.setUrl(zaraComPage.getUrl());
+    //set product url
+    product.setUrl(zaraComPage.getUrl());
 
-	    //set product key
-	    product.setKey(zaraComPage.getKey());
+    //set product key
+    product.setKey(zaraComPage.getKey());
 
-	    //set product status
-	    product.setDisabled(!zaraComPage.getActive());
+    //set product status
+    product.setDisabled(!zaraComPage.getActive());
 
-	    //set product store
-	    Store store = new Store();
-	    store.setId(zaraComPage.getStoreId());
-	    product.setStore(store);
+    //set product store
+    Store store = new Store();
+    store.setId(zaraComPage.getStoreId());
+    product.setStore(store);
 
-	    //set product tax
-	    if (product.getTaxes().isEmpty()) {
-	      ProductTax federal = new ProductTax();
-	      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
-	      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-	      ProductTax provincial = new ProductTax();
-	      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
-	      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-	      product.getTaxes().add(federal);
-	      product.getTaxes().add(provincial);
-	    }
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
 
-	    //set product fees
+    //set product fees
 
-	    if (product.getFees().isEmpty()) {
-	      ProductFee shipping = new ProductFee();
-	      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
-	      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
-	      shipping.setValue(0.00);
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
 
-	      product.getFees().add(shipping);
-	    }
+      product.getFees().add(shipping);
+    }
 
-	    //set product price
-	    if (product.getPrices().isEmpty()) {
-	      try {
-	        //set price
-	        ProductPrice price = new ProductPrice();
-	        price.setValue(zaraComPage.getPrice());
-	        //add price to product
-	        product.getPrices().add(price);
-	        product.setCurrentPrice(zaraComPage.getPrice());
-	        product.setCurrency(CURRENCY.CAD);
-	      } catch (Exception e) {
-	        e.printStackTrace();
-	      }
-	    }
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(zaraComPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(zaraComPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
 
-	    ProductText text = new ProductText();
-	    text.setLanguage(language);
-	    text.setName(zaraComPage.getName());
-	    text.setDescription(zaraComPage.getDescription());
-	    product.getTexts().add(text);
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(zaraComPage.getName());
+    text.setDescription(zaraComPage.getDescription());
+    product.getTexts().add(text);
 
-	    if (product.getImages().isEmpty()) {
-	      //set image
-	      ProductImage image = new ProductImage();
-	      image.setUrl(zaraComPage.getImage());
-	      //add image to product
-	      product.getImages().add(image);
-	    }
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(zaraComPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
 
-	    return product;
-	  }
+    return product;
+  }
 
   private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language)
       throws Exception {
@@ -2235,107 +2196,71 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  /**
-   * getProductFromEbayUS
-   *
-   * @param url
-   * @param product
-   * @param language
-   */
-  private Product getProductFromEbayCOM(URL url, Product product, LANGUAGE language)
+  private Product getProductFromEbayCom(String url, Product product, LANGUAGE language)
       throws Exception {
+    //product page info
+    EbayCom ebayComPage = new EbayCom();
+    ebayComPage.setActive(true);
+    ebayComPage.setStoreId();
+    ebayComPage.setUrl(url);
+    ebayComPage.setExpiration();
+
+    ebayComPage.setDoc();
+    ebayComPage.setKey();
+    ebayComPage.setName();
+    ebayComPage.setDescription();
+    ebayComPage.setImage();
+    ebayComPage.setPrice();
+
     //set product url
-    product.setUrl(url.toString());
-    //set product status
-    product.setDisabled(false);
+    product.setUrl(ebayComPage.getUrl());
+
     //set product key
-    product.setKey(this.getProductKeyFromEbayCOM(url));
+    product.setKey(ebayComPage.getKey());
+
+    //set product status
+    product.setDisabled(!ebayComPage.getActive());
 
     //set product store
     Store store = new Store();
-    int storeID = 9;
-    store.setId(storeID);
+    store.setId(ebayComPage.getStoreId());
     product.setStore(store);
 
-    //set product expired date
-    Calendar now = Calendar.getInstance();
-    int weekday = now.get(Calendar.DAY_OF_WEEK);
-    if (weekday != Calendar.THURSDAY) {
-      // calculate how much to add
-      // the 5 is the difference between Saturday and Thursday
-      int days = (Calendar.SATURDAY - weekday + 5);
-      now.add(Calendar.DAY_OF_YEAR, days);
-    }
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-    // language switch
-    String urlStr = url.toString();
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-    Document doc;
-    try {
-      doc = Jsoup.connect(urlStr).get();
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
     }
 
     //set product fees
-    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
-    PRODUCT_FEE_TITLE feeImport = PRODUCT_FEE_TITLE.IMPORT;
-    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
+
     if (product.getFees().isEmpty()) {
-      ProductFee fee1 = new ProductFee();
-      fee1.setTitle(feeShipping);
-      fee1.setType(feeType);
-      fee1.setValue(0);
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
 
-      ProductFee fee2 = new ProductFee();
-      fee2.setTitle(feeImport);
-      fee2.setType(feeType);
-      fee2.setValue(0);
-
-      NumberFormat numberFormat;
-      numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-
-      String fee1String = doc.select(this.HTML_PATH_EBAYCOM.get("shipping")).first().text();
-      String fee2String = doc.select(this.HTML_PATH_EBAYCOM.get("import")).first().text();
-      try {
-        Number fee1Number = numberFormat.parse(StringUtils.remove(fee1String, "$"));
-        double fee1Double = fee1Number.doubleValue();
-        Number fee2Number = numberFormat.parse(StringUtils.remove(fee2String, "$"));
-        double fee2Double = fee2Number.doubleValue();
-
-        fee1.setValue(fee1Double);
-        fee2.setValue(fee2Double);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-
-      product.getFees().add(fee1);
-      product.getFees().add(fee2);
+      product.getFees().add(shipping);
     }
 
+    //set product price
     if (product.getPrices().isEmpty()) {
-      String productPrice = "";
-      Element productPriceElement1 = doc.select(this.HTML_PATH_EBAYCOM.get("price")).first();
-      Element productPriceElement2 = doc.select(this.HTML_PATH_EBAYCOM.get("price2")).first();
-      if (productPriceElement1 != null) {
-        productPrice = productPriceElement1.text();
-      }
-      if (productPriceElement2 != null) {
-        productPrice = productPriceElement2.text();
-      }
-
-      Number number;
-      NumberFormat numberFormat;
-      numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
       try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "US $"));
-        double p = number.doubleValue();
+        //set price
         ProductPrice price = new ProductPrice();
-        price.setValue(p);
+        price.setValue(ebayComPage.getPrice());
+        //add price to product
         product.getPrices().add(price);
-        product.setCurrentPrice(p);
-        product.setCurrency(CURRENCY.USD);
+        product.setCurrentPrice(ebayComPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -2343,13 +2268,15 @@ public class SpiderServiceImpl implements SpiderService {
 
     ProductText text = new ProductText();
     text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATH_EBAYCOM.get("name")).first().text());
-    text.setDescription(doc.select(this.HTML_PATH_EBAYCOM.get("description")).text());
+    text.setName(ebayComPage.getName());
+    text.setDescription(ebayComPage.getDescription());
     product.getTexts().add(text);
 
     if (product.getImages().isEmpty()) {
+      //set image
       ProductImage image = new ProductImage();
-      image.setUrl(doc.select(this.HTML_PATH_EBAYCOM.get("image")).first().attr("src"));
+      image.setUrl(ebayComPage.getImage());
+      //add image to product
       product.getImages().add(image);
     }
 
