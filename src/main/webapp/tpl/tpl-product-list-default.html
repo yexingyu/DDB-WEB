@@ -26,7 +26,7 @@
                             <span  ng-if="(currentDate - item.createdAt >2*60*60*24*1000) && (currentDate - item.createdAt <=7*60*60*24*1000)">
 	                            {{(currentDate - item.createdAt)/(1000*60*60*24) | number:0}} Days Ago
                             </span>
-                            <span  ng-if="currentDate - item.createdAt >7*60*60*24*1000">
+                            <span class="recent_deal"  ng-if="currentDate - item.createdAt >7*60*60*24*1000">
 	                            <img ng-src="./images/add_product.png" height="16px">
 	                            {{item.createdAt | date:"MM/dd"}}
                             </span>                                                         
