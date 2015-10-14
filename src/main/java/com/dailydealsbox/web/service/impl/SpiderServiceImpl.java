@@ -46,7 +46,9 @@ import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.parser.IkeaCa;
 import com.dailydealsbox.web.parser.SephoraCom;
 import com.dailydealsbox.web.parser.SportsExpertsCa;
+import com.dailydealsbox.web.parser.StaplesCa;
 import com.dailydealsbox.web.parser.TheBayCa;
+import com.dailydealsbox.web.parser.ZaraCom;
 import com.dailydealsbox.web.service.SpiderService;
 
 /**
@@ -264,6 +266,14 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromIkeaCa(url, product, LANGUAGE.EN);
         this.getProductFromIkeaCa(url, product, LANGUAGE.FR);
         break;
+      case "www.zara.com":
+          this.getProductFromZaraCom(url, product, LANGUAGE.EN);
+          this.getProductFromZaraCom(url, product, LANGUAGE.FR);
+          break;   
+      case "www.staples.ca":
+          this.getProductFromStaplesCa(url, product, LANGUAGE.EN);
+          this.getProductFromStaplesCa(url, product, LANGUAGE.FR);
+          break;            
       case "www.gapcanada.ca":
         this.getProductFromGapCanadaCa(url, product, LANGUAGE.EN);
         this.getProductFromGapCanadaCa(url, product, LANGUAGE.FR);
@@ -1815,6 +1825,179 @@ public class SpiderServiceImpl implements SpiderService {
 
     return product;
   }
+  private Product getProductFromStaplesCa(String url, Product product, LANGUAGE language)
+	      throws Exception {
+	    //product page info
+	    StaplesCa staplesCaPage = new StaplesCa();
+	    staplesCaPage.setActive(true);
+	    staplesCaPage.setStoreId();
+	    staplesCaPage.setUrl(url);
+	    staplesCaPage.setExpiration();
+
+	    staplesCaPage.setDoc();
+	    staplesCaPage.setKey();
+	    staplesCaPage.setName();
+	    staplesCaPage.setDescription();
+	    staplesCaPage.setImage();
+	    staplesCaPage.setPrice();
+
+	    //set product url
+	    product.setUrl(staplesCaPage.getUrl());
+
+	    //set product key
+	    product.setKey(staplesCaPage.getKey());
+
+	    //set product status
+	    product.setDisabled(!staplesCaPage.getActive());
+
+	    //set product store
+	    Store store = new Store();
+	    store.setId(staplesCaPage.getStoreId());
+	    product.setStore(store);
+
+	    //set product tax
+	    if (product.getTaxes().isEmpty()) {
+	      ProductTax federal = new ProductTax();
+	      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+	      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+	      ProductTax provincial = new ProductTax();
+	      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+	      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+	      product.getTaxes().add(federal);
+	      product.getTaxes().add(provincial);
+	    }
+
+	    //set product fees
+
+	    if (product.getFees().isEmpty()) {
+	      ProductFee shipping = new ProductFee();
+	      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+	      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+	      shipping.setValue(0.00);
+
+	      product.getFees().add(shipping);
+	    }
+
+	    //set product price
+	    if (product.getPrices().isEmpty()) {
+	      try {
+	        //set price
+	        ProductPrice price = new ProductPrice();
+	        price.setValue(staplesCaPage.getPrice());
+	        //add price to product
+	        product.getPrices().add(price);
+	        product.setCurrentPrice(staplesCaPage.getPrice());
+	        product.setCurrency(CURRENCY.CAD);
+	      } catch (Exception e) {
+	        e.printStackTrace();
+	      }
+	    }
+
+	    ProductText text = new ProductText();
+	    text.setLanguage(language);
+	    text.setName(staplesCaPage.getName());
+	    text.setDescription(staplesCaPage.getDescription());
+	    product.getTexts().add(text);
+
+	    if (product.getImages().isEmpty()) {
+	      //set image
+	      ProductImage image = new ProductImage();
+	      image.setUrl(staplesCaPage.getImage());
+	      //add image to product
+	      product.getImages().add(image);
+	    }
+
+	    return product;
+	  }  
+  
+  private Product getProductFromZaraCom(String url, Product product, LANGUAGE language)
+	      throws Exception {
+	    //product page info
+	    ZaraCom zaraComPage = new ZaraCom();
+	    zaraComPage.setActive(true);
+	    zaraComPage.setStoreId();
+	    zaraComPage.setUrl(url);
+	    zaraComPage.setExpiration();
+
+	    zaraComPage.setDoc();
+	    zaraComPage.setKey();
+	    zaraComPage.setName();
+	    zaraComPage.setDescription();
+	    zaraComPage.setImage();
+	    zaraComPage.setPrice();
+
+	    //set product url
+	    product.setUrl(zaraComPage.getUrl());
+
+	    //set product key
+	    product.setKey(zaraComPage.getKey());
+
+	    //set product status
+	    product.setDisabled(!zaraComPage.getActive());
+
+	    //set product store
+	    Store store = new Store();
+	    store.setId(zaraComPage.getStoreId());
+	    product.setStore(store);
+
+	    //set product tax
+	    if (product.getTaxes().isEmpty()) {
+	      ProductTax federal = new ProductTax();
+	      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+	      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+	      ProductTax provincial = new ProductTax();
+	      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+	      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+	      product.getTaxes().add(federal);
+	      product.getTaxes().add(provincial);
+	    }
+
+	    //set product fees
+
+	    if (product.getFees().isEmpty()) {
+	      ProductFee shipping = new ProductFee();
+	      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+	      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+	      shipping.setValue(0.00);
+
+	      product.getFees().add(shipping);
+	    }
+
+	    //set product price
+	    if (product.getPrices().isEmpty()) {
+	      try {
+	        //set price
+	        ProductPrice price = new ProductPrice();
+	        price.setValue(zaraComPage.getPrice());
+	        //add price to product
+	        product.getPrices().add(price);
+	        product.setCurrentPrice(zaraComPage.getPrice());
+	        product.setCurrency(CURRENCY.CAD);
+	      } catch (Exception e) {
+	        e.printStackTrace();
+	      }
+	    }
+
+	    ProductText text = new ProductText();
+	    text.setLanguage(language);
+	    text.setName(zaraComPage.getName());
+	    text.setDescription(zaraComPage.getDescription());
+	    product.getTexts().add(text);
+
+	    if (product.getImages().isEmpty()) {
+	      //set image
+	      ProductImage image = new ProductImage();
+	      image.setUrl(zaraComPage.getImage());
+	      //add image to product
+	      product.getImages().add(image);
+	    }
+
+	    return product;
+	  }
 
   private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language)
       throws Exception {
