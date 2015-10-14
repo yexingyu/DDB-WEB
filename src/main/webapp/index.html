@@ -54,7 +54,6 @@
     <ul class="nav navbar-nav">
 	    <li><a href="#/all"><span class="glyphicon glyphicon-globe"></span>Online</a></li>
 	    <li><a href="#/local"><span class="glyphicon glyphicon-map-marker"></span>Local</a></li>
-	    <li><a href="#/following"><span class="glyphicon glyphicon-plus"></span>Follow</a></li>
 	    <li><a href="#/store"><span class="glyphicon glyphicons-shop"></span>Stores</a></li>
 	    <li><a href="#/share"><span class="glyphicon glyphicon-share"></span>Share</a></li>
 	    <li><a href="#/discuss"><span class="glyphicon glyphicon-retweet"></span>Discuss</a></li>
@@ -97,7 +96,8 @@
                         </a>
                     </li>
                     <li ng-show="!$root.profile.account.trim()"><a ng-click="login()"><span class="glyphicon glyphicon-user"></span>Log In</a></li>
-                    <li><a><span class="glyphicon glyphicon-heart"></span>Your Likes</a></li>
+                    <li><a href="#/following"><span class="glyphicon glyphicon-plus">Follow</a></li>
+                    <li><a><span class="glyphicon glyphicon-heart"></span>Likes</a></li>
                     <li>
 				        <a ng-click="switchLanguage()">
 				            <span ng-show="$root.language.language === 'EN'">Français</span>

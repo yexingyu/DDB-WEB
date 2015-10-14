@@ -14,21 +14,21 @@ public class ZaraCom extends ProductPage {
   @Override
   public void setKey() {
 
-	    //key
-	    String keyPattern = "-([0-9 a-z]*)\\.html";
-	    String keyString = "";
-	    //pattern
-	    Pattern r = Pattern.compile(keyPattern);
+    //key
+    String keyPattern = "-([0-9 a-z]*)\\.html";
+    String keyString = "";
+    //pattern
+    Pattern r = Pattern.compile(keyPattern);
 
-	    //matcher
-	    Matcher m = r.matcher(url);
-	    if (m.find()) {
-	      keyString = m.group(1);
+    //matcher
+    Matcher m = r.matcher(url);
+    if (m.find()) {
+      keyString = m.group(1);
 
-	    } else {
-	      keyString = null;
-	    }
-	    ;
+    } else {
+      keyString = null;
+    }
+    ;
 
     this.key = keyString;
   }
@@ -47,14 +47,15 @@ public class ZaraCom extends ProductPage {
   @Override
   public void setImage() throws IOException {
 
-    this.image = this.doc.select("img.image-big").get(0).attr("src");
+    this.image = this.doc.select("img.image-big").get(0).attr("data-src");
 
     ;
   }
 
   @Override
   public void setPrice() throws IOException {
-    this.price = Double.parseDouble(doc.select("span.price").get(0).attr("data-price").replace("  CAD", ""));
+    this.price = Double.parseDouble(doc.select("span.price").get(0).attr("data-price")
+        .replace("  CAD", ""));
   }
 
 }

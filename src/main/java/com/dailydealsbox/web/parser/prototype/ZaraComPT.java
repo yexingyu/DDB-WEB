@@ -55,7 +55,7 @@ public class ZaraComPT {
     product_description_text = doc.select("p.description").get(0).text();
 
     //image
-    product_image_text = doc.select("img.image-big").get(0).attr("src");
+    product_image_text = doc.select("img.image-big").get(0).attr("data-src");
 
     //price
     product_price_text = doc.select("span.price").get(0).attr("data-price").replace("  CAD", "");
