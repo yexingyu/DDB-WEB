@@ -57,7 +57,23 @@ public class NordStromComPT {
     product_image_text = doc.select("div#product-image").get(0).select("img").get(0).attr("src");
 
     //price
-    product_price_text = doc.select("span.sale-price").get(0).text().replace("Now: CAD ", "");
+    product_price_text = doc.html();
+
+    String pricePattern = "price\":\"CAD (\\d+.\\d+)";
+    String priceString = "";
+    //pattern
+    r = Pattern.compile(pricePattern);
+
+    //matcher
+    m = r.matcher(product_price_text);
+    if (m.find()) {
+      priceString = m.group(1);
+
+    } else {
+      priceString = null;
+    }
+    ;
+    product_price_text = priceString;
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 

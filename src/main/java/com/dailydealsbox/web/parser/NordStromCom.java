@@ -14,21 +14,21 @@ public class NordStromCom extends ProductPage {
   @Override
   public void setKey() {
 
-	    //key
-	    String keyPattern = "\\/(\\d+)";
-	    String keyString = "";
-	    //pattern
-	    Pattern r = Pattern.compile(keyPattern);
+    //key
+    String keyPattern = "\\/(\\d+)";
+    String keyString = "";
+    //pattern
+    Pattern r = Pattern.compile(keyPattern);
 
-	    //matcher
-	    Matcher m = r.matcher(url);
-	    if (m.find()) {
-	      keyString = m.group(1);
+    //matcher
+    Matcher m = r.matcher(url);
+    if (m.find()) {
+      keyString = m.group(1);
 
-	    } else {
-	      keyString = null;
-	    }
-	    ;
+    } else {
+      keyString = null;
+    }
+    ;
     this.key = keyString;
   }
 
@@ -53,7 +53,26 @@ public class NordStromCom extends ProductPage {
 
   @Override
   public void setPrice() throws IOException {
-    this.price = Double.parseDouble(this.doc.select("span.sale-price").get(0).text().replace("Now: CAD ", ""));
+    //price
+    String product_price_text = doc.html();
+
+    String pricePattern = "price\":\"CAD (\\d+.\\d+)";
+    String priceString = "";
+    //pattern
+    Pattern r = Pattern.compile(pricePattern);
+
+    //matcher
+    Matcher m = r.matcher(product_price_text);
+    if (m.find()) {
+      priceString = m.group(1);
+
+    } else {
+      priceString = null;
+    }
+    ;
+    product_price_text = priceString;
+
+    this.price = Double.parseDouble(product_price_text);
   }
 
 }
