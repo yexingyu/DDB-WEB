@@ -45,6 +45,7 @@ import com.dailydealsbox.web.parser.EbayCom;
 import com.dailydealsbox.web.parser.GapCanadaCa;
 import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.parser.IkeaCa;
+import com.dailydealsbox.web.parser.NordStromCom;
 import com.dailydealsbox.web.parser.SephoraCom;
 import com.dailydealsbox.web.parser.SportsExpertsCa;
 import com.dailydealsbox.web.parser.StaplesCa;
@@ -258,6 +259,11 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromStaplesCa(url, product, LANGUAGE.EN);
         this.getProductFromStaplesCa(url, product, LANGUAGE.FR);
         break;
+      case "shop.nordstrom.com/":
+          this.getProductFromNordStromCom(url, product, LANGUAGE.EN);
+          this.getProductFromNordStromCom(url, product, LANGUAGE.FR);
+          break;        
+        
       case "www.gapcanada.ca":
         this.getProductFromGapCanadaCa(url, product, LANGUAGE.EN);
         this.getProductFromGapCanadaCa(url, product, LANGUAGE.FR);
@@ -2282,4 +2288,91 @@ public class SpiderServiceImpl implements SpiderService {
 
     return product;
   }
+  
+  private Product getProductFromNordStromCom(String url, Product product, LANGUAGE language)
+	      throws Exception {
+	    //product page info
+	    NordStromCom nordStromComPage = new NordStromCom();
+	    nordStromComPage.setActive(true);
+	    nordStromComPage.setStoreId();
+	    nordStromComPage.setUrl(url);
+	    nordStromComPage.setExpiration();
+
+	    nordStromComPage.setDoc();
+	    nordStromComPage.setKey();
+	    nordStromComPage.setName();
+	    nordStromComPage.setDescription();
+	    nordStromComPage.setImage();
+	    nordStromComPage.setPrice();
+
+	    //set product url
+	    product.setUrl(nordStromComPage.getUrl());
+
+	    //set product key
+	    product.setKey(nordStromComPage.getKey());
+
+	    //set product status
+	    product.setDisabled(!nordStromComPage.getActive());
+
+	    //set product store
+	    Store store = new Store();
+	    store.setId(nordStromComPage.getStoreId());
+	    product.setStore(store);
+
+	    //set product tax
+	    if (product.getTaxes().isEmpty()) {
+	      ProductTax federal = new ProductTax();
+	      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+	      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+	      ProductTax provincial = new ProductTax();
+	      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+	      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+	      product.getTaxes().add(federal);
+	      product.getTaxes().add(provincial);
+	    }
+
+	    //set product fees
+
+	    if (product.getFees().isEmpty()) {
+	      ProductFee shipping = new ProductFee();
+	      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+	      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+	      shipping.setValue(0.00);
+
+	      product.getFees().add(shipping);
+	    }
+
+	    //set product price
+	    if (product.getPrices().isEmpty()) {
+	      try {
+	        //set price
+	        ProductPrice price = new ProductPrice();
+	        price.setValue(nordStromComPage.getPrice());
+	        //add price to product
+	        product.getPrices().add(price);
+	        product.setCurrentPrice(nordStromComPage.getPrice());
+	        product.setCurrency(CURRENCY.CAD);
+	      } catch (Exception e) {
+	        e.printStackTrace();
+	      }
+	    }
+
+	    ProductText text = new ProductText();
+	    text.setLanguage(language);
+	    text.setName(nordStromComPage.getName());
+	    text.setDescription(nordStromComPage.getDescription());
+	    product.getTexts().add(text);
+
+	    if (product.getImages().isEmpty()) {
+	      //set image
+	      ProductImage image = new ProductImage();
+	      image.setUrl(nordStromComPage.getImage());
+	      //add image to product
+	      product.getImages().add(image);
+	    }
+
+	    return product;
+	  }  
 }
