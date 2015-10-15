@@ -259,7 +259,7 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromStaplesCa(url, product, LANGUAGE.EN);
         this.getProductFromStaplesCa(url, product, LANGUAGE.FR);
         break;
-      case "shop.nordstrom.com/":
+      case "shop.nordstrom.com":
           this.getProductFromNordStromCom(url, product, LANGUAGE.EN);
           this.getProductFromNordStromCom(url, product, LANGUAGE.FR);
           break;        
