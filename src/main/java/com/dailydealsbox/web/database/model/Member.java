@@ -75,6 +75,9 @@ public class Member extends BaseEntityModel {
   @Column(name = "avatar", length = 45)
   private String             avatar     = "";
 
+  @Column(name = "picture", length = 45)
+  private String             picture    = "";
+
   @Column(name = "level", length = 45)
   private String             level      = "";
 
@@ -351,6 +354,21 @@ public class Member extends BaseEntityModel {
    */
   public void setAvatar(String avatar) {
     this.avatar = avatar;
+  }
+
+  /**
+   * @return the picture
+   */
+  public String getPicture() {
+    return this.picture;
+  }
+
+  /**
+   * @param picture
+   *          the picture to set
+   */
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
   /**

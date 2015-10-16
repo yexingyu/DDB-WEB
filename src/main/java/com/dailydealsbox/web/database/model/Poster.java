@@ -34,27 +34,30 @@ public class Poster extends BaseModel {
 
   @NotNull
   @Column(name = "nick_name")
-  private String nickName = "";
+  private String      nickName  = "";
 
   @Column(name = "signature")
-  private String signature = "";
+  private String      signature = "";
 
   @Column(name = "avatar")
-  private String avatar = "";
+  private String      avatar    = "";
+
+  @Column(name = "picture")
+  private String      picture   = "";
 
   @Column(name = "level")
-  private String level = "";
+  private String      level     = "";
 
   @Column(name = "point")
-  private int point;
+  private int         point;
 
   @Column(name = "point_redeemed")
-  private int pointRedeemed;
+  private int         pointRedeemed;
 
   @NotNull
   @Column(name = "role")
   @Enumerated(EnumType.STRING)
-  private MEMBER_ROLE role = MEMBER_ROLE.MEMBER;
+  private MEMBER_ROLE role      = MEMBER_ROLE.MEMBER;
 
   /**
    * constructor
@@ -85,7 +88,8 @@ public class Poster extends BaseModel {
   }
 
   /**
-   * @param nickName the nickName to set
+   * @param nickName
+   *          the nickName to set
    */
   public void setNickName(String nickName) {
     this.nickName = nickName;
@@ -99,7 +103,8 @@ public class Poster extends BaseModel {
   }
 
   /**
-   * @param signature the signature to set
+   * @param signature
+   *          the signature to set
    */
   public void setSignature(String signature) {
     this.signature = signature;
@@ -113,10 +118,26 @@ public class Poster extends BaseModel {
   }
 
   /**
-   * @param avatar the avatar to set
+   * @param avatar
+   *          the avatar to set
    */
   public void setAvatar(String avatar) {
     this.avatar = avatar;
+  }
+
+  /**
+   * @return the picture
+   */
+  public String getPicture() {
+    return this.picture;
+  }
+
+  /**
+   * @param picture
+   *          the picture to set
+   */
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
   /**
@@ -127,7 +148,8 @@ public class Poster extends BaseModel {
   }
 
   /**
-   * @param level the level to set
+   * @param level
+   *          the level to set
    */
   public void setLevel(String level) {
     this.level = level;
@@ -141,7 +163,8 @@ public class Poster extends BaseModel {
   }
 
   /**
-   * @param point the point to set
+   * @param point
+   *          the point to set
    */
   public void setPoint(int point) {
     this.point = point;
@@ -155,7 +178,8 @@ public class Poster extends BaseModel {
   }
 
   /**
-   * @param point the point to set
+   * @param point
+   *          the point to set
    */
   public void setPointRedeemed(int pointredeemed) {
     this.pointRedeemed = pointredeemed;
@@ -169,7 +193,8 @@ public class Poster extends BaseModel {
   }
 
   /**
-   * @param role the role to set
+   * @param role
+   *          the role to set
    */
   public void setRole(MEMBER_ROLE role) {
     this.role = role;
