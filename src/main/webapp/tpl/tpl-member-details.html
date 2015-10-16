@@ -1,13 +1,75 @@
 <div>
-    <div class="row">
-        <div class="col-sm-12">
-        <h3>Member Info</h3>
-        </div>
-        <div class="col-sm-12">
-        <img src="../images/banner/comingsoon.png"  class="coming_soon"><img/>
-        </div>        
-        <div class="col-sm-12">
-        <img src="../images/banner/user_info.png"><img/>
-        </div>
+            <div class="row">
+            <h3>Member Profile</h3>
+            <hr>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3">
+                                       
+                    <div class="user-wrapper">
+                        <img src="http://www.designbootstrap.com/livedemos/2015/02/04/user-profile/assets/img/1.jpg" class="img-responsive" /> 
+                    <div class="description">
+                       <h4> {{member.nickName}}</h4>
+                        <h5> <strong> Level: {{member.level}} </strong></h5>
+                        <p>
+                            {{member.signature}} 
+                        </p>
+                        <hr />
+                        <a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-user-plus" ></i> &nbsp;Profile + </a> 
+                    </div>
+                     </div>
+                </div>
+                
+                <div class="col-md-9 col-sm-9  user-wrapper">
+                    <div class="description">
+                         <h3> <span class="glyphicon glyphicon-heart"></span>Likes : </h3>
+                    <hr />
+                     <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                          Aliquam suscipit egestas eros, ut maximus magna blandit ut. 
+                         Suspendisse vel molestie sapien.
+                          Interdum et malesuada fames ac ante ipsum primis in faucibus. 
+                         Fusce sit amet egestas dui, vitae tincidunt justo. 
+                         </p>
+                    </div>     
+                    <div class="description">
+                         <h3><span class="glyphicon glyphicon-plus"></span>Following Stores: </h3>
+                    <hr />                         
+                    <p>
+                         Etiam eleifend massa congue magna pretium, id blandit dui pulvinar. 
+                         Nam et pulvinar risus, vel blandit risus.
+                          Maecenas tristique volutpat ante, aliquet hendrerit felis aliquet nec.
+                          Curabitur rutrum tincidunt erat, ac feugiat libero gravida ac. 
+                         Suspendisse ut varius quam, vitae rutrum metus. 
+                        </p>
+                    </div> 
+                    <div class="description">
+                         <h3><span class="glyphicon glyphicon-tag"></span>Following Tags : </h3>
+                    <hr />                         
+                    <p>
+                         Etiam eleifend massa congue magna pretium, id blandit dui pulvinar. 
+                         Nam et pulvinar risus, vel blandit risus.
+                          Maecenas tristique volutpat ante, aliquet hendrerit felis aliquet nec.
+                          Curabitur rutrum tincidunt erat, ac feugiat libero gravida ac. 
+                         Suspendisse ut varius quam, vitae rutrum metus. 
+                        </p>
+                    </div>                           
+                    <div class="description">
+                    <h3> Social Links: </h3>
+                    <hr />                
+                   <a href="#" class="btn btn-social btn-facebook">
+                            <i class="fa fa-facebook"></i>&nbsp; Facebook </a>
+
+                        <a href="#" class="btn btn-social btn-google">
+                            <i class="fa fa-google-plus"></i>&nbsp; Google</a>
+                        <a href="#" class="btn btn-social btn-twitter">
+                            <i class="fa fa-twitter"></i>&nbsp; Twitter </a>
+                        <a href="#" class="btn btn-social btn-linkedin">
+                            <i class="fa fa-linkedin"></i>&nbsp; Linkedin </a>
+                    </div>
+                 </div>
+                </div>
+            </div>
+           <!-- USER PROFILE ROW END-->
     </div>
 </div>

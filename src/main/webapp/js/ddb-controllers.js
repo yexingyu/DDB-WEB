@@ -721,7 +721,19 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     /*
      * MemberDetailsCtrl definition
      */
-    .controller('MemberDetailsCtrl', ['$scope', '$location', 'ProductService', 'LoginService', function ($scope, $location, ProductService, LoginService) {
+    .controller('MemberDetailsCtrl', ['$scope', '$location', '$routeParams','MemberService', 'LoginService', function ($scope, $location,$routeParams, MemberService, LoginService) {
+    	
+        var id = $routeParams.id;
+
+
+
+        // retrieve product details
+        MemberService.get(id, function (response) {
+            if (response.status == 'SUCCESS') {
+                $scope.member = response.data;
+                console.log(response.data);
+            }
+        });
     }])    
     /*
      * AboutCtrl definition

@@ -123,6 +123,32 @@ angular.module('ddbApp.services', ['ngResource', 'ngCookies'])
     }])
     
     /*
+     * MemberService
+     */
+    .factory('MemberService', ['$rootScope', '$resource', function ($rootScope, $resource) {
+        return {
+            list: function (callback) {
+                return $resource('/api/member', {}, {}).get(callback);
+            },
+            listAll: function (callback) {
+                return $resource('/api/member/all', {}, {}).get(callback);
+            },
+            get: function (memberId, callback) {
+                return $resource('/api/member/id/:memberId', {'memberId': memberId}, {}).get(callback);
+            },
+            add: function (member, callback) {
+                return $resource('/api/member', {}, {}).save(member, callback);
+            },
+            follow: function (memberId, callback) {
+                return $resource('/api/member/id/:memberId/follow', {'memberId': memberId}, {}).save(callback);
+            },
+            unfollow: function (memberId, callback) {
+                return $resource('/api/member/id/:memberId/follow', {'memberId': memberId}, {}).delete(callback);
+            }
+        };
+    }])    
+    
+    /*
      * TagService
      */
     .factory('TagService', ['$rootScope', '$resource', function ($rootScope, $resource) {

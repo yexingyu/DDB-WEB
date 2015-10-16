@@ -89,15 +89,15 @@ public class AmazonCa extends ProductPage {
     String productPriceText;
     productPriceText = "";
     try {
-      productPriceText = this.doc.select("span#priceblock_ourprice").text();
+      productPriceText = this.doc.select("span#priceblock_ourprice").get(0).text();
     } catch (IndexOutOfBoundsException e) {
 
       try {
-        productPriceText = this.doc.select("span#priceblock_dealprice").text();
+        productPriceText = this.doc.select("span#priceblock_dealprice").get(0).text();
       } catch (IndexOutOfBoundsException e1) {
 
         try {
-          productPriceText = this.doc.select("span#priceblock_saleprice").text();
+          productPriceText = this.doc.select("span#priceblock_saleprice").get(0).text();
         } catch (IndexOutOfBoundsException e3) {}
       }
     }

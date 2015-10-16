@@ -15,7 +15,7 @@ import org.jsoup.nodes.Document;
 public class AmazonCaPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://www.amazon.ca/Titan-11018-Folding-Utility-Knife/dp/B000PRT1V2/ref=sr_1_1198?s=hi&ie=UTF8&qid=1444649180&sr=1-1198";
+    String url = "http://www.amazon.ca/gp/product/B00IOL1ABK?ref_=gbps_img_s-3_6222_b3440b37_GB-SUPPL&smid=A3DWYIK6Y9EEQB";
 
     //set doc
     Document doc = Jsoup
@@ -79,7 +79,7 @@ public class AmazonCaPT {
 
     product_image_text = imageString.replace("{\"", "");
     //price
-    product_price_text = doc.select("span#priceblock_ourprice").text();
+    product_price_text = doc.select("span#priceblock_dealprice").get(0).text();
     ;
 
     //product rating
