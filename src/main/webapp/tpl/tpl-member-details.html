@@ -46,24 +46,18 @@
                     <div class="description">
                          <h3><span class="glyphicon glyphicon-plus"></span>Following Stores: </h3>
                     <hr />                         
-                    <p>
-                         Etiam eleifend massa congue magna pretium, id blandit dui pulvinar. 
-                         Nam et pulvinar risus, vel blandit risus.
-                          Maecenas tristique volutpat ante, aliquet hendrerit felis aliquet nec.
-                          Curabitur rutrum tincidunt erat, ac feugiat libero gravida ac. 
-                         Suspendisse ut varius quam, vitae rutrum metus. 
-                        </p>
+                     <p ng-repeate="store in member.stores">
+                     {{store.website}}
+
+                         </p>
                     </div> 
                     <div class="description">
                          <h3><span class="glyphicon glyphicon-tag"></span>Following Tags : </h3>
                     <hr />                         
-                    <p>
-                         Etiam eleifend massa congue magna pretium, id blandit dui pulvinar. 
-                         Nam et pulvinar risus, vel blandit risus.
-                          Maecenas tristique volutpat ante, aliquet hendrerit felis aliquet nec.
-                          Curabitur rutrum tincidunt erat, ac feugiat libero gravida ac. 
-                         Suspendisse ut varius quam, vitae rutrum metus. 
-                        </p>
+                     <p ng-repeate="tag in member.tags">
+                     {{tag.value}}
+
+                         </p>
                     </div>                           
                     <div class="description">
                     <h3> Social Links: </h3>
