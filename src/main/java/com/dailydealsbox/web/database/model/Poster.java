@@ -3,10 +3,15 @@
  */
 package com.dailydealsbox.web.database.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -58,6 +63,10 @@ public class Poster extends BaseModel {
   @Column(name = "role")
   @Enumerated(EnumType.STRING)
   private MEMBER_ROLE role      = MEMBER_ROLE.MEMBER;
+  
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "poster", cascade = { CascadeType.ALL }, orphanRemoval = true)
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Set<Product> products;
 
   /**
    * constructor
