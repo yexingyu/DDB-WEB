@@ -1,31 +1,34 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h2><span class="glyphicon glyphicon-tag"><b>Tags</b>:</span>
+            <h3><span class="glyphicon glyphicon-tag"><b>Tags</b>:</span>
             <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> 
             <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-plus" ng-click="followTag(tag)" ng-if="!tag.followed">Follow</button>
 
             <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollowTag(tag)" ng-if="tag.followed">Follow</button>            
 
-            </span></h2>
+            </span></h3>
         </div>
     </div>
 
 
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
             <a href="{{item.url}}" target="_blank"><h3 ng-repeat="text in item.texts | filter: {language: $root.language.language}">{{text.name}}</h3></a>
         </div>
-        <div class="col-sm-3">
+
+
+
+    </div>
+
+    <div class="row">
+            <div class="col-sm-3">
             <img ng-src="./images/favicon/{{item.store.favicon}}">
             <span><a> {{item.store.website}}</a></span>
             <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-plus" ng-click="follow(item.store)" ng-if="!item.store.followed">Follow</button>
             <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollow(item.store)" ng-if="item.store.followed">Follow</button>
-            <a href="{{item.store.dealPage}}" target="_blank">Deal Page</a>
         </div>
-
-
-    </div>
+        </div>
 
     <div class="row">
         <div class="col-sm-6">
@@ -57,37 +60,37 @@
                 <span ng-repeat="link in item.links ">
                             <div class="col-xs-8">
                               <span class="rating" ng-if="link.rating>4.75 && link.rating<=5">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
                               </span>
                               <span class="rating" ng-if="link.rating>4.25 && link.rating<=4.75">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
                                   <i class="fa fa-star-half-o fa-3"></i>                           
                               </span>
                               <span class="rating" ng-if="link.rating>3.75 && link.rating<=4.25">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
                                   <i class="fa fa-star-o fa-3"></i>                           
                               </span>
                               <span class="rating" ng-if="link.rating>3.25 && link.rating<=3.75">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
                                   <i class="fa fa-star-half-o fa-3"></i>
                                   <i class="fa fa-star-o fa-3"></i>                           
                               </span>
                               <span class="rating" ng-if="link.rating>2.75 && link.rating<=3.25">
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
-                                  <i class="fa fa-star fa-3"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
+                                  <i class="fa fa-star fa-3 highlight_RoyalBlue"></i>
                                   <i class="fa fa-star-o fa-3"></i> 
                                   <i class="fa fa-star-o fa-3"></i>                           
                               </span>
@@ -105,7 +108,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <h2><a href="{{item.url}}" target="_blank">Buy it from the {{item.store.website}}</a></h2>
+                    <h3><a href="{{item.url}}" target="_blank">Buy it from the {{item.store.website}}</a></h3>
                 </div>
             </div>            
             <div class="row">
@@ -136,18 +139,6 @@
         <div class="col-sm-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Reputation</h3>
-                </div>
-                <div class="panel-body">
-                    <div ng-repeat="link in item.links"><a href="{{link.url}}" target="_blank">{{link.name}}</a> - {{link.rating}} of {{link.reviewNumber}} Reviews</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
                     <h3 class="panel-title">Discuss</h3>
                 </div>
                 <div class="panel-body">                
@@ -162,9 +153,29 @@
 								</blockquote></td>
 							</tr>					
 					</table>
+	
+                
+                <div>
+                <hr>
+                </div>
+                <div class ="panel-body">
+                	<form class="form-horizontal">
+						  <div class="form-group">
+						    <div class=" col-sm-12">
+							    <label for="exampleInputEmail1">Add your Comment:</label>
+							    <textarea class="form-control" ng-model="item.review.content" rows="3"></textarea>
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <div class="col-sm-offset-10 col-sm-1">
+						      <button type="submit" class="btn btn-default" ng-click="actions.review(item)">Submit</button>
+						   </div>
+						</div>
+					</form>	
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="row">

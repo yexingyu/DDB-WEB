@@ -116,4 +116,20 @@ h4 a {
 	height:40px;
 }
 
+.new_deal{
+	background-color: #ef6e2b;
+    color: #fff;
+    right: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    left: auto;
+    font-family: arial, sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+}
+
+.fire {
+	color: red;
+}
+
 }

@@ -12,10 +12,10 @@ import org.jsoup.nodes.Document;
 /**
  * product info
  */
-public class AmazonCaPT {
+public class IkeaCaPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://www.amazon.ca/Titan-11018-Folding-Utility-Knife/dp/B000PRT1V2/ref=sr_1_1198?s=hi&ie=UTF8&qid=1444649180&sr=1-1198";
+    String url = "http://www.ikea.com/ca/en/catalog/products/80282152/";
 
     //set doc
     Document doc = Jsoup
@@ -25,7 +25,7 @@ public class AmazonCaPT {
         .get();
 
     //key
-    String keyPattern = "product/(.*)\\?";
+    String keyPattern = "\\/products\\/(\\d+)";
     String keyString = "";
     //pattern
     Pattern r = Pattern.compile(keyPattern);
@@ -45,9 +45,6 @@ public class AmazonCaPT {
     String product_description_text;
     String product_image_text;
     String product_price_text;
-    String product_rating;
-    String product_review_number;
-
     //String product_shipping_text;
     //String product_import_text;
 
@@ -58,73 +55,12 @@ public class AmazonCaPT {
     product_description_text = doc.select("meta[name=\"description\"]").attr("content");
 
     //image
-    product_image_text = doc.select("div#imgTagWrapperId").first().select("img").first()
-        .attr("data-a-dynamic-image");
-
-    //image
-    String imagePattern = "([^\\[]+)\":";
-    String imageString = "";
-    //pattern
-    r = Pattern.compile(imagePattern);
-
-    //matcher
-    m = r.matcher(product_image_text);
-    if (m.find()) {
-      imageString = m.group(1);
-
-    } else {
-      imageString = null;
-    }
+    product_image_text = doc.select("meta[property=\"og:image\"]").attr("content");
     ;
 
-    product_image_text = imageString.replace("{\"", "");
     //price
-    product_price_text = doc.select("span#priceblock_ourprice").text();
+    product_price_text = doc.select("meta[name=\"price\"]").attr("content");
     ;
-
-    //product rating
-    product_rating = doc.html();
-    ;
-
-    //rating
-    String ratingPattern = "(\\d.\\d) out of 5 stars";
-    String ratingString = "";
-    //pattern
-    r = Pattern.compile(ratingPattern);
-
-    //matcher
-    m = r.matcher(product_rating);
-    if (m.find()) {
-      ratingString = m.group(1);
-
-    } else {
-      ratingString = null;
-    }
-    ;
-
-    product_rating = ratingString;
-
-    //product review number
-    product_review_number = doc.html();
-    ;
-
-    //reviews
-    String reviewsPattern = "(\\d+) reviews";
-    String reviewsString = "";
-    //pattern
-    r = Pattern.compile(reviewsPattern);
-
-    //matcher
-    m = r.matcher(product_review_number);
-    if (m.find()) {
-      reviewsString = m.group(1);
-
-    } else {
-      reviewsString = null;
-    }
-    ;
-
-    product_review_number = reviewsString;
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 
@@ -153,8 +89,6 @@ public class AmazonCaPT {
     System.out.println("product description: " + product_description_text);
     System.out.println("product image: " + product_image_text);
     System.out.println("product price: " + product_price_text);
-    System.out.println("product rating: " + product_rating);
-    System.out.println("product revies number: " + product_review_number);
     //System.out.println(product_shipping_text);
     //System.out.println(product_import_text);
     System.out.println("product expiration: " + expiredDate.toString());

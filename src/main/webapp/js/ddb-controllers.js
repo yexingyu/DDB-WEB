@@ -172,6 +172,7 @@ angular.module('ddbApp.controllers', ['angular-md5'])
      */
     .controller('AllCtrl', ['$scope', '$location', 'ProductService', 'StoreService', 'ProfileService', 'ProductModel', 'StoreModel', function ($scope, $location, ProductService, StoreService, ProfileService, ProductModel, StoreModel) {
         $scope.requestSearch = $location.search();
+        $scope.currentDate = new Date();
         $scope.items = [];
         $scope.actions = {
             'like': ProductModel.like, 'unlike': ProductModel.unlike, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver

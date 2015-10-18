@@ -259,12 +259,7 @@ angular
             $scope.tag_hot = [{
                 value: ""
             }];
-            $scope.product.links = [{
-                url: '',
-                name: "",
-                rating: "",
-                review_number: ""
-            }];
+
 
 
             // payment term calculation
@@ -348,12 +343,7 @@ angular
                             value: ""
                         }];
 
-                        $scope.product.links = [{
-                            url: "",
-                            name: "",
-                            rating: "",
-                            review_number: 0
-                        }];
+
 
                         $scope.product.options = [];
 
