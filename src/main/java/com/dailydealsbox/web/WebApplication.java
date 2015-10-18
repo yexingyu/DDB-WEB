@@ -5,6 +5,8 @@ package com.dailydealsbox.web;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +49,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableScheduling
 public class WebApplication extends SpringBootServletInitializer {
-  public static Logger logger = LoggerFactory.getLogger(WebApplication.class);
+  public static Logger    logger = LoggerFactory.getLogger(WebApplication.class);
+  private ExecutorService pool   = Executors.newCachedThreadPool();
 
   @Autowired
   DDBAuthorizationInterceptor authInterceptor;
@@ -60,6 +63,15 @@ public class WebApplication extends SpringBootServletInitializer {
   @Scheduled(initialDelay = 60 * 1000, fixedRate = 60 * 1000)
   public void crondMinutely() {
     logger.info("crondMinutely() is running.");
+
+    // update product price
+    //this.pool.execute(new Runnable() {
+    //  @Override
+    //  public void run() {
+    productService.updateProductBySpider();
+    //  }
+    //});
+
     logger.info("crondMinutely() is called.");
   }
 
@@ -69,12 +81,19 @@ public class WebApplication extends SpringBootServletInitializer {
   @Scheduled(initialDelay = 3600 * 1000, fixedRate = 3600 * 1000)
   public void crondHourly() {
     logger.info("crondHourly() is running.");
+
     // update reputation
-    try {
-      this.productService.fixProduct();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    this.pool.execute(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          productService.fixProduct();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    });
+
     logger.info("crondHourly() is called.");
   }
 
@@ -157,7 +176,7 @@ public class WebApplication extends SpringBootServletInitializer {
    *
    * @param args
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     SpringApplication.run(WebApplication.class, args).registerShutdownHook();
   }
 

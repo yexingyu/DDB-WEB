@@ -5,6 +5,7 @@ package com.dailydealsbox.web.service.impl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -19,8 +20,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.dailydealsbox.web.configuration.BaseEnum.CURRENCY;
 import com.dailydealsbox.web.configuration.BaseEnum.LANGUAGE;
@@ -42,10 +46,13 @@ import com.dailydealsbox.web.parser.BrownsShoesCom;
 import com.dailydealsbox.web.parser.CanadianTireCa;
 import com.dailydealsbox.web.parser.GapCanadaCa;
 import com.dailydealsbox.web.parser.HomeDepotCa;
+import com.dailydealsbox.web.parser.ProductPage;
 import com.dailydealsbox.web.parser.SephoraCom;
 import com.dailydealsbox.web.parser.SportsExpertsCa;
 import com.dailydealsbox.web.parser.TheBayCa;
 import com.dailydealsbox.web.service.SpiderService;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * @author x_ye
@@ -53,6 +60,9 @@ import com.dailydealsbox.web.service.SpiderService;
 @Service
 @Transactional
 public class SpiderServiceImpl implements SpiderService {
+  public Logger                                      logger        = LoggerFactory.getLogger(SpiderServiceImpl.class);
+  ImmutableMap<String, Class<? extends ProductPage>> hostParserMap = ImmutableMap.of();
+
   private Map<String, String> HTML_PATH_BESTBUY   = new HashMap<>();
   private Map<String, String> HTML_PATH_WALMARTCA = new HashMap<>();
   private Map<String, String> HTML_PATH_EBAYCOM   = new HashMap<>();
@@ -2033,5 +2043,52 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     return product;
+  }
+
+  /**
+   * getParserByHost
+   *
+   * @param host
+   * @return
+   */
+  private Class<? extends ProductPage> getParserByHost(String host) {
+    if (Strings.isNullOrEmpty(host)) { return null; }
+    if (this.hostParserMap.isEmpty()) {
+      Map<String, Class<? extends ProductPage>> map = new HashMap<>();
+      map.put("www.amazon.ca", AmazonCa.class);
+      this.hostParserMap = ImmutableMap.copyOf(map);
+    }
+    return this.hostParserMap.get(host);
+  }
+
+  /*
+   * (nonavadoc)
+   * @see com.dailydealsbox.web.service.SpiderService#get(java.lang.String)
+   */
+  @Override
+  public Product get(String url) {
+    if (Strings.isNullOrEmpty(url)) { return null; }
+
+    URI uri = UriComponentsBuilder.fromUriString(url).build().encode().toUri();
+    String host = uri.getHost();
+
+    Class<? extends ProductPage> clazz = this.getParserByHost(host);
+    if (clazz == null) {
+      logger.error("No parser loaded for host: {}", host);
+      return null;
+    }
+
+    ProductPage parser = null;
+    try {
+      parser = clazz.newInstance();
+      parser.setUrl(url);
+      parser.setDoc();
+      parser.setPrice();
+      return new Product(parser);
+    } catch (Exception e) {
+      //e.printStackTrace();
+      return null;
+    }
+
   }
 }

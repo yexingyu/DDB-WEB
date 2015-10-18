@@ -29,6 +29,7 @@ import org.hibernate.annotations.Type;
 import com.dailydealsbox.web.configuration.BaseEnum;
 import com.dailydealsbox.web.configuration.BaseEnum.CURRENCY;
 import com.dailydealsbox.web.configuration.GenericConfiguration;
+import com.dailydealsbox.web.parser.ProductPage;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -129,6 +130,20 @@ public class Product extends BaseEntityModel {
   @JoinTable(name = "relation_product_tag", joinColumns = { @JoinColumn(name = "product_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   private Set<ProductTag> tags;
+
+  /**
+   * Contructor
+   */
+  public Product() {}
+
+  /**
+   * Contructor
+   *
+   * @param parser
+   */
+  public Product(ProductPage parser) {
+    this.setCurrentPrice(parser.getPrice());
+  }
 
   /**
    * getDealPrice

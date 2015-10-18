@@ -22,6 +22,8 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +49,9 @@ import com.dailydealsbox.web.database.repository.ProductRepository;
 import com.dailydealsbox.web.database.repository.ProductReviewRepository;
 import com.dailydealsbox.web.database.repository.ProductTagRepository;
 import com.dailydealsbox.web.service.ProductService;
+import com.dailydealsbox.web.service.SpiderService;
 import com.dailydealsbox.web.service.StoreService;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * @author x_ye
@@ -55,6 +59,7 @@ import com.dailydealsbox.web.service.StoreService;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ProductServiceImpl implements ProductService {
+  public Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
   @Resource
   private ProductRepository       repo;
@@ -66,6 +71,8 @@ public class ProductServiceImpl implements ProductService {
   private ProductTagRepository    repoTag;
   @Resource
   private StoreService            storeService;
+  @Resource
+  private SpiderService           spiderService;
 
   /*
    * (non-Javadoc)
@@ -87,32 +94,67 @@ public class ProductServiceImpl implements ProductService {
     this.fixTags(product);
 
     // fee
-    for (ProductFee o : product.getFees()) {
-      o.setProduct(product);
+    if (product.getFees() != null) {
+      for (ProductFee o : product.getFees()) {
+        if (o.getProduct() == null) {
+          o.setProduct(product);
+        }
+      }
     }
+
     // image
-    for (ProductImage o : product.getImages()) {
-      o.setProduct(product);
+    if (product.getImages() != null) {
+      for (ProductImage o : product.getImages()) {
+        if (o.getProduct() == null) {
+          o.setProduct(product);
+        }
+      }
     }
+
     // text
-    for (ProductText o : product.getTexts()) {
-      o.setProduct(product);
+    if (product.getTexts() != null) {
+      for (ProductText o : product.getTexts()) {
+        if (o.getProduct() == null) {
+          o.setProduct(product);
+        }
+      }
     }
+
     // price
-    for (ProductPrice o : product.getPrices()) {
-      o.setProduct(product);
+    if (product.getPrices() != null) {
+      product.getPrices().forEach(o -> {
+        if (o.getProduct() == null) {
+          o.setProduct(product);
+          System.out.println("set product for " + o);
+        }
+      });
     }
+
     // tax
-    for (ProductTax o : product.getTaxes()) {
-      o.setProduct(product);
+    if (product.getTaxes() != null) {
+      for (ProductTax o : product.getTaxes()) {
+        if (o.getProduct() == null) {
+          o.setProduct(product);
+        }
+      }
     }
+
     // link
-    for (ProductLink o : product.getLinks()) {
-      o.setProduct(product);
+    if (product.getLinks() != null) {
+      for (ProductLink o : product.getLinks()) {
+        if (o.getProduct() == null) {
+          o.setProduct(product);
+        }
+      }
     }
+
     // option
-    for (ProductOption o : product.getOptions()) {
-      o.setProduct(product);
+    if (product.getOptions() != null) {
+      for (ProductOption o : product.getOptions()) {
+        if (o.getProduct() == null) {
+          o.setProduct(product);
+        }
+      }
     }
 
     return product;
@@ -126,13 +168,15 @@ public class ProductServiceImpl implements ProductService {
    */
   private Product fixTags(Product product) {
     Set<ProductTag> tags = product.getTags();
-    product.setTags(new HashSet<ProductTag>());
-    for (ProductTag tag : tags) {
-      ProductTag tagDB = this.repoTag.findFirstByValue(tag.getValue());
-      if (tagDB != null) {
-        product.getTags().add(tagDB);
-      } else {
-        product.getTags().add(tag);
+    if (tags != null) {
+      product.setTags(new HashSet<ProductTag>());
+      for (ProductTag tag : tags) {
+        ProductTag tagDB = this.repoTag.findFirstByValue(tag.getValue());
+        if (tagDB != null) {
+          product.getTags().add(tagDB);
+        } else {
+          product.getTags().add(tag);
+        }
       }
     }
     return product;
@@ -473,6 +517,39 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public Page<Product> search(String keyword, Pageable pageable) throws Exception {
     return repo.search(keyword, pageable);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see com.dailydealsbox.web.service.ProductService#updateProductBySpider()
+   */
+  @Override
+  public void updateProductBySpider() {
+    Set<Product> products;
+    try {
+      products = this.listAll(null, null, null, null, null, false, false);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return;
+    }
+
+    for (Product product : products) {
+      Product productFromSpider = spiderService.get(product.getUrl());
+      if (productFromSpider == null || productFromSpider.getCurrentPrice() <= 0) {
+        continue;
+      }
+
+      ProductPrice price = new ProductPrice(productFromSpider.getCurrentPrice());
+      product.setCurrentPrice(productFromSpider.getCurrentPrice());
+      if (product.getPrices() == null) {
+        product.setPrices(ImmutableSet.of(price));
+      } else {
+        product.getPrices().add(price);
+      }
+
+      this.update(product);
+      logger.info("Update price for product(id: {}) to price: {}", product.getId(), product.getCurrentPrice());
+    }
   }
 
 }

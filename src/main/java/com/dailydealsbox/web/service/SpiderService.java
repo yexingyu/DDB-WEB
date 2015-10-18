@@ -12,10 +12,18 @@ public interface SpiderService {
 
   /**
    * getProduct
-   * 
+   *
    * @param url
    * @return
    * @throws Exception
    */
   public Product getProduct(String url) throws Exception;
+
+  /**
+   * get
+   *
+   * @param url
+   * @return
+   */
+  public Product get(String url);
 }

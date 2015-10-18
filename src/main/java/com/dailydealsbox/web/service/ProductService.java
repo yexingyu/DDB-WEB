@@ -148,4 +148,9 @@ public interface ProductService {
    * @return
    */
   public Page<Product> search(String keyword, Pageable pageable) throws Exception;
+
+  /**
+   * updateProductBySpider
+   */
+  public void updateProductBySpider();
 }

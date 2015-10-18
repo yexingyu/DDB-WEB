@@ -42,6 +42,20 @@ public class ProductPrice extends BaseEntityModel {
   private Product product;
 
   /**
+   * Constructor
+   */
+  public ProductPrice() {}
+
+  /**
+   * Constructor
+   *
+   * @param value
+   */
+  public ProductPrice(double value) {
+    this.setValue(value);
+  }
+
+  /**
    * validate
    *
    * @return
@@ -59,8 +73,7 @@ public class ProductPrice extends BaseEntityModel {
   }
 
   /**
-   * @param product
-   *          the product to set
+   * @param product the product to set
    */
   public void setProduct(Product product) {
     this.product = product;
@@ -74,8 +87,7 @@ public class ProductPrice extends BaseEntityModel {
   }
 
   /**
-   * @param value
-   *          the value to set
+   * @param value the value to set
    */
   public void setValue(double value) {
     this.value = value;
@@ -89,9 +101,7 @@ public class ProductPrice extends BaseEntityModel {
   }
 
   /**
-   * @param compare
-   *          value
-   *          the value to set
+   * @param compare value the value to set
    */
   public void setCompareValue(double compare_value) {
     this.compare_value = compare_value;
