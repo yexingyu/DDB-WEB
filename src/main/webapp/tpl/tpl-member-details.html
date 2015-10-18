@@ -46,18 +46,20 @@
                     <div class="description">
                          <h3><span class="glyphicon glyphicon-plus"></span>Following Stores: </h3>
                     <hr />                         
-                     <p ng-repeat="store in member.stores">
-                     {{store.website}}
-
-                         </p>
+                     <span ng-repeat="store in member.stores">
+	                     <a href="#/all?store_id={{store.id}}" >
+	                     {{store.website}}
+	                     </a>
+                     </span>
                     </div> 
                     <div class="description">
                          <h3><span class="glyphicon glyphicon-tag"></span>Following Tags : </h3>
                     <hr />                         
-                     <p ng-repeat="tag in member.tags">
-                     {{tag.value}}
-
-                         </p>
+                     <span ng-repeat="tag in member.tags">
+	                     <a href="#/all?tags={{tag.value}}">
+	                     {{tag.value}}
+	                     </a>
+                     </span>
                     </div>                           
                     <div class="description">
                     <h3> Social Links: </h3>
