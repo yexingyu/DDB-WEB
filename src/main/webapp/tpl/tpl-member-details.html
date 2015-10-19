@@ -45,12 +45,16 @@
                     </div>     
                     <div class="description">
                          <h3><span class="glyphicon glyphicon-plus"></span>Following Stores: </h3>
-                    <hr />                         
-                     <span ng-repeat="store in member.stores">
-	                     <a href="#/all?store_id={{store.id}}" ><span><img ng-src="./images/favicon/{{store.favicon}}"></span>
-	                     {{store.website}}
-	                     </a>
-                     </span>
+                    <hr />
+				    <div class="row">
+				            <div class="col-sm-3"ng-repeat="store in member.stores" >
+				            <a href="#/all?store_id={{store.id}}" ><span><img ng-src="./images/favicon/{{store.favicon}}"></span>
+				            {{store.website}}
+				            </a>
+				            <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-plus" ng-click="follow(store)" ng-if="!store.followed">Follow</button>
+				            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollow(store)" ng-if="store.followed">Follow</button>
+				        </div>
+				        </div>                     
                     </div> 
                     <div class="description">
                          <h3><span class="glyphicon glyphicon-tag"></span>Following Tags : </h3>
