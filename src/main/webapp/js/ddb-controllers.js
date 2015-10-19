@@ -265,18 +265,32 @@ angular.module('ddbApp.controllers', ['angular-md5'])
     /*
      * ProductDetailsCtrl definition
      */
-    .controller('ProductDetailsCtrl', ['$scope', '$location', '$routeParams', 'ProductService', 'ProductModel', 'TagModel', function ($scope, $location, $routeParams, ProductService, ProductModel,TagModel) {
+    .controller('ProductDetailsCtrl', ['$scope', '$location', '$routeParams', 'ProductService','ProfileService', 'ProductModel', 'TagModel', function ($scope, $location, $routeParams, ProductService,ProfileService, ProductModel,TagModel) {
         var id = $routeParams.id;
         $scope.item = {};
         $scope.actions = {
             'like': ProductModel.like, 'unlike': ProductModel.unlike, 'review': ProductModel.review, 'reviewHoveringOver': ProductModel.reviewHoveringOver
         };
 
+        $scope.me = {};
+        ProfileService.profile(function (response) {
+            if (response.status === 'SUCCESS') {
+                $scope.me = response.data;
+                console.log($scope.me.tags);
+            }
+        });
+        
+        
         // retrieve product details
         ProductService.get(id, function (response) {
             if (response.status == 'SUCCESS') {
                 angular.extend($scope.item, response.data);
                 ProductModel.fixLikeAndReviewOnProduct($scope.item);
+                console.log(response.data);
+                
+                angular.forEach(response.data.tags, function (tag) {
+	                TagModel.fixFollowed(tag, $scope.me.tags);
+                });
             }
         });
 

@@ -175,12 +175,12 @@ angular.module('ddbApp.models', [])
      */
     .factory('TagModel', ['$rootScope', '$route', 'ProductService', 'TagService', 'LoginService', function ($rootScope, $route, ProductService, TagService, LoginService) {
         return {
-            fixFollowed: function (store, followedTags) {
-                store.followed = false;
+            fixFollowed: function (tag, followedTags) {
+                tag.followed = false;
                 if (followedTags !== undefined && followedTags.length > 0) {
                     angular.forEach(followedTags, function (followedTag) {
-                        if (store.id === followedTag.id) {
-                            store['followed'] = true;
+                        if (tag.id === followedTag.id) {
+                            tag['followed'] = true;
                             return;
                         }
                     });

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,7 +25,6 @@ import com.dailydealsbox.web.base.GenericResponseData;
 import com.dailydealsbox.web.configuration.BaseEnum.RESPONSE_STATUS;
 import com.dailydealsbox.web.database.model.Member;
 import com.dailydealsbox.web.database.model.ProductTag;
-import com.dailydealsbox.web.database.model.Store;
 import com.dailydealsbox.web.service.AuthorizationService;
 import com.dailydealsbox.web.service.MemberService;
 import com.dailydealsbox.web.service.ProductTagService;
@@ -51,26 +51,26 @@ public class TagController {
    * @param request
    * @return
    */
-  @RequestMapping(value = "id/{storeId}/follow", method = { RequestMethod.POST })
-  @ApiOperation(value = "follow store",
+  @RequestMapping(value = "id/{tagId}/followTag", method = { RequestMethod.POST })
+  @ApiOperation(value = "follow tag",
     response = GenericResponseData.class,
     responseContainer = "Map",
     produces = "application/json",
-    notes = "Follow store details.")
+    notes = "Follow tag details.")
   @DDBAuthorization
   public GenericResponseData follow(
-      @ApiParam(value = "store id", required = true) @PathVariable("storeId") int storeId,
+      @ApiParam(value = "tag id", required = true) @PathVariable("tagId") int tagId,
       HttpServletRequest request) {
     AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
     Member me = this.memberService.get(token.getMemberId());
-    if (me.getStores() == null) {
-      me.setStores(new HashSet<Store>());
+    if (me.getTags() == null) {
+      me.setTags(new HashSet<ProductTag>());
     }
 
-    // store is following
+    // tag is following
     boolean following = false;
-    for (Store s : me.getStores()) {
-      if (s.getId() == storeId) {
+    for (ProductTag t : me.getTags()) {
+      if (t.getId() == tagId) {
         following = true;
         break;
       }
@@ -78,7 +78,7 @@ public class TagController {
 
     // if not following
     if (!following) {
-      ProductTag tag = this.tagService.get(storeId);
+      ProductTag tag = this.tagService.get(tagId);
       if (tag == null) { return GenericResponseData.newInstance(RESPONSE_STATUS.ERROR, "001"); }
 
       // update following
@@ -87,7 +87,51 @@ public class TagController {
 
     }
 
-    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getStores());
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getTags());
+  }
+
+  /**
+   * unfollow
+   *
+   * @param tagId
+   * @param request
+   * @return
+   */
+  @RequestMapping(value = "id/{tagId}/follow", method = { RequestMethod.DELETE })
+  @ApiOperation(value = "unfollow tag",
+    response = GenericResponseData.class,
+    responseContainer = "Map",
+    produces = "application/json",
+    notes = "Unfollow tag details.")
+  @DDBAuthorization
+  public GenericResponseData unfollow(
+      @ApiParam(value = "tag id", required = true) @PathVariable("tagId") int tagId,
+      HttpServletRequest request) {
+    AuthorizationToken token = (AuthorizationToken) request.getAttribute(BaseAuthorization.TOKEN);
+    Member me = this.memberService.get(token.getMemberId());
+    if (me.getTags() == null || me.getTags().isEmpty()) { return GenericResponseData.newInstance(
+        RESPONSE_STATUS.ERROR, "001"); }
+
+    boolean following = false;
+    Iterator<ProductTag> it = me.getTags().iterator();
+    while (it.hasNext()) {
+      ProductTag tag = it.next();
+      if (tag.getId() == tagId) {
+        it.remove();
+        following = true;
+      }
+    }
+
+    // if following
+    if (following) {
+      // update following
+      me = this.memberService.update(me);
+
+      // decrease count_followings
+      //this.tagService.decreaseCountFollowings(tagId);
+    }
+
+    return GenericResponseData.newInstance(RESPONSE_STATUS.SUCCESS, me.getTags());
   }
 
 }
