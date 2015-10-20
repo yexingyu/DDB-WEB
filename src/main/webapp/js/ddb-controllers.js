@@ -280,7 +280,17 @@ angular.module('ddbApp.controllers', ['angular-md5'])
             }
         });
         
+        $scope.loading = function () {
+            ProfileService.profile(function (response) {
+                if (response.status === 'SUCCESS') {
+                    $scope.me = response.data;
+                } else {
+                    $scope.me = {};
+                }
+            });
+        };        
         
+        $scope.loading();
         // retrieve product details
         ProductService.get(id, function (response) {
             if (response.status == 'SUCCESS') {

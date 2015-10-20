@@ -41,6 +41,7 @@ import com.dailydealsbox.web.parser.AmazonCa;
 import com.dailydealsbox.web.parser.BananaRepublicCa;
 import com.dailydealsbox.web.parser.BrownsShoesCom;
 import com.dailydealsbox.web.parser.CanadianTireCa;
+import com.dailydealsbox.web.parser.EbayCa;
 import com.dailydealsbox.web.parser.EbayCom;
 import com.dailydealsbox.web.parser.GapCanadaCa;
 import com.dailydealsbox.web.parser.HomeDepotCa;
@@ -61,8 +62,6 @@ import com.dailydealsbox.web.service.SpiderService;
 public class SpiderServiceImpl implements SpiderService {
   private Map<String, String> HTML_PATH_BESTBUY   = new HashMap<>();
   private Map<String, String> HTML_PATH_WALMARTCA = new HashMap<>();
-  private Map<String, String> HTML_PATH_EBAYCOM   = new HashMap<>();
-  private Map<String, String> HTML_PATH_EBAYCA    = new HashMap<>();
 
   private Map<String, String> HTML_PATH_COSTCOCA  = new HashMap<>();
   private Map<String, String> HTML_PATH_NEWEGGCA  = new HashMap<>();
@@ -75,9 +74,6 @@ public class SpiderServiceImpl implements SpiderService {
     String keyDescriptionHtmlPath;
     String keyImageHtmlPath;
     String keyPriceHtmlPath;
-    String keyPriceHtmlPath2;
-    String keyShippingHtmlPath;
-    String keyImportHtmlPath;
 
     // HTML_PATH_BESTBUY
     this.HTML_PATH_BESTBUY.put("name", "SPAN#ctl00_CP_ctl00_PD_lblProductTitle");
@@ -90,23 +86,6 @@ public class SpiderServiceImpl implements SpiderService {
     this.HTML_PATH_WALMARTCA.put("description", "P.description");
     this.HTML_PATH_WALMARTCA.put("image", "DIV.centered-img-wrap");
     this.HTML_PATH_WALMARTCA.put("price", "div.pricing-shipping");
-
-    //HTML_PATH_EBAYCA
-    keyNameHtmlPath = "H1#itemTitle";
-    keyDescriptionHtmlPath = "DIV.itemAttr";
-    keyImageHtmlPath = "IMG#icImg";
-    keyPriceHtmlPath = "SPAN#mm-saleDscPrc";
-    keyPriceHtmlPath2 = "SPAN#prcIsum";
-    keyShippingHtmlPath = "SPAN#fshippingCost";
-    keyImportHtmlPath = "SPAN#impchCost";
-
-    this.HTML_PATH_EBAYCA.put("name", keyNameHtmlPath);
-    this.HTML_PATH_EBAYCA.put("description", keyDescriptionHtmlPath);
-    this.HTML_PATH_EBAYCA.put("image", keyImageHtmlPath);
-    this.HTML_PATH_EBAYCA.put("price", keyPriceHtmlPath);
-    this.HTML_PATH_EBAYCA.put("price2", keyPriceHtmlPath2);
-    this.HTML_PATH_EBAYCA.put("shipping", keyShippingHtmlPath);
-    this.HTML_PATH_EBAYCA.put("import", keyImportHtmlPath);
 
     //HTML_PATH_AMAZONCA
     keyNameHtmlPath = "span#productTitle";
@@ -180,8 +159,8 @@ public class SpiderServiceImpl implements SpiderService {
     String host = oUrl.getHost();
     switch (host) {
       case "www.ebay.ca":
-        this.getProductFromEbayCA(oUrl, product, LANGUAGE.EN);
-        this.getProductFromEbayCA(oUrl, product, LANGUAGE.FR);
+        this.getProductFromEbayCa(url, product, LANGUAGE.EN);
+        this.getProductFromEbayCa(url, product, LANGUAGE.FR);
         break;
       case "www.ebay.com":
         this.getProductFromEbayCom(url, product, LANGUAGE.EN);
@@ -260,10 +239,10 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromStaplesCa(url, product, LANGUAGE.FR);
         break;
       case "shop.nordstrom.com":
-          this.getProductFromNordStromCom(url, product, LANGUAGE.EN);
-          this.getProductFromNordStromCom(url, product, LANGUAGE.FR);
-          break;        
-        
+        this.getProductFromNordStromCom(url, product, LANGUAGE.EN);
+        this.getProductFromNordStromCom(url, product, LANGUAGE.FR);
+        break;
+
       case "www.gapcanada.ca":
         this.getProductFromGapCanadaCa(url, product, LANGUAGE.EN);
         this.getProductFromGapCanadaCa(url, product, LANGUAGE.FR);
@@ -282,109 +261,70 @@ public class SpiderServiceImpl implements SpiderService {
    * @param product
    * @param language
    */
-  private Product getProductFromEbayCA(URL url, Product product, LANGUAGE language)
+  private Product getProductFromEbayCa(String url, Product product, LANGUAGE language)
       throws Exception {
+    //product page info
+    EbayCa ebayCaPage = new EbayCa();
+    ebayCaPage.setActive(true);
+    ebayCaPage.setStoreId();
+    ebayCaPage.setUrl(url);
+    ebayCaPage.setExpiration();
+
+    ebayCaPage.setDoc();
+    ebayCaPage.setKey();
+    ebayCaPage.setName();
+    ebayCaPage.setDescription();
+    ebayCaPage.setImage();
+    ebayCaPage.setPrice();
+
     //set product url
-    product.setUrl(url.toString());
-    //set product status
-    product.setDisabled(false);
+    product.setUrl(ebayCaPage.getUrl());
+
     //set product key
-    product.setKey(this.getProductKeyFromEbayCA(url));
+    product.setKey(ebayCaPage.getKey());
+
+    //set product status
+    product.setDisabled(!ebayCaPage.getActive());
 
     //set product store
     Store store = new Store();
-    int storeID = 2;
-    store.setId(storeID);
+    store.setId(ebayCaPage.getStoreId());
     product.setStore(store);
 
-    //set product expired date
-    Calendar now = Calendar.getInstance();
-    int weekday = now.get(Calendar.DAY_OF_WEEK);
-    if (weekday != Calendar.THURSDAY) {
-      // calculate how much to add
-      // the 5 is the difference between Saturday and Thursday
-      int days = (Calendar.SATURDAY - weekday + 5);
-      now.add(Calendar.DAY_OF_YEAR, days);
-    }
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-    // language switch
-    String urlStr = url.toString();
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-    Document doc;
-    try {
-      doc = Jsoup.connect(urlStr).get();
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
     }
 
     //set product fees
-    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
-    PRODUCT_FEE_TITLE feeImport = PRODUCT_FEE_TITLE.IMPORT;
-    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
+
     if (product.getFees().isEmpty()) {
-      ProductFee fee1 = new ProductFee();
-      fee1.setTitle(feeShipping);
-      fee1.setType(feeType);
-      fee1.setValue(0);
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
 
-      ProductFee fee2 = new ProductFee();
-      fee2.setTitle(feeImport);
-      fee2.setType(feeType);
-      fee2.setValue(0);
-
-      NumberFormat numberFormat;
-      numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-
-      String fee1String = doc.select(this.HTML_PATH_EBAYCOM.get("shipping")).first().text();
-      String fee2String = doc.select(this.HTML_PATH_EBAYCOM.get("import")).first().text();
-      double fee1Double = 0.00;
-      double fee2Double = 0.00;
-      try {
-        if (fee1String.equals("FREE")) {
-          fee1Double = 0.00;
-        } else {
-          Number fee1Number = numberFormat.parse(StringUtils.remove(fee1String, "$"));
-          fee1Double = fee1Number.doubleValue();
-        }
-        if (fee2String.equals("")) {
-          fee2Double = 0.00;
-        } else {
-          Number fee2Number = numberFormat.parse(StringUtils.remove(fee2String, "$"));
-          fee2Double = fee2Number.doubleValue();
-        }
-
-        fee1.setValue(fee1Double);
-        fee2.setValue(fee2Double);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-
-      product.getFees().add(fee1);
-      product.getFees().add(fee2);
+      product.getFees().add(shipping);
     }
 
+    //set product price
     if (product.getPrices().isEmpty()) {
-      String productPrice = "";
-      Element productPriceElement1 = doc.select(this.HTML_PATH_EBAYCOM.get("price")).first();
-      Element productPriceElement2 = doc.select(this.HTML_PATH_EBAYCOM.get("price2")).first();
-      if (productPriceElement1 != null) {
-        productPrice = productPriceElement1.text();
-      }
-      if (productPriceElement2 != null) {
-        productPrice = productPriceElement2.text();
-      }
-
-      Number number;
-      NumberFormat numberFormat;
-      numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
       try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "C $"));
-        double p = number.doubleValue();
+        //set price
         ProductPrice price = new ProductPrice();
-        price.setValue(p);
+        price.setValue(ebayCaPage.getPrice());
+        //add price to product
         product.getPrices().add(price);
-        product.setCurrentPrice(p);
+        product.setCurrentPrice(ebayCaPage.getPrice());
         product.setCurrency(CURRENCY.CAD);
       } catch (Exception e) {
         e.printStackTrace();
@@ -393,13 +333,15 @@ public class SpiderServiceImpl implements SpiderService {
 
     ProductText text = new ProductText();
     text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATH_EBAYCOM.get("name")).first().text());
-    text.setDescription(doc.select(this.HTML_PATH_EBAYCOM.get("description")).text());
+    text.setName(ebayCaPage.getName());
+    text.setDescription(ebayCaPage.getDescription());
     product.getTexts().add(text);
 
     if (product.getImages().isEmpty()) {
+      //set image
       ProductImage image = new ProductImage();
-      image.setUrl(doc.select(this.HTML_PATH_EBAYCOM.get("image")).first().attr("src"));
+      image.setUrl(ebayCaPage.getImage());
+      //add image to product
       product.getImages().add(image);
     }
 
@@ -721,30 +663,6 @@ public class SpiderServiceImpl implements SpiderService {
   private String getProductKeyFromCostcoCA(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\.(\\d+)\\.html";
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile(pattern);
-
-    // Now create matcher object.
-    Matcher m = r.matcher(url.toString());
-    if (m.find()) {
-      return m.group(1);
-
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * getProductKeyFromEbayCA
-   *
-   * @param url
-   * @return
-   * @throws Exception
-   */
-  private String getProductKeyFromEbayCA(URL url) throws Exception {
-    // String to be scanned to find the pattern.
-    String pattern = "\\/(\\d+)";
 
     // Create a Pattern object
     Pattern r = Pattern.compile(pattern);
@@ -2288,91 +2206,91 @@ public class SpiderServiceImpl implements SpiderService {
 
     return product;
   }
-  
+
   private Product getProductFromNordStromCom(String url, Product product, LANGUAGE language)
-	      throws Exception {
-	    //product page info
-	    NordStromCom nordStromComPage = new NordStromCom();
-	    nordStromComPage.setActive(true);
-	    nordStromComPage.setStoreId();
-	    nordStromComPage.setUrl(url);
-	    nordStromComPage.setExpiration();
+      throws Exception {
+    //product page info
+    NordStromCom nordStromComPage = new NordStromCom();
+    nordStromComPage.setActive(true);
+    nordStromComPage.setStoreId();
+    nordStromComPage.setUrl(url);
+    nordStromComPage.setExpiration();
 
-	    nordStromComPage.setDoc();
-	    nordStromComPage.setKey();
-	    nordStromComPage.setName();
-	    nordStromComPage.setDescription();
-	    nordStromComPage.setImage();
-	    nordStromComPage.setPrice();
+    nordStromComPage.setDoc();
+    nordStromComPage.setKey();
+    nordStromComPage.setName();
+    nordStromComPage.setDescription();
+    nordStromComPage.setImage();
+    nordStromComPage.setPrice();
 
-	    //set product url
-	    product.setUrl(nordStromComPage.getUrl());
+    //set product url
+    product.setUrl(nordStromComPage.getUrl());
 
-	    //set product key
-	    product.setKey(nordStromComPage.getKey());
+    //set product key
+    product.setKey(nordStromComPage.getKey());
 
-	    //set product status
-	    product.setDisabled(!nordStromComPage.getActive());
+    //set product status
+    product.setDisabled(!nordStromComPage.getActive());
 
-	    //set product store
-	    Store store = new Store();
-	    store.setId(nordStromComPage.getStoreId());
-	    product.setStore(store);
+    //set product store
+    Store store = new Store();
+    store.setId(nordStromComPage.getStoreId());
+    product.setStore(store);
 
-	    //set product tax
-	    if (product.getTaxes().isEmpty()) {
-	      ProductTax federal = new ProductTax();
-	      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
-	      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-	      ProductTax provincial = new ProductTax();
-	      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
-	      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-	      product.getTaxes().add(federal);
-	      product.getTaxes().add(provincial);
-	    }
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
 
-	    //set product fees
+    //set product fees
 
-	    if (product.getFees().isEmpty()) {
-	      ProductFee shipping = new ProductFee();
-	      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
-	      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
-	      shipping.setValue(0.00);
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
 
-	      product.getFees().add(shipping);
-	    }
+      product.getFees().add(shipping);
+    }
 
-	    //set product price
-	    if (product.getPrices().isEmpty()) {
-	      try {
-	        //set price
-	        ProductPrice price = new ProductPrice();
-	        price.setValue(nordStromComPage.getPrice());
-	        //add price to product
-	        product.getPrices().add(price);
-	        product.setCurrentPrice(nordStromComPage.getPrice());
-	        product.setCurrency(CURRENCY.CAD);
-	      } catch (Exception e) {
-	        e.printStackTrace();
-	      }
-	    }
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(nordStromComPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(nordStromComPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
 
-	    ProductText text = new ProductText();
-	    text.setLanguage(language);
-	    text.setName(nordStromComPage.getName());
-	    text.setDescription(nordStromComPage.getDescription());
-	    product.getTexts().add(text);
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(nordStromComPage.getName());
+    text.setDescription(nordStromComPage.getDescription());
+    product.getTexts().add(text);
 
-	    if (product.getImages().isEmpty()) {
-	      //set image
-	      ProductImage image = new ProductImage();
-	      image.setUrl(nordStromComPage.getImage());
-	      //add image to product
-	      product.getImages().add(image);
-	    }
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(nordStromComPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
 
-	    return product;
-	  }  
+    return product;
+  }
 }
