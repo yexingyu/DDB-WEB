@@ -74,6 +74,9 @@ public class SpiderServiceImpl implements SpiderService {
     String keyDescriptionHtmlPath;
     String keyImageHtmlPath;
     String keyPriceHtmlPath;
+    String keyPriceHtmlPath2;
+    String keyShippingHtmlPath;
+    String keyImportHtmlPath;
 
     // HTML_PATH_BESTBUY
     this.HTML_PATH_BESTBUY.put("name", "SPAN#ctl00_CP_ctl00_PD_lblProductTitle");
