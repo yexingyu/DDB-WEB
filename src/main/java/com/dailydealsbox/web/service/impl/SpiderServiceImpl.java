@@ -51,6 +51,7 @@ import com.dailydealsbox.web.parser.SephoraCom;
 import com.dailydealsbox.web.parser.SportsExpertsCa;
 import com.dailydealsbox.web.parser.StaplesCa;
 import com.dailydealsbox.web.parser.TheBayCa;
+import com.dailydealsbox.web.parser.WalmartCa;
 import com.dailydealsbox.web.parser.ZaraCom;
 import com.dailydealsbox.web.service.SpiderService;
 
@@ -60,11 +61,9 @@ import com.dailydealsbox.web.service.SpiderService;
 @Service
 @Transactional
 public class SpiderServiceImpl implements SpiderService {
-  private Map<String, String> HTML_PATH_BESTBUY   = new HashMap<>();
-  private Map<String, String> HTML_PATH_WALMARTCA = new HashMap<>();
-
-  private Map<String, String> HTML_PATH_COSTCOCA  = new HashMap<>();
-  private Map<String, String> HTML_PATH_NEWEGGCA  = new HashMap<>();
+  private Map<String, String> HTML_PATH_BESTBUY  = new HashMap<>();
+  private Map<String, String> HTML_PATH_COSTCOCA = new HashMap<>();
+  private Map<String, String> HTML_PATH_NEWEGGCA = new HashMap<>();
 
   /*
    * Constructor
@@ -83,12 +82,6 @@ public class SpiderServiceImpl implements SpiderService {
     this.HTML_PATH_BESTBUY.put("description", "DIV.tab-overview-item");
     this.HTML_PATH_BESTBUY.put("image", "IMG#ctl00_CP_ctl00_PD_PI_IP");
     this.HTML_PATH_BESTBUY.put("price", "SPAN.amount");
-
-    //HTML_PATH_WALMARTCA
-    this.HTML_PATH_WALMARTCA.put("name", "DIV#product-desc");
-    this.HTML_PATH_WALMARTCA.put("description", "P.description");
-    this.HTML_PATH_WALMARTCA.put("image", "DIV.centered-img-wrap");
-    this.HTML_PATH_WALMARTCA.put("price", "div.pricing-shipping");
 
     //HTML_PATH_AMAZONCA
     keyNameHtmlPath = "span#productTitle";
@@ -175,8 +168,8 @@ public class SpiderServiceImpl implements SpiderService {
         this.getProductFromBestbuyCA(oUrl, product, LANGUAGE.FR);
         break;
       case "www.walmart.ca":
-        this.getProductFromWalmartCA(oUrl, product, LANGUAGE.EN);
-        this.getProductFromWalmartCA(oUrl, product, LANGUAGE.FR);
+        this.getProductFromWalmartCa(url, product, LANGUAGE.EN);
+        this.getProductFromWalmartCa(url, product, LANGUAGE.FR);
         break;
       case "www.costco.ca":
         this.getProductFromCostcoCA(oUrl, product, LANGUAGE.EN);
@@ -1887,101 +1880,73 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
-  private Product getProductFromWalmartCA(URL url, Product product, LANGUAGE language)
+  private Product getProductFromWalmartCa(String url, Product product, LANGUAGE language)
       throws Exception {
+    //product page info
+    WalmartCa walmartCaPage = new WalmartCa();
+    walmartCaPage.setActive(true);
+    walmartCaPage.setStoreId();
+    walmartCaPage.setUrl(url);
+    walmartCaPage.setExpiration();
+
+    walmartCaPage.setDoc();
+    walmartCaPage.setKey();
+    walmartCaPage.setName();
+    walmartCaPage.setDescription();
+    walmartCaPage.setImage();
+    walmartCaPage.setPrice();
+
+    walmartCaPage.setRating();
+    walmartCaPage.setReviewsCount();
+
     //set product url
-    product.setUrl(url.toString());
-    //set product status
-    product.setDisabled(false);
+    product.setUrl(walmartCaPage.getUrl());
+
     //set product key
-    product.setKey(this.getProductKeyFromWalmartCA(url));
+    product.setKey(walmartCaPage.getKey());
+
+    //set product status
+    product.setDisabled(!walmartCaPage.getActive());
 
     //set product store
     Store store = new Store();
-    int storeID = 1;
-    store.setId(storeID);
+    store.setId(walmartCaPage.getStoreId());
     product.setStore(store);
 
-    //set product expired date
-    Calendar now = Calendar.getInstance();
-    int weekday = now.get(Calendar.DAY_OF_WEEK);
-    if (weekday != Calendar.THURSDAY) {
-      // calculate how much to add
-      // the 5 is the difference between Saturday and Thursday
-      int days = (Calendar.SATURDAY - weekday + 5);
-      now.add(Calendar.DAY_OF_YEAR, days);
-    }
-
     //set product tax
-    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
-    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
-    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-
     if (product.getTaxes().isEmpty()) {
-      ProductTax tax1 = new ProductTax();
-      tax1.setTitle(federal);
-      tax1.setType(percentage);
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-      ProductTax tax2 = new ProductTax();
-      tax2.setTitle(provincial);
-      tax2.setType(percentage);
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
 
-      product.getTaxes().add(tax1);
-      product.getTaxes().add(tax2);
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
     }
 
-    // language switch
-    String urlStr = url.toString();
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr/", "/en/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en/", "/fr/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
-    Document doc;
-    try {
-      doc = Jsoup.connect(urlStr).get();
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    }
     //set product fees
-    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
-    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
-    if (product.getFees().isEmpty()) {
-      ProductFee fee1 = new ProductFee();
-      fee1.setTitle(feeShipping);
-      fee1.setType(feeType);
-      fee1.setValue(0);
 
-      product.getFees().add(fee1);
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
     }
 
-    //set product tax
+    //set product price
     if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_WALMARTCA.get("price")).first()
-          .select("div.microdata-price").first().select("span").first().text();
-      Number number;
       try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
-        double p = number.doubleValue();
+        //set price
         ProductPrice price = new ProductPrice();
-        price.setValue(p);
+        price.setValue(walmartCaPage.getPrice());
+        //add price to product
         product.getPrices().add(price);
-        product.setCurrentPrice(p);
+        product.setCurrentPrice(walmartCaPage.getPrice());
         product.setCurrency(CURRENCY.CAD);
       } catch (Exception e) {
         e.printStackTrace();
@@ -1990,16 +1955,24 @@ public class SpiderServiceImpl implements SpiderService {
 
     ProductText text = new ProductText();
     text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATH_WALMARTCA.get("name")).first().select("h1").first()
-        .text());
-    text.setDescription(doc.select(this.HTML_PATH_WALMARTCA.get("description")).first().text());
+    text.setName(walmartCaPage.getName());
+    text.setDescription(walmartCaPage.getDescription());
     product.getTexts().add(text);
 
+    if (product.getLinks().isEmpty()) {
+      ProductLink link = new ProductLink();
+      link.setUrl(url);
+      link.setName("amazon.ca");
+      link.setRating(walmartCaPage.getRating());
+      link.setReviewNumber(walmartCaPage.getReviewsCount());
+      product.getLinks().add(link);
+    }
+
     if (product.getImages().isEmpty()) {
+      //set image
       ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s", url.getProtocol(),
-          doc.select(this.HTML_PATH_WALMARTCA.get("image")).first().select("img.image").first()
-              .attr("src")));
+      image.setUrl(walmartCaPage.getImage());
+      //add image to product
       product.getImages().add(image);
     }
 
