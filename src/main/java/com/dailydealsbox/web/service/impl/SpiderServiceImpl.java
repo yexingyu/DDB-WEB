@@ -73,22 +73,6 @@ public class SpiderServiceImpl implements SpiderService {
     String keyDescriptionHtmlPath;
     String keyImageHtmlPath;
     String keyPriceHtmlPath;
-    String keyPriceHtmlPath2;
-    String keyShippingHtmlPath;
-    String keyImportHtmlPath;
-
-    // HTML_PATH_BESTBUY
-    this.HTML_PATH_BESTBUY.put("name", "SPAN#ctl00_CP_ctl00_PD_lblProductTitle");
-    this.HTML_PATH_BESTBUY.put("description", "DIV.tab-overview-item");
-    this.HTML_PATH_BESTBUY.put("image", "IMG#ctl00_CP_ctl00_PD_PI_IP");
-    this.HTML_PATH_BESTBUY.put("price", "SPAN.amount");
-
-    //HTML_PATH_AMAZONCA
-    keyNameHtmlPath = "span#productTitle";
-    keyDescriptionHtmlPath = "DIV#feature-bullets";
-    keyImageHtmlPath = "div#imgTagWrapperId";
-    keyPriceHtmlPath = "SPAN#priceblock_ourprice";
-    keyPriceHtmlPath2 = "SPAN#priceblock_dealprice";
 
     //HTML_PATH_COSTCOCA
     keyNameHtmlPath = "h1";
@@ -611,30 +595,6 @@ public class SpiderServiceImpl implements SpiderService {
   private String getProductKeyFromBestbuyCA(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/(\\d+).aspx";
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile(pattern);
-
-    // Now create matcher object.
-    Matcher m = r.matcher(url.toString());
-    if (m.find()) {
-      return m.group(1);
-
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * getProductKeyFromWalmartCA
-   *
-   * @param {@link java.net.URL} url
-   * @return
-   * @throws Exception
-   */
-  private String getProductKeyFromWalmartCA(URL url) throws Exception {
-    // String to be scanned to find the pattern.
-    String pattern = "\\/(\\d+)";
 
     // Create a Pattern object
     Pattern r = Pattern.compile(pattern);

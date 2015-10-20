@@ -49,7 +49,6 @@ public class BananaRepublicCaPT {
     //String product_import_text;
 
     //name
-    String productBrand;
     product_name_text = doc.select("h1").get(0).text();
 
     //description
