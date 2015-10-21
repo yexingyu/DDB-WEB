@@ -1,57 +1,88 @@
 <div>
-            <div class="row">
-            <h3>Member Profile</h3>
-            <hr>
-            </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-3">
-                                       
-                    <div class="user-wrapper">
-                        <img src="images/user_picture/{{member.picture}}" /> 
-                    <div class="description">
-                       <h4> {{member.nickName}}</h4>
-                        <h5> <strong> Level: {{member.level}} </strong></h5>
-                        <p>
-                            {{member.signature}} 
-                        </p>
-                        <hr />
-                        <a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-user-plus" ></i> &nbsp;Profile + </a> 
-                    </div>
-                     </div>
-                </div>
-                
-                <div class="col-md-9 col-sm-9  user-wrapper">
-                    <div class="description">
-                         <h3> <span class="glyphicon glyphicon-share"></span>Share : </h3>
-                    <hr />
-                     <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Aliquam suscipit egestas eros, ut maximus magna blandit ut. 
-                         Suspendisse vel molestie sapien.
-                          Interdum et malesuada fames ac ante ipsum primis in faucibus. 
-                         Fusce sit amet egestas dui, vitae tincidunt justo. 
-                         </p>
-                    </div>                 
-                    <div class="description">
-                         <h3> <span class="glyphicon glyphicon-heart"></span>Likes : </h3>
-                    <hr />
-                     <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Aliquam suscipit egestas eros, ut maximus magna blandit ut. 
-                         Suspendisse vel molestie sapien.
-                          Interdum et malesuada fames ac ante ipsum primis in faucibus. 
-                         Fusce sit amet egestas dui, vitae tincidunt justo. 
-                         </p>
-                    </div>     
-                    <div class="description">
-                         <h3><span class="glyphicon glyphicon-plus"></span>Following Stores: </h3>
-                    <hr />
+	<div class="row">
+		<h3>Member Profile</h3>
+		<hr>
+	</div>
+    <div class="row">
+		<div class="col-md-3 col-sm-3">                                       
+	        <div class="user-wrapper">
+	            <img src="images/user_picture/{{member.picture}}" /> 
+	        <div class="description">
+	        	<h4> {{member.nickName}}</h4>
+                <h5> <strong> Level: {{member.level}} </strong></h5>
+                <h5> <strong> Point: {{member.point}} </strong></h5>
+	            <p>
+	                {{member.signature}} 
+	            </p>
+	            <hr />
+	            <a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-user-plus" ></i> &nbsp;Profile + </a> 
+	        </div>
+	         </div>
+		</div>
+        <div class="col-md-9 col-sm-9  user-wrapper">
+        	<div class="description">
+                     
+                    <div class="row">  
+					    <div class="col-sm-9">                                           
+							<span class="glyphicon glyphicon-share" style="font-size:24px;"></span><span style="font-size:24px;"> Share :</span>
+	                    </div>
+				    	<div class="col-sm-3">                                           
+    				    <div class="row">
+                    	 <a>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-th"></span>
+                   	     </a>				    
+				       </div>  
+                   </div>                   
+                   </div>
+                   <hr/>                                        
+          </div>                 
+        	<div class="description">
+                     
+                    <div class="row">  
+					    <div class="col-sm-9">                                           
+							<span class="glyphicon glyphicon-heart" style="font-size:24px;"></span><span style="font-size:24px;"> Likes :</span>
+	                    </div>
+				    	<div class="col-sm-3">                                           
+    				    <div class="row">
+                    	 <a>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-th"></span>
+                   	     </a>				    
+				       </div>  
+                   </div>                   
+                   </div>
+                   <hr/>                                         
+          </div>
+          
+        	<div class="description">
+                     
+                    <div class="row">  
+					    <div class="col-sm-9">                                           
+							<span class="glyphicon glyphicon-plus" style="font-size:24px;"></span><span style="font-size:24px;"> Following Stores :</span>
+	                    </div>
+				    	<div class="col-sm-3">                                           
+    				    <div class="row">
+                    	 <a>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-th"></span>
+                   	     </a>				    
+				       </div>  
+                   </div>                   
+                   </div>
+                   <hr/>
                     <div class="row">
-				    <div class="col-sm-2"ng-repeat="store in member.stores" >
+				    <div class="col-sm-4" ng-repeat="store in member.stores" >
 		                <div class="col-xs-12">
 		                    <div class="row">
 		                        <div class="col-xs-7 pull-left">
-		                            <img ng-src="./images/favicon/{{store.favicon}}">
+		                            <img ng-src="./images/favicon/{{store.favicon}}" style="height:20px; width:20px">
 		                            <span><a class="highlight_RoyalBlue" href="#/all?store_id={{store.id}}"> {{store.website}}</a></span>
 		                        </div>
 		                        <div class="col-xs-5 pull-right">
@@ -61,11 +92,26 @@
 		                    </div>
 		                </div>			    
 				        </div> 
-				    </div>
-				    </div>                    
-                    <div class="description">
-                         <h3><span class="glyphicon glyphicon-tag"></span>Following Tags : </h3>
-                    <hr />
+				    </div>                                          
+          </div>
+        	<div class="description">
+                     
+                    <div class="row">  
+					    <div class="col-sm-9">                                           
+							<span class="glyphicon glyphicon-plus" style="font-size:24px;"></span><span style="font-size:24px;"> Following Tags :</span>
+	                    </div>
+				    	<div class="col-sm-3">                                           
+    				    <div class="row">
+                    	 <a>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-chevron-right"></span>
+                   	     <span class="glyphicon glyphicon-th"></span>
+                   	     </a>				    
+				       </div>  
+                   </div>                   
+                   </div>
+                   <hr/>
                     <div class="row">  
 				    <div class="col-sm-4"ng-repeat="tag in member.tags" >                                           
 		                <div class="col-xs-12 pull-left">
@@ -78,8 +124,7 @@
 		                    </div>
 		                </div>
                    </div>
-                   </div>
-                    </div>                           
+                   </div>                         
                     <div class="description">
                     <h3> Social Links: </h3>
                     <hr />                
