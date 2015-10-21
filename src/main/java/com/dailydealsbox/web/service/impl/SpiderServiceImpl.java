@@ -39,8 +39,10 @@ import com.dailydealsbox.web.database.model.Store;
 import com.dailydealsbox.web.parser.AdidasCa;
 import com.dailydealsbox.web.parser.AmazonCa;
 import com.dailydealsbox.web.parser.BananaRepublicCa;
+import com.dailydealsbox.web.parser.BestBuyCa;
 import com.dailydealsbox.web.parser.BrownsShoesCom;
 import com.dailydealsbox.web.parser.CanadianTireCa;
+import com.dailydealsbox.web.parser.CostcoCa;
 import com.dailydealsbox.web.parser.EbayCa;
 import com.dailydealsbox.web.parser.EbayCom;
 import com.dailydealsbox.web.parser.GapCanadaCa;
@@ -62,7 +64,6 @@ import com.dailydealsbox.web.service.SpiderService;
 @Transactional
 public class SpiderServiceImpl implements SpiderService {
   private Map<String, String> HTML_PATH_BESTBUY  = new HashMap<>();
-  private Map<String, String> HTML_PATH_COSTCOCA = new HashMap<>();
   private Map<String, String> HTML_PATH_NEWEGGCA = new HashMap<>();
 
   /*
@@ -73,17 +74,6 @@ public class SpiderServiceImpl implements SpiderService {
     String keyDescriptionHtmlPath;
     String keyImageHtmlPath;
     String keyPriceHtmlPath;
-
-    //HTML_PATH_COSTCOCA
-    keyNameHtmlPath = "h1";
-    keyDescriptionHtmlPath = "DIV#features-description";
-    keyImageHtmlPath = "UL#large_images";
-    keyPriceHtmlPath = "div.your-price";
-
-    this.HTML_PATH_COSTCOCA.put("name", keyNameHtmlPath);
-    this.HTML_PATH_COSTCOCA.put("description", keyDescriptionHtmlPath);
-    this.HTML_PATH_COSTCOCA.put("image", keyImageHtmlPath);
-    this.HTML_PATH_COSTCOCA.put("price", keyPriceHtmlPath);
 
     //HTML_PATH_NEWEGGCA
     keyNameHtmlPath = "h1";
@@ -148,16 +138,16 @@ public class SpiderServiceImpl implements SpiderService {
         break;
 
       case "www.bestbuy.ca":
-        this.getProductFromBestbuyCA(oUrl, product, LANGUAGE.EN);
-        this.getProductFromBestbuyCA(oUrl, product, LANGUAGE.FR);
+        this.getProductFromBestBuyCa(url, product, LANGUAGE.EN);
+        this.getProductFromBestBuyCa(url, product, LANGUAGE.FR);
         break;
       case "www.walmart.ca":
         this.getProductFromWalmartCa(url, product, LANGUAGE.EN);
         this.getProductFromWalmartCa(url, product, LANGUAGE.FR);
         break;
       case "www.costco.ca":
-        this.getProductFromCostcoCA(oUrl, product, LANGUAGE.EN);
-        this.getProductFromCostcoCA(oUrl, product, LANGUAGE.FR);
+        this.getProductFromCostcoCa(url, product, LANGUAGE.EN);
+        this.getProductFromCostcoCa(url, product, LANGUAGE.FR);
         break;
       case "www.bestbuy.com":
         this.getProductFromBestbuyCOM(oUrl, product, LANGUAGE.EN);
@@ -586,53 +576,6 @@ public class SpiderServiceImpl implements SpiderService {
 
   }
 
-  /**
-   * getProductKeyFromBestbuyCA
-   *
-   * @param url
-   * @return
-   */
-  private String getProductKeyFromBestbuyCA(URL url) throws Exception {
-    // String to be scanned to find the pattern.
-    String pattern = "\\/(\\d+).aspx";
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile(pattern);
-
-    // Now create matcher object.
-    Matcher m = r.matcher(url.toString());
-    if (m.find()) {
-      return m.group(1);
-
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * getProductKeyFromCostcoCA
-   *
-   * @param url
-   * @return
-   * @throws Exception
-   */
-  private String getProductKeyFromCostcoCA(URL url) throws Exception {
-    // String to be scanned to find the pattern.
-    String pattern = "\\.(\\d+)\\.html";
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile(pattern);
-
-    // Now create matcher object.
-    Matcher m = r.matcher(url.toString());
-    if (m.find()) {
-      return m.group(1);
-
-    } else {
-      return null;
-    }
-  }
-
   private String getProductKeyFromNeweggCA(URL url) throws Exception {
     // String to be scanned to find the pattern.
     String pattern = "\\/product\\/(\\w+)\\/ref";
@@ -648,131 +591,6 @@ public class SpiderServiceImpl implements SpiderService {
     } else {
       return null;
     }
-  }
-
-  /**
-   * getProductFromBestbuyCA
-   *
-   * @param url
-   * @param product
-   * @param language
-   * @return
-   */
-  private Product getProductFromBestbuyCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
-    //set product url
-    product.setUrl(url.toString());
-    //set product status
-    product.setDisabled(false);
-    //set product key
-    product.setKey(this.getProductKeyFromBestbuyCA(url));
-
-    //set product store
-    Store store = new Store();
-    int storeID = 11;
-    store.setId(storeID);
-    product.setStore(store);
-
-    //set product expired date
-    Calendar now = Calendar.getInstance();
-    int weekday = now.get(Calendar.DAY_OF_WEEK);
-    if (weekday != Calendar.THURSDAY) {
-      // calculate how much to add
-      // the 5 is the difference between Saturday and Thursday
-      int days = (Calendar.SATURDAY - weekday + 5);
-      now.add(Calendar.DAY_OF_YEAR, days);
-    }
-
-    //set product tax
-    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
-    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
-    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-
-    if (product.getTaxes().isEmpty()) {
-      ProductTax tax1 = new ProductTax();
-      tax1.setTitle(federal);
-      tax1.setType(percentage);
-
-      ProductTax tax2 = new ProductTax();
-      tax2.setTitle(provincial);
-      tax2.setType(percentage);
-
-      product.getTaxes().add(tax1);
-      product.getTaxes().add(tax2);
-    }
-
-    // language switch
-    String urlStr = url.toString();
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "/fr-CA/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/fr-CA/", "/en-CA/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "/en-CA/")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "/en-CA/", "/fr-CA/");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
-    Document doc;
-    try {
-      doc = Jsoup.connect(urlStr).get();
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    }
-
-    //set product fees
-    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
-    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
-    if (product.getFees().isEmpty()) {
-      ProductFee fee1 = new ProductFee();
-      fee1.setTitle(feeShipping);
-      fee1.setType(feeType);
-      fee1.setValue(0);
-
-      product.getFees().add(fee1);
-    }
-
-    //set product price
-    if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_BESTBUY.get("price")).first().text();
-      Number number;
-      try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
-        double p = number.doubleValue();
-        ProductPrice price = new ProductPrice();
-        price.setValue(p);
-        product.getPrices().add(price);
-        product.setCurrentPrice(p);
-        product.setCurrency(CURRENCY.CAD);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-
-    ProductText text = new ProductText();
-    text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATH_BESTBUY.get("name")).first().text());
-    text.setDescription(doc.select(this.HTML_PATH_BESTBUY.get("description")).first().ownText());
-    product.getTexts().add(text);
-
-    if (product.getImages().isEmpty()) {
-      ProductImage image = new ProductImage();
-      image.setUrl(String.format("%s://%s%s", url.getProtocol(), url.getHost(),
-          doc.select(this.HTML_PATH_BESTBUY.get("image")).first().attr("src")));
-      product.getImages().add(image);
-    }
-
-    return product;
   }
 
   /**
@@ -1405,6 +1223,93 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
+  private Product getProductFromCostcoCa(String url, Product product, LANGUAGE language)
+      throws Exception {
+    //product page info
+    CostcoCa costcoCaPage = new CostcoCa();
+    costcoCaPage.setActive(true);
+    costcoCaPage.setStoreId();
+    costcoCaPage.setUrl(url);
+    costcoCaPage.setExpiration();
+
+    costcoCaPage.setDoc();
+    costcoCaPage.setKey();
+    costcoCaPage.setName();
+    costcoCaPage.setDescription();
+    costcoCaPage.setImage();
+    costcoCaPage.setPrice();
+
+    //set product url
+    product.setUrl(costcoCaPage.getUrl());
+
+    //set product key
+    product.setKey(costcoCaPage.getKey());
+
+    //set product status
+    product.setDisabled(!costcoCaPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(costcoCaPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(costcoCaPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(costcoCaPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(costcoCaPage.getName());
+    text.setDescription(costcoCaPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(costcoCaPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
   private Product getProductFromSportsExpertsCa(String url, Product product, LANGUAGE language)
       throws Exception {
     //product page info
@@ -1840,6 +1745,105 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
+  private Product getProductFromBestBuyCa(String url, Product product, LANGUAGE language)
+      throws Exception {
+    //product page info
+    BestBuyCa BestBuyCaPage = new BestBuyCa();
+    BestBuyCaPage.setActive(true);
+    BestBuyCaPage.setStoreId();
+    BestBuyCaPage.setUrl(url);
+    BestBuyCaPage.setExpiration();
+
+    BestBuyCaPage.setDoc();
+    BestBuyCaPage.setKey();
+    BestBuyCaPage.setName();
+    BestBuyCaPage.setDescription();
+    BestBuyCaPage.setImage();
+    BestBuyCaPage.setPrice();
+
+    BestBuyCaPage.setRating();
+    BestBuyCaPage.setReviewsCount();
+
+    //set product url
+    product.setUrl(BestBuyCaPage.getUrl());
+
+    //set product key
+    product.setKey(BestBuyCaPage.getKey());
+
+    //set product status
+    product.setDisabled(!BestBuyCaPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(BestBuyCaPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(BestBuyCaPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(BestBuyCaPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(BestBuyCaPage.getName());
+    text.setDescription(BestBuyCaPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getLinks().isEmpty()) {
+      ProductLink link = new ProductLink();
+      link.setUrl(url);
+      link.setName("bestbuy.ca");
+      link.setRating(BestBuyCaPage.getRating());
+      link.setReviewNumber(BestBuyCaPage.getReviewsCount());
+      product.getLinks().add(link);
+    }
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(BestBuyCaPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    return product;
+  }
+
   private Product getProductFromWalmartCa(String url, Product product, LANGUAGE language)
       throws Exception {
     //product page info
@@ -1922,7 +1926,7 @@ public class SpiderServiceImpl implements SpiderService {
     if (product.getLinks().isEmpty()) {
       ProductLink link = new ProductLink();
       link.setUrl(url);
-      link.setName("amazon.ca");
+      link.setName("walmart.ca");
       link.setRating(walmartCaPage.getRating());
       link.setReviewNumber(walmartCaPage.getReviewsCount());
       product.getLinks().add(link);
@@ -1933,123 +1937,6 @@ public class SpiderServiceImpl implements SpiderService {
       ProductImage image = new ProductImage();
       image.setUrl(walmartCaPage.getImage());
       //add image to product
-      product.getImages().add(image);
-    }
-
-    return product;
-  }
-
-  private Product getProductFromCostcoCA(URL url, Product product, LANGUAGE language)
-      throws Exception {
-    //set product url
-    product.setUrl(url.toString());
-    //set product status
-    product.setDisabled(false);
-    //set product key
-    product.setKey(this.getProductKeyFromCostcoCA(url));
-
-    //set product store
-    Store store = new Store();
-    int storeID = 20;
-    store.setId(storeID);
-    product.setStore(store);
-
-    //set product expired date
-    Calendar now = Calendar.getInstance();
-    int weekday = now.get(Calendar.DAY_OF_WEEK);
-    if (weekday != Calendar.THURSDAY) {
-      // calculate how much to add
-      // the 5 is the difference between Saturday and Thursday
-      int days = (Calendar.SATURDAY - weekday + 5);
-      now.add(Calendar.DAY_OF_YEAR, days);
-    }
-
-    //set product tax
-    PRODUCT_TAX_TITLE federal = PRODUCT_TAX_TITLE.CAFEDERAL;
-    PRODUCT_TAX_TITLE provincial = PRODUCT_TAX_TITLE.CAPROVINCE;
-    PRODUCT_TAX_TYPE percentage = PRODUCT_TAX_TYPE.PERCENTAGE;
-
-    if (product.getTaxes().isEmpty()) {
-      ProductTax tax1 = new ProductTax();
-      tax1.setTitle(federal);
-      tax1.setType(percentage);
-
-      ProductTax tax2 = new ProductTax();
-      tax2.setTitle(provincial);
-      tax2.setType(percentage);
-
-      product.getTaxes().add(tax1);
-      product.getTaxes().add(tax2);
-    }
-
-    // language switch
-    String urlStr = url.toString();
-    NumberFormat numberFormat;
-    switch (language) {
-      case EN:
-        if (StringUtils.containsIgnoreCase(urlStr, "langId=-25")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "langId=-25", "langId=-24");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-      case FR:
-        if (StringUtils.containsIgnoreCase(urlStr, "langId=-24")) {
-          urlStr = StringUtils.replaceOnce(urlStr, "langId=-24", "langId=-25");
-        }
-        numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-        break;
-      default:
-        numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-        break;
-    }
-
-    Document doc;
-    try {
-      doc = Jsoup.connect(urlStr).timeout(10000).get();
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    }
-    //set product fees
-    PRODUCT_FEE_TITLE feeShipping = PRODUCT_FEE_TITLE.SHIPPING;
-    PRODUCT_FEE_TYPE feeType = PRODUCT_FEE_TYPE.AMOUNT;
-    if (product.getFees().isEmpty()) {
-      ProductFee fee1 = new ProductFee();
-      fee1.setTitle(feeShipping);
-      fee1.setType(feeType);
-      fee1.setValue(0);
-
-      product.getFees().add(fee1);
-    }
-
-    //set product tax
-    if (product.getPrices().isEmpty()) {
-      String productPrice = doc.select(this.HTML_PATH_COSTCOCA.get("price")).first()
-          .select("span.currency").first().text();
-      Number number;
-      try {
-        number = numberFormat.parse(StringUtils.remove(productPrice, "$"));
-        double p = number.doubleValue();
-        ProductPrice price = new ProductPrice();
-        price.setValue(p);
-        product.getPrices().add(price);
-        product.setCurrentPrice(p);
-        product.setCurrency(CURRENCY.CAD);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-
-    ProductText text = new ProductText();
-    text.setLanguage(language);
-    text.setName(doc.select(this.HTML_PATH_COSTCOCA.get("name")).first().text());
-    text.setDescription(doc.select(this.HTML_PATH_COSTCOCA.get("description")).first().text());
-    product.getTexts().add(text);
-
-    if (product.getImages().isEmpty()) {
-      ProductImage image = new ProductImage();
-      image.setUrl(doc.select(this.HTML_PATH_COSTCOCA.get("image")).first().select("img").first()
-          .attr("src"));
       product.getImages().add(image);
     }
 

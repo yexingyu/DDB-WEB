@@ -53,6 +53,7 @@ public class CostcoCaPT {
 
     //description
     product_description_text = doc.select("div.product-detail-tabs").first().text()
+        .replace("Product Details Specifications Shipping & Terms Returns/Warranty Reviews ", "")
         .substring(0, 255);
 
     //image
