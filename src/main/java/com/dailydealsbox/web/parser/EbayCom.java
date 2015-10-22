@@ -2,7 +2,7 @@ package com.dailydealsbox.web.parser;
 
 import java.io.IOException;
 
-public class EbayCom extends ProductPage {
+public class EBayCom extends ProductPage {
 
   @Override
   public void setKey() {
