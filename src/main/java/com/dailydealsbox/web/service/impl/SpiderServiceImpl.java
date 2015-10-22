@@ -2152,6 +2152,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = walmartCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -2239,6 +2252,18 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = ebayComPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
     return product;
   }
 
@@ -2324,6 +2349,19 @@ public class SpiderServiceImpl implements SpiderService {
       image.setUrl(nordStromComPage.getImage());
       //add image to product
       product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = nordStromComPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
     }
 
     return product;
