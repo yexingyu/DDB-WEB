@@ -33,6 +33,7 @@ import com.dailydealsbox.web.database.model.ProductFee;
 import com.dailydealsbox.web.database.model.ProductImage;
 import com.dailydealsbox.web.database.model.ProductLink;
 import com.dailydealsbox.web.database.model.ProductPrice;
+import com.dailydealsbox.web.database.model.ProductTag;
 import com.dailydealsbox.web.database.model.ProductTax;
 import com.dailydealsbox.web.database.model.ProductText;
 import com.dailydealsbox.web.database.model.Store;
@@ -63,7 +64,6 @@ import com.dailydealsbox.web.service.SpiderService;
 @Service
 @Transactional
 public class SpiderServiceImpl implements SpiderService {
-  private Map<String, String> HTML_PATH_BESTBUY  = new HashMap<>();
   private Map<String, String> HTML_PATH_NEWEGGCA = new HashMap<>();
 
   /*
@@ -122,6 +122,10 @@ public class SpiderServiceImpl implements SpiderService {
 
     if (product.getLinks() == null) {
       product.setLinks(new HashSet<ProductLink>());
+    }
+
+    if (product.getTags() == null) {
+      product.setTags(new HashSet<ProductTag>());
     }
 
     // spider page based on host.
@@ -315,6 +319,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = ebayCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -424,6 +441,19 @@ public class SpiderServiceImpl implements SpiderService {
       image.setUrl(amazonCaPage.getImage());
       //add image to product
       product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = amazonCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
     }
 
     return product;
@@ -687,6 +717,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = homeDepotPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -784,6 +827,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = theBayPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -871,6 +927,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = brownsShoesPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -956,6 +1025,19 @@ public class SpiderServiceImpl implements SpiderService {
       image.setUrl(sephoraPage.getImage());
       //add image to product
       product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = sephoraPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
     }
 
     return product;
@@ -1046,6 +1128,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = bananaRepublicPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -1131,6 +1226,19 @@ public class SpiderServiceImpl implements SpiderService {
       image.setUrl(canadianTireCaPage.getImage());
       //add image to product
       product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = canadianTireCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
     }
 
     return product;
@@ -1220,6 +1328,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = adidasCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -1305,6 +1426,19 @@ public class SpiderServiceImpl implements SpiderService {
       image.setUrl(costcoCaPage.getImage());
       //add image to product
       product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = costcoCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
     }
 
     return product;
@@ -1394,6 +1528,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = sportsExpertsCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -1479,6 +1626,19 @@ public class SpiderServiceImpl implements SpiderService {
       image.setUrl(gapCanadaCaPage.getImage());
       //add image to product
       product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = gapCanadaCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
     }
 
     return product;
@@ -1568,6 +1728,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = ikeaCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -1655,6 +1828,19 @@ public class SpiderServiceImpl implements SpiderService {
       product.getImages().add(image);
     }
 
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = staplesCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
     return product;
   }
 
@@ -1740,6 +1926,19 @@ public class SpiderServiceImpl implements SpiderService {
       image.setUrl(zaraComPage.getImage());
       //add image to product
       product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = zaraComPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
     }
 
     return product;
@@ -1839,6 +2038,19 @@ public class SpiderServiceImpl implements SpiderService {
       image.setUrl(BestBuyCaPage.getImage());
       //add image to product
       product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = BestBuyCaPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
     }
 
     return product;

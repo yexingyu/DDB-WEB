@@ -242,23 +242,7 @@ angular
                     meta_description: ""
                 }];
 
-            $scope.product.tags = [{
-                value: ""
-            }, {
-                value: ""
-            }, {
-                value: ""
-            }, {
-                value: ""
-            }, {
-                value: ""
-            }, {
-                value: ""
-            }];
 
-            $scope.tag_hot = [{
-                value: ""
-            }];
 
 
 
@@ -327,22 +311,6 @@ angular
                 ProductService.spider($scope.product.url, function (response) {
                     if (response.status === 'SUCCESS') {
                         $scope.product = response.data;
-
-
-                        $scope.product.tags = [{
-                            value: ""
-                        }, {
-                            value: ""
-                        }, {
-                            value: ""
-                        }, {
-                            value: ""
-                        }, {
-                            value: ""
-                        }, {
-                            value: ""
-                        }];
-
 
 
                         $scope.product.options = [];
