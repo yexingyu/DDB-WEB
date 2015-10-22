@@ -12,10 +12,10 @@ import org.jsoup.nodes.Document;
 /**
  * product info
  */
-public class BananaRepublicCaPT {
+public class WalmartCaPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://bananarepublic.gapcanada.ca/browse/product.do?cid=1015182&vid=1&pid=506727013";
+    String url = "http://www.walmart.ca/en/ip/philips-40-smart-led-tv/6000187095491";
 
     //set doc
     Document doc = Jsoup
@@ -25,7 +25,7 @@ public class BananaRepublicCaPT {
         .get();
 
     //key
-    String keyPattern = "pid=(\\d+)";
+    String keyPattern = "\\/(\\d+)";
     String keyString = "";
     //pattern
     Pattern r = Pattern.compile(keyPattern);
@@ -45,36 +45,67 @@ public class BananaRepublicCaPT {
     String product_description_text;
     String product_image_text;
     String product_price_text;
+    String product_rating;
+    String product_review_number;
+
     //String product_shipping_text;
     //String product_import_text;
 
     //name
-    product_name_text = doc.select("h1").get(0).text();
+    product_name_text = doc.select("meta[property=og:title]").attr("content");
 
     //description
-    product_description_text = doc.select("div#tabWindow").get(0).text();
+    product_description_text = doc.select("meta[property=og:description]").attr("content");
 
     //image
-    product_image_text = "";
+    product_image_text = doc.select("DIV.centered-img-wrap").first().select("img").first()
+        .attr("src");
 
-    //price
-    product_price_text = doc.html();
+    product_price_text = doc.select("div.pricing-shipping").first().select("div.microdata-price")
+        .first().select("span").first().text().replace("$", "");
+    ;
 
-    String pricePattern = "CA\\$(\\d+.\\d+)";
-    String priceString = "";
+    //product rating
+    product_rating = doc.select("div#product-desc").get(0).select("ul.rating").get(0).select("li")
+        .get(0).html();
+
+    //rating
+    String ratingPattern = "data-analytics-value=\"(\\d_\\d)\"";
+    String ratingString = "";
     //pattern
-    r = Pattern.compile(pricePattern);
+    r = Pattern.compile(ratingPattern);
 
     //matcher
-    m = r.matcher(product_price_text);
+    m = r.matcher(product_rating);
     if (m.find()) {
-      priceString = m.group(1);
+      ratingString = m.group(1);
 
     } else {
-      priceString = null;
+      ratingString = null;
     }
     ;
-    product_price_text = priceString;
+
+    product_rating = ratingString.replace("_", ".");
+
+    //product review number
+    product_review_number = doc.select("div#product-desc").get(0).html();
+    //reviews
+    String reviewsPattern = "(\\d+) Reviews";
+    String reviewsString = "";
+    //pattern
+    r = Pattern.compile(reviewsPattern);
+
+    //matcher
+    m = r.matcher(product_review_number);
+    if (m.find()) {
+      reviewsString = m.group(1);
+
+    } else {
+      reviewsString = null;
+    }
+    ;
+
+    product_review_number = reviewsString;
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 
@@ -103,6 +134,8 @@ public class BananaRepublicCaPT {
     System.out.println("product description: " + product_description_text);
     System.out.println("product image: " + product_image_text);
     System.out.println("product price: " + product_price_text);
+    System.out.println("product rating: " + product_rating);
+    System.out.println("product revies number: " + product_review_number);
     //System.out.println(product_shipping_text);
     //System.out.println(product_import_text);
     System.out.println("product expiration: " + expiredDate.toString());

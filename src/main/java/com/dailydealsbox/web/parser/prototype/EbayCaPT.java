@@ -12,10 +12,10 @@ import org.jsoup.nodes.Document;
 /**
  * product info
  */
-public class BananaRepublicCaPT {
+public class EbayCaPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://bananarepublic.gapcanada.ca/browse/product.do?cid=1015182&vid=1&pid=506727013";
+    String url = "http://www.ebay.ca/itm/Breville-JE98XL-2-Speed-Juice-Fountain-Plus-Juicer-Sick-Fat-and-Nearly-Dead/111791612726";
 
     //set doc
     Document doc = Jsoup
@@ -25,7 +25,7 @@ public class BananaRepublicCaPT {
         .get();
 
     //key
-    String keyPattern = "pid=(\\d+)";
+    String keyPattern = "\\/(\\d+)";
     String keyString = "";
     //pattern
     Pattern r = Pattern.compile(keyPattern);
@@ -49,32 +49,16 @@ public class BananaRepublicCaPT {
     //String product_import_text;
 
     //name
-    product_name_text = doc.select("h1").get(0).text();
+    product_name_text = doc.select("meta[property=\"og:title\"]").attr("content");
 
     //description
-    product_description_text = doc.select("div#tabWindow").get(0).text();
+    product_description_text = doc.select("meta[name=\"description\"]").attr("content");
 
     //image
-    product_image_text = "";
-
+    product_image_text = doc.select("img#icImg").get(0).attr("src");
     //price
-    product_price_text = doc.html();
-
-    String pricePattern = "CA\\$(\\d+.\\d+)";
-    String priceString = "";
-    //pattern
-    r = Pattern.compile(pricePattern);
-
-    //matcher
-    m = r.matcher(product_price_text);
-    if (m.find()) {
-      priceString = m.group(1);
-
-    } else {
-      priceString = null;
-    }
+    product_price_text = doc.select("span#prcIsum").get(0).text().replace("US $", "");
     ;
-    product_price_text = priceString;
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 

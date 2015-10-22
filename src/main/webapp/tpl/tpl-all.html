@@ -36,12 +36,13 @@
         <div class="col-xs-12">
             <tabset justified="true">
                 <tab heading="Newly Added" select="select('createdAt,desc')"></tab>
+                <tab heading="Most Discussed" select="select('countReviews,desc')"></tab>                
                 <tab heading="Best Reputation" select="select('reputation,desc')"></tab>
                 <tab heading="$ Low to High" select="select('currentPrice,asc')"></tab>
                 <tab heading="$ High to Low" select="select('currentPrice,desc')"></tab>
 
                 <tab heading="Most Liked" select="select('countLikes,desc')"></tab>
-                <tab heading="Most Discussed" select="select('countReviews,desc')"></tab>
+
                 <!--  change filter to the top
                 <tab heading="Filter by Tags" select="loadTags()">
 

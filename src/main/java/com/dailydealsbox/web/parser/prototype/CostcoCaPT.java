@@ -12,10 +12,10 @@ import org.jsoup.nodes.Document;
 /**
  * product info
  */
-public class BananaRepublicCaPT {
+public class CostcoCaPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://bananarepublic.gapcanada.ca/browse/product.do?cid=1015182&vid=1&pid=506727013";
+    String url = "http://www.costco.ca/Paradise-Foosball-Table.product.100076111.html";
 
     //set doc
     Document doc = Jsoup
@@ -25,7 +25,7 @@ public class BananaRepublicCaPT {
         .get();
 
     //key
-    String keyPattern = "pid=(\\d+)";
+    String keyPattern = "product.(\\d+)";
     String keyString = "";
     //pattern
     Pattern r = Pattern.compile(keyPattern);
@@ -49,32 +49,18 @@ public class BananaRepublicCaPT {
     //String product_import_text;
 
     //name
-    product_name_text = doc.select("h1").get(0).text();
+    product_name_text = doc.select("h1").first().text();
 
     //description
-    product_description_text = doc.select("div#tabWindow").get(0).text();
+    product_description_text = doc.select("div.product-detail-tabs").first().text()
+        .replace("Product Details Specifications Shipping & Terms Returns/Warranty Reviews ", "")
+        .substring(0, 255);
 
     //image
-    product_image_text = "";
-
+    product_image_text = doc.select("UL#large_images").get(0).select("img").get(0).attr("src");
     //price
-    product_price_text = doc.html();
-
-    String pricePattern = "CA\\$(\\d+.\\d+)";
-    String priceString = "";
-    //pattern
-    r = Pattern.compile(pricePattern);
-
-    //matcher
-    m = r.matcher(product_price_text);
-    if (m.find()) {
-      priceString = m.group(1);
-
-    } else {
-      priceString = null;
-    }
+    product_price_text = doc.select("div.your-price").get(0).text().replace("Your Price $", "");
     ;
-    product_price_text = priceString;
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 
