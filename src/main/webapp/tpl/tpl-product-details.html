@@ -3,9 +3,9 @@
         <div class="col-sm-12">
             <h3><span class="glyphicon glyphicon-tag"><b>Tags</b>:</span>
             <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> 
-            <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-plus" ng-click="followTag(tag)" ng-if="!tag.followed">Follow</button>
+            <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-plus" ng-click="followTag(tag)" ng-if="!tag.followed"></button>
 
-            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollowTag(tag)" ng-if="tag.followed">Follow</button>            
+            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollowTag(tag)" ng-if="tag.followed"></button>            
 
             </span></h3>
         </div>
@@ -135,6 +135,24 @@
             <hr>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title glyphicon glyphicon-envelope">Deal Alerts</h3>
+                </div>
+                <div class="panel-body">
+            <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> 
+            <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-envelope" ng-click="followTag(tag)" ng-if="!tag.followed">Deal Alert</button>
+
+            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollowTag(tag)" ng-if="tag.followed"></button>            
+
+            </span>                
+                </div>
+           </div>
+
+        </div> 
+    </div>                   
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-info">
