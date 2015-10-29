@@ -1,9 +1,23 @@
     <div class="row">
-        <div class="col-xs-5">
+        <div class="col-xs-12">
             <h3 ng-if="!requestSearch.tags && !requestSearch.store_id">
 	            <span class="glyphicon glyphicon-globe"></span> 
-	            <span>Online - Follow & Get Deal Alerts!</span>
+	            <span>Online - All Best Deals</span>
             </h3>
+			<div class="jumbotron" ng-if="!requestSearch.tags && !requestSearch.store_id">
+			  <p>At DailyDealsBox.com, People </p>
+			  <ul class="list-group">
+			    <li><b><span class="glyphicon glyphicon-globe"></span> GET All Best Deals</b> in One Place.</li>			  
+			    <li><b><span class="glyphicon glyphicon-share"></span> <a href="#/share" >SHARE DEALs</a></b> from Hundreds of Stores.</li>
+			    <li><b><span class="glyphicon glyphicon-thumbs-up"></span> <a href="#/follow">LIKE & VOTE</a></b> for Trending Deals</li>				    
+			    <li><b><span class="glyphicon glyphicon-plus"></span> <a href="#/follow">FOLLOW</a></b> Stores, Tags, & Get Deal Alerts</li>
+			    <li><b><span class="glyphicon glyphicon-retweet"></span> <a href="">DISCUSS</a></b> The Deal</li>				    
+			    <li><b><span class="glyphicon glyphicon-map-marker"></span><a href="#/local"> PUBLISH OR FIND</a></b> Local Deals</li>
+			  </ul>			  
+			  
+			  
+			</div>            
+            
             <h3 ng-if="requestSearch.tags">
 	            <span class="glyphicon glyphicon-tag"></span>
 	            <span>Tag : {{requestSearch.tags}}</span>
@@ -12,6 +26,7 @@
 	            <span>Store</span>
             </h3>            
         </div>
+        <!-- 
         <div class="col-xs-7">
             <form class="form-inline">
                 <div class="form-group">
@@ -21,7 +36,7 @@
                     </select>
                     <select class="form-control">
                         <option ng-selected="tags.result">Tag</option>
-                        <!--<option>Store</option>-->
+
                     </select>
                 </div>
                 <div class="form-group">
@@ -31,17 +46,19 @@
             </form>
 
         </div>
+        
+        -->
     </div>        
     <div class="row">
         <div class="col-xs-12">
             <tabset justified="true">
-                <tab heading="Newly Added" select="select('createdAt,desc')"></tab>
+                <tab heading="New" select="select('createdAt,desc')"></tab>
+                <tab heading="Most Liked" select="select('countLikes,desc')"></tab>
                 <tab heading="Most Discussed" select="select('countReviews,desc')"></tab>                
                 <tab heading="Best Reputation" select="select('reputation,desc')"></tab>
-                <tab heading="$ Low to High" select="select('currentPrice,asc')"></tab>
-                <tab heading="$ High to Low" select="select('currentPrice,desc')"></tab>
+                <tab heading="Price Desc" select="select('currentPrice,asc')"></tab>
+                <tab heading="Price Asc" select="select('currentPrice,desc')"></tab>
 
-                <tab heading="Most Liked" select="select('countLikes,desc')"></tab>
 
                 <!--  change filter to the top
                 <tab heading="Filter by Tags" select="loadTags()">

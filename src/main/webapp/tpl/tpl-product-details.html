@@ -1,15 +1,5 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h3><span class="glyphicon glyphicon-tag"><b>Tags</b>:</span>
-            <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> 
-            <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-plus" ng-click="followTag(tag)" ng-if="!tag.followed">Follow</button>
 
-            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollowTag(tag)" ng-if="tag.followed">Follow</button>            
-
-            </span></h3>
-        </div>
-    </div>
 
 
     <div class="row">
@@ -21,13 +11,44 @@
 
     </div>
 
+
+
     <div class="row">
-            <div class="col-sm-3">
+		    <div class="col-sm-6">
+		                <span class="new_deal"  ng-if="currentDate - item.createdAt <=60*60*2*1000">Just In</span>
+		            <!--less than 48 hours New -->
+		            <span  class="new_deal" ng-if="(currentDate - item.createdAt >60*60*2*1000)  &&  (currentDate - item.createdAt <=2*60*60*24*1000)">New
+		            </span>
+		            <!--2 - 7 days Within X days -->
+		            <span class="recent_deal" ng-if="(currentDate - item.createdAt >2*60*60*24*1000) && (currentDate - item.createdAt <=7*60*60*24*1000)">
+		             {{(currentDate - item.createdAt)/(1000*60*60*24) | number:0}} Days Ago
+		            </span>
+		            <span   ng-if="currentDate - item.createdAt >7*60*60*24*1000">
+		             <img ng-src="./images/add_product.png" height="16px">
+		             {{item.createdAt | date:"MM/dd"}}
+		            </span>  
+		    </div>
+		    <div class="col-sm-6">
+		    <span class="fire glyphicon glyphicon-fire" ng-if="item.poster.id == 73"></span>
+		    
+		    </div>
+		    <div class="col-sm-6">
+		                        <div class="row">
+
+                        <div class="col-xs-2 pull-left">
+                            <img ng-src="images/avatar/{{item.poster.avatar}}">
+                        </div>
+                        <div class="col-xs-10 pull-right">
+                            <a href="#/member/{{item.poster.id}}"><span class="product_time">{{item.poster.nickName}}</span></a>
+                        </div>
+                    </div>
+		    </div>
+            <div class="col-sm-6">
             <img ng-src="./images/favicon/{{item.store.favicon}}">
-            <span><a> {{item.store.website}}</a></span>
+            <span><a class="highlight_RoyalBlue" href="#/all?store_id={{item.store.id}}"> {{item.store.website}}</a></span>
             <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-plus" ng-click="follow(item.store)" ng-if="!item.store.followed">Follow</button>
             <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollow(item.store)" ng-if="item.store.followed">Follow</button>
-        </div>
+            </div>
         </div>
 
     <div class="row">
@@ -108,7 +129,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <h3><a href="{{item.url}}" target="_blank">Buy it from the {{item.store.website}}</a></h3>
+                    <h3><a href="{{item.url}}" target="_blank">Buy it from {{item.store.website}}</a></h3>
                 </div>
             </div>            
             <div class="row">
@@ -117,7 +138,17 @@
                 </div>
             </div>
 
-
+		    <div class="row">
+		        <div class="col-sm-12">
+		            <h3><span class="glyphicon glyphicon-tag"><b>Tags</b>:</span>
+		            <span  ng-repeat="tag in item.tags"> <a href="#/all?tags={{tag.value}}"><b>{{tag.value}}</b></a> 
+		            <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-plus" ng-click="followTag(tag)" ng-if="!tag.followed"></button>
+		
+		            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollowTag(tag)" ng-if="tag.followed"></button>            
+		
+		            </span></h3>
+		        </div>
+		    </div> 
 
 
         </div>
@@ -135,11 +166,31 @@
             <hr>
         </div>
     </div>
+    
+   
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Discuss</h3>
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-envelope"></span>Deal Alerts</h3>
+                </div>
+                <div class="panel-body">
+            <span  ng-repeat="tag in item.tags"> 
+            <button type="button" class="btn btn-xs btn-success  glyphicon glyphicon-envelope" ng-click="followTag(tag)" ng-if="!tag.followed"> {{tag.value}} Deal Alert</button>
+
+            <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-remove" ng-click="unfollowTag(tag)" ng-if="tag.followed">Remove {{tag.value}} Deal Alert</button>            
+
+            </span>                
+                </div>
+           </div>
+
+        </div> 
+    </div>                   
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-retweet"></span>Discuss</h3>
                 </div>
                 <div class="panel-body">                
 					<table class="table table-striped" ng-repeat="review in item.reviews.content">
