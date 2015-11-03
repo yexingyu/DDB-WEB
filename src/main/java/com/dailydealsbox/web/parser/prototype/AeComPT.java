@@ -15,7 +15,7 @@ import org.jsoup.nodes.Document;
 public class AeComPT {
   public static void main(String[] args) throws IOException {
     //set url
-    String url = "http://ae.com/web/browse/product_details.jsp?productId=0104_9666_410&catId=cat1680012";
+    String url = "https://ae.com/web/browse/product_details.jsp?productId=0104_9666_410&catId=cat1680012";
 
     //set doc
     Document doc = Jsoup
@@ -60,8 +60,6 @@ public class AeComPT {
 
     product_price_text = doc.select("div.price").text();
     ;
-
-    
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 

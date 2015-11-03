@@ -49,11 +49,13 @@ import com.dailydealsbox.web.parser.EbayCom;
 import com.dailydealsbox.web.parser.GapCanadaCa;
 import com.dailydealsbox.web.parser.HomeDepotCa;
 import com.dailydealsbox.web.parser.IkeaCa;
+import com.dailydealsbox.web.parser.LacosteCom;
 import com.dailydealsbox.web.parser.NordStromCom;
 import com.dailydealsbox.web.parser.SephoraCom;
 import com.dailydealsbox.web.parser.SportsExpertsCa;
 import com.dailydealsbox.web.parser.StaplesCa;
 import com.dailydealsbox.web.parser.TheBayCa;
+import com.dailydealsbox.web.parser.TigerDirectCa;
 import com.dailydealsbox.web.parser.WalmartCa;
 import com.dailydealsbox.web.parser.ZaraCom;
 import com.dailydealsbox.web.service.SpiderService;
@@ -215,6 +217,16 @@ public class SpiderServiceImpl implements SpiderService {
       case "shop.nordstrom.com":
         this.getProductFromNordStromCom(url, product, LANGUAGE.EN);
         this.getProductFromNordStromCom(url, product, LANGUAGE.FR);
+        break;
+
+      case "www.lacoste.com":
+        this.getProductFromLacosteCom(url, product, LANGUAGE.EN);
+        this.getProductFromLacosteCom(url, product, LANGUAGE.FR);
+        break;
+
+      case "www.tigerdirect.ca":
+        this.getProductFromTigerDirectCa(url, product, LANGUAGE.EN);
+        this.getProductFromTigerDirectCa(url, product, LANGUAGE.FR);
         break;
 
       case "www.gapcanada.ca":
@@ -1944,6 +1956,106 @@ public class SpiderServiceImpl implements SpiderService {
     return product;
   }
 
+  private Product getProductFromLacosteCom(String url, Product product, LANGUAGE language)
+      throws Exception {
+    //product page info
+    LacosteCom lacosteComPage = new LacosteCom();
+    lacosteComPage.setActive(true);
+    lacosteComPage.setStoreId();
+    lacosteComPage.setUrl(url);
+    lacosteComPage.setExpiration();
+
+    lacosteComPage.setDoc();
+    lacosteComPage.setKey();
+    lacosteComPage.setName();
+    lacosteComPage.setDescription();
+    lacosteComPage.setImage();
+    lacosteComPage.setPrice();
+
+    //set product url
+    product.setUrl(lacosteComPage.getUrl());
+
+    //set product key
+    product.setKey(lacosteComPage.getKey());
+
+    //set product status
+    product.setDisabled(!lacosteComPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(lacosteComPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(lacosteComPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(lacosteComPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(lacosteComPage.getName());
+    text.setDescription(lacosteComPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(lacosteComPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = lacosteComPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
+    return product;
+  }
+
   private Product getProductFromBestBuyCa(String url, Product product, LANGUAGE language)
       throws Exception {
     //product page info
@@ -2355,6 +2467,118 @@ public class SpiderServiceImpl implements SpiderService {
       //set tags
 
       String[] tagArray = nordStromComPage.getName().split(" ");
+      for (String tagString : tagArray) {
+        ProductTag tag = new ProductTag();
+        tag.setValue(tagString);
+        //add image to product
+        product.getTags().add(tag);
+      }
+
+    }
+
+    return product;
+  }
+
+  private Product getProductFromTigerDirectCa(String url, Product product, LANGUAGE language)
+      throws Exception {
+    //product page info
+    TigerDirectCa TigerDirectCaPage = new TigerDirectCa();
+    TigerDirectCaPage.setActive(true);
+    TigerDirectCaPage.setStoreId();
+    TigerDirectCaPage.setUrl(url);
+    TigerDirectCaPage.setExpiration();
+
+    TigerDirectCaPage.setDoc();
+    TigerDirectCaPage.setKey();
+    TigerDirectCaPage.setName();
+    TigerDirectCaPage.setDescription();
+    TigerDirectCaPage.setImage();
+    TigerDirectCaPage.setPrice();
+
+    TigerDirectCaPage.setRating();
+    TigerDirectCaPage.setReviewsCount();
+
+    //set product url
+    product.setUrl(TigerDirectCaPage.getUrl());
+
+    //set product key
+    product.setKey(TigerDirectCaPage.getKey());
+
+    //set product status
+    product.setDisabled(!TigerDirectCaPage.getActive());
+
+    //set product store
+    Store store = new Store();
+    store.setId(TigerDirectCaPage.getStoreId());
+    product.setStore(store);
+
+    //set product tax
+    if (product.getTaxes().isEmpty()) {
+      ProductTax federal = new ProductTax();
+      federal.setTitle(PRODUCT_TAX_TITLE.CAFEDERAL);
+      federal.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      ProductTax provincial = new ProductTax();
+      provincial.setTitle(PRODUCT_TAX_TITLE.CAPROVINCE);
+      provincial.setType(PRODUCT_TAX_TYPE.PERCENTAGE);
+
+      product.getTaxes().add(federal);
+      product.getTaxes().add(provincial);
+    }
+
+    //set product fees
+
+    if (product.getFees().isEmpty()) {
+      ProductFee shipping = new ProductFee();
+      shipping.setTitle(PRODUCT_FEE_TITLE.SHIPPING);
+      shipping.setType(PRODUCT_FEE_TYPE.AMOUNT);
+      shipping.setValue(0.00);
+
+      product.getFees().add(shipping);
+    }
+
+    //set product price
+    if (product.getPrices().isEmpty()) {
+      try {
+        //set price
+        ProductPrice price = new ProductPrice();
+        price.setValue(TigerDirectCaPage.getPrice());
+        //add price to product
+        product.getPrices().add(price);
+        product.setCurrentPrice(TigerDirectCaPage.getPrice());
+        product.setCurrency(CURRENCY.CAD);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    ProductText text = new ProductText();
+    text.setLanguage(language);
+    text.setName(TigerDirectCaPage.getName());
+    text.setDescription(TigerDirectCaPage.getDescription());
+    product.getTexts().add(text);
+
+    if (product.getImages().isEmpty()) {
+      //set image
+      ProductImage image = new ProductImage();
+      image.setUrl(TigerDirectCaPage.getImage());
+      //add image to product
+      product.getImages().add(image);
+    }
+
+    if (product.getLinks().isEmpty()) {
+      ProductLink link = new ProductLink();
+      link.setUrl(url);
+      link.setName("tigerdirect.ca");
+      link.setRating(TigerDirectCaPage.getRating());
+      link.setReviewNumber(TigerDirectCaPage.getReviewsCount());
+      product.getLinks().add(link);
+    }
+
+    if (product.getTags().isEmpty()) {
+      //set tags
+
+      String[] tagArray = TigerDirectCaPage.getName().split(" ");
       for (String tagString : tagArray) {
         ProductTag tag = new ProductTag();
         tag.setValue(tagString);

@@ -56,12 +56,16 @@ public class TigerDirectCaPT {
     product_description_text = doc.select("meta[name=\"description\"]").attr("content");
 
     //image
-    product_image_text = doc.select("meta[property=og:image]").first().attr("content");
+    product_image_text = doc.select("img#detailImg").first().attr("src");
 
     product_price_text = doc.select("meta[itemprop=\"price\"]").first().attr("content");
     ;
 
-    
+    //product review number
+    String product_rating = doc.select("span.piRatingVal").first().text();
+
+    String product_review_number = doc.select("a.piReadRev").first().text()
+        .replace("Read reviews (", "").replace(")", "");
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 
@@ -90,6 +94,10 @@ public class TigerDirectCaPT {
     System.out.println("product description: " + product_description_text);
     System.out.println("product image: " + product_image_text);
     System.out.println("product price: " + product_price_text);
+
+    System.out.println("product rating: " + product_rating);
+    System.out.println("product revies number: " + product_review_number);
+
     //System.out.println(product_shipping_text);
     //System.out.println(product_import_text);
     System.out.println("product expiration: " + expiredDate.toString());

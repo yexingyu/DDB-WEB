@@ -70,42 +70,14 @@ public class WalmartCaPT {
         .get(0).html();
 
     //rating
-    String ratingPattern = "data-analytics-value=\"(\\d_\\d)\"";
-    String ratingString = "";
-    //pattern
-    r = Pattern.compile(ratingPattern);
 
-    //matcher
-    m = r.matcher(product_rating);
-    if (m.find()) {
-      ratingString = m.group(1);
-
-    } else {
-      ratingString = null;
-    }
-    ;
-
-    product_rating = ratingString.replace("_", ".");
+    product_rating = doc.select("div#product-desc").get(0).select("ul.rating").get(0).select("li")
+        .get(0).html();
 
     //product review number
-    product_review_number = doc.select("div#product-desc").get(0).html();
-    //reviews
-    String reviewsPattern = "(\\d+) Reviews";
-    String reviewsString = "";
-    //pattern
-    r = Pattern.compile(reviewsPattern);
+    product_review_number = doc.select("span.piRatingVal").first().text();
 
-    //matcher
-    m = r.matcher(product_review_number);
-    if (m.find()) {
-      reviewsString = m.group(1);
-
-    } else {
-      reviewsString = null;
-    }
-    ;
-
-    product_review_number = reviewsString;
+    product_review_number = doc.select("a.piReadRev").get(0).text();
 
     //product_shipping_text = doc.select(htmlPath.get("shipping")).first().text();
     //product_import_text = doc.select(htmlPath.get("import")).first().text(); 
