@@ -65,14 +65,20 @@ public class TigerDirectCa extends ProductPage {
 
   @Override
   public void setRating() {
-
-    this.rating = Double.parseDouble(this.doc.select("span.piRatingVal").first().text());
+    try {
+      this.rating = Double.parseDouble(this.doc.select("span.piRatingVal").first().text());
+    } catch (NullPointerException e) {
+      this.rating = 0.0;
+    }
   }
 
   @Override
   public void setReviewsCount() {
-
-    this.reviewsCount = Integer.parseInt(this.doc.select("a.piReadRev").first().text()
-        .replace("Read reviews (", "").replace(")", ""));
+    try {
+      this.reviewsCount = Integer.parseInt(this.doc.select("a.piReadRev").first().text()
+          .replace("Read reviews (", "").replace(")", ""));
+    } catch (NullPointerException e) {
+      this.reviewsCount = 0;
+    }
   }
 }
