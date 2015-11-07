@@ -7,17 +7,15 @@
         <div class="panel-body">
           <div class="form-group">
             <label>Deal URL *:</label> <input class="form-control" ng-model="product.url" placeholder = "Enter Deal URL">
-            <p class="help-block">
-              <a href="{{product.url}}" target="_blank">Merchant Deal Page</a>
-            </p>
           </div>
-          <button type="button" class="btn btn-default" ng-click="parse()">Get Deal Info</button>
+          <button type="button" class="btn btn-info" ng-click="parse()">Get Deal Info</button>
           </div>
     		<div class="panel-footer"></div>          	  
 	  </div>
 	  </div>
   </div>
-  
+  <div class="row">
+    <div class="col-lg-12">  
   <!-- product index preview-->
   <div class="panel panel-primary">
     <div class="panel-heading">Deal Preview</div>
@@ -54,13 +52,16 @@
             (Exchange Rate: {{getExchangeRate()}})
           </div>
         </div>
-        
   <div class="row">
   	<div class="col-lg-12">
 	
-	    <button type="submit" class="btn btn-info" ng-click="add()">Share Deal</button>
+	    <button type="submit" class="btn btn-danger" ng-click="add()">Share Deal</button>
 	</div> 
-	</div>        
+	</div>           
+        </div>
+        </div>
+        
+     
 
         </div>
         <div class="panel-footer"></div>
@@ -125,7 +126,7 @@
 
   <!-- product Reputation panel-->
   <div class="panel panel-primary">
-    <div class="panel-heading">Product Reputation</div>
+    <div class="panel-heading">Deal Reputation</div>
     <div class="panel-body">
       <div class="form-group">
         <label>Reference Link:</label>
@@ -146,7 +147,7 @@
   
   <!-- product image panel-->
   <div class="panel panel-primary">
-    <div class="panel-heading">Product Image</div>
+    <div class="panel-heading">Deal Image</div>
     <div class="panel-body">
       <div class="form-group">
         <label>Image:</label>
@@ -162,7 +163,7 @@
   </div>
   <!-- product text info panel-->
   <div class="panel panel-primary">
-    <div class="panel-heading">Product Name, Description, Warranty, Return Policy, Meta</div>
+    <div class="panel-heading">Deal Name, Description, Warranty, Return Policy, Meta</div>
     <div class="panel-body">
 		<form class="form-horizontal">
 		<div class="row">
@@ -184,48 +185,6 @@
 					    <label class="col-sm-2 control-label">Description:</label>
 					    <div class="col-sm-10">
 					     <textarea class="form-control" ng-model="text.description" placeholder ="Enter the product description"></textarea>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Warranty:</label>
-					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.warranty" placeholder ="Enter the product warranty"></textarea>
-					    </div>
-					  </div>			  
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Return Policy:</label>
-					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.return_policy" placeholder ="Enter the product return policy"></textarea>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Shipping Info:</label>
-					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.shipping_info" placeholder ="Enter the product shipping info"></textarea>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Coupon Info:</label>
-					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.coupon" placeholder ="Enter the product coupon info"></textarea>
-					    </div>
-					  </div>					  						  			  
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Meta Keyword:</label>
-					    <div class="col-sm-10">
-					      <input class="form-control" type="text" ng-model="text.meta_keyword" placeholder ="Enter meta keywords"/>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Meta Title:</label>
-					    <div class="col-sm-10">
-					      <input class="form-control" type="text" ng-model="text.meta_title" placeholder ="Enter meta title"/>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Meta Description:</label>
-					    <div class="col-sm-10">
-					     <textarea class="form-control" ng-model="text.meta_description" placeholder ="Enter meta description"></textarea>
 					    </div>
 					  </div>
 					  <div class="form-group">
@@ -293,7 +252,7 @@
   <div class="row">
   	<div class="col-lg-6">
 	
-	    <button type="submit" class="btn btn-info" ng-click="add()">Share Deal</button>
+	    <button type="submit" class="btn btn-danger" ng-click="add()">Share Deal</button>
 	</div> 
 	</div>
   
