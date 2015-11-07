@@ -758,7 +758,268 @@ angular.module('ddbApp.controllers', ['angular-md5'])
                 console.log(response.data);
             }
         });
-    }])    
+    }]) 
+    
+  /*
+     * PMProductAdd definition
+     */
+    .controller(
+    'ShareCtrl',
+    [
+        '$scope',
+        '$location',
+        '$routeParams',
+        'ProductService',
+        'StoreService',
+        function ($scope, $location, $routeParams, ProductService, StoreService) {
+            console.log("share control");
+        	
+        	var id = $routeParams.id;
+
+            $scope.status = [{
+                id: true,
+                name: "true"
+            }, {
+                id: false,
+                name: "false"
+            }
+            ];
+
+            $scope.tag_hot_options = [{
+                value: "phone"
+            }, {
+                value: "laptop"
+            }, {
+                value: "tablet"
+            }, {
+                value: "electronic"
+            }, {
+                value: "appliance"
+            }, {
+                value: "furniture"
+            }, {
+                value: "sport"
+            }, {
+                value: "outdoor"
+            }, {
+                value: "clothing"
+            }, {
+                value: "shoes"
+            }, {
+                value: "handbag"
+            }, {
+                value: "cosmetics"
+            }, {
+                value: "other"
+            }];
+
+
+            // retrieve store list
+            $scope.stores = [];
+            StoreService.list(function (response) {
+                if (response.status === "SUCCESS") {
+                    $scope.stores = response.data.content;
+                }
+            });
+            // add input field
+            $scope.product = {};
+            $scope.product.currency = "CAD";
+            $scope.product.currentPrice = "0.00";
+
+            $scope.product.prices = [{
+                currency: 'CAD',
+                value: ''
+            }];
+
+
+            $scope.product.images = [{
+                url: '',
+                alt: ''
+            }];
+
+            $scope.product.texts = [{
+                language: 'EN',
+                name: "",
+                description: "",
+                warranty: "",
+                return_policy: "",
+                shipping_info: "",
+                coupon: "",
+                meta_keyword: "",
+                meta_title: "",
+                meta_description: ""
+            }, {
+                language: 'FR',
+                name: "",
+                description: "",
+                warranty: "",
+                return_policy: "",
+                shipping_info: "",
+                coupon: "",
+                meta_keyword: "",
+                meta_title: "",
+                meta_description: ""
+            }];
+
+
+            // sample data
+            $scope.product.url = "";
+            $scope.product.key = "";
+            $scope.product.status = "AVAILABLE";
+            $scope.product.store = {
+                id: 2
+            };
+            $scope.product.prices = [{
+                currency: 'CAD',
+                value: ''
+            }];
+
+            $scope.product.taxes = [{
+                title: 'CAFEDERAL',
+                type: 'PERCENTAGE',
+            }, {
+                title: 'CAPROVINCE',
+                type: 'PERCENTAGE',
+
+            }];
+
+            $scope.product.fees = [{
+                title: 'SHIPPING',
+                type: 'AMOUNT',
+                value: ''
+            }, {
+                title: 'IMPORT',
+                type: 'AMOUNT',
+                value: ''
+            }];
+
+            $scope.product.images = [{
+                url: '',
+                alt: ''
+            }];
+
+            $scope.product.texts = [
+                {
+                    language: 'EN',
+                    name: "",
+                    description: "",
+                    warranty: "n/a",
+                    return_policy: "n/a",
+                    shipping_info: "n/a",
+                    meta_keyword: "",
+                    meta_title: "",
+                    meta_description: ""
+                },
+                {
+                    language: 'FR',
+                    name: "",
+                    description: "",
+                    warranty: "n/a",
+                    return_policy: "n/a",
+                    shipping_info: "n/a",
+                    meta_keyword: "",
+                    meta_title: "",
+                    meta_description: ""
+                }];
+
+
+
+
+
+            // payment term calculation
+            $scope.Math = window.Math;
+
+            $scope.getExchangeRate = function () {
+                if ($scope.product.currency == "CAD") {
+                    exchange_rate = 1;
+                }
+                if ($scope.product.currency == "USD") {
+                    exchange_rate = 1.3588;
+                }
+                return exchange_rate
+
+            }
+
+            $scope.getTotal = function () {
+                $scope.product.total = parseFloat($scope.product.currentPrice);
+                // add fees
+                total_fee = 0;
+                for (var i = 0; i < $scope.product.fees.length; i++) {
+                    if ($scope.product.fees[i].type == "AMOUNT") {
+                        total_fee = total_fee
+                            + parseFloat($scope.product.fees[i].value);
+                    }
+                    if ($scope.product.fees[i].type == "PERCENTAGE") {
+                        total_fee = total_fee + $scope.product.currentPrice
+                            * parseFloat($scope.product.fees[i].value / 100);
+                    }
+                }
+                total = total_fee + $scope.product.total;
+
+                return total;
+            }
+
+            $scope.yearly_interest_rate = 0.24;
+            $scope.number_of_payments = 12;
+            $scope.monthly_interest_rate = $scope.yearly_interest_rate
+                / $scope.number_of_payments;
+
+            $scope.getMonthlyPayment = function () {
+                $scope.product.total = parseFloat($scope.product.currentPrice);
+                // add fees
+                total_fee = 0;
+                for (var i = 0; i < $scope.product.fees.length; i++) {
+                    if ($scope.product.fees[i].type == "AMOUNT") {
+                        total_fee = total_fee
+                            + parseFloat($scope.product.fees[i].value);
+                    }
+                    if ($scope.product.fees[i].type == "PERCENTAGE") {
+                        total_fee = total_fee + $scope.product.currentPrice
+                            * parseFloat($scope.product.fees[i].value / 100);
+                    }
+                }
+                principal = total * 0.618;
+                MonthlyPayment = $scope.monthly_interest_rate
+                    * principal
+                    / (1 - Math.pow((1 + $scope.monthly_interest_rate),
+                        -$scope.number_of_payments));
+                MonthlyPayment = Math.round(MonthlyPayment * 100) / 100;
+                return MonthlyPayment;
+            }
+
+            $scope.parse = function () {
+                ProductService.spider($scope.product.url, function (response) {
+                    if (response.status === 'SUCCESS') {
+                        $scope.product = response.data;
+
+
+                        $scope.product.options = [];
+
+                        $scope.product.reviews = [];
+                        $scope.product.likes = [];
+
+                        console.log(response.data);
+                    }
+                })
+            }
+
+
+            $scope.add = function () {
+                //add currentPrice to prices
+                $scope.product.prices = [{
+                    currency: $scope.product.currency,
+                    value: $scope.product.currentPrice
+                }];
+                //$scope.product.tags.concat($scope.tag_hot);
+
+                console.log(JSON.stringify($scope.product));
+                ProductService.add($scope.product, function (response) {
+                    console.log(response);
+                    $location.path("/home");
+                });
+            };
+        }])    
+    
     /*
      * AboutCtrl definition
      */
