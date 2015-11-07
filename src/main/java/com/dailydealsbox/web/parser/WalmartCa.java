@@ -102,7 +102,10 @@ public class WalmartCa extends ProductPage {
       reviewsString = null;
     }
     ;
-
+    try {
     this.reviewsCount = Integer.parseInt(reviewsString);
+    } catch (NumberFormatException e ) {
+    	this.reviewsCount =0;
+    }
   }
 }
